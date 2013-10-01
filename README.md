@@ -1,4 +1,0 @@
-automaticDiet
-=============
-
-Aplicación para dietas 
