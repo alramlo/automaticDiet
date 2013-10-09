@@ -1,7 +1,5 @@
 package persistencia;
 
-import javax.persistence.EntityManager;
-
 import modelo.Caracteristica;
 
 public class CaracteristicaDAO extends AbstractDAO{
