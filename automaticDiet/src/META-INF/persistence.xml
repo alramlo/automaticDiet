@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="automaticDiet">
+		<class>persistencia.Caracteristica</class>
+		<class>persistencia.Dieta</class>
+		<class>persistencia.Grupo</class>
+		<class>persistencia.Ingrediente</class>
+		<class>persistencia.Plato</class>
+		<class>persistencia.PlatoDieta</class>
+		<class>persistencia.PlatoDietaPK</class>
+		<class>persistencia.PlatoIngrediente</class>
+		<class>persistencia.PlatoIngredientePK</class>
+		<class>persistencia.Seguimiento</class>
+		<class>persistencia.SeguimientoPK</class>
+		<class>persistencia.TipoPlato</class>
+		<class>persistencia.Usuario</class>
+	</persistence-unit>
+</persistence>
