@@ -12,37 +12,57 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import modelo.Plato;
+
 public class ElaboracionPlato extends JPanel {
-	private JTextField textField;
+	private JTextField textFieldBuscar;
+	private JComboBox<String> comboBox;
+	private JTextPane textPaneElaboracion;
 
 	/**
 	 * Create the panel.
 	 */
-	public ElaboracionPlato() {
+	public ElaboracionPlato(Object platoVuelta) {
+		
+		if(platoVuelta!=null){
+			if(platoVuelta instanceof Plato){
+				textPaneElaboracion.setText(((Plato) platoVuelta).getElaboracion());
+				//Falta mostrar imagen
+			}
+		}
+		
 		setLayout(null);
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
+		buttonPanelIngredientes.setEnabled(false);//desactivado mientras tanto
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.PLAIN, 12));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Controlador llamar wu ingredientes
 			}
 		});
 		buttonPanelIngredientes.setBounds(250, 11, 162, 39);
 		add(buttonPanelIngredientes);
 		
-		textField = new JTextField();
-		textField.setBounds(41, 76, 174, 29);
-		add(textField);
-		textField.setColumns(10);
+		textFieldBuscar = new JTextField();
+		textFieldBuscar.setBounds(41, 76, 174, 29);
+		add(textFieldBuscar);
+		textFieldBuscar.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Buscar");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblNewLabel.setBounds(41, 51, 46, 14);
 		add(lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
+		
+		//Extraer todos los platos del usuario
+		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Plato plato = new Plato();
+				plato.setNombre(comboBox.getSelectedItem()+"");
+				//Controlador
 			}
 		});
 		comboBox.setBounds(250, 142, 174, 20);
@@ -57,9 +77,9 @@ public class ElaboracionPlato extends JPanel {
 		imagenPlato.setBounds(41, 193, 174, 155);
 		add(imagenPlato);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(250, 193, 174, 155);
-		add(textPane);
+		textPaneElaboracion = new JTextPane();
+		textPaneElaboracion.setBounds(250, 193, 174, 155);
+		add(textPaneElaboracion);
 		
 		JLabel lblNewLabel_2 = new JLabel("AutomaticDiet");
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 13));
@@ -73,6 +93,9 @@ public class ElaboracionPlato extends JPanel {
 		JButton buttonBuscar = new JButton("Buscar");
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Plato plato = new Plato();
+				plato.setNombre(textFieldBuscar.getText());
+				//Controlador
 			}
 		});
 		buttonBuscar.setBackground(Color.RED);
