@@ -1,7 +1,6 @@
-package servicio;
+package persistencia;
 
 import modelo.Caracteristica;
-import persistencia.CaracteristicaDAO;
 import excepciones.DAOExcepcion;
 
 

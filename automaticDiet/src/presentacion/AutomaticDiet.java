@@ -11,7 +11,15 @@ import javax.swing.JPanel;
 
 public class AutomaticDiet
 {
-
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private JFrame automatic_diet;
 
 	/**

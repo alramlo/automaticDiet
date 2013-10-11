@@ -20,7 +20,7 @@ public class EjecutarPorConsola {
 
 		Caracteristica caract1 = new Caracteristica();
 		caract1.setId(1);
-		caract1.setNombre("Caracteristica Uno");
+		caract1.setNombre("Característica uno");
 		
 		try {
 			control.crearCaracteristica(caract1);

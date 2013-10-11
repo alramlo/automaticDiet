@@ -1,5 +1,6 @@
 package servicio;
 
+import persistencia.DAL;
 import modelo.Caracteristica;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
