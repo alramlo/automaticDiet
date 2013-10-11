@@ -21,41 +21,53 @@ public class Ingredientes extends JPanel {
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("NOMBRE INGREDIENTE");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 13));
-		lblNewLabel.setBounds(31, 22, 161, 23);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(21, 60, 197, 23);
 		add(lblNewLabel);
 		
 		JButton btnInfoNutricional = new JButton("Info nutricional");
-		btnInfoNutricional.setFont(new Font("Arial", Font.BOLD, 11));
-		btnInfoNutricional.setBounds(207, 23, 120, 23);
+		btnInfoNutricional.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnInfoNutricional.setFont(new Font("Arial", Font.BOLD, 16));
+		btnInfoNutricional.setBounds(355, 60, 197, 23);
 		add(btnInfoNutricional);
 		
 		JButton btnElaboracion = new JButton("Elaboracion del plato");
-		btnElaboracion.setFont(new Font("Arial", Font.BOLD, 11));
+		btnElaboracion.setFont(new Font("Arial", Font.BOLD, 16));
 		btnElaboracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnElaboracion.setBounds(329, 22, 145, 23);
+		btnElaboracion.setBounds(562, 60, 228, 23);
 		add(btnElaboracion);
 		
-		JList list = new JList();
-		list.setBounds(31, 284, 161, -201);
-		add(list);
-		
 		JTextPane textPaneInfoAlim = new JTextPane();
-		textPaneInfoAlim.setBounds(207, 78, 267, 215);
+		textPaneInfoAlim.setBounds(355, 108, 435, 373);
 		add(textPaneInfoAlim);
 		
 		JButton btnOrigenAli = new JButton("Origen del alimento");
-		btnOrigenAli.setFont(new Font("Arial", Font.BOLD, 11));
-		btnOrigenAli.setBounds(49, 375, 143, 23);
+		btnOrigenAli.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnOrigenAli.setFont(new Font("Arial", Font.BOLD, 16));
+		btnOrigenAli.setBounds(470, 550, 214, 23);
 		add(btnOrigenAli);
 		
 		JButton btnAnyadirLista = new JButton("A\u00F1adir a la lista de la compra");
-		btnAnyadirLista.setFont(new Font("Arial", Font.BOLD, 11));
-		btnAnyadirLista.setBounds(207, 375, 189, 23);
+		btnAnyadirLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAnyadirLista.setFont(new Font("Arial", Font.BOLD, 16));
+		btnAnyadirLista.setBounds(442, 505, 266, 23);
 		add(btnAnyadirLista);
+		
+		JList list = new JList();
+		list.setBounds(21, 480, 305, -371);
+		add(list);
 		
 
 	}
