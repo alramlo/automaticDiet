@@ -34,7 +34,6 @@ public class ElaboracionPlato extends JPanel {
 		setLayout(null);
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
-		buttonPanelIngredientes.setEnabled(false);//desactivado mientras tanto
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
