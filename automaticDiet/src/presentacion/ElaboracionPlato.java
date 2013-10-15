@@ -35,23 +35,23 @@ public class ElaboracionPlato extends JPanel {
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
 		buttonPanelIngredientes.setEnabled(false);//desactivado mientras tanto
-		buttonPanelIngredientes.setFont(new Font("Arial", Font.PLAIN, 12));
+		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//Controlador llamar wu ingredientes
 			}
 		});
-		buttonPanelIngredientes.setBounds(250, 11, 162, 39);
+		buttonPanelIngredientes.setBounds(366, 39, 186, 39);
 		add(buttonPanelIngredientes);
 		
 		textFieldBuscar = new JTextField();
-		textFieldBuscar.setBounds(41, 76, 174, 29);
+		textFieldBuscar.setBounds(10, 110, 256, 29);
 		add(textFieldBuscar);
 		textFieldBuscar.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Buscar");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel.setBounds(41, 51, 46, 14);
+		JLabel lblNewLabel = new JLabel("Buscar:");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(10, 85, 70, 14);
 		add(lblNewLabel);
 		
 		comboBox = new JComboBox<String>();
@@ -65,32 +65,34 @@ public class ElaboracionPlato extends JPanel {
 				//Controlador
 			}
 		});
-		comboBox.setBounds(250, 142, 174, 20);
+		comboBox.setBounds(366, 223, 424, 20);
 		add(comboBox);
 		
 		JLabel lblNewLabel_1 = new JLabel("Plato:");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(250, 117, 46, 14);
+		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(366, 198, 46, 14);
 		add(lblNewLabel_1);
 		
 		JLabel imagenPlato = new JLabel("");
-		imagenPlato.setBounds(41, 193, 174, 155);
+		imagenPlato.setBounds(10, 264, 346, 325);
 		add(imagenPlato);
 		
 		textPaneElaboracion = new JTextPane();
-		textPaneElaboracion.setBounds(250, 193, 174, 155);
+		textPaneElaboracion.setBounds(366, 264, 424, 325);
 		add(textPaneElaboracion);
 		
 		JLabel lblNewLabel_2 = new JLabel("AutomaticDiet");
-		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 13));
-		lblNewLabel_2.setBounds(250, 61, 162, 24);
+		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 21));
+		lblNewLabel_2.setBounds(366, 108, 162, 24);
 		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Cumple tus objetivos facilmente!");
-		lblNewLabel_3.setBounds(250, 83, 162, 14);
+		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 18));
+		lblNewLabel_3.setBounds(366, 143, 424, 29);
 		add(lblNewLabel_3);
 		
 		JButton buttonBuscar = new JButton("Buscar");
+		buttonBuscar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Plato plato = new Plato();
@@ -99,7 +101,7 @@ public class ElaboracionPlato extends JPanel {
 			}
 		});
 		buttonBuscar.setBackground(Color.RED);
-		buttonBuscar.setBounds(126, 114, 89, 23);
+		buttonBuscar.setBounds(177, 148, 89, 23);
 		add(buttonBuscar);
 
 
