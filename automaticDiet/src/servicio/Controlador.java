@@ -45,8 +45,14 @@ public class Controlador {
 		dal.crearCaracteristica(caracteristica);
 	}
 	
-	public void consultarPlato(Plato plato)throws DAOExcepcion
+	public Plato consultarPlato(Plato plato)throws DAOExcepcion
 	{
-		dal.consultarPlato(plato);
+		return dal.consultarPlato(plato);
 	}
+	
+	//public List<Ingredientes> IngredientesPorPlato(Plato p)throws DAOExcepcion
+	//{
+		//return dal.IngredientesPorPlato(p);
+
+	//}
 }

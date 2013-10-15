@@ -104,7 +104,12 @@ public class ElaboracionPlato extends JPanel {
 				Plato plato = new Plato();
 				plato.setNombre(textFieldBuscar.getText());
 				try {
-					Controlador.dameControlador().consultarPlato(plato);
+					Plato platoVuelta = Controlador.dameControlador().consultarPlato(plato);
+					if(platoVuelta!=null){
+						textFieldBuscar.setText(platoVuelta.getNombre());
+						textPaneElaboracion.setText(platoVuelta.getElaboracion());
+						comboBox.setSelectedItem(platoVuelta.getNombre());
+					}
 				} catch (DAOExcepcion e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

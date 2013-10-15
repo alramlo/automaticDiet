@@ -35,7 +35,12 @@ public class DAL {
 	}
 	
 	//plato
-	public void consultarPlato(Plato p) throws DAOExcepcion{
-		platoDAO.platoByNombre(p.getNombre());
+	public Plato consultarPlato(Plato p) throws DAOExcepcion{
+		return platoDAO.platoByNombre(p.getNombre());
 	}
+	
+	//public List<Ingredientes> IngredientesPorPlato(Plato p) throws DAOExcepcion{
+		//return platoDAO.IngredientesPorPlato(p.getNombre());
+	//}
+	
 }
