@@ -1,7 +1,8 @@
 package servicio;
 
-import persistencia.DAL;
 import modelo.Caracteristica;
+import modelo.Plato;
+import persistencia.DAL;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 
@@ -42,5 +43,10 @@ public class Controlador {
 	public void crearCaracteristica(Caracteristica caracteristica)throws DAOExcepcion
 	{
 		dal.crearCaracteristica(caracteristica);
+	}
+	
+	public void consultarPlato(Plato plato)throws DAOExcepcion
+	{
+		dal.consultarPlato(plato);
 	}
 }

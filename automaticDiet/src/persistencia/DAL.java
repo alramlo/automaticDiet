@@ -1,6 +1,7 @@
 package persistencia;
 
 import modelo.Caracteristica;
+import modelo.Plato;
 import excepciones.DAOExcepcion;
 
 
@@ -13,6 +14,7 @@ public class DAL {
 	private static DAL dal;
 	
 	private CaracteristicaDAO caracteristicaDAO;
+	private PlatoDAO platoDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -30,5 +32,10 @@ public class DAL {
 	// Características
 	public void crearCaracteristica(Caracteristica c) throws DAOExcepcion{
 		caracteristicaDAO.crearCaracteristica(c);
+	}
+	
+	//plato
+	public void consultarPlato(Plato p) throws DAOExcepcion{
+		platoDAO.platoByNombre(p.getNombre());
 	}
 }
