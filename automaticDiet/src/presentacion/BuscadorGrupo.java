@@ -16,6 +16,10 @@ import javax.swing.JTextField;
 import modelo.Grupo;
 
 public class BuscadorGrupo extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4625943961168080147L;
 	private JTextField textFieldNombre;
 	private JTable table;
 	private JComboBox<String> comboBoxLocalidad;
@@ -23,6 +27,7 @@ public class BuscadorGrupo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("unchecked")
 	public BuscadorGrupo(Object grupoVuelta) {
 		setLayout(null);
 		

@@ -13,6 +13,11 @@ import javax.swing.JTextPane;
 public class Ingredientes extends JPanel {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 629473746632711909L;
+
+	/**
 	 * Create the panel.
 	 */
 	public Ingredientes(Object ingredientesVuelta) {
@@ -63,7 +68,7 @@ public class Ingredientes extends JPanel {
 		btnAnyadirLista.setBounds(442, 505, 266, 23);
 		add(btnAnyadirLista);
 		
-		JList list = new JList();
+		JList<String> list = new JList<String>();
 		list.setBounds(21, 480, 305, -371);
 		add(list);
 		

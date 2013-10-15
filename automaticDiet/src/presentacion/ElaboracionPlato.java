@@ -15,6 +15,10 @@ import javax.swing.JTextPane;
 import modelo.Plato;
 
 public class ElaboracionPlato extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -35301839624147280L;
 	private JTextField textFieldBuscar;
 	private JComboBox<String> comboBox;
 	private JTextPane textPaneElaboracion;
