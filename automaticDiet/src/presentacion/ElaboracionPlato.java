@@ -12,7 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import excepciones.DAOExcepcion;
+import excepciones.DominioExcepcion;
 import modelo.Plato;
+import servicio.Controlador;
 
 public class ElaboracionPlato extends JPanel {
 	/**
@@ -100,7 +103,15 @@ public class ElaboracionPlato extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Plato plato = new Plato();
 				plato.setNombre(textFieldBuscar.getText());
-				//Controlador
+				try {
+					Controlador.dameControlador().consultarPlato(plato);
+				} catch (DAOExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DominioExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		buttonBuscar.setBackground(Color.RED);
