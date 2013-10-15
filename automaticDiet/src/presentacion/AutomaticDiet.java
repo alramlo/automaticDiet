@@ -17,11 +17,17 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AutomaticDiet
 {
 
 	private JFrame automatic_diet;
+	JPanel panel_central;
 
 	/**
 	 * Método para lanzar la aplicación
@@ -70,7 +76,7 @@ public class AutomaticDiet
 		automatic_diet.getContentPane().setSize(new Dimension(1024, 768));
 		automatic_diet.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_central = new Consultar_dieta_asignada();
+		panel_central = new Consultar_dieta_asignada();
 		panel_central.setSize(800, 600);
 		automatic_diet.getContentPane().add(panel_central, BorderLayout.SOUTH);
 		
@@ -125,5 +131,65 @@ public class AutomaticDiet
 		panel_superior.setLayout(gl_panel_superior);
 		automatic_diet.setBounds(100, 100, 487, 331);
 		automatic_diet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JMenuBar menuBar = new JMenuBar();
+		automatic_diet.setJMenuBar(menuBar);
+		
+		JMenu mnUsuario = new JMenu("Usuario");
+		menuBar.add(mnUsuario);
+		
+		JMenuItem mntmIndicadores = new JMenuItem("Indicadores");
+		mnUsuario.add(mntmIndicadores);
+		
+		JMenu mnDieta = new JMenu("Dieta");
+		menuBar.add(mnDieta);
+		
+		JMenuItem mntmConsultarDietaAsignada = new JMenuItem("Consultar dieta asignada");
+		mntmConsultarDietaAsignada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				automatic_diet.remove(panel_central);
+				panel_central = new Consultar_dieta_asignada();
+				automatic_diet.getContentPane().add(panel_central);
+				automatic_diet.validate();
+				automatic_diet.repaint();
+			}
+		});
+		mnDieta.add(mntmConsultarDietaAsignada);
+		
+		JMenu mnPlato = new JMenu("Plato");
+		menuBar.add(mnPlato);
+		
+		JMenuItem mntmElaboracinDePlato = new JMenuItem("Elaboraci\u00F3n de plato");
+		mntmElaboracinDePlato.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				automatic_diet.remove(panel_central);
+				panel_central = new ElaboracionPlato(null);
+				automatic_diet.getContentPane().add(panel_central);
+				automatic_diet.validate();
+				automatic_diet.repaint();
+			}
+		});
+		mnPlato.add(mntmElaboracinDePlato);
+		
+		JMenuItem mntmIngredientes = new JMenuItem("Ingredientes");
+		mntmIngredientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				automatic_diet.remove(panel_central);
+				panel_central = new Ingredientes();
+				automatic_diet.getContentPane().add(panel_central);
+				automatic_diet.validate();
+				automatic_diet.repaint();
+			}
+		});
+		mnPlato.add(mntmIngredientes);
+		
+		JMenu mnForo = new JMenu("Foro");
+		menuBar.add(mnForo);
+		
+		JMenuItem mntmBuscadorDeGrupos = new JMenuItem("Buscador de grupos");
+		mnForo.add(mntmBuscadorDeGrupos);
 	}
 }
