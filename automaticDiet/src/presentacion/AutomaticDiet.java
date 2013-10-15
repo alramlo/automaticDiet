@@ -25,7 +25,15 @@ import java.awt.event.ActionEvent;
 
 public class AutomaticDiet
 {
-
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private JFrame automatic_diet;
 	JPanel panel_central;
 

@@ -12,9 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import excepciones.DAOExcepcion;
+import excepciones.DominioExcepcion;
 import modelo.Plato;
+import servicio.Controlador;
 
 public class ElaboracionPlato extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -35301839624147280L;
 	private JTextField textFieldBuscar;
 	private JComboBox<String> comboBox;
 	private JTextPane textPaneElaboracion;
@@ -34,7 +41,6 @@ public class ElaboracionPlato extends JPanel {
 		setLayout(null);
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
-		buttonPanelIngredientes.setEnabled(false);//desactivado mientras tanto
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -97,7 +103,15 @@ public class ElaboracionPlato extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Plato plato = new Plato();
 				plato.setNombre(textFieldBuscar.getText());
-				//Controlador
+				try {
+					Controlador.dameControlador().consultarPlato(plato);
+				} catch (DAOExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DominioExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		buttonBuscar.setBackground(Color.RED);

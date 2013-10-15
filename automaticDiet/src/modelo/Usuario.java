@@ -174,4 +174,12 @@ public class Usuario implements Serializable {
 		return seguimiento;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", apellidos=" + apellidos + ", correo="
+				+ correo + ", direccion=" + direccion + ", dni=" + dni
+				+ ", nombre=" + nombre + ", pais=" + pais + ", poblacion="
+				+ poblacion + "]";
+	}
+
 }

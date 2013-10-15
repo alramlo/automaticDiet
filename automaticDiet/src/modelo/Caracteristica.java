@@ -54,4 +54,9 @@ public class Caracteristica implements Serializable {
 		this.grupos = grupos;
 	}
 
+	@Override
+	public String toString() {
+		return "Caracteristica [id=" + id + ", nombre=" + nombre + "]";
+	}
+
 }

@@ -130,4 +130,11 @@ public class Dieta implements Serializable {
 		return platoDieta;
 	}
 
+	@Override
+	public String toString() {
+		return "Dieta [id=" + id + ", caloriasMax=" + caloriasMax
+				+ ", caloriasMin=" + caloriasMin + ", fechaFinal=" + fechaFinal
+				+ ", fechaInicial=" + fechaInicial + ", nombre=" + nombre + "]";
+	}
+
 }
