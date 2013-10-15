@@ -1,15 +1,13 @@
 package presentacion;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JToggleButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 public class Ingredientes extends JPanel {
@@ -17,7 +15,7 @@ public class Ingredientes extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Ingredientes() {
+	public Ingredientes(Object ingredientesVuelta) {
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("NOMBRE INGREDIENTE");
