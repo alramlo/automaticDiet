@@ -3,6 +3,6 @@
 *.jar
 *.war
 *.ear
-.classpath
+
 /.settings
 /build

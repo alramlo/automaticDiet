@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -129,6 +130,12 @@ public class Plato implements Serializable {
 
 	public void setTipoPlatos(List<TipoPlato> tipoPlatos) {
 		this.tipoPlatos = tipoPlatos;
+	}
+
+	@Override
+	public String toString() {
+		return "Plato [id=" + id + ", elaboracion=" + elaboracion + ", imagen="
+				+ Arrays.toString(imagen) + ", nombre=" + nombre + "]";
 	}
 
 }

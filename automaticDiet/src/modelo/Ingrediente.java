@@ -169,4 +169,14 @@ public class Ingrediente implements Serializable {
 		return platoIngrediente;
 	}
 
+	@Override
+	public String toString() {
+		return "Ingrediente [id=" + id + ", calorias=" + calorias
+				+ ", carbohidratos=" + carbohidratos + ", colesterol="
+				+ colesterol + ", fibra=" + fibra + ", grasa=" + grasa
+				+ ", nombre=" + nombre + ", origen=" + origen + ", proteinas="
+				+ proteinas + ", sodio=" + sodio + ", vitaminas=" + vitaminas
+				+ "]";
+	}
+
 }

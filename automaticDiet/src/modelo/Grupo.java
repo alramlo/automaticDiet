@@ -119,4 +119,11 @@ public class Grupo implements Serializable {
 		this.usuarios = usuarios;
 	}
 
+	@Override
+	public String toString() {
+		return "Grupo [id=" + id + ", nombre=" + nombre + ", numParticipantes="
+				+ numParticipantes + ", poblacion=" + poblacion + ", privado="
+				+ privado + "]";
+	}
+
 }
