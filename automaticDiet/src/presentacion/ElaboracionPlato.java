@@ -49,9 +49,9 @@ public class ElaboracionPlato extends JPanel {
 		add(textFieldBuscar);
 		textFieldBuscar.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Buscar:");
+		JLabel lblNewLabel = new JLabel("Buscar plato:");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel.setBounds(10, 85, 70, 14);
+		lblNewLabel.setBounds(10, 79, 256, 20);
 		add(lblNewLabel);
 		
 		comboBox = new JComboBox<String>();
@@ -65,7 +65,7 @@ public class ElaboracionPlato extends JPanel {
 				//Controlador
 			}
 		});
-		comboBox.setBounds(366, 223, 424, 20);
+		comboBox.setBounds(366, 223, 424, 30);
 		add(comboBox);
 		
 		JLabel lblNewLabel_1 = new JLabel("Plato:");
@@ -92,7 +92,7 @@ public class ElaboracionPlato extends JPanel {
 		add(lblNewLabel_3);
 		
 		JButton buttonBuscar = new JButton("Buscar");
-		buttonBuscar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		buttonBuscar.setFont(new Font("Arial", Font.PLAIN, 14));
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Plato plato = new Plato();
