@@ -186,7 +186,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent e)
 			{
 				automatic_diet.remove(panel_central);
-				panel_central = new Ingredientes();
+				panel_central = new Ingredientes(null);
 				automatic_diet.getContentPane().add(panel_central);
 				automatic_diet.validate();
 				automatic_diet.repaint();
