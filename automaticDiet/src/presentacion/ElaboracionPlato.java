@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import excepciones.DAOExcepcion;
-import excepciones.DominioExcepcion;
 import modelo.Plato;
 import servicio.Controlador;
+import excepciones.DAOExcepcion;
+import excepciones.DominioExcepcion;
 
 public class ElaboracionPlato extends JPanel {
 	/**
@@ -44,7 +44,7 @@ public class ElaboracionPlato extends JPanel {
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Controlador llamar wu ingredientes
+				new Ingredientes2().setVisible(true);
 			}
 		});
 		buttonPanelIngredientes.setBounds(366, 39, 186, 39);
