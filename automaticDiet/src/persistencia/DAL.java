@@ -15,6 +15,7 @@ public class DAL {
 	
 	private CaracteristicaDAO caracteristicaDAO;
 	private PlatoDAO platoDAO;
+	//private GrupoDAO grupoDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -35,12 +36,17 @@ public class DAL {
 	}
 	
 	//plato
-	public Plato consultarPlato(Plato p) throws DAOExcepcion{
-		return platoDAO.platoByNombre(p.getNombre());
+	public Plato consultarPlato(String n) throws DAOExcepcion{
+		return platoDAO.platoByNombre(n);
 	}
 	
-	//public List<Ingredientes> IngredientesPorPlato(Plato p) throws DAOExcepcion{
-		//return platoDAO.IngredientesPorPlato(p.getNombre());
+	//public List<Ingredientes> IngredientesPorPlato(String n) throws DAOExcepcion{
+		//return platoDAO.IngredientesPorPlato(n);
 	//}
 	
+	//grupo
+	
+	//public Grupo buscarGrupoPorNombre(String n) throws DAOExcepcion{
+		//return grupoDAO.buscarGrupoPorNombre(n);
+	//}
 }

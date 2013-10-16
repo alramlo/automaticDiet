@@ -70,12 +70,30 @@ public class BuscadorGrupo extends JPanel {
 		add(lblNewLabel_1);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!textFieldNombre.getText().equals("")){
+					comboBoxLocalidad.setEnabled(false);
+				}
+				else
+					comboBoxLocalidad.setEnabled(true);
+			}
+		});
 		textFieldNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		textFieldNombre.setBounds(138, 25, 210, 20);
 		add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		comboBoxLocalidad = new JComboBox<String>();
+		comboBoxLocalidad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(comboBoxLocalidad.getSelectedItem()+"").equals("")){
+					textFieldNombre.setEnabled(false);
+				}
+				else
+					textFieldNombre.setEnabled(true);
+			}
+		});
 		comboBoxLocalidad.setFont(new Font("Arial", Font.BOLD, 16));
 		comboBoxLocalidad.setBounds(138, 71, 210, 20);
 		add(comboBoxLocalidad);
@@ -103,9 +121,8 @@ public class BuscadorGrupo extends JPanel {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Grupo grupo = new Grupo();
-				grupo.setNombre(textFieldNombre.getText());
-				grupo.setPoblacion(comboBoxLocalidad.getSelectedItem()+"");
+				
+				
 				//Faltan añadir al dto grupo las caracteristicas e intereses
 				//Controlador buscar grupo
 			}

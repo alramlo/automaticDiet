@@ -44,7 +44,7 @@ public class ElaboracionPlato extends JPanel {
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new Ingredientes2().setVisible(true);
+				new Ingredientes2(comboBox.getSelectedItem()+"").setVisible(true);
 			}
 		});
 		buttonPanelIngredientes.setBounds(366, 39, 186, 39);
@@ -101,10 +101,8 @@ public class ElaboracionPlato extends JPanel {
 		buttonBuscar.setFont(new Font("Arial", Font.PLAIN, 14));
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Plato plato = new Plato();
-				plato.setNombre(textFieldBuscar.getText());
 				try {
-					Plato platoVuelta = Controlador.dameControlador().consultarPlato(plato);
+					Plato platoVuelta = Controlador.dameControlador().consultarPlato(textFieldBuscar.getText());
 					if(platoVuelta!=null){
 						textFieldBuscar.setText(platoVuelta.getNombre());
 						textPaneElaboracion.setText(platoVuelta.getElaboracion());

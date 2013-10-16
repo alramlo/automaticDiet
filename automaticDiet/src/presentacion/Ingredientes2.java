@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import servicio.Controlador;
+
 public class Ingredientes2 extends JFrame {
 
 
@@ -28,7 +30,7 @@ public class Ingredientes2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ingredientes2 frame = new Ingredientes2();
+					Ingredientes2 frame = new Ingredientes2(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +42,14 @@ public class Ingredientes2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Ingredientes2() {
+	public Ingredientes2(String plato) {
+		
+		
+		if(plato!=null){
+			//List<Ingredientes> lista = Controlador.dameControlador().IngredientesPorPlato(plato);
+			//recorrer la lista y rellenar los campos
+		}
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 400);

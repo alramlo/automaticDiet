@@ -45,14 +45,20 @@ public class Controlador {
 		dal.crearCaracteristica(caracteristica);
 	}
 	
-	public Plato consultarPlato(Plato plato)throws DAOExcepcion
+	public Plato consultarPlato(String nombre)throws DAOExcepcion
 	{
-		return dal.consultarPlato(plato);
+		return dal.consultarPlato(nombre);
 	}
 	
-	//public List<Ingredientes> IngredientesPorPlato(Plato p)throws DAOExcepcion
+	//public List<Ingredientes> IngredientesPorPlato(String plato)throws DAOExcepcion
 	//{
-		//return dal.IngredientesPorPlato(p);
+		//return dal.IngredientesPorPlato(plato);
 
+	//}
+	
+	//grupo
+	
+	//public Grupo buscarGrupoPorNombre(String nombre){
+		//dal.buscarGrupoPorNombre(nombre);
 	//}
 }
