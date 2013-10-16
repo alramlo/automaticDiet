@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Window.Type;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -35,7 +34,8 @@ public class AutomaticDiet
 	}
 	
 	private JFrame automatic_diet;
-	JPanel panel_central;
+	JPanel panel_central = new JPanel();
+	JLabel titulo_panel_central = new JLabel("");
 
 	/**
 	 * Método para lanzar la aplicación
@@ -76,14 +76,14 @@ public class AutomaticDiet
 		automatic_diet.setVisible(true);
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
 		automatic_diet.setExtendedState(Frame.MAXIMIZED_BOTH);
-		automatic_diet.setMaximumSize(new Dimension(1024, 768));
-		automatic_diet.setMinimumSize(new Dimension(1024, 768));
+		automatic_diet.setMaximumSize(new Dimension(1024, 760));
+		automatic_diet.setMinimumSize(new Dimension(1024, 760));
 		automatic_diet.setResizable(false);
 		automatic_diet.setSize(new Dimension(1024, 768));
-		automatic_diet.getContentPane().setSize(new Dimension(1024, 768));
+		automatic_diet.getContentPane().setSize(new Dimension(1024, 760));
 		automatic_diet.getContentPane().setLayout(new BorderLayout(0, 0));
+		titulo_panel_central.setFont(new Font("Arial Black", Font.BOLD, 24));
 		
-		panel_central = new Consultar_dieta_asignada();
 		panel_central.setSize(800, 600);
 		automatic_diet.getContentPane().add(panel_central, BorderLayout.SOUTH);
 		
@@ -102,9 +102,6 @@ public class AutomaticDiet
 		btn_perfil.setHorizontalAlignment(SwingConstants.LEFT);
 		btn_perfil.setContentAreaFilled(false);
 		btn_perfil.setBorderPainted(false);
-		
-		JLabel titulo_panel_central = new JLabel("Dieta asignada");
-		titulo_panel_central.setFont(new Font("Arial Black", Font.BOLD, 24));
 		
 		JLabel app_titulo = new JLabel("Automatic Diet");
 		app_titulo.setForeground(Color.BLUE);
@@ -126,13 +123,15 @@ public class AutomaticDiet
 		gl_panel_superior.setVerticalGroup(
 			gl_panel_superior.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_superior.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_superior.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btn_perfil, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_superior.createParallelGroup(Alignment.BASELINE)
-							.addComponent(titulo_panel_central, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-							.addComponent(app_titulo, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-						.addComponent(foto_perfil, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel_superior.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_superior.createSequentialGroup()
+							.addGap(61)
+							.addGroup(gl_panel_superior.createParallelGroup(Alignment.BASELINE)
+								.addComponent(titulo_panel_central, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+								.addComponent(app_titulo, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel_superior.createParallelGroup(Alignment.TRAILING)
+							.addComponent(btn_perfil, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addComponent(foto_perfil, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(28, Short.MAX_VALUE))
 		);
 		panel_superior.setLayout(gl_panel_superior);
@@ -155,6 +154,7 @@ public class AutomaticDiet
 		mntmConsultarDietaAsignada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				titulo_panel_central.setText("Dieta asignada");
 				automatic_diet.remove(panel_central);
 				panel_central = new Consultar_dieta_asignada();
 				automatic_diet.getContentPane().add(panel_central);
@@ -171,6 +171,7 @@ public class AutomaticDiet
 		mntmElaboracinDePlato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
+				titulo_panel_central.setText("Elaboración");
 				automatic_diet.remove(panel_central);
 				panel_central = new ElaboracionPlato(null);
 				automatic_diet.getContentPane().add(panel_central);
@@ -184,6 +185,7 @@ public class AutomaticDiet
 		mntmIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				titulo_panel_central.setText("Ingredientes");
 				automatic_diet.remove(panel_central);
 				panel_central = new Ingredientes(null);
 				automatic_diet.getContentPane().add(panel_central);
@@ -197,6 +199,17 @@ public class AutomaticDiet
 		menuBar.add(mnForo);
 		
 		JMenuItem mntmBuscadorDeGrupos = new JMenuItem("Buscador de grupos");
+		mntmBuscadorDeGrupos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				titulo_panel_central.setText("Buscador de grupos");
+				automatic_diet.remove(panel_central);
+				panel_central = new BuscadorGrupo(null);
+				automatic_diet.getContentPane().add(panel_central);
+				automatic_diet.validate();
+				automatic_diet.repaint();
+			}
+		});
 		mnForo.add(mntmBuscadorDeGrupos);
 	}
 }
