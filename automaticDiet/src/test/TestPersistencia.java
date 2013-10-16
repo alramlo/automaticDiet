@@ -1,6 +1,9 @@
 package test;
 
+import java.util.List;
+
 import modelo.Caracteristica;
+import modelo.Ingrediente;
 import modelo.Plato;
 import persistencia.CaracteristicaDAO;
 import persistencia.PlatoDAO;
@@ -15,9 +18,14 @@ public class TestPersistencia {
 		c.setNombre("Prueba");
 		dao.crearCaracteristica(c);
 		**/
-		PlatoDAO platoDao= new PlatoDAO();
-		Plato pl=platoDao.platoByNombre("Paella");
-		System.out.println("Plato encontrado: "+pl);
+		
+		//PlatoDAO platoDao= new PlatoDAO();
+		//Plato pl=platoDao.platoByNombre("Macarrones");
+		//System.out.println("Plato encontrado: "+pl);
+		
+		PlatoDAO platoDao = new PlatoDAO();
+		List<Ingrediente> li = platoDao.IngredientesPorPlato("Macarrones");
+		System.out.println("Numero de ingredientes= "+li.size());
 		
 	}
 

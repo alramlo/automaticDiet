@@ -21,6 +21,7 @@ public class DAL {
 	private DAL() throws DAOExcepcion {
 		// Objectos para comunicarse con la capa de acceso a datos
 		caracteristicaDAO = new CaracteristicaDAO();
+		platoDAO = new PlatoDAO(); 
 	}
 	
 	// Patrón Singleton
