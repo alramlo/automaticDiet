@@ -73,7 +73,6 @@ public class AutomaticDiet
 	private void initialize()
 	{
 		automatic_diet = new JFrame();
-		automatic_diet.setType(Type.UTILITY);
 		automatic_diet.setVisible(true);
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
 		automatic_diet.setExtendedState(Frame.MAXIMIZED_BOTH);
