@@ -2,9 +2,17 @@ package presentacion;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -25,18 +33,12 @@ public class ElaboracionPlato extends JPanel {
 	private JTextField textFieldBuscar;
 	private JComboBox<String> comboBox;
 	private JTextPane textPaneElaboracion;
+	private JLabel imagenPlato;
 
 	/**
 	 * Create the panel.
 	 */
 	public ElaboracionPlato(Object platoVuelta) {
-		
-		if(platoVuelta!=null){
-			if(platoVuelta instanceof Plato){
-				textPaneElaboracion.setText(((Plato) platoVuelta).getElaboracion());
-				//Falta mostrar imagen
-			}
-		}
 		
 		setLayout(null);
 		
@@ -79,7 +81,7 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_1.setBounds(366, 198, 46, 14);
 		add(lblNewLabel_1);
 		
-		JLabel imagenPlato = new JLabel("");
+		imagenPlato = new JLabel("");
 		imagenPlato.setBounds(10, 264, 346, 325);
 		add(imagenPlato);
 		
@@ -106,7 +108,35 @@ public class ElaboracionPlato extends JPanel {
 					if(platoVuelta!=null){
 						textFieldBuscar.setText(platoVuelta.getNombre());
 						textPaneElaboracion.setText(platoVuelta.getElaboracion());
-						comboBox.setSelectedItem(platoVuelta.getNombre());
+						String[] vector = new String[1];
+						vector[0]=((Plato)platoVuelta).getNombre();
+						comboBox=new JComboBox<String>(vector);
+						File file=null;
+						try {
+							file = new File("automaticDiet");
+							FileOutputStream fos = new FileOutputStream (file);
+							fos.write(((Plato) platoVuelta).getImagen());
+							fos.close();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						ImageIcon im=null;
+		        		BufferedImage buffer;
+						try {
+							buffer = ImageIO.read(file);
+							im = new ImageIcon(buffer);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		        		Image image=im.getImage();
+		        		Image newImage = image.getScaledInstance(346, 325, java.awt.Image.SCALE_SMOOTH);
+		        		imagenPlato.setIcon(new ImageIcon(newImage));
 					}
 				} catch (DAOExcepcion e1) {
 					// TODO Auto-generated catch block
@@ -120,7 +150,6 @@ public class ElaboracionPlato extends JPanel {
 		buttonBuscar.setBackground(Color.RED);
 		buttonBuscar.setBounds(177, 148, 89, 23);
 		add(buttonBuscar);
-
 
 	}
 }
