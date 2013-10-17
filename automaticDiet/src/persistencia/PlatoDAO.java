@@ -30,7 +30,7 @@ public class PlatoDAO extends AbstractDAO {
 		q = entityManager.createQuery("SELECT p FROM Plato p");
 		return (List<Plato>)q.getResultList();
 		}catch(Exception e){
-			System.out.println("Error: "+e);
+			//System.out.println("Error: "+e);
 			return null;
 			
 		}
