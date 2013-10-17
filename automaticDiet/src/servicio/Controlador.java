@@ -56,7 +56,7 @@ public class Controlador {
 	
 	public String[] todosPlatos (){
 		
-		ArrayList<Plato> listaPlatos = (ArrayList)dal.todosPlatos();
+		ArrayList<Plato> listaPlatos = (ArrayList<Plato>)dal.todosPlatos();
 		String [] nombresPlatos = new String[listaPlatos.size()];
 		
 		Iterator<Plato> itPlatos = listaPlatos.iterator();
