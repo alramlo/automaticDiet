@@ -1,5 +1,7 @@
 package servicio;
 
+import java.util.List;
+
 import modelo.Caracteristica;
 import modelo.Plato;
 import persistencia.DAL;
@@ -48,6 +50,11 @@ public class Controlador {
 	public Plato consultarPlato(String nombre)throws DAOExcepcion
 	{
 		return dal.consultarPlato(nombre);
+	}
+	
+	public List<Plato> todosPlatos (){
+		
+		return null;
 	}
 	
 	//public List<Ingredientes> IngredientesPorPlato(String plato)throws DAOExcepcion

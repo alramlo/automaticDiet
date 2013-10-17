@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.util.List;
+
 import modelo.Caracteristica;
 import modelo.Plato;
 import excepciones.DAOExcepcion;
@@ -39,6 +41,10 @@ public class DAL {
 	//plato
 	public Plato consultarPlato(String n) throws DAOExcepcion{
 		return platoDAO.platoByNombre(n);
+	}
+	
+	public List<Plato> todosPlatos (){
+		return platoDAO.todosPlatos();
 	}
 	
 	//public List<Ingredientes> IngredientesPorPlato(String n) throws DAOExcepcion{
