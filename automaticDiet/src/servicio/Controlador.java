@@ -1,5 +1,7 @@
 package servicio;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import modelo.Caracteristica;
@@ -52,9 +54,17 @@ public class Controlador {
 		return dal.consultarPlato(nombre);
 	}
 	
-	public List<Plato> todosPlatos (){
+	public String[] todosPlatos (){
 		
-		return null;
+		ArrayList<Plato> listaPlatos = (ArrayList)dal.todosPlatos();
+		String [] nombresPlatos = new String[listaPlatos.size()];
+		
+		Iterator<Plato> itPlatos = listaPlatos.iterator();
+		for(int i=0; itPlatos.hasNext(); i++){
+			Plato p = itPlatos.next();
+			nombresPlatos[i]=p.getNombre();
+		}
+		return nombresPlatos;
 	}
 	
 	//public List<Ingredientes> IngredientesPorPlato(String plato)throws DAOExcepcion
