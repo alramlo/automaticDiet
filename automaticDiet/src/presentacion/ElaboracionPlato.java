@@ -2,6 +2,7 @@ package presentacion;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 
 import modelo.Plato;
 import servicio.Controlador;
@@ -29,9 +29,9 @@ public class ElaboracionPlato extends JPanel {
 	 */
 	private static final long serialVersionUID = -35301839624147280L;
 	private JComboBox<String> comboBox;
-	private JTextPane textPaneElaboracion;
 	private JLabel imagenPlato;
 	private static Controlador control;
+	private TextArea textAreaElaboracion;
 
 	/**
 	 * Create the panel.
@@ -66,7 +66,7 @@ public class ElaboracionPlato extends JPanel {
 				try {
 					platoVuelta = control.consultarPlato(comboBox.getSelectedItem()+"");
 				if(platoVuelta!=null){
-					textPaneElaboracion.setText(platoVuelta.getElaboracion());
+					textAreaElaboracion.setText(platoVuelta.getElaboracion());
 					String[] vector = new String[1];
 					vector[0]=((Plato)platoVuelta).getNombre();
 					comboBox=new JComboBox<String>(vector);
@@ -115,10 +115,6 @@ public class ElaboracionPlato extends JPanel {
 		imagenPlato.setBounds(10, 264, 346, 325);
 		add(imagenPlato);
 		
-		textPaneElaboracion = new JTextPane();
-		textPaneElaboracion.setBounds(366, 264, 424, 325);
-		add(textPaneElaboracion);
-		
 		JLabel lblNewLabel_2 = new JLabel("AutomaticDiet");
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 21));
 		lblNewLabel_2.setBounds(366, 108, 162, 24);
@@ -128,6 +124,11 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 18));
 		lblNewLabel_3.setBounds(366, 143, 424, 29);
 		add(lblNewLabel_3);
+		
+		textAreaElaboracion = new TextArea();
+		textAreaElaboracion.setEditable(false);
+		textAreaElaboracion.setBounds(366, 259, 424, 160);
+		add(textAreaElaboracion);
 		
 	}
 }

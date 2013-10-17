@@ -187,7 +187,7 @@ public class AutomaticDiet
 			{
 				titulo_panel_central.setText("Ingredientes");
 				automatic_diet.remove(panel_central);
-				panel_central = new Ingredientes(null);
+			//	panel_central = new Ingredientes2(null);
 				automatic_diet.getContentPane().add(panel_central);
 				automatic_diet.validate();
 				automatic_diet.repaint();

@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import servicio.Controlador;
-
 public class Ingredientes2 extends JFrame {
 
 
