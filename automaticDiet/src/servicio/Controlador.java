@@ -1,10 +1,9 @@
 package servicio;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import modelo.Caracteristica;
-import modelo.Ingrediente;
 import modelo.Plato;
 import persistencia.DAL;
 import excepciones.DAOExcepcion;
@@ -56,7 +55,7 @@ public class Controlador {
 	
 	public String[] todosPlatos (){
 		
-		ArrayList<Plato> listaPlatos = (ArrayList)dal.todosPlatos();
+		List<Plato> listaPlatos = dal.todosPlatos();
 		String [] nombresPlatos = new String[listaPlatos.size()];
 		
 		Iterator<Plato> itPlatos = listaPlatos.iterator();
