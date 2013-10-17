@@ -25,8 +25,12 @@ public class TestPersistencia {
 		
 		PlatoDAO platoDao = new PlatoDAO();
 		List<Ingrediente> li = platoDao.IngredientesPorPlato("Macarrones");
-		System.out.println("Numero de ingredientes= "+li.size());
-		
+		if(li!=null){
+			System.out.println("Numero de ingredientes= "+li.size());
+			System.out.println("Ingredientes: "+li);
+		}
+		else
+			System.out.println("Numero de ingredientes= "+0);
 	}
 
 }

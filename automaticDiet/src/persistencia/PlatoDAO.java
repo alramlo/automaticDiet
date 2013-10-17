@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -22,26 +23,38 @@ public class PlatoDAO extends AbstractDAO {
 		
 	}
 	
-	public List<Ingrediente> IngredientesPorPlato(String nombre){
-		
-		try{
-			List result;
-			List<Ingrediente> resultIn= null;
-			Query q;
-			q=entityManager.createQuery("Select i "
-					+ "from Plato p, Ingrediente i, PlatoIngrediente pi "
-					+ "where p.nombre=:nom and pi.idPlato=p.id and pi.idIngrediente=i.id ");
-			q.setParameter("nom", nombre);
-			result = q.getResultList();
-			for(Object i:result){
-				resultIn.add((Ingrediente)i);
-			}
-			return resultIn; }
-			catch(Exception e){
-				return null;
+			public List<Ingrediente> IngredientesPorPlato(String nombre){
+				
+				try{
+					List result;
+					List<Ingrediente> resultIn = new ArrayList<Ingrediente>();
+					Query q;
+					Plato p = this.platoByNombre(nombre);
+					if(p!=null){
+						System.out.println("Plato: "+p.getNombre());
+						q=entityManager.createQuery("SELECT i "
+								+ "FROM Ingrediente i, PlatoIngrediente pi "
+								+ "WHERE pi.id.idPlato=:idP AND "
+								+ "pi.id.idIngrediente=i.id");
+						q.setParameter("idP", p.getId());
+						result = q.getResultList();
+						for(Object i:result){
+							resultIn.add((Ingrediente)i);
+						}
+						return resultIn; 
+					
+					}
+					else{
+						//System.out.println("No se encuentra el plato");
+						return null;
+					}
+					}catch(Exception e){
+						//System.out.println("Excepción: "+e);
+						
+						return null;
+						
+					}
 				
 			}
-		
-	}
 
 }
