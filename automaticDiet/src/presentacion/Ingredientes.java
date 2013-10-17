@@ -6,20 +6,26 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class Ingredientes2 extends JFrame {
+import modelo.Ingrediente;
+import servicio.Controlador;
+import excepciones.DAOExcepcion;
+import excepciones.DominioExcepcion;
 
+public class Ingredientes extends JFrame {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7838174345100775020L;
+	private static final long serialVersionUID = 7211093247670386312L;
 	private JPanel contentPane;
-	private JTextField textFieldInfo;
+	private static Controlador control;
+	private JTabbedPane tabbedPane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -28,7 +34,7 @@ public class Ingredientes2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ingredientes2 frame = new Ingredientes2(null);
+					Ingredientes frame = new Ingredientes(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,12 +46,13 @@ public class Ingredientes2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Ingredientes2(String plato) {
-		
-		
-		if(plato!=null){
-			//List<Ingredientes> lista = Controlador.dameControlador().IngredientesPorPlato(plato);
-			//recorrer la lista y rellenar los campos
+	public Ingredientes(String plato) {
+	
+		try {
+			control = Controlador.dameControlador();
+		} catch (DominioExcepcion e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		setResizable(false);
@@ -60,15 +67,6 @@ public class Ingredientes2 extends JFrame {
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
 		lblNombre.setBounds(10, 11, 161, 14);
 		contentPane.add(lblNombre);
-		
-		textFieldInfo = new JTextField();
-		textFieldInfo.setBounds(214, 83, 210, 169);
-		contentPane.add(textFieldInfo);
-		textFieldInfo.setColumns(10);
-		
-		JList<String> listLista = new JList<String>();
-		listLista.setBounds(10, 253, 188, -167);
-		contentPane.add(listLista);
 		
 		JButton btnInfo = new JButton("Info nutricional");
 		btnInfo.setEnabled(false);
@@ -86,6 +84,29 @@ public class Ingredientes2 extends JFrame {
 		btnOrigen.setFont(new Font("Arial", Font.BOLD, 14));
 		btnOrigen.setBounds(214, 304, 210, 23);
 		contentPane.add(btnOrigen);
-	}
+		
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 83, 414, 159);
+		contentPane.add(tabbedPane);
+		
+		if(plato!=null){
+			try {
+				Ingrediente[] ingredientes = control.ingredientesPorPlato(plato);
+				for(int i=0;i<ingredientes.length;i++){
+					JPanel panel = new JPanel();
+					tabbedPane.addTab(ingredientes[i].getNombre(), null, panel, null);
+					textField = new JTextField();
+					textField.setBounds(0, 0, 414, 159);
+					panel.add(textField);
+					textField.setColumns(10);
+					textField.setText(ingredientes[i].toString());
+				}
 
+			} catch (DAOExcepcion e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+	}
 }

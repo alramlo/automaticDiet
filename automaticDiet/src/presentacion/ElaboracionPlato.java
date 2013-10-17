@@ -51,13 +51,13 @@ public class ElaboracionPlato extends JPanel {
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new Ingredientes2(comboBox.getSelectedItem()+"").setVisible(true);
+				new Ingredientes(comboBox.getSelectedItem()+"").setVisible(true);
 			}
 		});
 		buttonPanelIngredientes.setBounds(366, 39, 186, 39);
 		add(buttonPanelIngredientes);
 		
-		comboBox = new JComboBox<String>(/*control.todosPlatos()*/);	
+		comboBox = new JComboBox<String>(control.todosPlatos());	
 		//Extraer todos los platos del usuario
 		
 		comboBox.addActionListener(new ActionListener() {
