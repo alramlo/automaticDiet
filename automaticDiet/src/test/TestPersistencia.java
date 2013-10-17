@@ -13,15 +13,15 @@ public class TestPersistencia {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		/**CaracteristicaDAO dao = new CaracteristicaDAO();
-		Caracteristica c = new Caracteristica();
-		c.setNombre("Prueba");
-		dao.crearCaracteristica(c);
-		**/
-		
-		//PlatoDAO platoDao= new PlatoDAO();
-		//Plato pl=platoDao.platoByNombre("Macarrones");
-		//System.out.println("Plato encontrado: "+pl);
+//		CaracteristicaDAO dao = new CaracteristicaDAO();
+//		Caracteristica c = new Caracteristica();
+//		c.setNombre("Prueba");
+//		dao.crearCaracteristica(c);
+//		
+//		
+//		PlatoDAO platoDao= new PlatoDAO();
+//		Plato pl=platoDao.platoByNombre("Macarrones");
+//		System.out.println("Plato encontrado: "+pl);
 		
 		PlatoDAO platoDao = new PlatoDAO();
 		List<Ingrediente> li = platoDao.IngredientesPorPlato("Macarrones");
@@ -31,6 +31,9 @@ public class TestPersistencia {
 		}
 		else
 			System.out.println("Numero de ingredientes= "+0);
+	
+		System.out.println("Lista de platos: "+platoDao.todosPlatos());
+		
 	}
 
 }
