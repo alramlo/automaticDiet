@@ -2,9 +2,9 @@ package servicio;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import modelo.Caracteristica;
+import modelo.Ingrediente;
 import modelo.Plato;
 import persistencia.DAL;
 import excepciones.DAOExcepcion;
@@ -56,7 +56,7 @@ public class Controlador {
 	
 	public String[] todosPlatos (){
 		
-		ArrayList<Plato> listaPlatos = (ArrayList<Plato>)dal.todosPlatos();
+		ArrayList<Plato> listaPlatos = (ArrayList)dal.todosPlatos();
 		String [] nombresPlatos = new String[listaPlatos.size()];
 		
 		Iterator<Plato> itPlatos = listaPlatos.iterator();
@@ -67,12 +67,12 @@ public class Controlador {
 		return nombresPlatos;
 	}
 	
-	//public List<Ingredientes> IngredientesPorPlato(String plato)throws DAOExcepcion
-	//{
-		//return dal.IngredientesPorPlato(plato);
-
-	//}
-	
+//	public Ingrediente [] IngredientesPorPlato(String plato)throws DAOExcepcion
+//	{
+//		return dal.IngredientesPorPlato(plato);
+//
+//	}
+//	
 	//grupo
 	
 	//public Grupo buscarGrupoPorNombre(String nombre){
