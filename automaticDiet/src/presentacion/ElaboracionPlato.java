@@ -62,6 +62,7 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel.setBounds(10, 79, 256, 20);
 		add(lblNewLabel);
 		
+		
 		comboBox = new JComboBox<String>();
 		
 		//Extraer todos los platos del usuario
