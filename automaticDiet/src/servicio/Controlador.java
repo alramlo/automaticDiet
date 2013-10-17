@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import modelo.Caracteristica;
+import modelo.Ingrediente;
 import modelo.Plato;
 import persistencia.DAL;
 import excepciones.DAOExcepcion;
@@ -53,7 +54,7 @@ public class Controlador {
 		return dal.consultarPlato(nombre);
 	}
 	
-	public String[] todosPlatos (){
+	public String[] todosPlatos(){
 		
 		List<Plato> listaPlatos = dal.todosPlatos();
 		String [] nombresPlatos = new String[listaPlatos.size()];
@@ -66,12 +67,19 @@ public class Controlador {
 		return nombresPlatos;
 	}
 	
-//	public Ingrediente [] IngredientesPorPlato(String plato)throws DAOExcepcion
-//	{
-//		return dal.IngredientesPorPlato(plato);
-//
-//	}
-//	
+	public Ingrediente[] ingredientesPorPlato(String plato)throws DAOExcepcion
+	{
+		List<Ingrediente> listaIngredientes = dal.ingredientesPorPlato(plato);
+		Ingrediente [] ingredientes = new Ingrediente[listaIngredientes.size()];
+		
+		Iterator<Ingrediente> itIngrediente = listaIngredientes.iterator();
+		for(int i=0; itIngrediente.hasNext(); i++){
+			
+			ingredientes[i]=itIngrediente.next();
+		}
+		return ingredientes;
+	}
+	
 	//grupo
 	
 	//public Grupo buscarGrupoPorNombre(String nombre){
