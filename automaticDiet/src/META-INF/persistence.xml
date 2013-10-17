@@ -14,6 +14,9 @@
 		<class>modelo.SeguimientoPK</class>
 		<class>modelo.TipoPlato</class>
 		<class>modelo.Usuario</class>
+		<class>modelo.GrupoInteres</class>
+		<class>modelo.GrupoInteresPK</class>
+		<class>modelo.Interes</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://www.db4free.net/automaticdiet"/>
