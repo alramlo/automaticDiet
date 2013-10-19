@@ -3,8 +3,9 @@ package presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
 import java.awt.Dimension;
-import java.awt.Frame;
+
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -24,7 +25,13 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.EtchedBorder;
 
 import java.awt.Component;
+
 import javax.swing.JTabbedPane;
+
+import excepciones.DAOExcepcion;
+import excepciones.DominioExcepcion;
+import servicio.Controlador;
+
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -34,6 +41,7 @@ public class AutomaticDiet
 	
 	private JFrame automatic_diet;
 	JPanel panel_central = new JPanel();
+	Controlador control;
 
 	/**
 	 * Método para lanzar la aplicación
@@ -63,6 +71,12 @@ public class AutomaticDiet
 	 **/
 	public AutomaticDiet()
 	{
+		try {
+			control=Controlador.dameControlador();
+		} catch (DominioExcepcion e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 		initialize();
 	}
 
@@ -73,10 +87,7 @@ public class AutomaticDiet
 	{
 		automatic_diet = new JFrame();
 		automatic_diet.setAlwaysOnTop(true);
-		automatic_diet.setBackground(new Color(50, 205, 50));
-		automatic_diet.setVisible(true);
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
-		automatic_diet.setExtendedState(Frame.MAXIMIZED_BOTH);
 		automatic_diet.setMaximumSize(new Dimension(1024, 760));
 		automatic_diet.setMinimumSize(new Dimension(1024, 760));
 		automatic_diet.setResizable(false);
@@ -101,7 +112,8 @@ public class AutomaticDiet
 		btn_perfil.setContentAreaFilled(false);
 		btn_perfil.setBorderPainted(false);
 		
-		JLabel app_titulo = new JLabel("Automatic Diet");
+		JLabel app_titulo = new JLabel("");
+		app_titulo.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/logo.png")));
 		app_titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		app_titulo.setForeground(Color.BLUE);
 		app_titulo.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 30));
@@ -114,25 +126,27 @@ public class AutomaticDiet
 					.addGap(4)
 					.addComponent(btn_perfil, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(app_titulo, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+					.addComponent(app_titulo, GroupLayout.PREFERRED_SIZE, 692, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panel_superior.setVerticalGroup(
-			gl_panel_superior.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel_superior.createSequentialGroup()
+			gl_panel_superior.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_superior.createSequentialGroup()
 					.addGap(10)
 					.addGroup(gl_panel_superior.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_superior.createParallelGroup(Alignment.TRAILING)
-							.addComponent(btn_perfil, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-							.addGroup(gl_panel_superior.createSequentialGroup()
-								.addComponent(app_titulo, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 10, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(foto_perfil, GroupLayout.PREFERRED_SIZE, 64, Short.MAX_VALUE))
-					.addGap(10))
+						.addGroup(gl_panel_superior.createSequentialGroup()
+							.addComponent(app_titulo, GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
+							.addGap(2))
+						.addGroup(gl_panel_superior.createSequentialGroup()
+							.addGroup(gl_panel_superior.createParallelGroup(Alignment.LEADING)
+								.addComponent(btn_perfil, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+								.addComponent(foto_perfil, GroupLayout.PREFERRED_SIZE, 101, Short.MAX_VALUE))
+							.addGap(10))))
 		);
 		panel_superior.setLayout(gl_panel_superior);
 		
 		JTabbedPane menu = new JTabbedPane(JTabbedPane.LEFT);
+		menu.setFont(new Font("Arial", Font.PLAIN, 12));
 		menu.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		menu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		menu.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -177,7 +191,7 @@ public class AutomaticDiet
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				cambiaPanel(new Consultar_dieta_asignada());
+				cambiaPanel(new Consultar_dieta_asignada(control));
 			}
 		}
 		);
@@ -199,7 +213,12 @@ public class AutomaticDiet
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				cambiaPanel(new ElaboracionPlato(null));
+				try {
+					cambiaPanel(new ElaboracionPlato(control.consultarPlato("Macarrones")));
+				} catch (DAOExcepcion e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		);

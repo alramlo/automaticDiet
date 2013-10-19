@@ -9,23 +9,28 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+
 import com.toedter.calendar.JDateChooser;
+
 import java.awt.Color;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
+import servicio.Controlador;
+
 public class Consultar_dieta_asignada extends JPanel
 {
+	private static final long serialVersionUID = 1L;
 	private JTable tabla_dieta;
 	JButton btn_lista_compra = new JButton("Lista de la compra");
 	JButton btn_modificar = new JButton("Modificar dieta");
@@ -34,7 +39,7 @@ public class Consultar_dieta_asignada extends JPanel
 	/**
 	 * Create the panel.
 	 */
-	public Consultar_dieta_asignada(/*Controlador c*/)
+	public Consultar_dieta_asignada(Controlador c)
 	{
 		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2, true), "Dieta asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
