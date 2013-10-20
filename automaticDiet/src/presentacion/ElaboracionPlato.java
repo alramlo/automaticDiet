@@ -1,5 +1,6 @@
 package presentacion;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.TextArea;
@@ -23,6 +24,12 @@ import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 
+import java.awt.Dimension;
+
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
 public class ElaboracionPlato extends JPanel {
 	/**
 	 * 
@@ -37,6 +44,9 @@ public class ElaboracionPlato extends JPanel {
 	 * Create the panel.
 	 */
 	public ElaboracionPlato() {
+		setSize(new Dimension(800, 600));
+		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2, true), "Elaboración de plato", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		this.setSize(800, 600);
 		
 		try {
 			control=Controlador.dameControlador();
@@ -48,16 +58,18 @@ public class ElaboracionPlato extends JPanel {
 		setLayout(null);
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
+		buttonPanelIngredientes.setIcon(new ImageIcon(ElaboracionPlato.class.getResource("/iconos/ingredients-icon.png")));
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new Ingredientes(comboBox.getSelectedItem()+"").setVisible(true);
 			}
 		});
-		buttonPanelIngredientes.setBounds(366, 39, 186, 39);
+		buttonPanelIngredientes.setBounds(110, 143, 209, 36);
 		add(buttonPanelIngredientes);
 		
-		comboBox = new JComboBox<String>(control.todosPlatos());	
+//		comboBox = new JComboBox<String>(control.todosPlatos());	
+		comboBox = new JComboBox<String>();	
 		//Extraer todos los platos del usuario
 		
 		comboBox.addActionListener(new ActionListener() {
@@ -103,31 +115,31 @@ public class ElaboracionPlato extends JPanel {
 				}
 			}
 		});
-		comboBox.setBounds(366, 223, 424, 30);
+		comboBox.setBounds(425, 145, 365, 36);
 		add(comboBox);
 		
-		JLabel lblNewLabel_1 = new JLabel("Plato:");
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel_1.setBounds(366, 198, 46, 14);
-		add(lblNewLabel_1);
-		
 		imagenPlato = new JLabel("");
-		imagenPlato.setBounds(10, 264, 346, 325);
+		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		imagenPlato.setBounds(10, 186, 409, 402);
 		add(imagenPlato);
 		
 		JLabel lblNewLabel_2 = new JLabel("AutomaticDiet");
-		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 21));
-		lblNewLabel_2.setBounds(366, 108, 162, 24);
+		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 48));
+		lblNewLabel_2.setBounds(10, 11, 780, 75);
 		add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Cumple tus objetivos facilmente!");
-		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_3.setBounds(366, 143, 424, 29);
+		JLabel lblNewLabel_3 = new JLabel("\u00A1Cumple tus objetivos facilmente!");
+		lblNewLabel_3.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 20));
+		lblNewLabel_3.setBounds(10, 79, 780, 60);
 		add(lblNewLabel_3);
 		
 		textAreaElaboracion = new TextArea();
 		textAreaElaboracion.setEditable(false);
-		textAreaElaboracion.setBounds(366, 259, 424, 160);
+		textAreaElaboracion.setBounds(425, 186, 365, 402);
 		add(textAreaElaboracion);
 		
 	}
