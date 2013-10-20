@@ -163,8 +163,8 @@ public class Consultar_dieta_asignada extends JPanel
 									.addComponent(btn_consultar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
 							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-							.addGap(52))))
+							.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
+							.addContainerGap())))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -181,7 +181,7 @@ public class Consultar_dieta_asignada extends JPanel
 							.addComponent(fecha_actual, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGap(18)
-					.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+					.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()

@@ -35,7 +35,6 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
-import javax.swing.border.BevelBorder;
 
 public class AutomaticDiet
 {
@@ -143,10 +142,11 @@ public class AutomaticDiet
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_perfil, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-								.addComponent(menu, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))
+								.addComponent(panel_perfil, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
+								.addComponent(menu, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
 							.addGap(4)
-							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
 					.addGap(4))
 		);
 		groupLayout.setVerticalGroup(
@@ -172,18 +172,18 @@ public class AutomaticDiet
 		label.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GroupLayout gl_panel_perfil = new GroupLayout(panel_perfil);
 		gl_panel_perfil.setHorizontalGroup(
-			gl_panel_perfil.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_perfil.createSequentialGroup()
-					.addGap(21)
+			gl_panel_perfil.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_perfil.createSequentialGroup()
+					.addGap(24)
 					.addComponent(label, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-					.addGap(19))
+					.addGap(24))
 		);
 		gl_panel_perfil.setVerticalGroup(
 			gl_panel_perfil.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_perfil.createSequentialGroup()
-					.addContainerGap()
+					.addGap(15)
 					.addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(19))
+					.addGap(15))
 		);
 		panel_perfil.setLayout(gl_panel_perfil);
 		panel_central.setLayout(null);
@@ -195,12 +195,37 @@ public class AutomaticDiet
 		menu_usuario.setAlignmentX(Component.LEFT_ALIGNMENT);
 		menu.addTab("Usuario", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
 		
+		JButton menu_indicadores = new JButton("<html><p>Indicadores</p><p>personales</p></html>");
+		menu_indicadores.setOpaque(false);
+		menu_indicadores.setMargin(new Insets(2, 2, 2, 2));
+		menu_indicadores.setHorizontalTextPosition(SwingConstants.CENTER);
+		menu_indicadores.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_indicadores.setContentAreaFilled(false);
+		menu_indicadores.setBorderPainted(false);
+		menu_indicadores.setBorder(null);
+		GroupLayout gl_menu_usuario = new GroupLayout(menu_usuario);
+		gl_menu_usuario.setHorizontalGroup(
+			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_usuario.createSequentialGroup()
+					.addGap(1)
+					.addComponent(menu_indicadores))
+		);
+		gl_menu_usuario.setVerticalGroup(
+			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_usuario.createSequentialGroup()
+					.addGap(5)
+					.addComponent(menu_indicadores, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+		);
+		menu_usuario.setLayout(gl_menu_usuario);
+		
 		JPanel menu_dietas = new JPanel();
 		menu_dietas.setOpaque(false);
 		menu_dietas.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu.addTab("Dietas", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_dietas, null);
 		
 		JButton menu_dieta_asignada = new JButton("<html><p>Dieta</p><p>asignada</p></html>");
+		menu_dieta_asignada.setOpaque(false);
+		menu_dieta_asignada.setBorderPainted(false);
 		menu_dieta_asignada.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -209,13 +234,25 @@ public class AutomaticDiet
 			}
 		}
 		);
-		menu_dieta_asignada.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		menu_dieta_asignada.setBorder(null);
 		menu_dieta_asignada.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_dieta_asignada.setMargin(new Insets(2, 2, 2, 2));
 		menu_dieta_asignada.setContentAreaFilled(false);
-		menu_dieta_asignada.setBorderPainted(false);
 		menu_dieta_asignada.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_dietas.add(menu_dieta_asignada);
+		GroupLayout gl_menu_dietas = new GroupLayout(menu_dietas);
+		gl_menu_dietas.setHorizontalGroup(
+			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_dietas.createSequentialGroup()
+					.addGap(1)
+					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_menu_dietas.setVerticalGroup(
+			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_dietas.createSequentialGroup()
+					.addGap(5)
+					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+		);
+		menu_dietas.setLayout(gl_menu_dietas);
 		
 		JPanel menu_platos = new JPanel();
 		menu_platos.setOpaque(false);
@@ -223,6 +260,8 @@ public class AutomaticDiet
 		menu.addTab("Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/platos.png")), menu_platos, null);
 		
 		JButton menu_elaboracion = new JButton("Elaboraci\u00F3n");
+		menu_elaboracion.setOpaque(false);
+		menu_elaboracion.setBorderPainted(false);
 		menu_elaboracion.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -232,17 +271,52 @@ public class AutomaticDiet
 		}
 		);
 		menu_elaboracion.setBorder(null);
-		menu_elaboracion.setBorderPainted(false);
 		menu_elaboracion.setContentAreaFilled(false);
 		menu_elaboracion.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_elaboracion.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_platos.add(menu_elaboracion);
+		GroupLayout gl_menu_platos = new GroupLayout(menu_platos);
+		gl_menu_platos.setHorizontalGroup(
+			gl_menu_platos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_platos.createSequentialGroup()
+					.addGap(1)
+					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_menu_platos.setVerticalGroup(
+			gl_menu_platos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_platos.createSequentialGroup()
+					.addGap(5)
+					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+		);
+		menu_platos.setLayout(gl_menu_platos);
 		
 		
 		JPanel menu_foro = new JPanel();
 		menu_foro.setOpaque(false);
 		menu_foro.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu.addTab("Foro", new ImageIcon(AutomaticDiet.class.getResource("/iconos/foro.png")), menu_foro, null);
+		
+		JButton menu_buscador_grupos = new JButton("<html><p>Buscador</p><p>de grupos</p></html>");
+		menu_buscador_grupos.setOpaque(false);
+		menu_buscador_grupos.setMargin(new Insets(2, 2, 2, 2));
+		menu_buscador_grupos.setHorizontalTextPosition(SwingConstants.CENTER);
+		menu_buscador_grupos.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_buscador_grupos.setContentAreaFilled(false);
+		menu_buscador_grupos.setBorderPainted(false);
+		menu_buscador_grupos.setBorder(null);
+		GroupLayout gl_menu_foro = new GroupLayout(menu_foro);
+		gl_menu_foro.setHorizontalGroup(
+			gl_menu_foro.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_foro.createSequentialGroup()
+					.addGap(1)
+					.addComponent(menu_buscador_grupos))
+		);
+		gl_menu_foro.setVerticalGroup(
+			gl_menu_foro.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_foro.createSequentialGroup()
+					.addGap(5)
+					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+		);
+		menu_foro.setLayout(gl_menu_foro);
 		automatic_diet.getContentPane().setLayout(groupLayout);
 		automatic_diet.setBounds(100, 100, 487, 331);
 		automatic_diet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

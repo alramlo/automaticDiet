@@ -13,11 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Window.Type;
 import java.awt.Cursor;
 
 public class Advertencia extends JDialog
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JEditorPane texto = new JEditorPane();
 	JLabel lbl_icono = new JLabel("");
 	
