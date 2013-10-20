@@ -68,8 +68,8 @@ public class ElaboracionPlato extends JPanel {
 		buttonPanelIngredientes.setBounds(110, 143, 209, 36);
 		add(buttonPanelIngredientes);
 		
-//		comboBox = new JComboBox<String>(control.todosPlatos());	
-		comboBox = new JComboBox<String>();	
+		comboBox = new JComboBox<String>(control.todosPlatos());	
+//		comboBox = new JComboBox<String>();	
 		//Extraer todos los platos del usuario
 		
 		comboBox.addActionListener(new ActionListener() {
