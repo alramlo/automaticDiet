@@ -47,14 +47,6 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<Dieta> dietas;
 
-	//bi-directional many-to-many association to Grupo
-	@ManyToMany(mappedBy="usuarios")
-	private List<Grupo> grupos;
-
-	//bi-directional many-to-one association to Seguimiento
-	@OneToMany(mappedBy="usuario")
-	private List<Seguimiento> seguimientos;
-
 	public Usuario() {
 	}
 
@@ -142,44 +134,6 @@ public class Usuario implements Serializable {
 		dieta.setUsuario(null);
 
 		return dieta;
-	}
-
-	public List<Grupo> getGrupos() {
-		return this.grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
-	}
-
-	public List<Seguimiento> getSeguimientos() {
-		return this.seguimientos;
-	}
-
-	public void setSeguimientos(List<Seguimiento> seguimientos) {
-		this.seguimientos = seguimientos;
-	}
-
-	public Seguimiento addSeguimiento(Seguimiento seguimiento) {
-		getSeguimientos().add(seguimiento);
-		seguimiento.setUsuario(this);
-
-		return seguimiento;
-	}
-
-	public Seguimiento removeSeguimiento(Seguimiento seguimiento) {
-		getSeguimientos().remove(seguimiento);
-		seguimiento.setUsuario(null);
-
-		return seguimiento;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", apellidos=" + apellidos + ", correo="
-				+ correo + ", direccion=" + direccion + ", dni=" + dni
-				+ ", nombre=" + nombre + ", pais=" + pais + ", poblacion="
-				+ poblacion + "]";
 	}
 
 }

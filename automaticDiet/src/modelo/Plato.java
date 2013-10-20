@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -36,14 +35,6 @@ public class Plato implements Serializable {
 	//bi-directional many-to-one association to PlatoDieta
 	@OneToMany(mappedBy="plato")
 	private List<PlatoDieta> platoDietas;
-
-	//bi-directional many-to-one association to PlatoIngrediente
-	@OneToMany(mappedBy="plato")
-	private List<PlatoIngrediente> platoIngredientes;
-
-	//bi-directional many-to-many association to TipoPlato
-	@ManyToMany(mappedBy="platos")
-	private List<TipoPlato> tipoPlatos;
 
 	public Plato() {
 	}
@@ -100,42 +91,6 @@ public class Plato implements Serializable {
 		platoDieta.setPlato(null);
 
 		return platoDieta;
-	}
-
-	public List<PlatoIngrediente> getPlatoIngredientes() {
-		return this.platoIngredientes;
-	}
-
-	public void setPlatoIngredientes(List<PlatoIngrediente> platoIngredientes) {
-		this.platoIngredientes = platoIngredientes;
-	}
-
-	public PlatoIngrediente addPlatoIngrediente(PlatoIngrediente platoIngrediente) {
-		getPlatoIngredientes().add(platoIngrediente);
-		platoIngrediente.setPlato(this);
-
-		return platoIngrediente;
-	}
-
-	public PlatoIngrediente removePlatoIngrediente(PlatoIngrediente platoIngrediente) {
-		getPlatoIngredientes().remove(platoIngrediente);
-		platoIngrediente.setPlato(null);
-
-		return platoIngrediente;
-	}
-
-	public List<TipoPlato> getTipoPlatos() {
-		return this.tipoPlatos;
-	}
-
-	public void setTipoPlatos(List<TipoPlato> tipoPlatos) {
-		this.tipoPlatos = tipoPlatos;
-	}
-
-	@Override
-	public String toString() {
-		return "Plato [id=" + id + ", elaboracion=" + elaboracion + ", imagen="
-				+ Arrays.toString(imagen) + ", nombre=" + nombre + "]";
 	}
 
 }

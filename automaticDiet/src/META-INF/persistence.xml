@@ -6,8 +6,6 @@
 		<class>modelo.Grupo</class>
 		<class>modelo.Ingrediente</class>
 		<class>modelo.Plato</class>
-		<class>modelo.PlatoDieta</class>
-		<class>modelo.PlatoDietaPK</class>
 		<class>modelo.PlatoIngrediente</class>
 		<class>modelo.PlatoIngredientePK</class>
 		<class>modelo.Seguimiento</class>
@@ -17,6 +15,8 @@
 		<class>modelo.GrupoInteres</class>
 		<class>modelo.GrupoInteresPK</class>
 		<class>modelo.Interes</class>
+		<class>modelo.PlatoDieta</class>
+		<class>modelo.PlatoDietaPK</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://www.db4free.net/automaticdiet"/>

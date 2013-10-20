@@ -17,9 +17,6 @@ public class PlatoDieta implements Serializable {
 	@EmbeddedId
 	private PlatoDietaPK id;
 
-	@Column(name="DIA")
-	private String dia;
-
 	//bi-directional many-to-one association to Dieta
 	@ManyToOne
 	@JoinColumn(name="ID_DIETAS")
@@ -39,14 +36,6 @@ public class PlatoDieta implements Serializable {
 
 	public void setId(PlatoDietaPK id) {
 		this.id = id;
-	}
-
-	public String getDia() {
-		return this.dia;
-	}
-
-	public void setDia(String dia) {
-		this.dia = dia;
 	}
 
 	public Dieta getDieta() {

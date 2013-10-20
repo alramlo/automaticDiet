@@ -18,6 +18,10 @@ public class PlatoDietaPK implements Serializable {
 	@Column(name="ID_DIETAS", insertable=false, updatable=false)
 	private int idDietas;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name="DIA")
+	private java.util.Date dia;
+
 	public PlatoDietaPK() {
 	}
 	public int getIdPlato() {
@@ -32,6 +36,12 @@ public class PlatoDietaPK implements Serializable {
 	public void setIdDietas(int idDietas) {
 		this.idDietas = idDietas;
 	}
+	public java.util.Date getDia() {
+		return this.dia;
+	}
+	public void setDia(java.util.Date dia) {
+		this.dia = dia;
+	}
 
 	public boolean equals(Object other) {
 		if (this == other) {
@@ -43,7 +53,8 @@ public class PlatoDietaPK implements Serializable {
 		PlatoDietaPK castOther = (PlatoDietaPK)other;
 		return 
 			(this.idPlato == castOther.idPlato)
-			&& (this.idDietas == castOther.idDietas);
+			&& (this.idDietas == castOther.idDietas)
+			&& this.dia.equals(castOther.dia);
 	}
 
 	public int hashCode() {
@@ -51,6 +62,7 @@ public class PlatoDietaPK implements Serializable {
 		int hash = 17;
 		hash = hash * prime + this.idPlato;
 		hash = hash * prime + this.idDietas;
+		hash = hash * prime + this.dia.hashCode();
 		
 		return hash;
 	}
