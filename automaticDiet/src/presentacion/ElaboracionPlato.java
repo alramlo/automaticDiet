@@ -36,7 +36,7 @@ public class ElaboracionPlato extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ElaboracionPlato(Object platoVuelta) {
+	public ElaboracionPlato() {
 		
 		try {
 			control=Controlador.dameControlador();
