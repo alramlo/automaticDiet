@@ -28,19 +28,13 @@ import java.awt.Component;
 
 import javax.swing.JTabbedPane;
 
-import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 import servicio.Controlador;
 
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.border.LineBorder;
-import javax.swing.BoxLayout;
 import javax.swing.border.BevelBorder;
 
 public class AutomaticDiet
