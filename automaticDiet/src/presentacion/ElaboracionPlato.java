@@ -69,12 +69,15 @@ public class ElaboracionPlato extends JPanel {
 		add(buttonPanelIngredientes);
 		
 		comboBox = new JComboBox<String>(control.todosPlatos());	
+		comboBox.setBounds(425, 145, 365, 36);
+		add(comboBox);
 //		comboBox = new JComboBox<String>();	
 		//Extraer todos los platos del usuario
 		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Plato platoVuelta;
+				//System.out.println(comboBox.getSelectedItem().toString());
 				try {
 					platoVuelta = control.consultarPlato(comboBox.getSelectedItem()+"");
 				if(platoVuelta!=null){
@@ -115,8 +118,6 @@ public class ElaboracionPlato extends JPanel {
 				}
 			}
 		});
-		comboBox.setBounds(425, 145, 365, 36);
-		add(comboBox);
 		
 		imagenPlato = new JLabel("");
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
