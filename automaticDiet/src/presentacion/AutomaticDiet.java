@@ -41,7 +41,7 @@ public class AutomaticDiet
 	
 	private JFrame automatic_diet;
 	JPanel panel_central = new JPanel();
-	Controlador control;
+	private Controlador control;
 
 	/**
 	 * Método para lanzar la aplicación
@@ -86,7 +86,6 @@ public class AutomaticDiet
 	private void initialize()
 	{
 		automatic_diet = new JFrame();
-		automatic_diet.setAlwaysOnTop(true);
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
 		automatic_diet.setMaximumSize(new Dimension(1024, 760));
 		automatic_diet.setMinimumSize(new Dimension(1024, 760));
@@ -213,12 +212,7 @@ public class AutomaticDiet
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				try {
-					cambiaPanel(new ElaboracionPlato(control.consultarPlato("Macarrones")));
-				} catch (DAOExcepcion e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				cambiaPanel(new ElaboracionPlato());
 			}
 		}
 		);
@@ -229,21 +223,6 @@ public class AutomaticDiet
 		menu_elaboracion.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu_platos.add(menu_elaboracion);
 		
-		JButton menu_ingredientes = new JButton("Ingredientes");
-		menu_ingredientes.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				new Ingredientes(null);
-			}
-		}
-		);
-		menu_ingredientes.setBorder(null);
-		menu_ingredientes.setBorderPainted(false);
-		menu_ingredientes.setContentAreaFilled(false);
-		menu_ingredientes.setHorizontalTextPosition(SwingConstants.CENTER);
-		menu_ingredientes.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_platos.add(menu_ingredientes);
 		
 		JPanel menu_foro = new JPanel();
 		menu_foro.setOpaque(false);

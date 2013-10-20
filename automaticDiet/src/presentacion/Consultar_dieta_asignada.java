@@ -68,7 +68,7 @@ public class Consultar_dieta_asignada extends JPanel
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				new Advertencia("Esta función no esta diponible en este momento",  "info").setVisible(true);
+				new Advertencia("Esta función no esta diponible", "info").setVisible(true);
 			}
 		});
 		
@@ -76,7 +76,7 @@ public class Consultar_dieta_asignada extends JPanel
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				
+				new Advertencia("Esta función no esta diponible","info").setVisible(true);
 			}
 		});
 		btn_modificar.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/actualizar.png")));
@@ -88,7 +88,7 @@ public class Consultar_dieta_asignada extends JPanel
 			{
 				if (!tabla_dieta.isColumnSelected(tabla_dieta.getSelectedColumn()))
 				{
-					
+					new Advertencia("Esta función no esta diponible",  "warning").setVisible(true);
 				}
 			}
 		});
