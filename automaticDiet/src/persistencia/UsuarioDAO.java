@@ -19,16 +19,28 @@ public class UsuarioDAO extends AbstractDAO{
 		
 		try{
 			Query q;
+//			q = entityManager.createQuery("SELECT p "
+//					+ "FROM Dieta d, Usuario u, PlatoDieta pd, Plato p "
+//					+ "WHERE u.id=:usu AND "
+//					+ "d.usuario.id=u.id AND "
+//					+ "pd.dieta.id=d.id AND "
+//					+ "pd.id.dia>=:diaI AND "
+//					+ "pd.id.dia<=:diaF");
+//			q.setParameter("usu", idUsuario);
+//			q.setParameter("diaI", fechaIni);
+//			q.setParameter("diaF", fechaFin);
+//			q = entityManager.createQuery("SELECT p "
+//					+ "FROM Plato p, PlatoDieta pd, Dieta d, Usuario u "
+//					+ "WHERE pd.id.dia>=:fechaI "
+//					+ "AND pd.id.dia<=:fechaF "
+//					+ "AND p.id=pd.id.idPlato");
 			q = entityManager.createQuery("SELECT p "
-					+ "FROM Dieta d, Usuario u, PlatoDieta pd, Plato p "
-					+ "WHERE u.id=:usu AND "
-					+ "d.usuario.id=u.id AND "
-					+ "pd.dieta.id=d.id AND "
-					+ "pd.id.dia>=:diaI AND "
-					+ "pd.id.dia<=:diaF");
-			q.setParameter("usu", idUsuario);
-			q.setParameter("diaI", fechaIni);
-			q.setParameter("diaF", fechaFin);
+					+ "FROM Plato p, PlatoDieta pd, Dieta d, Usuario u "
+					+ "WHERE pd.id.dia>=:fechaI "
+					+ "AND pd.id.dia<=:fechaF "
+					+ "AND p.id=pd.id.idPlato ");
+			q.setParameter("fechaI", fechaIni);
+			q.setParameter("fechaF", fechaFin);
 			return (List<Plato>) q.getResultList();
 			
 			

@@ -136,4 +136,12 @@ public class Usuario implements Serializable {
 		return dieta;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", apellidos=" + apellidos + ", correo="
+				+ correo + ", direccion=" + direccion + ", dni=" + dni
+				+ ", nombre=" + nombre + ", pais=" + pais + ", poblacion="
+				+ poblacion + "]";
+	}
+
 }

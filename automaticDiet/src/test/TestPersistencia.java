@@ -40,14 +40,20 @@ public class TestPersistencia {
 		
 		UsuarioDAO usuarioDao = new UsuarioDAO();
 		
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-mm-dd");
-		Date fechaI = f.parse("2013-10-21");
+		SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
+		Date fechaI = f.parse("2013/10/21");
+		System.out.println("Fecha inicial: "+fechaI);
 		
-		SimpleDateFormat f2 = new SimpleDateFormat("yyyy-mm-dd");
-		Date fechaF = f2.parse("2013-11-03");
+		SimpleDateFormat f2 = new SimpleDateFormat("yyyy/MM/dd");
+		Date fechaF = f2.parse("2013/10/22");
+		System.out.println("Fecha final: "+fechaF);
 		
 		List<Plato> listaPlatos = usuarioDao.dietaSemanal(1, fechaI, fechaF);
-		System.out.println("Lista de platos--> "+listaPlatos);
+		System.out.println("Numero de platos--> "+listaPlatos.size());
+		for(Plato p:listaPlatos){
+			System.out.println("Plato: "+p.getId());
+			
+		}
 		
 		
 	}
