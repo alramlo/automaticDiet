@@ -90,6 +90,7 @@ public class Ingredientes extends JFrame {
                 btnCompra.setFont(new Font("Arial", Font.BOLD, 14));
                 
                 JButton btnOrigen = new JButton("  Origen");
+                btnOrigen.setEnabled(false);
                 btnOrigen.setHorizontalAlignment(SwingConstants.LEFT);
                 btnOrigen.setIcon(new ImageIcon(Ingredientes.class.getResource("/iconos/origen.png")));
                 btnOrigen.setFont(new Font("Arial", Font.PLAIN, 16));

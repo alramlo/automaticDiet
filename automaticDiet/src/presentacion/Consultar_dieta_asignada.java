@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.GroupLayout;
@@ -13,6 +15,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -33,6 +36,7 @@ public class Consultar_dieta_asignada extends JPanel
 	private static final long serialVersionUID = 1L;
 	private JTable tabla_dieta;
 	private JDateChooser fecha_actual;
+	private int cont;
 	JButton btn_lista_compra = new JButton("Lista de la compra");
 	JButton btn_modificar = new JButton("Modificar dieta");
 	JButton btn_detalle = new JButton("Ver detalles");
@@ -128,12 +132,40 @@ public class Consultar_dieta_asignada extends JPanel
 		lblHistrico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHistrico.setFont(new Font("Arial", Font.BOLD, 14));
 		
-		fecha_actual = new JDateChooser(actual);
+		 cont=0;
+		//Date prueba = new Date(2013,9,28);
+		 SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
+		 Date fechaI=null;
+		 try {
+			fechaI = f.parse("2013/10/21");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		fecha_actual = new JDateChooser(fechaI);
 		fecha_actual.getDateEditor().addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent e){
-				if(fecha_actual.getDate()!=null)
+			
+			try{
+			if(fecha_actual.getDate()!=null && cont<28){
 				platos=c.dietaSemanal(1, fecha_actual.getDate());
-				System.out.println(platos.length);
+				if(platos.length!=0){
+				for(int i=1;i<=7;i++){
+					for(int j=1;j<=4;j++){
+					tabla_dieta.setValueAt(platos[cont].getNombre(),j , i);
+					cont++;
+					}
+				}
+				}else{
+					for(int i=1;i<=7;i++){
+						for(int j=1;j<=4;j++){
+						tabla_dieta.setValueAt("",j , i);
+						}
+					}
+				}
+				cont=0;
+				}
+			}catch(java.lang.IllegalStateException a){}
 			}
 		});
 		fecha_actual.getCalendarButton().setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
