@@ -46,7 +46,7 @@ public class ElaboracionPlato extends JPanel {
 	 */
 	public ElaboracionPlato() {
 		setSize(new Dimension(800, 600));
-		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2, true), "Elaboración de plato", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Elaboración de plato", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
 		
 		try {

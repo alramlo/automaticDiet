@@ -35,6 +35,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+import java.awt.Toolkit;
 
 public class AutomaticDiet
 {
@@ -86,13 +87,14 @@ public class AutomaticDiet
 	private void initialize()
 	{
 		automatic_diet = new JFrame();
+		automatic_diet.setIconImage(Toolkit.getDefaultToolkit().getImage(AutomaticDiet.class.getResource("/iconos/logo_icon.png")));
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
 		automatic_diet.setMaximumSize(new Dimension(1024, 760));
 		automatic_diet.setMinimumSize(new Dimension(1024, 760));
 		automatic_diet.setResizable(false);
 		automatic_diet.setSize(new Dimension(1024, 760));
 		automatic_diet.getContentPane().setSize(new Dimension(1024, 760));
-		panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)), "Bienvenido", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Bienvenido", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		panel_central.setSize(800, 600);
 		
@@ -130,7 +132,7 @@ public class AutomaticDiet
 		menu.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		JPanel panel_perfil = new JPanel();
-		panel_perfil.setBorder(new TitledBorder(new LineBorder(new Color(100, 100, 100), 2, true), "Patricio Letelier", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_perfil.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Scarlett Johansson", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(automatic_diet.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -166,7 +168,7 @@ public class AutomaticDiet
 		);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/no_avatar.png")));
+		label.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/perfil_scarlet.jpg")));
 		label.setHorizontalTextPosition(SwingConstants.CENTER);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));

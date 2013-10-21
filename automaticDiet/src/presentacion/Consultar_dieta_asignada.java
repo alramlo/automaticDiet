@@ -41,7 +41,7 @@ public class Consultar_dieta_asignada extends JPanel
 	 */
 	public Consultar_dieta_asignada(Controlador c)
 	{
-		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2, true), "Dieta asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Dieta asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
 		
 		tabla_dieta = new JTable(/*new Tabla_dieta_semanal(c)*/);
