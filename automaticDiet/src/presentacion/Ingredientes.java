@@ -85,6 +85,7 @@ public class Ingredientes extends JFrame {
                 btnInfo.setFont(new Font("Arial", Font.BOLD, 14));
                 
                 JButton btnCompra = new JButton("A\u00F1adir lista compra");
+                btnCompra.setIcon(new ImageIcon(Ingredientes.class.getResource("/iconos/carrito.png")));
                 btnCompra.setEnabled(false);
                 btnCompra.setFont(new Font("Arial", Font.BOLD, 14));
                 
@@ -103,12 +104,12 @@ public class Ingredientes extends JFrame {
                 			.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
                 				.addGroup(gl_contentPane.createSequentialGroup()
                 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-                						.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                						.addComponent(btnOrigen, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+                						.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                						.addComponent(btnOrigen, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
                 					.addPreferredGap(ComponentPlacement.RELATED)
                 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-                						.addComponent(btnInfo)
-                						.addComponent(btnCompra, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)))
+                						.addComponent(btnInfo, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+                						.addComponent(btnCompra, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
                 				.addComponent(lista_ingredientes, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
                 			.addContainerGap())
                 );
@@ -117,13 +118,13 @@ public class Ingredientes extends JFrame {
                 		.addGroup(gl_contentPane.createSequentialGroup()
                 			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
                 				.addComponent(lblNombre)
-                				.addComponent(btnInfo))
+                				.addComponent(btnInfo, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                 			.addPreferredGap(ComponentPlacement.RELATED)
-                			.addComponent(lista_ingredientes, GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                			.addComponent(lista_ingredientes, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 			.addPreferredGap(ComponentPlacement.RELATED)
                 			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-                				.addComponent(btnOrigen)
-                				.addComponent(btnCompra)))
+                				.addComponent(btnOrigen, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                				.addComponent(btnCompra, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
                 );
                 contentPane.setLayout(gl_contentPane);
                 
