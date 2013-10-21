@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.util.Date;
 import java.util.List;
 
 import modelo.Caracteristica;
@@ -18,6 +19,7 @@ public class DAL {
 	
 	private CaracteristicaDAO caracteristicaDAO;
 	private PlatoDAO platoDAO;
+	private UsuarioDAO usuarioDAO;
 	//private GrupoDAO grupoDAO;
 
 
@@ -25,6 +27,7 @@ public class DAL {
 		// Objectos para comunicarse con la capa de acceso a datos
 		caracteristicaDAO = new CaracteristicaDAO();
 		platoDAO = new PlatoDAO(); 
+		usuarioDAO = new UsuarioDAO();
 	}
 	
 	// Patrón Singleton
@@ -57,4 +60,8 @@ public class DAL {
 	//public Grupo buscarGrupoPorNombre(String n) throws DAOExcepcion{
 		//return grupoDAO.buscarGrupoPorNombre(n);
 	//}
+	
+	public List<Plato> dietaSemanal(int idUsuario, Date fechaIni, Date fechaFin){
+		return usuarioDAO.dietaSemanal(1, fechaIni, fechaFin);
+	}
 }

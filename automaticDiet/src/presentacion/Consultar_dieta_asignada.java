@@ -1,45 +1,47 @@
 package presentacion;
 
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
 
-import javax.swing.SwingConstants;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import modelo.Plato;
+import servicio.Controlador;
 
 import com.toedter.calendar.JDateChooser;
-
-import java.awt.Color;
-
-import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
-
-import servicio.Controlador;
 
 public class Consultar_dieta_asignada extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private JTable tabla_dieta;
+	private JDateChooser fecha_actual;
 	JButton btn_lista_compra = new JButton("Lista de la compra");
 	JButton btn_modificar = new JButton("Modificar dieta");
 	JButton btn_detalle = new JButton("Ver detalles");
+	Plato[] platos;
 	
 	/**
 	 * Create the panel.
 	 */
-	public Consultar_dieta_asignada(Controlador c)
+	public Consultar_dieta_asignada(final Controlador c)
 	{
 		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Dieta asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
@@ -62,6 +64,7 @@ public class Consultar_dieta_asignada extends JPanel
 		tabla_dieta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabla_dieta.setRowSelectionAllowed(false);
 		tabla_dieta.setFont(new Font("Arial", Font.PLAIN, 14));
+		btn_lista_compra.setEnabled(false);
 		btn_lista_compra.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/carrito.png")));
 		btn_lista_compra.setFont(new Font("Arial", Font.PLAIN, 12));
 		
@@ -72,6 +75,7 @@ public class Consultar_dieta_asignada extends JPanel
 				new Advertencia("Esta función no esta diponible", "info").setVisible(true);
 			}
 		});
+		btn_modificar.setEnabled(false);
 		
 		btn_modificar.addActionListener(new ActionListener()
 		{
@@ -82,6 +86,7 @@ public class Consultar_dieta_asignada extends JPanel
 		});
 		btn_modificar.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/actualizar.png")));
 		btn_modificar.setFont(new Font("Arial", Font.PLAIN, 12));
+		btn_detalle.setEnabled(false);
 		
 		btn_detalle.addActionListener(new ActionListener()
 		{
@@ -106,6 +111,7 @@ public class Consultar_dieta_asignada extends JPanel
 		dia_inicio.setDateFormatString("dd-MMMM-yyyy");
 		
 		JButton btn_consultar = new JButton("Consultar");
+		btn_consultar.setEnabled(false);
 		btn_consultar.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblFechaInicial = new JLabel("fecha inicial");
@@ -122,7 +128,14 @@ public class Consultar_dieta_asignada extends JPanel
 		lblHistrico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHistrico.setFont(new Font("Arial", Font.BOLD, 14));
 		
-		JDateChooser fecha_actual = new JDateChooser(actual);
+		fecha_actual = new JDateChooser(actual);
+		fecha_actual.getDateEditor().addPropertyChangeListener(new PropertyChangeListener(){
+			public void propertyChange(PropertyChangeEvent e){
+				if(fecha_actual.getDate()!=null)
+				platos=c.dietaSemanal(1, fecha_actual.getDate());
+				System.out.println(platos.length);
+			}
+		});
 		fecha_actual.getCalendarButton().setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		fecha_actual.getCalendarButton().setContentAreaFilled(false);
 		fecha_actual.setOpaque(false);

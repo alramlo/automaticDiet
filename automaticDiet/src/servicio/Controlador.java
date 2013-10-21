@@ -1,5 +1,8 @@
 package servicio;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -85,4 +88,76 @@ public class Controlador {
 	//public Grupo buscarGrupoPorNombre(String nombre){
 		//dal.buscarGrupoPorNombre(nombre);
 	//}
+	
+	public Plato[] dietaSemanal(int idUsuario, Date fecha){
+		
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(fecha);
+		Calendar[] fechas=getFechaIniFin(cal.get(Calendar.DAY_OF_WEEK),cal);
+		
+		List<Plato> listaPlatos = dal.dietaSemanal(idUsuario, fechas[0].getTime(), fechas[1].getTime());
+		Plato [] platos = new Plato[listaPlatos.size()];
+		
+		Iterator<Plato> itPlato = listaPlatos.iterator();
+		for(int i=0; itPlato.hasNext(); i++){
+			
+			platos[i]=itPlato.next();
+		}
+		return platos;
+	}
+	private Calendar[] getFechaIniFin(int nfecha, GregorianCalendar fecha){
+		Calendar [] fechas = new Calendar[2];
+		GregorianCalendar fechaIni, fechaFin;
+		switch(nfecha){
+		case 1: //domingo
+			fechaFin=(GregorianCalendar)fecha.clone();
+			fecha.add(fecha.DATE, -6);
+			fechas[0]=fecha;
+			fechas[1]=fechaFin;
+			break;
+		case 2: //lunes
+			fechaIni=(GregorianCalendar)fecha.clone();
+			fechas[0]=fechaIni;
+			fecha.add(fecha.DATE,+6);
+			fechas[1]=fecha;
+			break;
+		case 3: //martes
+			fechaFin=(GregorianCalendar)fecha.clone();
+			fechaFin.add(fecha.DATE,+5);
+			fecha.add(fecha.DATE,-1);
+			fechas[0]=fecha;
+			fechas[1]=fechaFin;
+			break;
+		case 4: //miércoles
+			fechaFin=(GregorianCalendar)fecha.clone();
+			fechaFin.add(fecha.DATE,+4);
+			fecha.add(fecha.DATE,-2);
+			fechas[0]=fecha;
+			fechas[1]=fechaFin;
+			break;
+		case 5: //jueves
+			fechaFin=(GregorianCalendar)fecha.clone();
+			fechaFin.add(fecha.DATE,+3);
+			fecha.add(fecha.DATE,-3);
+			fechas[0]=fecha;
+			fechas[1]=fechaFin;
+			break;
+		case 6: //viernes
+			fechaFin=(GregorianCalendar)fecha.clone();
+			fechaFin.add(fecha.DATE,+2);
+			fecha.add(fecha.DATE,-4);
+			fechas[0]=fecha;
+			fechas[1]=fechaFin;
+			break;
+		case 7: //sabado
+			fechaFin=(GregorianCalendar)fecha.clone();
+			fechaFin.add(fecha.DATE,+1);
+			fecha.add(fecha.DATE,-5);
+			fechas[0]=fecha;
+			fechas[1]=fechaFin;
+			break;
+	}
+		return fechas;
+	}
 }
+
