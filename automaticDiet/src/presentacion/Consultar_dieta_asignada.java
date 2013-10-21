@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.GroupLayout;
@@ -15,7 +13,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -24,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Plato;
@@ -68,6 +66,15 @@ public class Consultar_dieta_asignada extends JPanel
 		tabla_dieta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabla_dieta.setRowSelectionAllowed(false);
 		tabla_dieta.setFont(new Font("Arial", Font.PLAIN, 14));
+		tabla_dieta.setRowHeight(100);
+		
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		for(int i=0;i<8;i++){
+		tabla_dieta.getColumnModel().getColumn(i).setCellRenderer(tcr);
+		tabla_dieta.getColumnModel().getColumn(i).setCellRenderer(tcr);
+		}
+		
 		btn_lista_compra.setEnabled(false);
 		btn_lista_compra.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/carrito.png")));
 		btn_lista_compra.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -133,16 +140,7 @@ public class Consultar_dieta_asignada extends JPanel
 		lblHistrico.setFont(new Font("Arial", Font.BOLD, 14));
 		
 		 cont=0;
-		//Date prueba = new Date(2013,9,28);
-		 SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
-		 Date fechaI=null;
-		 try {
-			fechaI = f.parse("2013/10/21");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		fecha_actual = new JDateChooser(fechaI);
+		fecha_actual = new JDateChooser(actual);
 		fecha_actual.getDateEditor().addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent e){
 			

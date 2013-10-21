@@ -115,7 +115,7 @@ public class ElaboracionPlato extends JPanel {
 								e1.printStackTrace();
 							}
 			        		Image image=im.getImage();
-			        		Image newImage = image.getScaledInstance(346, 325, java.awt.Image.SCALE_SMOOTH);
+			        		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
 			        		imagenPlato.setIcon(new ImageIcon(newImage));
 						}
 						} catch (DAOExcepcion e2) {
@@ -195,7 +195,7 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_3.setBounds(10, 79, 780, 60);
 		add(lblNewLabel_3);
 		
-		textAreaElaboracion = new TextArea();
+		textAreaElaboracion = new TextArea(50,1);
 		textAreaElaboracion.setEditable(false);
 		textAreaElaboracion.setBounds(425, 186, 365, 402);
 		add(textAreaElaboracion);
