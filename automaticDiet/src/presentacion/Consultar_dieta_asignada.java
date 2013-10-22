@@ -49,6 +49,7 @@ public class Consultar_dieta_asignada extends JPanel
 		this.setSize(800, 600);
 		
 		tabla_dieta = new JTable(/*new Tabla_dieta_semanal(c)*/);
+		tabla_dieta.setEnabled(false);
 		tabla_dieta.setBackground(Color.WHITE);
 		tabla_dieta.setColumnSelectionAllowed(true);
 		tabla_dieta.setModel(new DefaultTableModel(
