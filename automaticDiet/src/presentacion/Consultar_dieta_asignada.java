@@ -28,6 +28,7 @@ import modelo.Plato;
 import servicio.Controlador;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.UIManager;
 
 public class Consultar_dieta_asignada extends JPanel
 {
@@ -49,6 +50,7 @@ public class Consultar_dieta_asignada extends JPanel
 		this.setSize(800, 600);
 		
 		tabla_dieta = new JTable(/*new Tabla_dieta_semanal(c)*/);
+		tabla_dieta.setBackground(Color.WHITE);
 		tabla_dieta.setColumnSelectionAllowed(true);
 		tabla_dieta.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -67,6 +69,8 @@ public class Consultar_dieta_asignada extends JPanel
 		tabla_dieta.setRowSelectionAllowed(false);
 		tabla_dieta.setFont(new Font("Arial", Font.PLAIN, 14));
 		tabla_dieta.setRowHeight(100);
+//		textAreaElaboracion.setLineWrap(true);
+//		textAreaElaboracion.setWrapStyleWord(true);
 		
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);

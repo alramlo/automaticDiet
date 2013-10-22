@@ -175,17 +175,11 @@ public class AutomaticDiet
 		GroupLayout gl_panel_perfil = new GroupLayout(panel_perfil);
 		gl_panel_perfil.setHorizontalGroup(
 			gl_panel_perfil.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_perfil.createSequentialGroup()
-					.addGap(24)
-					.addComponent(label, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-					.addGap(24))
+				.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
 		);
 		gl_panel_perfil.setVerticalGroup(
 			gl_panel_perfil.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_perfil.createSequentialGroup()
-					.addGap(15)
-					.addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(15))
+				.addComponent(label, GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
 		);
 		panel_perfil.setLayout(gl_panel_perfil);
 		panel_central.setLayout(null);

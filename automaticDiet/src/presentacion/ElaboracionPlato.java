@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -21,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -29,6 +29,7 @@ import modelo.Plato;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
+import javax.swing.UIManager;
 
 public class ElaboracionPlato extends JPanel {
 	/**
@@ -37,8 +38,8 @@ public class ElaboracionPlato extends JPanel {
 	private static final long serialVersionUID = -35301839624147280L;
 	private JComboBox<String> comboBox;
 	private JLabel imagenPlato;
+	private JTextArea textAreaElaboracion;
 	private static Controlador control;
-	private TextArea textAreaElaboracion;
 	Plato platoVuelta;
 
 	/**
@@ -74,8 +75,6 @@ public class ElaboracionPlato extends JPanel {
 //		comboBox = new JComboBox<String>();
 		comboBox.setSelectedIndex(-1);
 		comboBox.setBounds(425, 145, 365, 36);
-
-
 		
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evento) {
@@ -128,54 +127,6 @@ public class ElaboracionPlato extends JPanel {
 		});
 		add(comboBox);
 
-
-//		//Extraer todos los platos del usuario
-//		
-//		comboBox.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				Plato platoVuelta;
-//				//System.out.println(comboBox.getSelectedItem().toString());
-//				try {
-//					platoVuelta = control.consultarPlato(comboBox.getSelectedItem()+"");
-//				if(platoVuelta!=null){
-//					textAreaElaboracion.setText(platoVuelta.getElaboracion());
-//					String[] vector = new String[1];
-//					vector[0]=((Plato)platoVuelta).getNombre();
-//					comboBox=new JComboBox<String>(vector);
-//					File file=null;
-//					try {
-//						file = new File("automaticDiet");
-//						FileOutputStream fos = new FileOutputStream (file);
-//						fos.write(((Plato) platoVuelta).getImagen());
-//						fos.close();
-//					} catch (FileNotFoundException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-//					catch (IOException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-//					ImageIcon im=null;
-//	        		BufferedImage buffer;
-//					try {
-//						buffer = ImageIO.read(file);
-//						im = new ImageIcon(buffer);
-//					} catch (IOException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-//	        		Image image=im.getImage();
-//	        		Image newImage = image.getScaledInstance(346, 325, java.awt.Image.SCALE_SMOOTH);
-//	        		imagenPlato.setIcon(new ImageIcon(newImage));
-//				}
-//				} catch (DAOExcepcion e2) {
-//					// TODO Auto-generated catch block
-//					e2.printStackTrace();
-//				}
-//			}
-//		});
-		
 		imagenPlato = new JLabel("");
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		imagenPlato.setBounds(10, 186, 409, 402);
@@ -195,8 +146,15 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_3.setBounds(10, 79, 780, 60);
 		add(lblNewLabel_3);
 		
-		textAreaElaboracion = new TextArea(50,1);
+		textAreaElaboracion = new JTextArea();
+		textAreaElaboracion.setFont(new Font("Arial", Font.PLAIN, 18));
+		textAreaElaboracion.setAutoscrolls(false);
+		textAreaElaboracion.setBackground(UIManager.getColor("Button.background"));
 		textAreaElaboracion.setEditable(false);
+		textAreaElaboracion.setLineWrap(true);
+		textAreaElaboracion.setWrapStyleWord(true);
+		textAreaElaboracion.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		textAreaElaboracion.setText("  Descripci\u00F3n de la elaboraci\u00F3n de los platos");
 		textAreaElaboracion.setBounds(425, 186, 365, 402);
 		add(textAreaElaboracion);
 		
