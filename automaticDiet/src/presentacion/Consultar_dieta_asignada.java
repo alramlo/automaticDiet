@@ -28,13 +28,12 @@ import modelo.Plato;
 import servicio.Controlador;
 
 import com.toedter.calendar.JDateChooser;
-import javax.swing.UIManager;
 
 public class Consultar_dieta_asignada extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private JTable tabla_dieta;
-	private JDateChooser fecha_actual;
+	private JDateChooser fecha_actual = new JDateChooser();
 	private int cont;
 	JButton btn_lista_compra = new JButton("Lista de la compra");
 	JButton btn_modificar = new JButton("Modificar dieta");
@@ -117,8 +116,6 @@ public class Consultar_dieta_asignada extends JPanel
 		btn_detalle.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/lupa.png")));
 		btn_detalle.setFont(new Font("Arial", Font.PLAIN, 12));
 		
-		Date actual = new Date();
-		
 		JDateChooser dia_final = new JDateChooser();
 		dia_final.setDateFormatString("dd-MMMM-yyyy");
 		
@@ -143,8 +140,8 @@ public class Consultar_dieta_asignada extends JPanel
 		lblHistrico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHistrico.setFont(new Font("Arial", Font.BOLD, 14));
 		
-		 cont=0;
-		fecha_actual = new JDateChooser(actual);
+		cont=0;
+		fecha_actual.setDate(new Date());
 		fecha_actual.getDateEditor().addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent e){
 			
@@ -154,7 +151,16 @@ public class Consultar_dieta_asignada extends JPanel
 				if(platos.length!=0){
 				for(int i=1;i<=7;i++){
 					for(int j=1;j<=4;j++){
-					tabla_dieta.setValueAt(platos[cont].getNombre(),j , i);
+						String nom_plato = platos[cont].getNombre();
+						int indice = nom_plato.lastIndexOf(" ");
+						if(indice > 0)
+						{
+							String s1 = nom_plato.substring(0, nom_plato.lastIndexOf(" "));
+							String s2 = nom_plato.substring(nom_plato.lastIndexOf(" "), nom_plato.length());
+							nom_plato = "<html><p>"+s1+"</p><p>"+s2+"</p></html>";
+						}
+						
+					tabla_dieta.setValueAt(nom_plato,j , i);
 					cont++;
 					}
 				}
@@ -176,6 +182,7 @@ public class Consultar_dieta_asignada extends JPanel
 		fecha_actual.setFont(new Font("Arial", Font.PLAIN, 22));
 		fecha_actual.setDateFormatString(" dd / MMMM / yyyy");
 		fecha_actual.setBorder(null);
+		fecha_actual.setDate(new Date());
 		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
