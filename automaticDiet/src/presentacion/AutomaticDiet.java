@@ -1,41 +1,34 @@
 package presentacion;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import java.awt.Font;
-
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-
-import java.awt.Color;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.EtchedBorder;
-
-import java.awt.Component;
-
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
-import excepciones.DominioExcepcion;
-import servicio.Controlador;
-
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Toolkit;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+
+import servicio.Controlador;
+import excepciones.DominioExcepcion;
 
 public class AutomaticDiet
 {
@@ -43,6 +36,7 @@ public class AutomaticDiet
 	private JFrame automatic_diet;
 	JPanel panel_central = new JPanel();
 	private Controlador control;
+	private JLabel iconCabecera;
 
 	/**
 	 * Método para lanzar la aplicación
@@ -103,25 +97,39 @@ public class AutomaticDiet
 		panel_superior.setPreferredSize(new Dimension(1020, 160));
 		panel_superior.setSize(1024, 168);
 		
-		JLabel app_titulo = new JLabel("");
-		app_titulo.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/logo.png")));
-		app_titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		app_titulo.setForeground(Color.BLUE);
-		app_titulo.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 30));
+		iconCabecera = new JLabel("");
+		iconCabecera.setSize(new Dimension(110, 110));
+		iconCabecera.setHorizontalTextPosition(SwingConstants.CENTER);
+		iconCabecera.setHorizontalAlignment(SwingConstants.CENTER);
+		ImageIcon imgIcon = new ImageIcon(AutomaticDiet.class.getResource("/iconos/logo_icon.png"));
+		Image imgEscalada = imgIcon.getImage().getScaledInstance(iconCabecera.getWidth(),iconCabecera.getHeight(), Image.SCALE_SMOOTH);
+	    Icon iconoEscalado = new ImageIcon(imgEscalada);
+	    iconCabecera.setIcon(iconoEscalado);
+		
+		JLabel lblAutomaticDiet = new JLabel("Automatic Diet");
+		lblAutomaticDiet.setFont(new Font("Arial Black", Font.PLAIN, 74));
+		lblAutomaticDiet.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblAutomaticDiet.setHorizontalAlignment(SwingConstants.CENTER);
+
 		GroupLayout gl_panel_superior = new GroupLayout(panel_superior);
 		gl_panel_superior.setHorizontalGroup(
-			gl_panel_superior.createParallelGroup(Alignment.TRAILING)
+			gl_panel_superior.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_superior.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(app_titulo, GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
+					.addComponent(iconCabecera, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblAutomaticDiet, GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panel_superior.setVerticalGroup(
-			gl_panel_superior.createParallelGroup(Alignment.TRAILING)
+			gl_panel_superior.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_superior.createSequentialGroup()
-					.addContainerGap(10, Short.MAX_VALUE)
-					.addComponent(app_titulo, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addGap(0))
+					.addGroup(gl_panel_superior.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_superior.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblAutomaticDiet, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(iconCabecera, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		panel_superior.setLayout(gl_panel_superior);
 		
