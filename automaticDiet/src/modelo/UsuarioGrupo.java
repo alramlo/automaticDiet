@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the GRUPO_INTERESES database table.
+ * The persistent class for the USUARIO_GRUPO database table.
  * 
  */
 @Entity
-@Table(name="GRUPO_INTERESES")
-@NamedQuery(name="GrupoInteres.findAll", query="SELECT g FROM GrupoInteres g")
-public class GrupoInteres implements Serializable {
+@Table(name="USUARIO_GRUPO")
+@NamedQuery(name="UsuarioGrupo.findAll", query="SELECT u FROM UsuarioGrupo u")
+public class UsuarioGrupo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -19,17 +19,17 @@ public class GrupoInteres implements Serializable {
 	@Column(name="ID")
 	private int id;
 
-	//bi-directional many-to-one association to Interes
+	//bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumn(name="ID_INTERESES")
-	private Interes interes;
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
 
 	//bi-directional many-to-one association to Grupo
 	@ManyToOne
 	@JoinColumn(name="ID_GRUPO")
 	private Grupo grupo;
 
-	public GrupoInteres() {
+	public UsuarioGrupo() {
 	}
 
 	public int getId() {
@@ -40,12 +40,12 @@ public class GrupoInteres implements Serializable {
 		this.id = id;
 	}
 
-	public Interes getInteres() {
-		return this.interes;
+	public Usuario getUsuario() {
+		return this.usuario;
 	}
 
-	public void setInteres(Interes interes) {
-		this.interes = interes;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Grupo getGrupo() {

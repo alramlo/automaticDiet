@@ -2,21 +2,21 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="automaticDiet" transaction-type="RESOURCE_LOCAL">
 		<class>modelo.Caracteristica</class>
+		<class>modelo.Denuncia</class>
 		<class>modelo.Dieta</class>
+		<class>modelo.Foro</class>
 		<class>modelo.Grupo</class>
-		<class>modelo.Ingrediente</class>
-		<class>modelo.Plato</class>
-		<class>modelo.PlatoIngrediente</class>
-		<class>modelo.PlatoIngredientePK</class>
-		<class>modelo.Seguimiento</class>
-		<class>modelo.SeguimientoPK</class>
-		<class>modelo.TipoPlato</class>
-		<class>modelo.Usuario</class>
+		<class>modelo.GrupoCaracteristica</class>
 		<class>modelo.GrupoInteres</class>
-		<class>modelo.GrupoInteresPK</class>
+		<class>modelo.Ingrediente</class>
 		<class>modelo.Interes</class>
+		<class>modelo.Mensaje</class>
+		<class>modelo.Plato</class>
 		<class>modelo.PlatoDieta</class>
-		<class>modelo.PlatoDietaPK</class>
+		<class>modelo.PlatoIngrediente</class>
+		<class>modelo.Seguimiento</class>
+		<class>modelo.Usuario</class>
+		<class>modelo.UsuarioGrupo</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://www.db4free.net/automaticdiet"/>

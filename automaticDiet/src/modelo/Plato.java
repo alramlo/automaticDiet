@@ -1,10 +1,8 @@
 package modelo;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,7 +17,7 @@ public class Plato implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	private int id;
 
@@ -32,6 +30,22 @@ public class Plato implements Serializable {
 
 	@Column(name="NOMBRE")
 	private String nombre;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="TIEMPO")
+	private Date tiempo;
+
+	@Column(name="TIPO")
+	private String tipo;
+
+	//bi-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
+
+	//bi-directional many-to-one association to PlatoIngrediente
+	@OneToMany(mappedBy="plato")
+	private List<PlatoIngrediente> platoIngredientes;
 
 	//bi-directional many-to-one association to PlatoDieta
 	@OneToMany(mappedBy="plato")
@@ -72,6 +86,52 @@ public class Plato implements Serializable {
 		this.nombre = nombre;
 	}
 
+	public Date getTiempo() {
+		return this.tiempo;
+	}
+
+	public void setTiempo(Date tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public String getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<PlatoIngrediente> getPlatoIngredientes() {
+		return this.platoIngredientes;
+	}
+
+	public void setPlatoIngredientes(List<PlatoIngrediente> platoIngredientes) {
+		this.platoIngredientes = platoIngredientes;
+	}
+
+	public PlatoIngrediente addPlatoIngrediente(PlatoIngrediente platoIngrediente) {
+		getPlatoIngredientes().add(platoIngrediente);
+		platoIngrediente.setPlato(this);
+
+		return platoIngrediente;
+	}
+
+	public PlatoIngrediente removePlatoIngrediente(PlatoIngrediente platoIngrediente) {
+		getPlatoIngredientes().remove(platoIngrediente);
+		platoIngrediente.setPlato(null);
+
+		return platoIngrediente;
+	}
+
 	public List<PlatoDieta> getPlatoDietas() {
 		return this.platoDietas;
 	}
@@ -93,13 +153,5 @@ public class Plato implements Serializable {
 
 		return platoDieta;
 	}
-
-	@Override
-	public String toString() {
-		return "Plato [id=" + id + ", elaboracion=" + elaboracion + ", imagen="
-				+ Arrays.toString(imagen) + ", nombre=" + nombre + "]";
-	}
-	
-	
 
 }

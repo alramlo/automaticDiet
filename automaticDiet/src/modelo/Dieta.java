@@ -1,9 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class Dieta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	private int id;
 
@@ -128,13 +126,6 @@ public class Dieta implements Serializable {
 		platoDieta.setDieta(null);
 
 		return platoDieta;
-	}
-
-	@Override
-	public String toString() {
-		return "Dieta [id=" + id + ", caloriasMax=" + caloriasMax
-				+ ", caloriasMin=" + caloriasMin + ", fechaFinal=" + fechaFinal
-				+ ", fechaInicial=" + fechaInicial + ", nombre=" + nombre + "]";
 	}
 
 }

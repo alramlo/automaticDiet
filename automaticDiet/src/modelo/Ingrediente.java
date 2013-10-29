@@ -1,9 +1,8 @@
 package modelo;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -18,7 +17,7 @@ public class Ingrediente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	private int id;
 
@@ -42,6 +41,9 @@ public class Ingrediente implements Serializable {
 
 	@Column(name="ORIGEN")
 	private String origen;
+
+	@Column(name="PRECIO")
+	private BigDecimal precio;
 
 	@Column(name="PROTEINAS")
 	private int proteinas;
@@ -123,6 +125,14 @@ public class Ingrediente implements Serializable {
 		this.origen = origen;
 	}
 
+	public BigDecimal getPrecio() {
+		return this.precio;
+	}
+
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
+	}
+
 	public int getProteinas() {
 		return this.proteinas;
 	}
@@ -167,16 +177,6 @@ public class Ingrediente implements Serializable {
 		platoIngrediente.setIngrediente(null);
 
 		return platoIngrediente;
-	}
-
-	@Override
-	public String toString() {
-		return "Ingrediente [id=" + id + ", calorias=" + calorias
-				+ ", carbohidratos=" + carbohidratos + ", colesterol="
-				+ colesterol + ", fibra=" + fibra + ", grasa=" + grasa
-				+ ", nombre=" + nombre + ", origen=" + origen + ", proteinas="
-				+ proteinas + ", sodio=" + sodio + ", vitaminas=" + vitaminas
-				+ "]";
 	}
 
 }

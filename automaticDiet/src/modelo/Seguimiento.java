@@ -2,6 +2,8 @@ package modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 
 /**
@@ -14,25 +16,39 @@ import javax.persistence.*;
 public class Seguimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private SeguimientoPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID")
+	private int id;
 
 	@Column(name="CUMPLIDO")
 	private String cumplido;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name="FECHA")
+	private Date fecha;
+
+	@Column(name="PESO")
+	private BigDecimal peso;
+
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID")
-	private Usuario usuario;
+	private Usuario usuario1;
+
+	//bi-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario2;
 
 	public Seguimiento() {
 	}
 
-	public SeguimientoPK getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(SeguimientoPK id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -44,12 +60,36 @@ public class Seguimiento implements Serializable {
 		this.cumplido = cumplido;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
+	public Date getFecha() {
+		return this.fecha;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public BigDecimal getPeso() {
+		return this.peso;
+	}
+
+	public void setPeso(BigDecimal peso) {
+		this.peso = peso;
+	}
+
+	public Usuario getUsuario1() {
+		return this.usuario1;
+	}
+
+	public void setUsuario1(Usuario usuario1) {
+		this.usuario1 = usuario1;
+	}
+
+	public Usuario getUsuario2() {
+		return this.usuario2;
+	}
+
+	public void setUsuario2(Usuario usuario2) {
+		this.usuario2 = usuario2;
 	}
 
 }

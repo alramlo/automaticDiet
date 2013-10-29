@@ -1,9 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -18,7 +16,7 @@ public class Interes implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	private int id;
 
@@ -68,11 +66,6 @@ public class Interes implements Serializable {
 		grupoInteres.setInteres(null);
 
 		return grupoInteres;
-	}
-
-	@Override
-	public String toString() {
-		return "Interes [id=" + id + ", nombre=" + nombre + "]";
 	}
 
 }

@@ -14,8 +14,10 @@ import javax.persistence.*;
 public class PlatoIngrediente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private PlatoIngredientePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID")
+	private int id;
 
 	@Column(name="CANTIDAD")
 	private int cantidad;
@@ -33,11 +35,11 @@ public class PlatoIngrediente implements Serializable {
 	public PlatoIngrediente() {
 	}
 
-	public PlatoIngredientePK getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(PlatoIngredientePK id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
