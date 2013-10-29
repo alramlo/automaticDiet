@@ -73,7 +73,7 @@ public class ElaboracionPlato extends JPanel {
 		
 		comboBox = new JComboBox<String>(control.todosPlatos());
 //		comboBox = new JComboBox<String>();
-		comboBox.setSelectedIndex(-1);
+		comboBox.setSelectedIndex(1);
 		comboBox.setBounds(425, 145, 365, 36);
 		
 		comboBox.addItemListener(new ItemListener() {

@@ -200,6 +200,13 @@ public class AutomaticDiet
 		menu.addTab("Usuario", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
 		
 		JButton menu_indicadores = new JButton("<html><p>Indicadores</p><p>personales</p></html>");
+		menu_indicadores.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				//cambiaPanel(new Indicadores_personales());
+			}
+		});
 		menu_indicadores.setOpaque(false);
 		menu_indicadores.setMargin(new Insets(2, 2, 2, 2));
 		menu_indicadores.setHorizontalTextPosition(SwingConstants.CENTER);
