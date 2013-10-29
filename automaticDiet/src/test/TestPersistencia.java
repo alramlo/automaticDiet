@@ -23,21 +23,25 @@ public class TestPersistencia {
 //		dao.crearCaracteristica(c);
 //		
 //		
-		//PlatoDAO platoDao= new PlatoDAO();
-		//Plato pl=platoDao.platoByNombre("Macarrones");
-		//System.out.println("Plato encontrado: "+pl);
+		System.out.println("------------PRUEBA PLATOBYNOMBRE--------------------");
+		PlatoDAO platoDao= new PlatoDAO();
+		Plato pl=platoDao.platoByNombre("Macedonia");
+		System.out.println("Plato encontrado: "+pl.getNombre());
 		
-//		PlatoDAO platoDao = new PlatoDAO();
-//		List<Ingrediente> li = platoDao.IngredientesPorPlato("Macarrones");
-//		if(li!=null){
-//			System.out.println("Numero de ingredientes= "+li.size());
-//			System.out.println("Ingredientes: "+li);
-//		}
-//		else
-//			System.out.println("Numero de ingredientes= "+0);
-//	
-//		System.out.println("Lista de platos: "+platoDao.todosPlatos());
+		System.out.println("------------PRUEBA INGREDIENTESPORPLATOS--------------------");
+		platoDao = new PlatoDAO();
+		List<Ingrediente> li = platoDao.IngredientesPorPlato("Macedonia");
+		if(li!=null){
+			System.out.println("Numero de ingredientes= "+li.size());
+		}
+		else
+			System.out.println("Numero de ingredientes= "+0);
+	
+		System.out.println("------------PRUEBA TODOSPLATOS--------------------");
+
+		System.out.println("Todos los platos: "+platoDao.todosPlatos().size());
 		
+		System.out.println("------------PRUEBA DIETA SEMANAL--------------------");
 		UsuarioDAO usuarioDao = new UsuarioDAO();
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");

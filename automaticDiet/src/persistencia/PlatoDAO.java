@@ -18,6 +18,7 @@ public class PlatoDAO extends AbstractDAO {
 			q.setParameter("nom", nombre);
 			return (Plato) q.getSingleResult();
 		} catch (Exception e) {
+			System.out.println("Error: "+e);
 			return null;
 
 		}
@@ -30,7 +31,7 @@ public class PlatoDAO extends AbstractDAO {
 		q = entityManager.createQuery("SELECT p FROM Plato p");
 		return (List<Plato>)q.getResultList();
 		}catch(Exception e){
-			//System.out.println("Error: "+e);
+			System.out.println("Error: "+e);
 			return null;
 			
 		}
@@ -49,8 +50,8 @@ public class PlatoDAO extends AbstractDAO {
 				System.out.println("Plato: " + p.getNombre());
 				q = entityManager.createQuery("SELECT i "
 						+ "FROM Ingrediente i, PlatoIngrediente pi "
-						+ "WHERE pi.id.idPlato=:idP AND "
-						+ "pi.id.idIngrediente=i.id");
+						+ "WHERE pi.plato.id=:idP AND "
+						+ "pi.ingrediente.id=i.id");
 				q.setParameter("idP", p.getId());
 				result = q.getResultList();
 				for (Object i : result) {
@@ -63,8 +64,7 @@ public class PlatoDAO extends AbstractDAO {
 				return null;
 			}
 		} catch (Exception e) {
-			// System.out.println("Excepción: "+e);
-
+			System.out.println("Error: "+e);
 			return null;
 
 		}
