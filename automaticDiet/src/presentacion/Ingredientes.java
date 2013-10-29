@@ -80,10 +80,6 @@ public class Ingredientes extends JFrame {
                 JLabel lblNombre = new JLabel(plato);
                 lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
                 
-                JButton btnInfo = new JButton("Info nutricional");
-                btnInfo.setEnabled(false);
-                btnInfo.setFont(new Font("Arial", Font.BOLD, 14));
-                
                 JButton btnCompra = new JButton("A\u00F1adir lista compra");
                 btnCompra.setIcon(new ImageIcon(Ingredientes.class.getResource("/iconos/carrito.png")));
                 btnCompra.setEnabled(false);
@@ -97,6 +93,10 @@ public class Ingredientes extends JFrame {
                 
                 
                 lista_ingredientes.setFont(new Font("Arial", Font.PLAIN, 14));
+                
+                JLabel lblNewLabel = new JLabel("INFO NUTRICIONAL");
+                lblNewLabel.setIcon(new ImageIcon(Ingredientes.class.getResource("/iconos/icono_informacion.png")));
+                lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
                 GroupLayout gl_contentPane = new GroupLayout(contentPane);
                 gl_contentPane.setHorizontalGroup(
                 	gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -105,12 +105,14 @@ public class Ingredientes extends JFrame {
                 			.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
                 				.addGroup(gl_contentPane.createSequentialGroup()
                 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-                						.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                						.addGroup(gl_contentPane.createSequentialGroup()
+                							.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                							.addGap(159))
                 						.addComponent(btnOrigen, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
                 					.addPreferredGap(ComponentPlacement.RELATED)
-                					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-                						.addComponent(btnInfo, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-                						.addComponent(btnCompra, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
+                					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+                						.addComponent(btnCompra, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                						.addComponent(lblNewLabel)))
                 				.addComponent(lista_ingredientes, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
                 			.addContainerGap())
                 );
@@ -119,9 +121,9 @@ public class Ingredientes extends JFrame {
                 		.addGroup(gl_contentPane.createSequentialGroup()
                 			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
                 				.addComponent(lblNombre)
-                				.addComponent(btnInfo, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+                				.addComponent(lblNewLabel))
                 			.addPreferredGap(ComponentPlacement.RELATED)
-                			.addComponent(lista_ingredientes, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                			.addComponent(lista_ingredientes, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 			.addPreferredGap(ComponentPlacement.RELATED)
                 			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
                 				.addComponent(btnOrigen, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -138,7 +140,7 @@ public class Ingredientes extends JFrame {
                     		+ "<p><b>Calorias:</b> "+ing[i].getCalorias()+" kcal</p>"
                     		+ "<p><b>Grasas:</b> "+ing[i].getGrasa()+" g</p>"
                     		+ "<p><b>Colesterol:</b> "+ing[i].getColesterol()+" g</p>"
-                    		+ "<p><b>Sodio:</b> "+ing[i].getSodio()+" μg</p>"
+                    		+ "<p><b>Sodio:</b> "+ing[i].getSodio()+" g</p>"
                     		+ "<p><b>Carbohidratos:</b> "+ing[i].getCarbohidratos()+" g</p>"
                     		+ "<p><b>Fibra:</b> "+ing[i].getFibra()+" g</p>"
                     		+ "<p><b>Proteinas:</b> "+ing[i].getProteinas()+" g</p>"
