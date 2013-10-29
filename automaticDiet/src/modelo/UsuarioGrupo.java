@@ -19,15 +19,15 @@ public class UsuarioGrupo implements Serializable {
 	@Column(name="ID")
 	private int id;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="ID_USUARIO")
-	private Usuario usuario;
-
-	//bi-directional many-to-one association to Grupo
+	//uni-directional many-to-one association to Grupo
 	@ManyToOne
 	@JoinColumn(name="ID_GRUPO")
 	private Grupo grupo;
+
+	//uni-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
 
 	public UsuarioGrupo() {
 	}
@@ -40,20 +40,20 @@ public class UsuarioGrupo implements Serializable {
 		this.id = id;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Grupo getGrupo() {
 		return this.grupo;
 	}
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

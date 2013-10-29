@@ -3,7 +3,6 @@ package modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -38,18 +37,10 @@ public class Plato implements Serializable {
 	@Column(name="TIPO")
 	private String tipo;
 
-	//bi-directional many-to-one association to Usuario
+	//uni-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
-
-	//bi-directional many-to-one association to PlatoIngrediente
-	@OneToMany(mappedBy="plato")
-	private List<PlatoIngrediente> platoIngredientes;
-
-	//bi-directional many-to-one association to PlatoDieta
-	@OneToMany(mappedBy="plato")
-	private List<PlatoDieta> platoDietas;
 
 	public Plato() {
 	}
@@ -108,50 +99,6 @@ public class Plato implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<PlatoIngrediente> getPlatoIngredientes() {
-		return this.platoIngredientes;
-	}
-
-	public void setPlatoIngredientes(List<PlatoIngrediente> platoIngredientes) {
-		this.platoIngredientes = platoIngredientes;
-	}
-
-	public PlatoIngrediente addPlatoIngrediente(PlatoIngrediente platoIngrediente) {
-		getPlatoIngredientes().add(platoIngrediente);
-		platoIngrediente.setPlato(this);
-
-		return platoIngrediente;
-	}
-
-	public PlatoIngrediente removePlatoIngrediente(PlatoIngrediente platoIngrediente) {
-		getPlatoIngredientes().remove(platoIngrediente);
-		platoIngrediente.setPlato(null);
-
-		return platoIngrediente;
-	}
-
-	public List<PlatoDieta> getPlatoDietas() {
-		return this.platoDietas;
-	}
-
-	public void setPlatoDietas(List<PlatoDieta> platoDietas) {
-		this.platoDietas = platoDietas;
-	}
-
-	public PlatoDieta addPlatoDieta(PlatoDieta platoDieta) {
-		getPlatoDietas().add(platoDieta);
-		platoDieta.setPlato(this);
-
-		return platoDieta;
-	}
-
-	public PlatoDieta removePlatoDieta(PlatoDieta platoDieta) {
-		getPlatoDietas().remove(platoDieta);
-		platoDieta.setPlato(null);
-
-		return platoDieta;
 	}
 
 }

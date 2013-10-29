@@ -3,7 +3,6 @@ package modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 
 /**
@@ -53,10 +52,6 @@ public class Ingrediente implements Serializable {
 
 	@Column(name="VITAMINAS")
 	private String vitaminas;
-
-	//bi-directional many-to-one association to PlatoIngrediente
-	@OneToMany(mappedBy="ingrediente")
-	private List<PlatoIngrediente> platoIngredientes;
 
 	public Ingrediente() {
 	}
@@ -155,28 +150,6 @@ public class Ingrediente implements Serializable {
 
 	public void setVitaminas(String vitaminas) {
 		this.vitaminas = vitaminas;
-	}
-
-	public List<PlatoIngrediente> getPlatoIngredientes() {
-		return this.platoIngredientes;
-	}
-
-	public void setPlatoIngredientes(List<PlatoIngrediente> platoIngredientes) {
-		this.platoIngredientes = platoIngredientes;
-	}
-
-	public PlatoIngrediente addPlatoIngrediente(PlatoIngrediente platoIngrediente) {
-		getPlatoIngredientes().add(platoIngrediente);
-		platoIngrediente.setIngrediente(this);
-
-		return platoIngrediente;
-	}
-
-	public PlatoIngrediente removePlatoIngrediente(PlatoIngrediente platoIngrediente) {
-		getPlatoIngredientes().remove(platoIngrediente);
-		platoIngrediente.setIngrediente(null);
-
-		return platoIngrediente;
 	}
 
 }

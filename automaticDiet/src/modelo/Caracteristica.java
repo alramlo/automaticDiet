@@ -2,7 +2,6 @@ package modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -23,14 +22,6 @@ public class Caracteristica implements Serializable {
 	@Column(name="NOMBRE")
 	private String nombre;
 
-	//bi-directional many-to-many association to Grupo
-	@ManyToMany(mappedBy="caracteristicas")
-	private List<Grupo> grupos;
-
-	//bi-directional many-to-one association to GrupoCaracteristica
-	@OneToMany(mappedBy="caracteristica")
-	private List<GrupoCaracteristica> grupoCaracteristicas;
-
 	public Caracteristica() {
 	}
 
@@ -48,36 +39,6 @@ public class Caracteristica implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Grupo> getGrupos() {
-		return this.grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
-	}
-
-	public List<GrupoCaracteristica> getGrupoCaracteristicas() {
-		return this.grupoCaracteristicas;
-	}
-
-	public void setGrupoCaracteristicas(List<GrupoCaracteristica> grupoCaracteristicas) {
-		this.grupoCaracteristicas = grupoCaracteristicas;
-	}
-
-	public GrupoCaracteristica addGrupoCaracteristica(GrupoCaracteristica grupoCaracteristica) {
-		getGrupoCaracteristicas().add(grupoCaracteristica);
-		grupoCaracteristica.setCaracteristica(this);
-
-		return grupoCaracteristica;
-	}
-
-	public GrupoCaracteristica removeGrupoCaracteristica(GrupoCaracteristica grupoCaracteristica) {
-		getGrupoCaracteristicas().remove(grupoCaracteristica);
-		grupoCaracteristica.setCaracteristica(null);
-
-		return grupoCaracteristica;
 	}
 
 }

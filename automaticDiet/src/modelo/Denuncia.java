@@ -30,15 +30,15 @@ public class Denuncia implements Serializable {
 	@Column(name="MOTIVO")
 	private String motivo;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="ID_USUARIO")
-	private Usuario usuario;
-
-	//bi-directional many-to-one association to Mensaje
+	//uni-directional many-to-one association to Mensaje
 	@ManyToOne
 	@JoinColumn(name="ID_MENSAJE")
 	private Mensaje mensaje;
+
+	//uni-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
 
 	public Denuncia() {
 	}
@@ -75,20 +75,20 @@ public class Denuncia implements Serializable {
 		this.motivo = motivo;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Mensaje getMensaje() {
 		return this.mensaje;
 	}
 
 	public void setMensaje(Mensaje mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

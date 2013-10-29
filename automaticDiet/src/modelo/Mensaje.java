@@ -3,7 +3,6 @@ package modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -28,24 +27,20 @@ public class Mensaje implements Serializable {
 	@Column(name="FECHA")
 	private Date fecha;
 
-	//bi-directional many-to-one association to Denuncia
-	@OneToMany(mappedBy="mensaje")
-	private List<Denuncia> denuncias;
-
-	//bi-directional many-to-one association to Foro
+	//uni-directional many-to-one association to Foro
 	@ManyToOne
 	@JoinColumn(name="ID_FORO")
 	private Foro foro;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="ID_USUARIO")
-	private Usuario usuario;
-
-	//bi-directional many-to-one association to Grupo
+	//uni-directional many-to-one association to Grupo
 	@ManyToOne
 	@JoinColumn(name="ID_GRUPO")
 	private Grupo grupo;
+
+	//uni-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
 
 	public Mensaje() {
 	}
@@ -74,28 +69,6 @@ public class Mensaje implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public List<Denuncia> getDenuncias() {
-		return this.denuncias;
-	}
-
-	public void setDenuncias(List<Denuncia> denuncias) {
-		this.denuncias = denuncias;
-	}
-
-	public Denuncia addDenuncia(Denuncia denuncia) {
-		getDenuncias().add(denuncia);
-		denuncia.setMensaje(this);
-
-		return denuncia;
-	}
-
-	public Denuncia removeDenuncia(Denuncia denuncia) {
-		getDenuncias().remove(denuncia);
-		denuncia.setMensaje(null);
-
-		return denuncia;
-	}
-
 	public Foro getForo() {
 		return this.foro;
 	}
@@ -104,20 +77,20 @@ public class Mensaje implements Serializable {
 		this.foro = foro;
 	}
 
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Grupo getGrupo() {
 		return this.grupo;
 	}
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

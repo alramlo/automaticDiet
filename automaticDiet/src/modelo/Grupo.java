@@ -29,7 +29,7 @@ public class Grupo implements Serializable {
 	@Column(name="PRIVADO")
 	private String privado;
 
-	//bi-directional many-to-many association to Caracteristica
+	//uni-directional many-to-many association to Caracteristica
 	@ManyToMany
 	@JoinTable(
 		name="GRUPO_CARACTERISTICAS"
@@ -42,26 +42,10 @@ public class Grupo implements Serializable {
 		)
 	private List<Caracteristica> caracteristicas;
 
-	//bi-directional many-to-one association to Usuario
+	//uni-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="CREADOR")
 	private Usuario usuario;
-
-	//bi-directional many-to-one association to GrupoCaracteristica
-	@OneToMany(mappedBy="grupo")
-	private List<GrupoCaracteristica> grupoCaracteristicas;
-
-	//bi-directional many-to-one association to GrupoInteres
-	@OneToMany(mappedBy="grupo")
-	private List<GrupoInteres> grupoIntereses;
-
-	//bi-directional many-to-one association to Mensaje
-	@OneToMany(mappedBy="grupo")
-	private List<Mensaje> mensajes;
-
-	//bi-directional many-to-one association to UsuarioGrupo
-	@OneToMany(mappedBy="grupo")
-	private List<UsuarioGrupo> usuarioGrupos;
 
 	public Grupo() {
 	}
@@ -112,94 +96,6 @@ public class Grupo implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<GrupoCaracteristica> getGrupoCaracteristicas() {
-		return this.grupoCaracteristicas;
-	}
-
-	public void setGrupoCaracteristicas(List<GrupoCaracteristica> grupoCaracteristicas) {
-		this.grupoCaracteristicas = grupoCaracteristicas;
-	}
-
-	public GrupoCaracteristica addGrupoCaracteristica(GrupoCaracteristica grupoCaracteristica) {
-		getGrupoCaracteristicas().add(grupoCaracteristica);
-		grupoCaracteristica.setGrupo(this);
-
-		return grupoCaracteristica;
-	}
-
-	public GrupoCaracteristica removeGrupoCaracteristica(GrupoCaracteristica grupoCaracteristica) {
-		getGrupoCaracteristicas().remove(grupoCaracteristica);
-		grupoCaracteristica.setGrupo(null);
-
-		return grupoCaracteristica;
-	}
-
-	public List<GrupoInteres> getGrupoIntereses() {
-		return this.grupoIntereses;
-	}
-
-	public void setGrupoIntereses(List<GrupoInteres> grupoIntereses) {
-		this.grupoIntereses = grupoIntereses;
-	}
-
-	public GrupoInteres addGrupoInteres(GrupoInteres grupoInteres) {
-		getGrupoIntereses().add(grupoInteres);
-		grupoInteres.setGrupo(this);
-
-		return grupoInteres;
-	}
-
-	public GrupoInteres removeGrupoInteres(GrupoInteres grupoInteres) {
-		getGrupoIntereses().remove(grupoInteres);
-		grupoInteres.setGrupo(null);
-
-		return grupoInteres;
-	}
-
-	public List<Mensaje> getMensajes() {
-		return this.mensajes;
-	}
-
-	public void setMensajes(List<Mensaje> mensajes) {
-		this.mensajes = mensajes;
-	}
-
-	public Mensaje addMensaje(Mensaje mensaje) {
-		getMensajes().add(mensaje);
-		mensaje.setGrupo(this);
-
-		return mensaje;
-	}
-
-	public Mensaje removeMensaje(Mensaje mensaje) {
-		getMensajes().remove(mensaje);
-		mensaje.setGrupo(null);
-
-		return mensaje;
-	}
-
-	public List<UsuarioGrupo> getUsuarioGrupos() {
-		return this.usuarioGrupos;
-	}
-
-	public void setUsuarioGrupos(List<UsuarioGrupo> usuarioGrupos) {
-		this.usuarioGrupos = usuarioGrupos;
-	}
-
-	public UsuarioGrupo addUsuarioGrupo(UsuarioGrupo usuarioGrupo) {
-		getUsuarioGrupos().add(usuarioGrupo);
-		usuarioGrupo.setGrupo(this);
-
-		return usuarioGrupo;
-	}
-
-	public UsuarioGrupo removeUsuarioGrupo(UsuarioGrupo usuarioGrupo) {
-		getUsuarioGrupos().remove(usuarioGrupo);
-		usuarioGrupo.setGrupo(null);
-
-		return usuarioGrupo;
 	}
 
 }

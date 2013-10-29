@@ -22,12 +22,12 @@ public class PlatoIngrediente implements Serializable {
 	@Column(name="CANTIDAD")
 	private int cantidad;
 
-	//bi-directional many-to-one association to Ingrediente
+	//uni-directional many-to-one association to Ingrediente
 	@ManyToOne
 	@JoinColumn(name="ID_INGREDIENTE")
 	private Ingrediente ingrediente;
 
-	//bi-directional many-to-one association to Plato
+	//uni-directional many-to-one association to Plato
 	@ManyToOne
 	@JoinColumn(name="ID_PLATO")
 	private Plato plato;

@@ -2,7 +2,6 @@ package modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -23,10 +22,6 @@ public class Interes implements Serializable {
 	@Column(name="NOMBRE")
 	private String nombre;
 
-	//bi-directional many-to-one association to GrupoInteres
-	@OneToMany(mappedBy="interes")
-	private List<GrupoInteres> grupoIntereses;
-
 	public Interes() {
 	}
 
@@ -44,28 +39,6 @@ public class Interes implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<GrupoInteres> getGrupoIntereses() {
-		return this.grupoIntereses;
-	}
-
-	public void setGrupoIntereses(List<GrupoInteres> grupoIntereses) {
-		this.grupoIntereses = grupoIntereses;
-	}
-
-	public GrupoInteres addGrupoInteres(GrupoInteres grupoInteres) {
-		getGrupoIntereses().add(grupoInteres);
-		grupoInteres.setInteres(this);
-
-		return grupoInteres;
-	}
-
-	public GrupoInteres removeGrupoInteres(GrupoInteres grupoInteres) {
-		getGrupoIntereses().remove(grupoInteres);
-		grupoInteres.setInteres(null);
-
-		return grupoInteres;
 	}
 
 }

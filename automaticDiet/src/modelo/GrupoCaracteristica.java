@@ -19,15 +19,15 @@ public class GrupoCaracteristica implements Serializable {
 	@Column(name="ID")
 	private int id;
 
-	//bi-directional many-to-one association to Grupo
-	@ManyToOne
-	@JoinColumn(name="ID_GRUPO")
-	private Grupo grupo;
-
-	//bi-directional many-to-one association to Caracteristica
+	//uni-directional many-to-one association to Caracteristica
 	@ManyToOne
 	@JoinColumn(name="ID_CARACTERISTICAS")
 	private Caracteristica caracteristica;
+
+	//uni-directional many-to-one association to Grupo
+	@ManyToOne
+	@JoinColumn(name="ID_GRUPO")
+	private Grupo grupo;
 
 	public GrupoCaracteristica() {
 	}
@@ -40,20 +40,20 @@ public class GrupoCaracteristica implements Serializable {
 		this.id = id;
 	}
 
-	public Grupo getGrupo() {
-		return this.grupo;
-	}
-
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
-	}
-
 	public Caracteristica getCaracteristica() {
 		return this.caracteristica;
 	}
 
 	public void setCaracteristica(Caracteristica caracteristica) {
 		this.caracteristica = caracteristica;
+	}
+
+	public Grupo getGrupo() {
+		return this.grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 
 }

@@ -3,7 +3,6 @@ package modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -30,10 +29,6 @@ public class Foro implements Serializable {
 
 	@Column(name="VISITAR")
 	private int visitar;
-
-	//bi-directional many-to-one association to Mensaje
-	@OneToMany(mappedBy="foro")
-	private List<Mensaje> mensajes;
 
 	public Foro() {
 	}
@@ -68,28 +63,6 @@ public class Foro implements Serializable {
 
 	public void setVisitar(int visitar) {
 		this.visitar = visitar;
-	}
-
-	public List<Mensaje> getMensajes() {
-		return this.mensajes;
-	}
-
-	public void setMensajes(List<Mensaje> mensajes) {
-		this.mensajes = mensajes;
-	}
-
-	public Mensaje addMensaje(Mensaje mensaje) {
-		getMensajes().add(mensaje);
-		mensaje.setForo(this);
-
-		return mensaje;
-	}
-
-	public Mensaje removeMensaje(Mensaje mensaje) {
-		getMensajes().remove(mensaje);
-		mensaje.setForo(null);
-
-		return mensaje;
 	}
 
 }

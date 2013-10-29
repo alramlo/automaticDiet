@@ -31,12 +31,12 @@ public class Seguimiento implements Serializable {
 	@Column(name="PESO")
 	private BigDecimal peso;
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="ID")
-	private Usuario usuario1;
+	//uni-directional many-to-one association to Usuario
+	//@ManyToOne
+	//@JoinColumn(name="ID")
+	//private Usuario usuario1;
 
-	//bi-directional many-to-one association to Usuario
+	//uni-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario2;
@@ -76,13 +76,13 @@ public class Seguimiento implements Serializable {
 		this.peso = peso;
 	}
 
-	public Usuario getUsuario1() {
-		return this.usuario1;
-	}
+//	public Usuario getUsuario1() {
+//		return this.usuario1;
+//	}
 
-	public void setUsuario1(Usuario usuario1) {
-		this.usuario1 = usuario1;
-	}
+//	public void setUsuario1(Usuario usuario1) {
+//		this.usuario1 = usuario1;
+//	}
 
 	public Usuario getUsuario2() {
 		return this.usuario2;

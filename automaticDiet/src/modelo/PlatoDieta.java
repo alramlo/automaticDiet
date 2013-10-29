@@ -24,15 +24,15 @@ public class PlatoDieta implements Serializable {
 	@Column(name="DIA")
 	private Date dia;
 
-	//bi-directional many-to-one association to Plato
-	@ManyToOne
-	@JoinColumn(name="ID_PLATO")
-	private Plato plato;
-
-	//bi-directional many-to-one association to Dieta
+	//uni-directional many-to-one association to Dieta
 	@ManyToOne
 	@JoinColumn(name="ID_DIETAS")
 	private Dieta dieta;
+
+	//uni-directional many-to-one association to Plato
+	@ManyToOne
+	@JoinColumn(name="ID_PLATO")
+	private Plato plato;
 
 	public PlatoDieta() {
 	}
@@ -53,20 +53,20 @@ public class PlatoDieta implements Serializable {
 		this.dia = dia;
 	}
 
-	public Plato getPlato() {
-		return this.plato;
-	}
-
-	public void setPlato(Plato plato) {
-		this.plato = plato;
-	}
-
 	public Dieta getDieta() {
 		return this.dieta;
 	}
 
 	public void setDieta(Dieta dieta) {
 		this.dieta = dieta;
+	}
+
+	public Plato getPlato() {
+		return this.plato;
+	}
+
+	public void setPlato(Plato plato) {
+		this.plato = plato;
 	}
 
 }

@@ -19,15 +19,15 @@ public class GrupoInteres implements Serializable {
 	@Column(name="ID")
 	private int id;
 
-	//bi-directional many-to-one association to Interes
-	@ManyToOne
-	@JoinColumn(name="ID_INTERESES")
-	private Interes interes;
-
-	//bi-directional many-to-one association to Grupo
+	//uni-directional many-to-one association to Grupo
 	@ManyToOne
 	@JoinColumn(name="ID_GRUPO")
 	private Grupo grupo;
+
+	//uni-directional many-to-one association to Interes
+	@ManyToOne
+	@JoinColumn(name="ID_INTERESES")
+	private Interes interes;
 
 	public GrupoInteres() {
 	}
@@ -40,20 +40,20 @@ public class GrupoInteres implements Serializable {
 		this.id = id;
 	}
 
-	public Interes getInteres() {
-		return this.interes;
-	}
-
-	public void setInteres(Interes interes) {
-		this.interes = interes;
-	}
-
 	public Grupo getGrupo() {
 		return this.grupo;
 	}
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public Interes getInteres() {
+		return this.interes;
+	}
+
+	public void setInteres(Interes interes) {
+		this.interes = interes;
 	}
 
 }

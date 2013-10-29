@@ -3,7 +3,6 @@ package modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -38,14 +37,10 @@ public class Dieta implements Serializable {
 	@Column(name="NOMBRE")
 	private String nombre;
 
-	//bi-directional many-to-one association to Usuario
+	//uni-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
-
-	//bi-directional many-to-one association to PlatoDieta
-	@OneToMany(mappedBy="dieta")
-	private List<PlatoDieta> platoDietas;
 
 	public Dieta() {
 	}
@@ -104,28 +99,6 @@ public class Dieta implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<PlatoDieta> getPlatoDietas() {
-		return this.platoDietas;
-	}
-
-	public void setPlatoDietas(List<PlatoDieta> platoDietas) {
-		this.platoDietas = platoDietas;
-	}
-
-	public PlatoDieta addPlatoDieta(PlatoDieta platoDieta) {
-		getPlatoDietas().add(platoDieta);
-		platoDieta.setDieta(this);
-
-		return platoDieta;
-	}
-
-	public PlatoDieta removePlatoDieta(PlatoDieta platoDieta) {
-		getPlatoDietas().remove(platoDieta);
-		platoDieta.setDieta(null);
-
-		return platoDieta;
 	}
 
 }
