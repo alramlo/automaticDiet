@@ -76,6 +76,45 @@ public class ElaboracionPlato extends JPanel {
 		comboBox.setSelectedIndex(1);
 		comboBox.setBounds(425, 145, 365, 36);
 		
+		try {
+			platoVuelta = control.consultarPlato(comboBox.getItemAt(1).toString());
+		if(platoVuelta!=null){
+			textAreaElaboracion.setText(platoVuelta.getElaboracion());
+			String[] vector = new String[1];
+			vector[0]=((Plato)platoVuelta).getNombre();
+//			comboBox=new JComboBox<String>(vector);
+			File file=null;
+			try {
+				file = new File("automaticDiet");
+				FileOutputStream fos = new FileOutputStream (file);
+				fos.write(((Plato) platoVuelta).getImagen());
+				fos.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			ImageIcon im=null;
+    		BufferedImage buffer;
+			try {
+				buffer = ImageIO.read(file);
+				im = new ImageIcon(buffer);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+    		Image image=im.getImage();
+    		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
+    		imagenPlato.setIcon(new ImageIcon(newImage));
+		}
+		} catch (DAOExcepcion e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evento) {
 				// determina si está seleccionada el estado correspondiente
@@ -83,7 +122,6 @@ public class ElaboracionPlato extends JPanel {
 				{
 				
 						try {
-							System.out.println("He clicado en el comboBox: "+comboBox.getSelectedIndex());
 							platoVuelta = control.consultarPlato(comboBox.getSelectedItem().toString());
 						if(platoVuelta!=null){
 							textAreaElaboracion.setText(platoVuelta.getElaboracion());
