@@ -57,7 +57,7 @@ public class BuscadorGrupo extends JPanel {
 					grupos[0][i]=((Vector<Grupo>)grupoVuelta).get(i).getPrivado();
 					grupos[1][i]=((Vector<Grupo>)grupoVuelta).get(i).getNombre();
 					grupos[2][i]=((Vector<Grupo>)grupoVuelta).get(i).getPoblacion();
-					grupos[3][i]=((Vector<Grupo>)grupoVuelta).get(i).getNumParticipantes();
+					//grupos[3][i]=((Vector<Grupo>)grupoVuelta).get(i).getNumParticipantes();
 				}
 				
 				
