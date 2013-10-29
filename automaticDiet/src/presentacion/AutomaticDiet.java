@@ -85,7 +85,6 @@ public class AutomaticDiet
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
 		automatic_diet.setMaximumSize(new Dimension(1024, 760));
 		automatic_diet.setMinimumSize(new Dimension(1024, 760));
-		automatic_diet.setResizable(false);
 		automatic_diet.setSize(new Dimension(1024, 760));
 		automatic_diet.getContentPane().setSize(new Dimension(1024, 760));
 		panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Bienvenido", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -118,8 +117,8 @@ public class AutomaticDiet
 					.addContainerGap()
 					.addComponent(iconCabecera, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblAutomaticDiet, GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(lblAutomaticDiet, GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
+					.addGap(64))
 		);
 		gl_panel_superior.setVerticalGroup(
 			gl_panel_superior.createParallelGroup(Alignment.LEADING)
@@ -127,9 +126,9 @@ public class AutomaticDiet
 					.addGroup(gl_panel_superior.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_superior.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblAutomaticDiet, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(iconCabecera, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-					.addContainerGap())
+							.addComponent(lblAutomaticDiet, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+						.addComponent(iconCabecera, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+					.addGap(0))
 		);
 		panel_superior.setLayout(gl_panel_superior);
 		
@@ -141,39 +140,6 @@ public class AutomaticDiet
 		
 		JPanel panel_perfil = new JPanel();
 		panel_perfil.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Scarlett Johansson", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GroupLayout groupLayout = new GroupLayout(automatic_diet.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(1)
-							.addComponent(panel_superior, GroupLayout.PREFERRED_SIZE, 1013, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panel_perfil, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
-								.addComponent(menu, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
-							.addGap(4)
-							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
-					.addGap(4))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(1)
-					.addComponent(panel_superior, GroupLayout.PREFERRED_SIZE, 115, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_perfil, GroupLayout.PREFERRED_SIZE, 184, Short.MAX_VALUE)
-							.addGap(1)
-							.addComponent(menu, GroupLayout.PREFERRED_SIZE, 415, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED))
-						.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE))
-					.addGap(10))
-		);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/perfil_scarlet.jpg")));
@@ -183,13 +149,47 @@ public class AutomaticDiet
 		GroupLayout gl_panel_perfil = new GroupLayout(panel_perfil);
 		gl_panel_perfil.setHorizontalGroup(
 			gl_panel_perfil.createParallelGroup(Alignment.TRAILING)
-				.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+				.addComponent(label, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE)
 		);
 		gl_panel_perfil.setVerticalGroup(
 			gl_panel_perfil.createParallelGroup(Alignment.LEADING)
-				.addComponent(label, GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+				.addComponent(label, GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE)
 		);
 		panel_perfil.setLayout(gl_panel_perfil);
+		GroupLayout groupLayout = new GroupLayout(automatic_diet.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(menu, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(1)
+							.addComponent(panel_superior, GroupLayout.PREFERRED_SIZE, 849, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_perfil, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(1)))
+					.addGap(2))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(2)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_perfil, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+						.addComponent(panel_superior, GroupLayout.PREFERRED_SIZE, 115, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(1)
+							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(18)
+							.addComponent(menu, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)))
+					.addGap(4))
+		);
 		panel_central.setLayout(null);
 		
 		JPanel menu_usuario = new JPanel();
@@ -200,6 +200,7 @@ public class AutomaticDiet
 		menu.addTab("Usuario", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
 		
 		JButton menu_indicadores = new JButton("<html><p>Indicadores</p><p>personales</p></html>");
+		menu_indicadores.setSelected(true);
 		menu_indicadores.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -211,7 +212,6 @@ public class AutomaticDiet
 		menu_indicadores.setMargin(new Insets(2, 2, 2, 2));
 		menu_indicadores.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_indicadores.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_indicadores.setContentAreaFilled(false);
 		menu_indicadores.setBorderPainted(false);
 		menu_indicadores.setBorder(null);
 		GroupLayout gl_menu_usuario = new GroupLayout(menu_usuario);
@@ -219,7 +219,7 @@ public class AutomaticDiet
 			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_usuario.createSequentialGroup()
 					.addGap(1)
-					.addComponent(menu_indicadores))
+					.addComponent(menu_indicadores, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_menu_usuario.setVerticalGroup(
 			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
@@ -235,6 +235,7 @@ public class AutomaticDiet
 		menu.addTab("Dietas", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_dietas, null);
 		
 		JButton menu_dieta_asignada = new JButton("<html><p>Dieta</p><p>asignada</p></html>");
+		menu_dieta_asignada.setSelected(true);
 		menu_dieta_asignada.setOpaque(false);
 		menu_dieta_asignada.setBorderPainted(false);
 		menu_dieta_asignada.addActionListener(new ActionListener()
@@ -248,14 +249,13 @@ public class AutomaticDiet
 		menu_dieta_asignada.setBorder(null);
 		menu_dieta_asignada.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_dieta_asignada.setMargin(new Insets(2, 2, 2, 2));
-		menu_dieta_asignada.setContentAreaFilled(false);
 		menu_dieta_asignada.setFont(new Font("Arial", Font.PLAIN, 14));
 		GroupLayout gl_menu_dietas = new GroupLayout(menu_dietas);
 		gl_menu_dietas.setHorizontalGroup(
 			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_dietas.createSequentialGroup()
 					.addGap(1)
-					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_menu_dietas.setVerticalGroup(
 			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
@@ -271,6 +271,7 @@ public class AutomaticDiet
 		menu.addTab("Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/platos.png")), menu_platos, null);
 		
 		JButton menu_elaboracion = new JButton("Elaboraci\u00F3n");
+		menu_elaboracion.setSelected(true);
 		menu_elaboracion.setOpaque(false);
 		menu_elaboracion.setBorderPainted(false);
 		menu_elaboracion.addActionListener(new ActionListener()
@@ -282,7 +283,6 @@ public class AutomaticDiet
 		}
 		);
 		menu_elaboracion.setBorder(null);
-		menu_elaboracion.setContentAreaFilled(false);
 		menu_elaboracion.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_elaboracion.setFont(new Font("Arial", Font.PLAIN, 14));
 		GroupLayout gl_menu_platos = new GroupLayout(menu_platos);
@@ -290,13 +290,13 @@ public class AutomaticDiet
 			gl_menu_platos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_platos.createSequentialGroup()
 					.addGap(1)
-					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_menu_platos.setVerticalGroup(
 			gl_menu_platos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_platos.createSequentialGroup()
 					.addGap(5)
-					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 		);
 		menu_platos.setLayout(gl_menu_platos);
 		
@@ -307,11 +307,11 @@ public class AutomaticDiet
 		menu.addTab("Foro", new ImageIcon(AutomaticDiet.class.getResource("/iconos/foro.png")), menu_foro, null);
 		
 		JButton menu_buscador_grupos = new JButton("<html><p>Buscador</p><p>de grupos</p></html>");
+		menu_buscador_grupos.setSelected(true);
 		menu_buscador_grupos.setOpaque(false);
 		menu_buscador_grupos.setMargin(new Insets(2, 2, 2, 2));
 		menu_buscador_grupos.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_buscador_grupos.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_buscador_grupos.setContentAreaFilled(false);
 		menu_buscador_grupos.setBorderPainted(false);
 		menu_buscador_grupos.setBorder(null);
 		GroupLayout gl_menu_foro = new GroupLayout(menu_foro);
@@ -319,7 +319,7 @@ public class AutomaticDiet
 			gl_menu_foro.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_foro.createSequentialGroup()
 					.addGap(1)
-					.addComponent(menu_buscador_grupos))
+					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_menu_foro.setVerticalGroup(
 			gl_menu_foro.createParallelGroup(Alignment.LEADING)
