@@ -71,6 +71,23 @@ public class ElaboracionPlato extends JPanel {
 		buttonPanelIngredientes.setBounds(110, 143, 209, 36);
 		add(buttonPanelIngredientes);
 		
+		textAreaElaboracion = new JTextArea();
+		textAreaElaboracion.setFont(new Font("Arial", Font.PLAIN, 18));
+		textAreaElaboracion.setAutoscrolls(false);
+		textAreaElaboracion.setBackground(UIManager.getColor("Button.background"));
+		textAreaElaboracion.setEditable(false);
+		textAreaElaboracion.setLineWrap(true);
+		textAreaElaboracion.setWrapStyleWord(true);
+		textAreaElaboracion.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		textAreaElaboracion.setText("  Descripci\u00F3n de la elaboraci\u00F3n de los platos");
+		textAreaElaboracion.setBounds(425, 186, 365, 402);
+		add(textAreaElaboracion);
+		
+		imagenPlato = new JLabel("");
+		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		imagenPlato.setBounds(10, 186, 409, 402);
+		add(imagenPlato);
+		
 		comboBox = new JComboBox<String>(control.todosPlatos());
 //		comboBox = new JComboBox<String>();
 		comboBox.setSelectedIndex(1);
@@ -127,11 +144,6 @@ public class ElaboracionPlato extends JPanel {
 			}
 		});
 		add(comboBox);
-
-		imagenPlato = new JLabel("");
-		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		imagenPlato.setBounds(10, 186, 409, 402);
-		add(imagenPlato);
 		
 		JLabel lblNewLabel_2 = new JLabel("AutomaticDiet");
 		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -146,18 +158,6 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 20));
 		lblNewLabel_3.setBounds(10, 79, 780, 60);
 		add(lblNewLabel_3);
-		
-		textAreaElaboracion = new JTextArea();
-		textAreaElaboracion.setFont(new Font("Arial", Font.PLAIN, 18));
-		textAreaElaboracion.setAutoscrolls(false);
-		textAreaElaboracion.setBackground(UIManager.getColor("Button.background"));
-		textAreaElaboracion.setEditable(false);
-		textAreaElaboracion.setLineWrap(true);
-		textAreaElaboracion.setWrapStyleWord(true);
-		textAreaElaboracion.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		textAreaElaboracion.setText("  Descripci\u00F3n de la elaboraci\u00F3n de los platos");
-		textAreaElaboracion.setBounds(425, 186, 365, 402);
-		add(textAreaElaboracion);
 		
 	}
 	
