@@ -270,7 +270,7 @@ public class AutomaticDiet
 		menu_platos.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu.addTab("Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/platos.png")), menu_platos, null);
 		
-		JButton menu_elaboracion = new JButton("Elaboraci\u00F3n");
+		JButton menu_elaboracion = new JButton("Elaboración");
 		menu_elaboracion.setSelected(true);
 		menu_elaboracion.setOpaque(false);
 		menu_elaboracion.setBorderPainted(false);
@@ -313,6 +313,11 @@ public class AutomaticDiet
 		menu_buscador_grupos.setHorizontalTextPosition(SwingConstants.CENTER);
 		menu_buscador_grupos.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu_buscador_grupos.setBorderPainted(false);
+		menu_buscador_grupos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cambiaPanel(new BuscadorGrupo(null));
+			}
+		});
 		menu_buscador_grupos.setBorder(null);
 		GroupLayout gl_menu_foro = new GroupLayout(menu_foro);
 		gl_menu_foro.setHorizontalGroup(
