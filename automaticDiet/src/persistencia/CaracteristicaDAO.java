@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.util.List;
+
 import modelo.Caracteristica;
 
 public class CaracteristicaDAO extends AbstractDAO{
@@ -21,6 +23,10 @@ public class CaracteristicaDAO extends AbstractDAO{
 		}
 		
 		entityManager.getTransaction().commit();
+	}
+	
+	public List<Caracteristica> getCaracteristicas(){
+		return null;
 	}
 
 }

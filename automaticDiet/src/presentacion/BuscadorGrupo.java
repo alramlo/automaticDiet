@@ -2,9 +2,12 @@ package presentacion;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.Box;
@@ -16,9 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 
+import modelo.Caracteristica;
 import modelo.Grupo;
+import servicio.Controlador;
+import excepciones.DominioExcepcion;
 
 public class BuscadorGrupo extends JPanel {
 	/**
@@ -29,12 +37,26 @@ public class BuscadorGrupo extends JPanel {
 	private JTable table;
 	private JComboBox<String> comboBoxLocalidad;
 	private JTable table_1;
+	private static Controlador control;
 
 	/**
 	 * Create the panel.
 	 */
 	@SuppressWarnings("unchecked")
 	public BuscadorGrupo(Object grupoVuelta) {
+		setSize(new Dimension(800, 600));
+		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Buscador de grupo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		this.setSize(800, 600);
+		
+		try {
+			control=Controlador.dameControlador();
+		} catch (DominioExcepcion e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		
+		setLayout(null);
+
 		
 		if(grupoVuelta!=null){
 			if(grupoVuelta instanceof Vector){
@@ -99,7 +121,7 @@ public class BuscadorGrupo extends JPanel {
 		});
 		comboBoxLocalidad.setFont(new Font("Arial", Font.BOLD, 16));
 		
-		JLabel lblNewLabel_2 = new JLabel("H\u00E1bitos:");
+		JLabel lblNewLabel_2 = new JLabel("Hábitos:");
 		lblNewLabel_2.setBounds(10, 95, 78, 14);
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 16));
 		
@@ -112,10 +134,8 @@ public class BuscadorGrupo extends JPanel {
 		btnBuscar.setIcon(new ImageIcon(BuscadorGrupo.class.getResource("/iconos/buscar.png")));
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				List<Caracteristica> caracteristicas = new ArrayList<Caracteristica>();
 				
-				
-				//Faltan añadir al dto grupo las caracteristicas e intereses
-				//Controlador buscar grupo
 			}
 		});
 		btnBuscar.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -125,6 +145,8 @@ public class BuscadorGrupo extends JPanel {
 		boxHabitos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		boxHabitos.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
+		//obtener todas las caracteristicas
+		
 		JCheckBox chckbxPrimero = new JCheckBox("Ejemplo 1");
 		boxHabitos.add(chckbxPrimero);
 		chckbxPrimero.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -133,10 +155,11 @@ public class BuscadorGrupo extends JPanel {
 		verticalBox.setBounds(469, 105, 280, 150);
 		verticalBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
+		//obtener todos los intereses
+		
 		JCheckBox chckbxInteres1 = new JCheckBox("Interes 1");
 		verticalBox.add(chckbxInteres1);
 		chckbxInteres1.setFont(new Font("Arial", Font.PLAIN, 14));
-		setLayout(null);
 		
 		table_1 = new JTable();
 		table_1.setBounds(10, 312, 780, 277);

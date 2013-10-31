@@ -1,8 +1,7 @@
 package servicio;
+import modelo.Caracteristica;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
-import modelo.Caracteristica;
-import servicio.Controlador;
 
 public class EjecutarPorConsola {
 

@@ -5,10 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import modelo.Caracteristica;
 import modelo.Ingrediente;
 import modelo.Plato;
-import persistencia.CaracteristicaDAO;
 import persistencia.PlatoDAO;
 import persistencia.UsuarioDAO;
 
