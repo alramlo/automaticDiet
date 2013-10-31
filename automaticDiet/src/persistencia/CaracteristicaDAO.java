@@ -2,6 +2,8 @@ package persistencia;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import modelo.Caracteristica;
 
 public class CaracteristicaDAO extends AbstractDAO{
@@ -25,8 +27,17 @@ public class CaracteristicaDAO extends AbstractDAO{
 		entityManager.getTransaction().commit();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Caracteristica> getCaracteristicas(){
-		return null;
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT c FROM Caracteristica c");
+			return (List<Caracteristica>)q.getResultList();
+			}catch(Exception e){
+				System.out.println("Error: "+e);
+				return null;
+				
+			}
 	}
 
 }

@@ -64,4 +64,8 @@ public class DAL {
 	public List<Plato> dietaSemanal(int idUsuario, Date fechaIni, Date fechaFin){
 		return usuarioDAO.dietaSemanal(1, fechaIni, fechaFin);
 	}
+	
+	public List<Caracteristica> getCaracteristicas(){
+		return caracteristicaDAO.getCaracteristicas();
+	}
 }

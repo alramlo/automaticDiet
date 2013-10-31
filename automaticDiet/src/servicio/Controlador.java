@@ -105,6 +105,21 @@ public class Controlador {
 		}
 		return platos;
 	}
+	
+	public Caracteristica[] getCaracteristicas(){
+		List<Caracteristica> listaCaracteristica = dal.getCaracteristicas();
+		Caracteristica[] caracteristica= new Caracteristica[listaCaracteristica.size()];
+		
+		Iterator<Caracteristica> itCaracteristica= listaCaracteristica.iterator();
+		for(int i=0; itCaracteristica.hasNext(); i++){
+			
+			caracteristica[i]=itCaracteristica.next();
+		}
+		return caracteristica;
+	}
+	
+	
+	@SuppressWarnings("static-access")
 	private Calendar[] getFechaIniFin(int nfecha, GregorianCalendar fecha){
 		Calendar [] fechas = new Calendar[2];
 		GregorianCalendar fechaIni, fechaFin;

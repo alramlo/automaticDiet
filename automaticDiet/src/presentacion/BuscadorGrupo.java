@@ -142,10 +142,14 @@ public class BuscadorGrupo extends JPanel {
 		boxHabitos.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
 		//obtener todas las caracteristicas
+		Caracteristica[] caracteristica=control.getCaracteristicas();
 		
-		JCheckBox chckbxPrimero = new JCheckBox("Ejemplo 1");
-		boxHabitos.add(chckbxPrimero);
-		chckbxPrimero.setFont(new Font("Arial", Font.PLAIN, 14));
+		for(int i=0;i<caracteristica.length;i++){
+		
+			JCheckBox chckbxPrimero = new JCheckBox(caracteristica[i].getNombre());
+			boxHabitos.add(chckbxPrimero);
+			chckbxPrimero.setFont(new Font("Arial", Font.PLAIN, 14));
+		}
 		
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setBounds(469, 105, 280, 150);
