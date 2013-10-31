@@ -43,7 +43,7 @@ public class BuscadorGrupo extends JPanel {
 	 * Create the panel.
 	 */
 	@SuppressWarnings("unchecked")
-	public BuscadorGrupo(Object grupoVuelta) {
+	public BuscadorGrupo() {
 		setSize(new Dimension(800, 600));
 		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Buscador de grupo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
@@ -58,33 +58,29 @@ public class BuscadorGrupo extends JPanel {
 		setLayout(null);
 
 		
-		if(grupoVuelta!=null){
-			if(grupoVuelta instanceof Vector){
-				textFieldNombre.setText(((Vector<Grupo>) grupoVuelta).get(0).getNombre());
-				comboBoxLocalidad.setSelectedItem(((Vector<Grupo>) grupoVuelta).get(0).getPoblacion());
-				//Falta checkear caracteristicas e intereses
+//				textFieldNombre.setText(((Vector<Grupo>) grupoVuelta).get(0).getNombre());
+//				comboBoxLocalidad.setSelectedItem(((Vector<Grupo>) grupoVuelta).get(0).getPoblacion());
+//				//Falta checkear caracteristicas e intereses
+//				
+//				table = new JTable(((Vector<Grupo>)grupoVuelta).size()+1,4);
+//				table.setBounds(752, 409, -708, 168);
+//				//table.set
+//				
+//				Object[] cabecera = {"Privado","Nombre","Población","Número Participantes"};
+//				Object[][] grupos = new Object[4][((Vector<Grupo>)grupoVuelta).size()];
+//				
+//				for(int i=0;i<((Vector<Grupo>)grupoVuelta).size();i++){
+//					grupos[0][i]=((Vector<Grupo>)grupoVuelta).get(i).getPrivado();
+//					grupos[1][i]=((Vector<Grupo>)grupoVuelta).get(i).getNombre();
+//					grupos[2][i]=((Vector<Grupo>)grupoVuelta).get(i).getPoblacion();
+//					//grupos[3][i]=((Vector<Grupo>)grupoVuelta).get(i).getNumParticipantes();
+//				}
+//				
+//				
+//				table = new JTable(grupos,cabecera);
+//				table.setBounds(752, 409, -708, 168);
+//				add(table);
 				
-				table = new JTable(((Vector<Grupo>)grupoVuelta).size()+1,4);
-				table.setBounds(752, 409, -708, 168);
-				//table.set
-				
-				Object[] cabecera = {"Privado","Nombre","Población","Número Participantes"};
-				Object[][] grupos = new Object[4][((Vector<Grupo>)grupoVuelta).size()];
-				
-				for(int i=0;i<((Vector<Grupo>)grupoVuelta).size();i++){
-					grupos[0][i]=((Vector<Grupo>)grupoVuelta).get(i).getPrivado();
-					grupos[1][i]=((Vector<Grupo>)grupoVuelta).get(i).getNombre();
-					grupos[2][i]=((Vector<Grupo>)grupoVuelta).get(i).getPoblacion();
-					//grupos[3][i]=((Vector<Grupo>)grupoVuelta).get(i).getNumParticipantes();
-				}
-				
-				
-				table = new JTable(grupos,cabecera);
-				table.setBounds(752, 409, -708, 168);
-				add(table);
-				
-			}
-		}
 		
 		JLabel lblNewLabel = new JLabel("Nombre:");
 		lblNewLabel.setBounds(10, 28, 78, 14);

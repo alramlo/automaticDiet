@@ -315,7 +315,7 @@ public class AutomaticDiet
 		menu_buscador_grupos.setBorderPainted(false);
 		menu_buscador_grupos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cambiaPanel(new BuscadorGrupo(null));
+				cambiaPanel(new BuscadorGrupo());
 			}
 		});
 		menu_buscador_grupos.setBorder(null);
