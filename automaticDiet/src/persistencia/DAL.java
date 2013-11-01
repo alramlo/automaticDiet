@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import modelo.Caracteristica;
+import modelo.Grupo;
 import modelo.Ingrediente;
+import modelo.Interes;
 import modelo.Plato;
 import excepciones.DAOExcepcion;
 
@@ -20,7 +22,8 @@ public class DAL {
 	private CaracteristicaDAO caracteristicaDAO;
 	private PlatoDAO platoDAO;
 	private UsuarioDAO usuarioDAO;
-	//private GrupoDAO grupoDAO;
+	private InteresDAO interesDAO;
+	private GrupoDAO grupoDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -28,6 +31,8 @@ public class DAL {
 		caracteristicaDAO = new CaracteristicaDAO();
 		platoDAO = new PlatoDAO(); 
 		usuarioDAO = new UsuarioDAO();
+		interesDAO = new InteresDAO();
+		grupoDAO = new GrupoDAO();
 	}
 	
 	// Patrón Singleton
@@ -67,5 +72,13 @@ public class DAL {
 	
 	public List<Caracteristica> getCaracteristicas(){
 		return caracteristicaDAO.getCaracteristicas();
+	}
+	
+	public List<Interes> getIntereses(){
+		return interesDAO.getIntereses();
+	}
+
+	public List<Grupo> getGrupos(Grupo grupo) {
+		return grupoDAO.getGrupos(grupo);
 	}
 }

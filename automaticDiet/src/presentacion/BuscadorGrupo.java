@@ -6,9 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -16,12 +13,14 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import modelo.Caracteristica;
 import modelo.Grupo;
@@ -34,7 +33,6 @@ public class BuscadorGrupo extends JPanel {
 	 */
 	private static final long serialVersionUID = 4625943961168080147L;
 	private JTextField textFieldNombre;
-	private JTable table;
 	private JComboBox<String> comboBoxLocalidad;
 	private JTable table_1;
 	private static Controlador control;
@@ -42,7 +40,6 @@ public class BuscadorGrupo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	@SuppressWarnings("unchecked")
 	public BuscadorGrupo() {
 		setSize(new Dimension(800, 600));
 		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Buscador de grupo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -51,36 +48,10 @@ public class BuscadorGrupo extends JPanel {
 		try {
 			control=Controlador.dameControlador();
 		} catch (DominioExcepcion e3) {
-			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
 		
-		setLayout(null);
-
-		
-//				textFieldNombre.setText(((Vector<Grupo>) grupoVuelta).get(0).getNombre());
-//				comboBoxLocalidad.setSelectedItem(((Vector<Grupo>) grupoVuelta).get(0).getPoblacion());
-//				//Falta checkear caracteristicas e intereses
-//				
-//				table = new JTable(((Vector<Grupo>)grupoVuelta).size()+1,4);
-//				table.setBounds(752, 409, -708, 168);
-//				//table.set
-//				
-//				Object[] cabecera = {"Privado","Nombre","Población","Número Participantes"};
-//				Object[][] grupos = new Object[4][((Vector<Grupo>)grupoVuelta).size()];
-//				
-//				for(int i=0;i<((Vector<Grupo>)grupoVuelta).size();i++){
-//					grupos[0][i]=((Vector<Grupo>)grupoVuelta).get(i).getPrivado();
-//					grupos[1][i]=((Vector<Grupo>)grupoVuelta).get(i).getNombre();
-//					grupos[2][i]=((Vector<Grupo>)grupoVuelta).get(i).getPoblacion();
-//					//grupos[3][i]=((Vector<Grupo>)grupoVuelta).get(i).getNumParticipantes();
-//				}
-//				
-//				
-//				table = new JTable(grupos,cabecera);
-//				table.setBounds(752, 409, -708, 168);
-//				add(table);
-				
+		setLayout(null);		
 		
 		JLabel lblNewLabel = new JLabel("Nombre:");
 		lblNewLabel.setBounds(10, 28, 78, 14);
@@ -130,7 +101,40 @@ public class BuscadorGrupo extends JPanel {
 		btnBuscar.setIcon(new ImageIcon(BuscadorGrupo.class.getResource("/iconos/buscar.png")));
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				List<Caracteristica> caracteristicas = new ArrayList<Caracteristica>();
+		//		List<Caracteristica> caracteristicas = new ArrayList<Caracteristica>();
+				Grupo grupo = new Grupo();
+				grupo.setNombre(textFieldNombre.getText());
+				//añadir pais, ciudad, intereses y caracteristicas
+				Grupo[] grupoVuelta = control.getGrupos(grupo);
+				if(grupoVuelta.length!=0){
+					
+				table_1 = new JTable(grupoVuelta.length+10,4);
+				table_1.setBounds(10, 312, 780, 277);
+				table_1.getColumnModel().getColumn(0).setPreferredWidth(180);
+				table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
+				table_1.getColumnModel().getColumn(2).setPreferredWidth(180);
+				table_1.getColumnModel().getColumn(3).setPreferredWidth(180);
+				add(table_1);
+				
+				table_1.setModel(new DefaultTableModel(
+						new Object[][] {
+							{"Privado", "Nombre", "Población", "Número participantes"},
+							{null, null, null, null, null, null, null},
+						},
+						new String[] {
+							"Privado", "Nombre", "Población", "Número participantes"
+						}
+					));
+				
+				for(int i=0;i<grupoVuelta.length;i++){
+					table_1.setValueAt(grupoVuelta[i].getPrivado(), i+1, 0);
+					table_1.setValueAt(grupoVuelta[i].getNombre(), i+1, 1);
+					table_1.setValueAt(grupoVuelta[i].getPoblacion(), i+1, 2);
+					table_1.setValueAt("Prueba", i+1, 3);
+				}
+				}
+				else
+					JOptionPane.showMessageDialog(null, "No existe el grupo", "Error", JOptionPane.ERROR_MESSAGE);
 				
 			}
 		});
@@ -156,14 +160,15 @@ public class BuscadorGrupo extends JPanel {
 		verticalBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
 		//obtener todos los intereses
+//		Interes[] interes = control.getIntereses();
+//		
+//		for(int i=0; i<interes.length;i++){
+//		
+//			JCheckBox chckbxInteres1 = new JCheckBox(interes[i].getNombre());
+//			verticalBox.add(chckbxInteres1);
+//			chckbxInteres1.setFont(new Font("Arial", Font.PLAIN, 14));
+//		}
 		
-		JCheckBox chckbxInteres1 = new JCheckBox("Interes 1");
-		verticalBox.add(chckbxInteres1);
-		chckbxInteres1.setFont(new Font("Arial", Font.PLAIN, 14));
-		
-		table_1 = new JTable();
-		table_1.setBounds(10, 312, 780, 277);
-		add(table_1);
 		add(lblNewLabel);
 		add(lblNewLabel_2);
 		add(lblNewLabel_1);
@@ -181,8 +186,7 @@ public class BuscadorGrupo extends JPanel {
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(469, 27, 280, 20);
-		add(comboBox);
-		
+		add(comboBox);	
 
 	}
 }

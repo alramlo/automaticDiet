@@ -3,23 +3,38 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 
-import modelo.Caracteristica;
-import persistencia.CaracteristicaDAO;
+import modelo.Interes;
+import persistencia.InteresDAO;
 public class TestSergio {
 
 
 	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
 	
-		System.out.println("------------PRUEBA PLATOBYNOMBRE--------------------");
-		CaracteristicaDAO caracteristicaDao= new CaracteristicaDAO();
-		List<Caracteristica> pl=caracteristicaDao.getCaracteristicas();
-		Iterator<Caracteristica> itCaracteristica = pl.iterator();
-		while(itCaracteristica.hasNext()){
-		//for(int i=0; itCaracteristica.hasNext(); i++){
-			Caracteristica c = itCaracteristica.next();
-			System.out.println(c.getNombre());
+//		CaracteristicaDAO caracteristicaDao= new CaracteristicaDAO();
+//		List<Caracteristica> pl=caracteristicaDao.getCaracteristicas();
+//		Iterator<Caracteristica> itCaracteristica = pl.iterator();
+//		while(itCaracteristica.hasNext()){
+//			Caracteristica c = itCaracteristica.next();
+//			System.out.println(c.getNombre());
+//		}
+		
+		InteresDAO interesDao= new InteresDAO();
+		List<Interes> pl2=interesDao.getIntereses();
+		Iterator<Interes> itIntereses = pl2.iterator();
+		while(itIntereses.hasNext()){
+			Interes i = itIntereses.next();
+			System.out.println(i.getNombre());
 		}
+//		Grupo prueba = new Grupo();
+//		prueba.setNombre("AlimentacionEsVida");
+//		GrupoDAO grupo = new GrupoDAO();
+//		List<Grupo> pl3 = grupo.getGrupos(prueba);
+//		Iterator<Grupo> itGrupos = pl3.iterator();
+//		while(itGrupos.hasNext()){
+//			Grupo g = itGrupos.next();
+//			System.out.println(g.getNombre());
+//		}
 	}
 
 }

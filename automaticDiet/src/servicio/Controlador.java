@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import modelo.Caracteristica;
+import modelo.Grupo;
 import modelo.Ingrediente;
+import modelo.Interes;
 import modelo.Plato;
 import persistencia.DAL;
 import excepciones.DAOExcepcion;
@@ -116,6 +118,30 @@ public class Controlador {
 			caracteristica[i]=itCaracteristica.next();
 		}
 		return caracteristica;
+	}
+	
+	public Interes[] getIntereses(){
+		List<Interes> listaInteres = dal.getIntereses();
+		Interes[] interes= new Interes[listaInteres.size()];
+		
+		Iterator<Interes> itInteres= listaInteres.iterator();
+		for(int i=0; itInteres.hasNext(); i++){
+			
+			interes[i]=itInteres.next();
+		}
+		return interes;
+	}
+	
+	public Grupo[] getGrupos(Grupo grupo) {
+		List<Grupo> listaGrupos = dal.getGrupos(grupo);
+		Grupo[] grupos= new Grupo[listaGrupos.size()];
+		
+		Iterator<Grupo> itGrupo= listaGrupos.iterator();
+		for(int i=0; itGrupo.hasNext(); i++){
+			
+			grupos[i]=itGrupo.next();
+		}
+		return grupos;
 	}
 	
 	
