@@ -1,10 +1,13 @@
 package servicio;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import modelo.Caracteristica;
 import modelo.Grupo;
@@ -133,14 +136,48 @@ public class Controlador {
 	}
 	
 	public Grupo[] getGrupos(Grupo grupo) {
-		List<Grupo> listaGrupos = dal.getGrupos(grupo);
-		Grupo[] grupos= new Grupo[listaGrupos.size()];
 		
-		Iterator<Grupo> itGrupo= listaGrupos.iterator();
-		for(int i=0; itGrupo.hasNext(); i++){
-			
+		List<Caracteristica> l = grupo.getCaracteristicas();
+		Set<Grupo> resultado = new HashSet<Grupo>();
+		Iterator<Caracteristica> itCaracteristica= l.iterator();
+
+		if(grupo.getNombre().equals("")){
+			if(grupo.getCaracteristicas()==null){
+				
+			}
+			else{
+				while(itCaracteristica.hasNext()){
+					List<Grupo> listaGrupos = dal.getGrupos(itCaracteristica.next());
+					resultado.addAll(listaGrupos);
+				}
+			}
+		}
+		else{
+			if(grupo.getCaracteristicas()==null){
+				
+			}
+			else{
+				while(itCaracteristica.hasNext()){
+					List<Grupo> listaGrupos = dal.getGrupos(grupo.getNombre(),itCaracteristica.next());
+					resultado.addAll(listaGrupos);
+				}
+			}
+		}
+		List<Grupo> gruposValidos = new ArrayList<Grupo>(resultado);
+		Grupo[] grupos= new Grupo[gruposValidos.size()];
+		
+		Iterator<Grupo> itGrupo= gruposValidos.iterator();
+		for(int i=0; itGrupo.hasNext(); i++){	
 			grupos[i]=itGrupo.next();
 		}
+		//List<Grupo> listaGrupos = dal.getGrupos(grupo.getNombre());
+		//Grupo[] grupos= new Grupo[listaGrupos.size()];
+		
+//		Iterator<Grupo> itGrupo= listaGrupos.iterator();
+//		for(int i=0; itGrupo.hasNext(); i++){
+//			
+//			grupos[i]=itGrupo.next();
+//		}
 		return grupos;
 	}
 	

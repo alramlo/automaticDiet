@@ -78,7 +78,11 @@ public class DAL {
 		return interesDAO.getIntereses();
 	}
 
-	public List<Grupo> getGrupos(Grupo grupo) {
-		return grupoDAO.getGrupos(grupo);
+	public List<Grupo> getGrupos(String nombre, Caracteristica car) {
+		return grupoDAO.getGrupos(nombre, car);
+	}
+	
+	public List<Grupo> getGrupos(Caracteristica car) {
+		return grupoDAO.getGrupos(car);
 	}
 }
