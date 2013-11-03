@@ -49,6 +49,10 @@ public class BuscadorGrupo extends JPanel {
 	private JCheckBox chckbxDefinir;
 	private JCheckBox chckbxMuscular; 
 	private JCheckBox chckbxSubir;
+	
+	private final char[] caracEspe={'!','·','$','\"','%','&','/','(',')','=','?','¿','¡'
+			,'º','ª','\\','|','@','#','~','¬','€','*','+','[',']','^','{','}',';',':',','
+			,'.','-','<','>'};
 
 	/**
 	 * Create the panel.
@@ -179,51 +183,55 @@ public class BuscadorGrupo extends JPanel {
 		btnBuscar.setIcon(new ImageIcon(BuscadorGrupo.class.getResource("/iconos/buscar.png")));
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				List<Caracteristica> caracteristicas = queCaracteristicas();
-				List<Interes> intereses = queIntereses();
-				Grupo grupo = new Grupo();
-				if(!textFieldNombre.getText().equals(""))
-					grupo.setNombre(textFieldNombre.getText());
-				if(caracteristicas.size()!=0)
-					grupo.setCaracteristicas(caracteristicas);
-				//añadir al dto al atributo List<Interes>
-				Grupo[] grupoVuelta = control.getGrupos(grupo);
-				if(grupoVuelta.length!=0){
+				
+				if(nombreCorrecto(textFieldNombre.getText())){
+					List<Caracteristica> caracteristicas = queCaracteristicas();
+					List<Interes> intereses = queIntereses();
+					Grupo grupo = new Grupo();
+					if(!textFieldNombre.getText().equals(""))
+						grupo.setNombre(textFieldNombre.getText());
+					if(caracteristicas.size()!=0)
+						grupo.setCaracteristicas(caracteristicas);
+					//añadir al dto al atributo List<Interes>
+					Grupo[] grupoVuelta = control.getGrupos(grupo);
+					if(grupoVuelta.length!=0){
+						
+					table_1 = new JTable(grupoVuelta.length+1,4);
+					table_1.setBounds(10, 312, 780, 277);
+					table_1.getColumnModel().getColumn(0).setPreferredWidth(180);
+					table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
+					table_1.getColumnModel().getColumn(2).setPreferredWidth(180);
+					table_1.getColumnModel().getColumn(3).setPreferredWidth(180);
+					add(table_1);
 					
-				table_1 = new JTable(grupoVuelta.length+1,4);
-				table_1.setBounds(10, 312, 780, 277);
-				table_1.getColumnModel().getColumn(0).setPreferredWidth(180);
-				table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
-				table_1.getColumnModel().getColumn(2).setPreferredWidth(180);
-				table_1.getColumnModel().getColumn(3).setPreferredWidth(180);
-				add(table_1);
-				
-				Object[][] o=new Object[grupoVuelta.length+1][4];
-				
-				o[0][0]="Privado";
-				o[0][1]="Nombre";
-				o[0][2]="Poblacion";
-				o[0][3]="Participantes";
-				
-				for(int i=1;i<=grupoVuelta.length;i++){
-					o[i][0]=grupoVuelta[i-1].getPrivado();
-					o[i][1]=grupoVuelta[i-1].getNombre();
-					o[i][2]=grupoVuelta[i-1].getPoblacion();
-					o[i][3]="Prueba";
-				}
-				
-				
-				
-				table_1.setModel(new DefaultTableModel(
-						o,
-						new String[] {
-							"Privado", "Nombre", "Población", "Número participantes"
-						}
-					));
-				
-				}
-				else
-					JOptionPane.showMessageDialog(null, "No existe el grupo", "Error", JOptionPane.ERROR_MESSAGE);
+					Object[][] o=new Object[grupoVuelta.length+1][4];
+					
+					o[0][0]="Privado";
+					o[0][1]="Nombre";
+					o[0][2]="Poblacion";
+					o[0][3]="Participantes";
+					
+					for(int i=1;i<=grupoVuelta.length;i++){
+						o[i][0]=grupoVuelta[i-1].getPrivado();
+						o[i][1]=grupoVuelta[i-1].getNombre();
+						o[i][2]=grupoVuelta[i-1].getPoblacion();
+						o[i][3]="Prueba";
+					}
+					
+					
+					
+					table_1.setModel(new DefaultTableModel(
+							o,
+							new String[] {
+								"Privado", "Nombre", "Población", "Número participantes"
+							}
+						));
+					
+					}
+					else
+						JOptionPane.showMessageDialog(null, "No existe el grupo", "Error", JOptionPane.ERROR_MESSAGE);
+			}else
+				JOptionPane.showMessageDialog(null, "No se permiten introducir caracteres especiales", "Error", JOptionPane.ERROR_MESSAGE);
 				
 			}
 		});
@@ -308,5 +316,18 @@ public class BuscadorGrupo extends JPanel {
 			lista.add(subir);
 		}
 		return lista;
+	}
+	
+	private boolean nombreCorrecto(String s){
+		char[] c= new char[s.length()];
+		for(int i=0; i<s.length();i++){
+			c[i]=s.charAt(i);
+			for(int j=0;j<caracEspe.length;j++){
+				if(c[i]==caracEspe[j]){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
