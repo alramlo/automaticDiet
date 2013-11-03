@@ -137,25 +137,42 @@ public class Controlador {
 	
 	public Grupo[] getGrupos(Grupo grupo) {
 		
-		List<Caracteristica> l = grupo.getCaracteristicas();
-		Set<Grupo> resultado = new HashSet<Grupo>();
-		Iterator<Caracteristica> itCaracteristica= l.iterator();
-		
-		List<Grupo> gruposValidos = new ArrayList<Grupo>(resultado);
-		Grupo[] grupos= new Grupo[gruposValidos.size()];
-		
-		Iterator<Grupo> itGrupo= gruposValidos.iterator();
+		List<Grupo> lgrupos = dal.getGrupos();
+		List<Grupo> posibles=new ArrayList<Grupo>();
+		Grupo[] grupos;
+		Iterator<Grupo> itGrupo= lgrupos.iterator();
 		for(int i=0; itGrupo.hasNext(); i++){	
-			grupos[i]=itGrupo.next();
+			lgrupos.get(i).setCaracteristicas(dal.addCaracteristicas(lgrupos.get(i)));
 		}
-		//List<Grupo> listaGrupos = dal.getGrupos(grupo.getNombre());
-		//Grupo[] grupos= new Grupo[listaGrupos.size()];
+		//falta añadir los intereses
 		
-//		Iterator<Grupo> itGrupo= listaGrupos.iterator();
-//		for(int i=0; itGrupo.hasNext(); i++){
-//			
-//			grupos[i]=itGrupo.next();
-//		}
+		//Primer filtro -> nombre
+		if(grupo.getNombre()!=null){
+			Iterator<Grupo> itGrupo2= lgrupos.iterator();
+			for(int i=0; itGrupo2.hasNext(); i++){	
+				if(grupo.getNombre().equals(lgrupos.get(i).getNombre())){
+					posibles.set(i, lgrupos.get(i));
+				}
+			}
+		}
+		
+		List<Grupo> posibles2Filtro=new ArrayList<Grupo>();
+		//Segundo filtro --> caracteristicas
+		if(grupo.getCaracteristicas()!=null){
+			Iterator<Grupo> itGrupo3= posibles.iterator();
+			for(int i=0; itGrupo3.hasNext(); i++){//grupos posibles	
+				for(int j=0;j<posibles.get(i).getCaracteristicas().size(); j++){//caracteristicas de cada grupo posible
+					for(int k=0;k<grupo.getCaracteristicas().size(); k++){ //caracteristicas del grupo a buscar
+						if(grupo.getCaracteristicas().get(k).equals(posibles.get(i).getCaracteristicas().get(j))){
+							posibles2Filtro.add(posibles.get(i));
+						}
+						break;
+					}
+					break;
+				}
+			}
+		}
+		grupos=(Grupo[]) posibles2Filtro.toArray();
 		return grupos;
 	}
 	

@@ -81,4 +81,8 @@ public class DAL {
 	public List<Grupo> getGrupos() {
 		return grupoDAO.getGrupos();
 	}
+	
+	public List<Caracteristica> addCaracteristicas(Grupo g){
+		return grupoDAO.addCaracteristicas(g);
+	}
 }

@@ -27,17 +27,22 @@ public class TestSergio {
 //			Interes i = itIntereses.next();
 //			System.out.println(i.getNombre());
 //		}
-		Grupo prueba = new Grupo();
-		prueba.setNombre("AlimentacionEsVida");
+		
+//		Grupo prueba = new Grupo();
+//		prueba.setNombre("AlimentacionEsVida");
 		GrupoDAO grupo = new GrupoDAO();
-		Caracteristica c = new Caracteristica();
-		c.setNombre("FUTBOL");
-		List<Grupo> pl3 = grupo.getGrupos("AlimentacionEsVida",c);
-		Iterator<Grupo> itGrupos = pl3.iterator();
-		while(itGrupos.hasNext()){
-			Grupo g = itGrupos.next();
-			System.out.println(g.getNombre());
-		}
+		List<Grupo> pl3 = grupo.getGrupos();
+		//Grupo pl4 = grupo.addCaracteristicas(pl3.get(0));
+		//System.out.println(pl4.getCaracteristicas().size());
+		
+//		Caracteristica c = new Caracteristica();
+//		c.setNombre("FUTBOL");
+//		List<Grupo> pl3 = grupo.getGrupos("AlimentacionEsVida",c);
+//		Iterator<Grupo> itGrupos = pl4.iterator();
+//		while(itGrupos.hasNext()){
+//			Grupo g = itGrupos.next();
+//			System.out.println(g.getCaracteristicas().size());
+//		}
 	}
 
 }
