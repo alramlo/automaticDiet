@@ -182,8 +182,10 @@ public class BuscadorGrupo extends JPanel {
 				List<Caracteristica> caracteristicas = queCaracteristicas();
 				List<Interes> intereses = queIntereses();
 				Grupo grupo = new Grupo();
-				grupo.setNombre(textFieldNombre.getText());
-				grupo.setCaracteristicas(caracteristicas);
+				if(!textFieldNombre.getText().equals(""))
+					grupo.setNombre(textFieldNombre.getText());
+				if(caracteristicas.size()!=0)
+					grupo.setCaracteristicas(caracteristicas);
 				//añadir al dto al atributo List<Interes>
 				Grupo[] grupoVuelta = control.getGrupos(grupo);
 				if(grupoVuelta.length!=0){

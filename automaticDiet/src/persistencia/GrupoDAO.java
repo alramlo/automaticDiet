@@ -27,19 +27,19 @@ public class GrupoDAO extends AbstractDAO{
 		}
 	}
 	
-	public List<Grupo> getGrupos(Caracteristica car) {
-		try {
-			Query q;
-			q = entityManager
-					.createQuery("SELECT g FROM Caracteristica c, Grupo_Caracteristicas gc,"
-							+ " Grupo g WHERE c.nombre=:carac AND gc.id_caracteristicas=c.id "
-							+ " AND gc.id_grupo=g.id");
-			q.setParameter("carac", car.getNombre());
-			return (List<Grupo>) q.getResultList();
-		} catch (Exception e) {
-			System.out.println("Error: "+e);
+	public List<Grupo> getGrupos() {
+//		try {
+//			Query q;
+//			q = entityManager
+//					.createQuery("SELECT g FROM Caracteristica c, Grupo_Caracteristicas gc,"
+//							+ " Grupo g WHERE c.nombre=:carac AND gc.id_caracteristicas=c.id "
+//							+ " AND gc.id_grupo=g.id");
+//			q.setParameter("carac", car.getNombre());
+//			return (List<Grupo>) q.getResultList();
+//		} catch (Exception e) {
+//			System.out.println("Error: "+e);
 			return null;
 
-		}
+//		}
 	}
 }

@@ -140,29 +140,7 @@ public class Controlador {
 		List<Caracteristica> l = grupo.getCaracteristicas();
 		Set<Grupo> resultado = new HashSet<Grupo>();
 		Iterator<Caracteristica> itCaracteristica= l.iterator();
-
-		if(grupo.getNombre().equals("")){
-			if(grupo.getCaracteristicas()==null){
-				
-			}
-			else{
-				while(itCaracteristica.hasNext()){
-					List<Grupo> listaGrupos = dal.getGrupos(itCaracteristica.next());
-					resultado.addAll(listaGrupos);
-				}
-			}
-		}
-		else{
-			if(grupo.getCaracteristicas()==null){
-				
-			}
-			else{
-				while(itCaracteristica.hasNext()){
-					List<Grupo> listaGrupos = dal.getGrupos(grupo.getNombre(),itCaracteristica.next());
-					resultado.addAll(listaGrupos);
-				}
-			}
-		}
+		
 		List<Grupo> gruposValidos = new ArrayList<Grupo>(resultado);
 		Grupo[] grupos= new Grupo[gruposValidos.size()];
 		
