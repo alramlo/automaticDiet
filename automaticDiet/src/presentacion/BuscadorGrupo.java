@@ -190,7 +190,7 @@ public class BuscadorGrupo extends JPanel {
 				Grupo[] grupoVuelta = control.getGrupos(grupo);
 				if(grupoVuelta.length!=0){
 					
-				table_1 = new JTable(grupoVuelta.length+10,4);
+				table_1 = new JTable(grupoVuelta.length+1,4);
 				table_1.setBounds(10, 312, 780, 277);
 				table_1.getColumnModel().getColumn(0).setPreferredWidth(180);
 				table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
@@ -198,22 +198,29 @@ public class BuscadorGrupo extends JPanel {
 				table_1.getColumnModel().getColumn(3).setPreferredWidth(180);
 				add(table_1);
 				
+				Object[][] o=new Object[grupoVuelta.length+1][4];
+				
+				o[0][0]="Privado";
+				o[0][1]="Nombre";
+				o[0][2]="Poblacion";
+				o[0][3]="Participantes";
+				
+				for(int i=1;i<=grupoVuelta.length;i++){
+					o[i][0]=grupoVuelta[i-1].getPrivado();
+					o[i][1]=grupoVuelta[i-1].getNombre();
+					o[i][2]=grupoVuelta[i-1].getPoblacion();
+					o[i][3]="Prueba";
+				}
+				
+				
+				
 				table_1.setModel(new DefaultTableModel(
-						new Object[][] {
-							{"Privado", "Nombre", "Población", "Número participantes"},
-							{null, null, null, null, null, null, null},
-						},
+						o,
 						new String[] {
 							"Privado", "Nombre", "Población", "Número participantes"
 						}
 					));
 				
-				for(int i=0;i<grupoVuelta.length;i++){
-					table_1.setValueAt(grupoVuelta[i].getPrivado(), i+1, 0);
-					table_1.setValueAt(grupoVuelta[i].getNombre(), i+1, 1);
-					table_1.setValueAt(grupoVuelta[i].getPoblacion(), i+1, 2);
-					table_1.setValueAt("Prueba", i+1, 3);
-				}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "No existe el grupo", "Error", JOptionPane.ERROR_MESSAGE);

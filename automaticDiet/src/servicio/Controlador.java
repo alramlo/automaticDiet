@@ -139,40 +139,55 @@ public class Controlador {
 		
 		List<Grupo> lgrupos = dal.getGrupos();
 		List<Grupo> posibles=new ArrayList<Grupo>();
-		Grupo[] grupos;
-		Iterator<Grupo> itGrupo= lgrupos.iterator();
-		for(int i=0; itGrupo.hasNext(); i++){	
+		//Iterator<Grupo> itGrupo= lgrupos.iterator();
+		for(int i=0; i<lgrupos.size(); i++){	
 			lgrupos.get(i).setCaracteristicas(dal.addCaracteristicas(lgrupos.get(i)));
 		}
 		//falta añadir los intereses
 		
 		//Primer filtro -> nombre
 		if(grupo.getNombre()!=null){
-			Iterator<Grupo> itGrupo2= lgrupos.iterator();
-			for(int i=0; itGrupo2.hasNext(); i++){	
+			//Iterator<Grupo> itGrupo2= lgrupos.iterator();
+			for(int i=0; i<lgrupos.size(); i++){	
 				if(grupo.getNombre().equals(lgrupos.get(i).getNombre())){
-					posibles.set(i, lgrupos.get(i));
+					posibles.add(lgrupos.get(i));
 				}
+			}
+		}
+		if(grupo.getNombre()!=null){
+			lgrupos.clear();
+			int count=posibles.size();
+			for(int i=0; i<count; i++){
+				lgrupos.add(posibles.get(i));
 			}
 		}
 		
-		List<Grupo> posibles2Filtro=new ArrayList<Grupo>();
 		//Segundo filtro --> caracteristicas
 		if(grupo.getCaracteristicas()!=null){
-			Iterator<Grupo> itGrupo3= posibles.iterator();
-			for(int i=0; itGrupo3.hasNext(); i++){//grupos posibles	
-				for(int j=0;j<posibles.get(i).getCaracteristicas().size(); j++){//caracteristicas de cada grupo posible
+			posibles.clear();
+			//Iterator<Grupo> itGrupo3= posibles.iterator();
+			int cont=0;
+			for(int i=0; i<lgrupos.size(); i++){//grupos posibles
+				cont=0;
+				for(int j=0;j<lgrupos.get(i).getCaracteristicas().size(); j++){//caracteristicas de cada grupo posible
 					for(int k=0;k<grupo.getCaracteristicas().size(); k++){ //caracteristicas del grupo a buscar
-						if(grupo.getCaracteristicas().get(k).equals(posibles.get(i).getCaracteristicas().get(j))){
-							posibles2Filtro.add(posibles.get(i));
+						if(grupo.getCaracteristicas().get(k).getNombre().equals(lgrupos.get(i).getCaracteristicas().get(j).getNombre())){
+							cont++;
 						}
+					}
+					if(cont==grupo.getCaracteristicas().size()){
+						posibles.add(lgrupos.get(i));
 						break;
 					}
-					break;
 				}
 			}
 		}
-		grupos=(Grupo[]) posibles2Filtro.toArray();
+		Grupo[] grupos = new Grupo[posibles.size()];
+		Iterator<Grupo> itGrupo= posibles.iterator();
+		for(int i=0; itGrupo.hasNext(); i++){
+			
+			grupos[i]=itGrupo.next();
+		}
 		return grupos;
 	}
 	
