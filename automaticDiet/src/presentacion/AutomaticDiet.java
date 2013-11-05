@@ -30,6 +30,12 @@ import javax.swing.border.TitledBorder;
 import servicio.Controlador;
 import excepciones.DominioExcepcion;
 
+import javax.swing.JComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+
 public class AutomaticDiet
 {
 	
@@ -37,6 +43,7 @@ public class AutomaticDiet
 	JPanel panel_central = new JPanel();
 	private Controlador control;
 	private JLabel iconCabecera;
+	private static String [] rolUsuarioAdmin = {"Administrador","Usuario Registrado"};
 
 	/**
 	 * Método para lanzar la aplicación
@@ -132,12 +139,6 @@ public class AutomaticDiet
 		);
 		panel_superior.setLayout(gl_panel_superior);
 		
-		JTabbedPane menu = new JTabbedPane(JTabbedPane.LEFT);
-		menu.setFont(new Font("Arial", Font.PLAIN, 12));
-		menu.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		menu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		menu.setAlignmentX(Component.LEFT_ALIGNMENT);
-		
 		JPanel panel_perfil = new JPanel();
 		panel_perfil.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Scarlett Johansson", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
@@ -156,6 +157,8 @@ public class AutomaticDiet
 				.addComponent(label, GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE)
 		);
 		panel_perfil.setLayout(gl_panel_perfil);
+		
+		JPanel panel_izquierda = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(automatic_diet.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -163,7 +166,7 @@ public class AutomaticDiet
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(menu, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel_izquierda, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
@@ -184,21 +187,66 @@ public class AutomaticDiet
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(1)
-							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE))
+							.addComponent(panel_central, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
+							.addGap(4))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addComponent(menu, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)))
-					.addGap(4))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(panel_izquierda, GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+							.addContainerGap())))
 		);
-		panel_central.setLayout(null);
+		panel_izquierda.setLayout(null);
+		
+
+		
+		final JTabbedPane tabsMenuUsuario = new JTabbedPane(JTabbedPane.LEFT);
+		tabsMenuUsuario.setBounds(0, 44, 190, 208);
+		tabsMenuUsuario.setVisible(false);
+		panel_izquierda.add(tabsMenuUsuario);
+		tabsMenuUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
+		tabsMenuUsuario.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		tabsMenuUsuario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabsMenuUsuario.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
+		
+		final JTabbedPane tabsMenuAdministrador = new JTabbedPane(JTabbedPane.TOP);
+		tabsMenuAdministrador.setBounds(0, 44, 190, 208);
+		tabsMenuAdministrador.setVisible(false);
+		panel_izquierda.add(tabsMenuAdministrador);
+		
+		
+		final JComboBox comboBox = new JComboBox(rolUsuarioAdmin);
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				System.out.println(comboBox.getSelectedIndex()+" Arg0: "+arg0);
+				
+				if(comboBox.getSelectedIndex()==0)
+				{
+					tabsMenuUsuario.setVisible(false);
+					tabsMenuAdministrador.setVisible(true);
+					_limpiarMenuCentral();
+				}
+				
+				if(comboBox.getSelectedIndex()==1)
+				{
+					tabsMenuAdministrador.setVisible(false);
+					tabsMenuUsuario.setVisible(true);
+					_limpiarMenuCentral();
+				}
+			}
+		});
+		comboBox.setSelectedIndex(-1);
+		comboBox.setBounds(0, 0, 190, 26);
+		panel_izquierda.add(comboBox);
+		
+		
 		
 		JPanel menu_usuario = new JPanel();
 		menu_usuario.setOpaque(false);
 		menu_usuario.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu_usuario.setAlignmentY(Component.TOP_ALIGNMENT);
 		menu_usuario.setAlignmentX(Component.LEFT_ALIGNMENT);
-		menu.addTab("Usuario", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
-		
+		tabsMenuUsuario.addTab("Usuario", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
+
 		JButton menu_indicadores = new JButton("<html><p>Indicadores</p><p>personales</p></html>");
 		menu_indicadores.setSelected(true);
 		menu_indicadores.addActionListener(new ActionListener()
@@ -229,10 +277,48 @@ public class AutomaticDiet
 		);
 		menu_usuario.setLayout(gl_menu_usuario);
 		
+//		JPanel menu_admin = new JPanel();
+//		menu_admin.setOpaque(false);
+//		menu_admin.setFont(new Font("Arial", Font.PLAIN, 14));
+//		menu_admin.setAlignmentY(Component.TOP_ALIGNMENT);
+//		menu_admin.setAlignmentX(Component.LEFT_ALIGNMENT);
+//		tabsMenuAdministrador.addTab("Administrador", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_admin, null);
+//		
+//		JButton menu_gestionGrupos = new JButton("<html><p>Gestión</p><p>grupos</p></html>");
+//		menu_gestionGrupos.setSelected(true);
+//		menu_gestionGrupos.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent arg0)
+//			{
+//				//cambiaPanel(new Indicadores_personales());
+//			}
+//		});
+//		menu_gestionGrupos.setOpaque(false);
+//		menu_gestionGrupos.setMargin(new Insets(2, 2, 2, 2));
+//		menu_gestionGrupos.setHorizontalTextPosition(SwingConstants.CENTER);
+//		menu_gestionGrupos.setFont(new Font("Arial", Font.PLAIN, 14));
+//		menu_gestionGrupos.setBorderPainted(false);
+//		menu_gestionGrupos.setBorder(null);
+//		GroupLayout gl_menu_admin = new GroupLayout(menu_admin);
+//		gl_menu_admin.setHorizontalGroup(
+//			gl_menu_admin.createParallelGroup(Alignment.LEADING)
+//				.addGroup(gl_menu_admin.createSequentialGroup()
+//					.addGap(1)
+//					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+//		);
+//		gl_menu_admin.setVerticalGroup(
+//			gl_menu_admin.createParallelGroup(Alignment.LEADING)
+//				.addGroup(gl_menu_admin.createSequentialGroup()
+//					.addGap(5)
+//					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+//		);
+//		menu_admin.setLayout(gl_menu_admin);
+			
+	
 		JPanel menu_dietas = new JPanel();
 		menu_dietas.setOpaque(false);
 		menu_dietas.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu.addTab("Dietas", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_dietas, null);
+		tabsMenuUsuario.addTab("Dietas", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_dietas, null);		
 		
 		JButton menu_dieta_asignada = new JButton("<html><p>Dieta</p><p>asignada</p></html>");
 		menu_dieta_asignada.setSelected(true);
@@ -265,10 +351,17 @@ public class AutomaticDiet
 		);
 		menu_dietas.setLayout(gl_menu_dietas);
 		
+		
+//		JPanel menu_gestionPlatos = new JPanel();
+//		menu_gestionPlatos.setOpaque(false);
+//		menu_gestionPlatos.setFont(new Font("Arial", Font.PLAIN, 14));
+//		tabsMenuAdministrador.addTab("Gestión Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_gestionPlatos, null);
+		
+		
 		JPanel menu_platos = new JPanel();
 		menu_platos.setOpaque(false);
 		menu_platos.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu.addTab("Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/platos.png")), menu_platos, null);
+		tabsMenuUsuario.addTab("Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/platos.png")), menu_platos, null);
 		
 		JButton menu_elaboracion = new JButton("Elaboración");
 		menu_elaboracion.setSelected(true);
@@ -304,7 +397,7 @@ public class AutomaticDiet
 		JPanel menu_foro = new JPanel();
 		menu_foro.setOpaque(false);
 		menu_foro.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu.addTab("Foro", new ImageIcon(AutomaticDiet.class.getResource("/iconos/foro.png")), menu_foro, null);
+		tabsMenuUsuario.addTab("Foro", new ImageIcon(AutomaticDiet.class.getResource("/iconos/foro.png")), menu_foro, null);
 		
 		JButton menu_buscador_grupos = new JButton("<html><p>Buscador</p><p>de grupos</p></html>");
 		menu_buscador_grupos.setSelected(true);
@@ -333,6 +426,10 @@ public class AutomaticDiet
 					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 		);
 		menu_foro.setLayout(gl_menu_foro);
+		
+		
+
+		panel_central.setLayout(null);
 		automatic_diet.getContentPane().setLayout(groupLayout);
 		automatic_diet.setBounds(100, 100, 487, 331);
 		automatic_diet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -342,6 +439,13 @@ public class AutomaticDiet
 	{
 		panel_central.removeAll();
 		panel_central.add(nuevo);
+		panel_central.revalidate();
+		panel_central.repaint();
+	}
+	
+	private void _limpiarMenuCentral()
+	{
+		panel_central.removeAll();
 		panel_central.revalidate();
 		panel_central.repaint();
 	}
