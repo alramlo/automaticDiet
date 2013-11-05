@@ -34,8 +34,11 @@ public class Grupo implements Serializable {
 	@Column(name="NOMBRE")
 	private String nombre;
 
-	@Column(name="POBLACION")
-	private String poblacion;
+	@Column(name="PAIS")
+	private String pais;
+	
+	@Column(name="CIUDAD")
+	private String ciudad;
 
 	@Column(name="PRIVADO")
 	private String privado;
@@ -52,6 +55,21 @@ public class Grupo implements Serializable {
 			}
 		)
 	private List<Caracteristica> caracteristicas;
+	
+	//uni-directional many-to-many association to Caracteristica
+	@ManyToMany
+	@JoinTable(
+		name="GRUPO_INTERESES"
+		, joinColumns={
+			@JoinColumn(name="ID_GRUPO")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="ID_INTERESES")
+			}
+		)
+	private List<Interes> intereses;
+	
+	
 
 	//uni-directional many-to-one association to Usuario
 	@ManyToOne
@@ -77,14 +95,6 @@ public class Grupo implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getPoblacion() {
-		return this.poblacion;
-	}
-
-	public void setPoblacion(String poblacion) {
-		this.poblacion = poblacion;
-	}
-
 	public String getPrivado() {
 		return this.privado;
 	}
@@ -107,6 +117,22 @@ public class Grupo implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 
 }

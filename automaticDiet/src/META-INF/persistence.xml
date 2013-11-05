@@ -17,6 +17,8 @@
 		<class>modelo.Seguimiento</class>
 		<class>modelo.Usuario</class>
 		<class>modelo.UsuarioGrupo</class>
+		<class>modelo.Ciudad</class>
+		<class>modelo.Pais</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://www.db4free.net/automaticdiet"/>
