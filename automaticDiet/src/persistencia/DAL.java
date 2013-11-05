@@ -8,6 +8,7 @@ import modelo.Grupo;
 import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Plato;
+import modelo.Usuario;
 import excepciones.DAOExcepcion;
 
 
@@ -84,5 +85,17 @@ public class DAL {
 	
 	public List<Caracteristica> addCaracteristicas(Grupo g){
 		return grupoDAO.addCaracteristicas(g);
+	}
+	
+	public Usuario getIdUsuario(String n, String a){
+		return usuarioDAO.getIdUsuario(n,a);
+	}
+	
+	public List<Plato> buscarPlatos(String p, Usuario usuario){
+		return platoDAO.buscarPlatos(p,usuario);
+	}
+	
+	public List<Plato> buscarPlatos(String p){
+		return platoDAO.buscarPlatos(p);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import modelo.Plato;
+import modelo.Usuario;
 
 public class UsuarioDAO extends AbstractDAO{
 	
@@ -29,6 +30,25 @@ public class UsuarioDAO extends AbstractDAO{
 			return (List<Plato>) q.getResultList();
 			
 			
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+			
+		}
+		
+	}
+	
+public Usuario getIdUsuario(String n, String a){
+		
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT u.id "
+					+ "FROM Usuario u "
+					+ "WHERE u.nombre=:nom "
+					+ "AND u.apellidos=:apell");
+			q.setParameter("nom", n);
+			q.setParameter("apell", a);
+			return (Usuario) q.getSingleResult();
 		}catch(Exception e){
 			System.out.println("Error:"+e);
 			return null;

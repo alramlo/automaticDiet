@@ -1,11 +1,10 @@
 package test;
 import java.text.ParseException;
-import java.util.Iterator;
 import java.util.List;
 
-import modelo.Caracteristica;
-import modelo.Grupo;
-import persistencia.GrupoDAO;
+import modelo.Plato;
+import modelo.Usuario;
+import persistencia.PlatoDAO;
 public class TestSergio {
 
 
@@ -30,8 +29,8 @@ public class TestSergio {
 		
 //		Grupo prueba = new Grupo();
 //		prueba.setNombre("AlimentacionEsVida");
-		GrupoDAO grupo = new GrupoDAO();
-		List<Grupo> pl3 = grupo.getGrupos();
+//		GrupoDAO grupo = new GrupoDAO();
+//		List<Grupo> pl3 = grupo.getGrupos();
 		//Grupo pl4 = grupo.addCaracteristicas(pl3.get(0));
 		//System.out.println(pl4.getCaracteristicas().size());
 		
@@ -43,6 +42,16 @@ public class TestSergio {
 //			Grupo g = itGrupos.next();
 //			System.out.println(g.getCaracteristicas().size());
 //		}
+		
+		//UsuarioDAO u = new UsuarioDAO();
+		//System.out.println(u.getIdUsuario("Sergio", "Campoy Arnau"));
+		
+		PlatoDAO p = new PlatoDAO();
+		Usuario u = new Usuario();
+		u.setId(1);
+		List<Plato> l = p.buscarPlatos("Cereales con leche", u);
+		System.out.println(l.size());
+		
 	}
 
 }

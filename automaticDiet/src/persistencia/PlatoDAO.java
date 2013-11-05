@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import modelo.Ingrediente;
 import modelo.Plato;
+import modelo.Usuario;
 
 public class PlatoDAO extends AbstractDAO {
 
@@ -69,6 +70,36 @@ public class PlatoDAO extends AbstractDAO {
 
 		}
 
+	}
+	
+	public List<Plato> buscarPlatos(String p, Usuario usuario){
+		try{
+		Query q;
+		q = entityManager.createQuery("SELECT p FROM Plato p WHERE p.nombre=:nom"
+				+ " AND p.usuario.id=:id");
+		q.setParameter("nom", p);
+		q.setParameter("id", usuario.getId());
+		return (List<Plato>)q.getResultList();
+		}catch(Exception e){
+			System.out.println("Error: "+e);
+			return null;
+			
+		}
+		
+	}
+	
+	public List<Plato> buscarPlatos(String p){
+		try{
+		Query q;
+		q = entityManager.createQuery("SELECT p FROM Plato p WHERE p.nombre=:nom");
+		q.setParameter("nom", p);
+		return (List<Plato>)q.getResultList();
+		}catch(Exception e){
+			System.out.println("Error: "+e);
+			return null;
+			
+		}
+		
 	}
 
 }
