@@ -214,7 +214,7 @@ public class BuscadorGrupo extends JPanel {
 					for(int i=1;i<=grupoVuelta.length;i++){
 						o[i][0]=grupoVuelta[i-1].getPrivado();
 						o[i][1]=grupoVuelta[i-1].getNombre();
-						o[i][2]=grupoVuelta[i-1].getPoblacion();
+						//o[i][2]=grupoVuelta[i-1].getPoblacion();
 						o[i][3]="Prueba";
 					}
 					
