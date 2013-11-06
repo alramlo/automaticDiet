@@ -29,6 +29,8 @@ import modelo.Grupo;
 import modelo.Interes;
 import servicio.Controlador;
 import excepciones.DominioExcepcion;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class BuscadorGrupo extends JPanel {
 	/**
@@ -36,7 +38,8 @@ public class BuscadorGrupo extends JPanel {
 	 */
 	private static final long serialVersionUID = 4625943961168080147L;
 	private JTextField textFieldNombre;
-	private JComboBox<String> comboBoxLocalidad;
+	private JComboBox<String> comboBoxCiudad;
+	private JComboBox<String> comboBoxPais;
 	private JTable table_1;
 	private static Controlador control;
 	private JCheckBox chckbxBasquet;
@@ -80,30 +83,8 @@ public class BuscadorGrupo extends JPanel {
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setBounds(83, 25, 278, 20);
-		textFieldNombre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(!textFieldNombre.getText().equals("")){
-					comboBoxLocalidad.setEnabled(false);
-				}
-				else
-					comboBoxLocalidad.setEnabled(true);
-			}
-		});
 		textFieldNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		textFieldNombre.setColumns(10);
-		
-		comboBoxLocalidad = new JComboBox<String>();
-		comboBoxLocalidad.setBounds(469, 60, 280, 20);
-		comboBoxLocalidad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(comboBoxLocalidad.getSelectedItem()+"").equals("")){
-					textFieldNombre.setEnabled(false);
-				}
-				else
-					textFieldNombre.setEnabled(true);
-			}
-		});
-		comboBoxLocalidad.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JLabel lblNewLabel_2 = new JLabel("Hábitos:");
 		lblNewLabel_2.setBounds(10, 95, 78, 14);
@@ -190,8 +171,14 @@ public class BuscadorGrupo extends JPanel {
 					Grupo grupo = new Grupo();
 					if(!textFieldNombre.getText().equals(""))
 						grupo.setNombre(textFieldNombre.getText());
+					if(!(comboBoxPais.getSelectedItem()+"").equals(""))
+						grupo.setPais(comboBoxPais.getSelectedItem()+"");
+					if(!(comboBoxCiudad.getSelectedItem()+"").equals(""))
+						grupo.setPais(comboBoxCiudad.getSelectedItem()+"");
 					if(caracteristicas.size()!=0)
 						grupo.setCaracteristicas(caracteristicas);
+					if(intereses.size()!=0)
+						grupo.setIntereses(intereses);
 					//añadir al dto al atributo List<Interes>
 					Grupo[] grupoVuelta = control.getGrupos(grupo);
 					if(grupoVuelta.length!=0){
@@ -242,7 +229,6 @@ public class BuscadorGrupo extends JPanel {
 		add(lblNewLabel_1);
 		add(textFieldNombre);
 		add(btnBuscar);
-		add(comboBoxLocalidad);
 		add(boxHabitos);
 		add(lblIntereses);
 		add(verticalBox);
@@ -252,10 +238,27 @@ public class BuscadorGrupo extends JPanel {
 		lblPais.setBounds(391, 28, 46, 14);
 		add(lblPais);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(469, 27, 280, 20);
-		add(comboBox);	
-
+		
+		String[] paises= control.getPaises();
+		comboBoxPais = new JComboBox<String>(paises);	
+		comboBoxPais.setFont(new Font("Arial", Font.BOLD, 14));
+		comboBoxPais.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				comboBoxCiudad.removeAllItems();
+				String[] ciudades = control.getCiudades(comboBoxPais.getSelectedItem()+"");
+				for(int i=0;i<ciudades.length;i++){
+					comboBoxCiudad.addItem(ciudades[i]);
+				}
+			}
+		});
+		comboBoxPais.setBounds(469, 27, 280, 20);
+		add(comboBoxPais);	
+		
+		String[] ciudades = control.getCiudades(paises[0]);
+		comboBoxCiudad = new JComboBox<String>(ciudades);
+		comboBoxCiudad.setBounds(469, 60, 280, 20);
+		comboBoxCiudad.setFont(new Font("Arial", Font.BOLD, 14));
+		add(comboBoxCiudad);
 	}
 	
 	private List<Caracteristica> queCaracteristicas(){

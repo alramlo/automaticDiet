@@ -8,9 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import modelo.Caracteristica;
+import modelo.Ciudad;
 import modelo.Grupo;
 import modelo.Ingrediente;
 import modelo.Interes;
+import modelo.Pais;
 import modelo.Plato;
 import modelo.Usuario;
 import persistencia.DAL;
@@ -152,14 +154,19 @@ public class Controlador {
 					posibles.add(lgrupos.get(i));
 				}
 			}
-		}
-		if(grupo.getNombre()!=null){
 			lgrupos.clear();
 			int count=posibles.size();
 			for(int i=0; i<count; i++){
 				lgrupos.add(posibles.get(i));
 			}
 		}
+//		if(grupo.getNombre()!=null){
+//			lgrupos.clear();
+//			int count=posibles.size();
+//			for(int i=0; i<count; i++){
+//				lgrupos.add(posibles.get(i));
+//			}
+//		}
 		
 		//Segundo filtro --> caracteristicas
 		if(grupo.getCaracteristicas()!=null){
@@ -199,6 +206,32 @@ public class Controlador {
 			return dal.buscarPlatos(p,usuario);
 		else
 			return dal.buscarPlatos(p);
+	}
+	
+	public String[] getPaises(){
+		List<Pais> listaPaises = dal.getPaises();
+		String[] paises= new String[listaPaises.size()];
+		paises[0]="";
+		Iterator<Pais> itPais= listaPaises.iterator();
+		for(int i=1; itPais.hasNext(); i++){
+			
+			paises[i]=itPais.next().getNombre();
+		}
+		
+		return paises;
+	}
+	
+	public String[] getCiudades(String p){
+		List<Ciudad> listaCiudades = dal.getCiudades(p);
+		String[] ciudades= new String[listaCiudades.size()];
+		ciudades[0]="";
+		Iterator<Ciudad> itCiudad= listaCiudades.iterator();
+		for(int i=1; itCiudad.hasNext(); i++){
+			
+			ciudades[i]=itCiudad.next().getNombre();
+		}
+		
+		return ciudades;
 	}
 	
 	@SuppressWarnings("static-access")

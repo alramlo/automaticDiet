@@ -134,5 +134,13 @@ public class Grupo implements Serializable {
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
+	
+	public void setIntereses(List<Interes> lintereses){
+		this.intereses=lintereses;
+	}
+	
+	public List<Interes> getIntereses(){
+		return this.intereses;
+	}
 
 }

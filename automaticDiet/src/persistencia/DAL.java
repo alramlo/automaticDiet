@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import modelo.Caracteristica;
+import modelo.Ciudad;
 import modelo.Grupo;
 import modelo.Ingrediente;
 import modelo.Interes;
+import modelo.Pais;
 import modelo.Plato;
 import modelo.Usuario;
 import excepciones.DAOExcepcion;
@@ -25,6 +27,8 @@ public class DAL {
 	private UsuarioDAO usuarioDAO;
 	private InteresDAO interesDAO;
 	private GrupoDAO grupoDAO;
+	private PaisDAO paisDAO;
+	private CiudadDAO ciudadDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -34,6 +38,8 @@ public class DAL {
 		usuarioDAO = new UsuarioDAO();
 		interesDAO = new InteresDAO();
 		grupoDAO = new GrupoDAO();
+		paisDAO = new PaisDAO();
+		ciudadDAO = new CiudadDAO();
 	}
 	
 	// Patrón Singleton
@@ -97,5 +103,13 @@ public class DAL {
 	
 	public List<Plato> buscarPlatos(String p){
 		return platoDAO.buscarPlatos(p);
+	}
+	
+	public List<Pais> getPaises(){
+		return paisDAO.getPaises();
+	}
+	
+	public List<Ciudad> getCiudades(String p){
+		return ciudadDAO.getCiudades(p);
 	}
 }

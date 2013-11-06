@@ -1,10 +1,7 @@
 package test;
 import java.text.ParseException;
-import java.util.List;
 
-import modelo.Plato;
-import modelo.Usuario;
-import persistencia.PlatoDAO;
+import persistencia.CiudadDAO;
 public class TestSergio {
 
 
@@ -46,11 +43,14 @@ public class TestSergio {
 		//UsuarioDAO u = new UsuarioDAO();
 		//System.out.println(u.getIdUsuario("Sergio", "Campoy Arnau"));
 		
-		PlatoDAO p = new PlatoDAO();
-		Usuario u = new Usuario();
-		u.setId(1);
-		List<Plato> l = p.buscarPlatos("Cereales con leche", u);
-		System.out.println(l.size());
+//		PlatoDAO p = new PlatoDAO();
+//		Usuario u = new Usuario();
+//		u.setId(1);
+//		List<Plato> l = p.buscarPlatos("Cereales con leche", u);
+//		System.out.println(l.size());
+		
+		CiudadDAO ciudad = new CiudadDAO();
+		System.out.println(ciudad.getCiudades("Italia").get(0).getNombre());
 		
 	}
 
