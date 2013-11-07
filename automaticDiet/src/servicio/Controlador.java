@@ -143,6 +143,7 @@ public class Controlador {
 		//Iterator<Grupo> itGrupo= lgrupos.iterator();
 		for(int i=0; i<lgrupos.size(); i++){	
 			lgrupos.get(i).setCaracteristicas(dal.addCaracteristicas(lgrupos.get(i)));
+			//lgrupos.get(i).setIntereses(dal.addIntereses(lgrupos.get(i)));
 		}
 		//falta añadir los intereses
 		
@@ -167,6 +168,34 @@ public class Controlador {
 //				lgrupos.add(posibles.get(i));
 //			}
 //		}
+		
+		if(grupo.getPais()!=null){
+			posibles.clear();
+			for(int i=0; i<lgrupos.size(); i++){	
+				if(grupo.getPais().equals(lgrupos.get(i).getPais())){
+					posibles.add(lgrupos.get(i));
+				}
+			}
+			lgrupos.clear();
+			int count=posibles.size();
+			for(int i=0; i<count; i++){
+				lgrupos.add(posibles.get(i));
+			}
+		}
+	
+		if(grupo.getCiudad()!=null){
+			posibles.clear();
+			for(int i=0; i<lgrupos.size(); i++){	
+				if(grupo.getCiudad().equals(lgrupos.get(i).getCiudad())){
+					posibles.add(lgrupos.get(i));
+				}
+			}
+			lgrupos.clear();
+			int count=posibles.size();
+			for(int i=0; i<count; i++){
+				lgrupos.add(posibles.get(i));
+			}
+		}
 		
 		//Segundo filtro --> caracteristicas
 		if(grupo.getCaracteristicas()!=null){
@@ -210,7 +239,7 @@ public class Controlador {
 	
 	public String[] getPaises(){
 		List<Pais> listaPaises = dal.getPaises();
-		String[] paises= new String[listaPaises.size()];
+		String[] paises= new String[listaPaises.size()+1];
 		paises[0]="";
 		Iterator<Pais> itPais= listaPaises.iterator();
 		for(int i=1; itPais.hasNext(); i++){
@@ -223,7 +252,7 @@ public class Controlador {
 	
 	public String[] getCiudades(String p){
 		List<Ciudad> listaCiudades = dal.getCiudades(p);
-		String[] ciudades= new String[listaCiudades.size()];
+		String[] ciudades= new String[listaCiudades.size()+1];
 		ciudades[0]="";
 		Iterator<Ciudad> itCiudad= listaCiudades.iterator();
 		for(int i=1; itCiudad.hasNext(); i++){

@@ -93,6 +93,10 @@ public class DAL {
 		return grupoDAO.addCaracteristicas(g);
 	}
 	
+	public List<Interes> addIntereses(Grupo g){
+		return grupoDAO.addIntereses(g);
+	}
+	
 	public Usuario getIdUsuario(String n, String a){
 		return usuarioDAO.getIdUsuario(n,a);
 	}

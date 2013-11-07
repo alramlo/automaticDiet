@@ -174,7 +174,7 @@ public class BuscadorGrupo extends JPanel {
 					if(!(comboBoxPais.getSelectedItem()+"").equals(""))
 						grupo.setPais(comboBoxPais.getSelectedItem()+"");
 					if(!(comboBoxCiudad.getSelectedItem()+"").equals(""))
-						grupo.setPais(comboBoxCiudad.getSelectedItem()+"");
+						grupo.setCiudad(comboBoxCiudad.getSelectedItem()+"");
 					if(caracteristicas.size()!=0)
 						grupo.setCaracteristicas(caracteristicas);
 					if(intereses.size()!=0)
