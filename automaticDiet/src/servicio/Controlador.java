@@ -143,7 +143,7 @@ public class Controlador {
 		//Iterator<Grupo> itGrupo= lgrupos.iterator();
 		for(int i=0; i<lgrupos.size(); i++){	
 			lgrupos.get(i).setCaracteristicas(dal.addCaracteristicas(lgrupos.get(i)));
-			//lgrupos.get(i).setIntereses(dal.addIntereses(lgrupos.get(i)));
+			lgrupos.get(i).setIntereses(dal.addIntereses(lgrupos.get(i)));
 		}
 		//falta añadir los intereses
 		
@@ -216,6 +216,36 @@ public class Controlador {
 					}
 				}
 			}
+			lgrupos.clear();
+			int count=posibles.size();
+			for(int i=0; i<count; i++){
+				lgrupos.add(posibles.get(i));
+			}
+		}
+		
+		if(grupo.getIntereses()!=null){
+			posibles.clear();
+			//Iterator<Grupo> itGrupo3= posibles.iterator();
+			int cont=0;
+			for(int i=0; i<lgrupos.size(); i++){//grupos posibles
+				cont=0;
+				for(int j=0;j<lgrupos.get(i).getIntereses().size(); j++){//caracteristicas de cada grupo posible
+					for(int k=0;k<grupo.getIntereses().size(); k++){ //caracteristicas del grupo a buscar
+						if(grupo.getIntereses().get(k).getNombre().equals(lgrupos.get(i).getIntereses().get(j).getNombre())){
+							cont++;
+						}
+					}
+					if(cont==grupo.getIntereses().size()){
+						posibles.add(lgrupos.get(i));
+						break;
+					}
+				}
+			}
+			lgrupos.clear();
+			int count=posibles.size();
+			for(int i=0; i<count; i++){
+				lgrupos.add(posibles.get(i));
+			}
 		}
 		Grupo[] grupos = new Grupo[posibles.size()];
 		Iterator<Grupo> itGrupo= posibles.iterator();
@@ -224,6 +254,10 @@ public class Controlador {
 			grupos[i]=itGrupo.next();
 		}
 		return grupos;
+	}
+	
+	public int getNumParticipantes(Grupo g){
+		return dal.getNumParticipantes(g).size();
 	}
 	
 	public Usuario getIdUsuario(String n,String a){

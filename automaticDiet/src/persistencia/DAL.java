@@ -97,6 +97,10 @@ public class DAL {
 		return grupoDAO.addIntereses(g);
 	}
 	
+	public List<Usuario> getNumParticipantes(Grupo g){
+		return usuarioDAO.getNumParticipantes(g);
+	}
+	
 	public Usuario getIdUsuario(String n, String a){
 		return usuarioDAO.getIdUsuario(n,a);
 	}

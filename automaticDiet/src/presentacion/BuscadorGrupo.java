@@ -55,7 +55,7 @@ public class BuscadorGrupo extends JPanel {
 	
 	private final char[] caracEspe={'!','·','$','\"','%','&','/','(',')','=','?','¿','¡'
 			,'º','ª','\\','|','@','#','~','¬','€','*','+','[',']','^','{','}',';',':',','
-			,'.','-','<','>'};
+			,'-','<','>'};
 
 	/**
 	 * Create the panel.
@@ -99,65 +99,50 @@ public class BuscadorGrupo extends JPanel {
 		boxHabitos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		boxHabitos.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
-		//obtener todas las caracteristicas
-				//Caracteristica[] caracteristica=control.getCaracteristicas();
 				
-				//for(int i=0;i<caracteristica.length;i++){
-				
-					chckbxBasquet = new JCheckBox("BALONCESTO");
-					boxHabitos.add(chckbxBasquet);
-					chckbxBasquet.setFont(new Font("Arial", Font.PLAIN, 14));
-					
-					chckbxCorrer = new JCheckBox("CORRER");
-					boxHabitos.add(chckbxCorrer);
-					chckbxCorrer.setFont(new Font("Arial", Font.PLAIN, 14));
-					
-					chckbxEstudios = new JCheckBox("ESTUDIOS");
-					boxHabitos.add(chckbxEstudios);
-					chckbxEstudios.setFont(new Font("Arial", Font.PLAIN, 14));
-					
-					chckbxFutbol = new JCheckBox("FUTBOL");
-					boxHabitos.add(chckbxFutbol);
-					chckbxFutbol.setFont(new Font("Arial", Font.PLAIN, 14));
-					
-					chckbxGastronomia = new JCheckBox("GASTRONOMÍA");
-					boxHabitos.add(chckbxGastronomia);
-					chckbxGastronomia.setFont(new Font("Arial", Font.PLAIN, 14));
-				//}
-					
-					Box verticalBox = Box.createVerticalBox();
-					verticalBox.setBounds(469, 105, 280, 150);
-					verticalBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
-					
-					//obtener todos los intereses
-//					Interes[] interes = control.getIntereses();
-//					
-//					for(int i=0; i<interes.length;i++){
-//					
-//						JCheckBox chckbxInteres1 = new JCheckBox(interes[i].getNombre());
-//						verticalBox.add(chckbxInteres1);
-//						chckbxInteres1.setFont(new Font("Arial", Font.PLAIN, 14));
-//					}
-					
-					chckbxBajar = new JCheckBox("BAJAR PESO");
-					verticalBox.add(chckbxBajar);
-					chckbxBajar.setFont(new Font("Arial", Font.PLAIN, 14));
+		chckbxBasquet = new JCheckBox("BALONCESTO");
+		boxHabitos.add(chckbxBasquet);
+		chckbxBasquet.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		chckbxCorrer = new JCheckBox("CORRER");
+		boxHabitos.add(chckbxCorrer);
+		chckbxCorrer.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		chckbxEstudios = new JCheckBox("ESTUDIOS");
+		boxHabitos.add(chckbxEstudios);
+		chckbxEstudios.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		chckbxFutbol = new JCheckBox("FUTBOL");
+		boxHabitos.add(chckbxFutbol);
+		chckbxFutbol.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		chckbxGastronomia = new JCheckBox("GASTRONOMÍA");
+		boxHabitos.add(chckbxGastronomia);
+		chckbxGastronomia.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		Box verticalBox = Box.createVerticalBox();
+		verticalBox.setBounds(469, 105, 280, 150);
+		verticalBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
+		
+		chckbxBajar = new JCheckBox("BAJAR PESO");
+		verticalBox.add(chckbxBajar);
+		chckbxBajar.setFont(new Font("Arial", Font.PLAIN, 14));
 
-					chckbxConocer = new JCheckBox("CONOCER GENTE");
-					verticalBox.add(chckbxConocer);
-					chckbxConocer.setFont(new Font("Arial", Font.PLAIN, 14));
-						
-					chckbxDefinir = new JCheckBox("DEFINIR");
-					verticalBox.add(chckbxDefinir);
-					chckbxDefinir.setFont(new Font("Arial", Font.PLAIN, 14));
-					
-					chckbxMuscular = new JCheckBox("MUSCULAR");
-					verticalBox.add(chckbxMuscular);
-					chckbxMuscular.setFont(new Font("Arial", Font.PLAIN, 14));
-					
-					chckbxSubir = new JCheckBox("SUBIR PESO");
-					verticalBox.add(chckbxSubir);
-					chckbxSubir.setFont(new Font("Arial", Font.PLAIN, 14));
+		chckbxConocer = new JCheckBox("CONOCER GENTE");
+		verticalBox.add(chckbxConocer);
+		chckbxConocer.setFont(new Font("Arial", Font.PLAIN, 14));
+			
+		chckbxDefinir = new JCheckBox("DEFINIR");
+		verticalBox.add(chckbxDefinir);
+		chckbxDefinir.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		chckbxMuscular = new JCheckBox("MUSCULAR");
+		verticalBox.add(chckbxMuscular);
+		chckbxMuscular.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		chckbxSubir = new JCheckBox("SUBIR PESO");
+		verticalBox.add(chckbxSubir);
+		chckbxSubir.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JButton btnBuscar = new JButton("   Buscar");
 		btnBuscar.setBounds(589, 266, 160, 35);
@@ -179,11 +164,11 @@ public class BuscadorGrupo extends JPanel {
 						grupo.setCaracteristicas(caracteristicas);
 					if(intereses.size()!=0)
 						grupo.setIntereses(intereses);
-					//añadir al dto al atributo List<Interes>
+					
 					Grupo[] grupoVuelta = control.getGrupos(grupo);
 					if(grupoVuelta.length!=0){
 						
-					table_1 = new JTable(grupoVuelta.length+1,4);
+					table_1 = new JTable(grupoVuelta.length+1,5);
 					table_1.setBounds(10, 312, 780, 277);
 					table_1.getColumnModel().getColumn(0).setPreferredWidth(180);
 					table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
@@ -191,18 +176,20 @@ public class BuscadorGrupo extends JPanel {
 					table_1.getColumnModel().getColumn(3).setPreferredWidth(180);
 					add(table_1);
 					
-					Object[][] o=new Object[grupoVuelta.length+1][4];
+					Object[][] o=new Object[grupoVuelta.length+1][5];
 					
 					o[0][0]="Privado";
 					o[0][1]="Nombre";
-					o[0][2]="Poblacion";
-					o[0][3]="Participantes";
+					o[0][2]="Pais";
+					o[0][3]="Ciudad";
+					o[0][4]="Participantes";
 					
 					for(int i=1;i<=grupoVuelta.length;i++){
 						o[i][0]=grupoVuelta[i-1].getPrivado();
 						o[i][1]=grupoVuelta[i-1].getNombre();
-						//o[i][2]=grupoVuelta[i-1].getPoblacion();
-						o[i][3]="Prueba";
+						o[i][2]=grupoVuelta[i-1].getPais();
+						o[i][3]=grupoVuelta[i-1].getCiudad();
+						o[i][4]=control.getNumParticipantes(grupoVuelta[i-1]);
 					}
 					
 					
@@ -210,7 +197,7 @@ public class BuscadorGrupo extends JPanel {
 					table_1.setModel(new DefaultTableModel(
 							o,
 							new String[] {
-								"Privado", "Nombre", "Población", "Número participantes"
+								"Privado", "Nombre", "Pais", "Ciudad", "Número participantes"
 							}
 						));
 					

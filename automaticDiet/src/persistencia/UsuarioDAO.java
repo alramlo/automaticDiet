@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import modelo.Grupo;
 import modelo.Plato;
 import modelo.Usuario;
 
@@ -56,5 +57,25 @@ public Usuario getIdUsuario(String n, String a){
 		}
 		
 	}
+public List<Usuario> getNumParticipantes(Grupo g){
+	try{
+		Query q;
+		q = entityManager.createQuery("SELECT u "
+				+ "FROM Usuario u, UsuarioGrupo ug, Grupo g "
+				+ "WHERE g.nombre=:nom "
+				+ "AND g.pais=:p "
+				+ "AND g.ciudad=:c "
+				+ "AND u.id=ug.usuario.id "
+				+ "AND ug.grupo.id=g.id");
+		q.setParameter("nom", g.getNombre());
+		q.setParameter("p", g.getPais());
+		q.setParameter("c", g.getCiudad());
+		return (List<Usuario>) q.getResultList();
+	}catch(Exception e){
+		System.out.println("Error:"+e);
+		return null;
+		
+	}
+}
 	
 }

@@ -60,13 +60,13 @@ public class GrupoDAO extends AbstractDAO{
 	public List<Interes> addIntereses(Grupo grupo){
 		try {
 			Query q;
-			q = entityManager.createQuery("SELECT c "
-					+ "FROM Caracteristica c, GrupoCaracteristica gc "
-					+ "WHERE gc.caracteristica.id=c.id AND "
-					+ "gc.grupo.id=:ident");
+			q = entityManager.createQuery("SELECT i "
+					+ "FROM Interes i, GrupoInteres gi "
+					+ "WHERE gi.interes.id=i.id AND "
+					+ "gi.grupo.id=:ident");
 				q.setParameter("ident", grupo.getId());
 				
-				return null; //(List<Caracteristica>)q.getResultList(); 
+				return (List<Interes>)q.getResultList(); 
 		} catch (Exception e) {
 			System.out.println("Error: "+e);
 			return null;
