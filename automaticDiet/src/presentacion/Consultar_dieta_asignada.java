@@ -40,13 +40,13 @@ public class Consultar_dieta_asignada extends JPanel
 	JButton btn_detalle = new JButton("Ver detalles");
 	Plato[] platos;
 	
+	
 	/**
 	 * Create the panel.
 	 */
 	public Consultar_dieta_asignada(final Controlador c)
 	{
-		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Dieta asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		this.setSize(800, 600);
+		this.setSize(768, 580);
 		
 		tabla_dieta = new JTable(/*new Tabla_dieta_semanal(c)*/);
 		tabla_dieta.setEnabled(false);
@@ -68,7 +68,7 @@ public class Consultar_dieta_asignada extends JPanel
 		tabla_dieta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabla_dieta.setRowSelectionAllowed(false);
 		tabla_dieta.setFont(new Font("Arial", Font.PLAIN, 14));
-		tabla_dieta.setRowHeight(100);
+//		tabla_dieta.setRowHeight(60);
 //		textAreaElaboracion.setLineWrap(true);
 //		textAreaElaboracion.setWrapStyleWord(true);
 		
@@ -188,56 +188,48 @@ public class Consultar_dieta_asignada extends JPanel
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(fecha_actual, GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-									.addGap(18)
-									.addComponent(btn_detalle, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btn_modificar, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btn_lista_compra, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(lblHistrico, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblConsultar, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(dia_inicio, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblFechaInicial, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblFechaFinal)
-										.addComponent(dia_final, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addComponent(btn_consultar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
-							.addContainerGap())))
+						.addComponent(tabla_dieta, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btn_detalle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btn_modificar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btn_lista_compra, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblHistrico, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblConsultar, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(dia_inicio, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblFechaInicial, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblFechaFinal)
+								.addComponent(dia_final, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addComponent(btn_consultar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(10)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btn_detalle, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-								.addComponent(btn_modificar, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-								.addComponent(btn_lista_compra, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE))
-							.addGap(12))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(fecha_actual, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(btn_detalle, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+							.addComponent(btn_modificar, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+							.addComponent(btn_lista_compra, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE))
+						.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(tabla_dieta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
