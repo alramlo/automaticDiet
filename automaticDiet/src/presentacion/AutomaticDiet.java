@@ -257,7 +257,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Indicadores personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				cambiaPanel(new Indicadores_personales());
+				//cambiaPanel(new Indicadores_personales());
 			}
 		});
 		menu_indicadores.setOpaque(false);
