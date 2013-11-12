@@ -127,4 +127,8 @@ public class DAL {
 	public List<Seguimiento> getSegUsuario(int idUsuario){
 		return seguimientoDao.getSegUsuario(idUsuario);
 	}
+	
+	public List<Plato> buscarPlatosPorAutor(Usuario u){
+		return platoDAO.buscarPlatosPorAutor(u);
+	}
 }

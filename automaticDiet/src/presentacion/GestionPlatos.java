@@ -30,9 +30,7 @@ public class GestionPlatos extends JPanel {
 	private JTextField textFieldNombrePlato;
 	private JTextField textFieldApellidosAutor;
 	private JTextField textFieldNombreAutor;
-	//private JTable table;
 	private Controlador control;
-	private JTable table_1;
 
 	/**
 	 * Create the panel.
@@ -117,15 +115,15 @@ public class GestionPlatos extends JPanel {
 				Usuario usuario;
 				List<Plato> platos=null;
 				//FILTRO POR AUTOR
-				if(!textFieldNombreAutor.getText().equals("") && !textFieldApellidosAutor.getText().equals("")){
+				if(!textFieldNombreAutor.getText().equals("") && !textFieldApellidosAutor.getText().equals("") && textFieldNombrePlato.getText().equals("")){
 					usuario = getIdUsuario(textFieldNombreAutor.getText(),textFieldApellidosAutor.getText());
 					if(usuario==null){
 						JOptionPane.showMessageDialog(null, "No existe el usuario", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					else{
-						platos=buscarPlatos(textFieldNombrePlato.getText(),usuario);
+						platos=control.buscarPlatosPorAutor(usuario);
 						if(platos!=null)
-							mostrar(platos);
+							System.out.println(platos.get(0).getNombre());
 						else
 							JOptionPane.showMessageDialog(null, "No existe el plato", "Error", JOptionPane.ERROR_MESSAGE);
 					}
@@ -169,24 +167,6 @@ public class GestionPlatos extends JPanel {
 	}
 	
 	private void mostrar(List<Plato> l){
-		table_1 = new JTable(l.size(),5);
-		table_1.setBounds(717, 202, -654, 326);
-		add(table_1);
-		Object[][] o = new Object[l.size()+100][5];
-		
-		for(int i=0;i<l.size();i++){
-			o[i][0]=l.get(i).getNombre();
-			o[i][0]="Prueba";
-			o[i][0]="";
-			o[i][0]="";
-			o[i][0]="";
-		}
-		
-		table_1.setModel(new DefaultTableModel(
-				o,
-				new String[] {
-					"Nombre del plato", "Autor", "Calorias", "Precio", "Valoración"
-				}
-			));
+
 	}
 }

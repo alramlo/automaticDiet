@@ -363,5 +363,9 @@ public class Controlador {
 		}
 		return datos;
 	}
+	
+	public List<Plato> buscarPlatosPorAutor(Usuario u){
+		return dal.buscarPlatosPorAutor(u);
+	}
 }
 

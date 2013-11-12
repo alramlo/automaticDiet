@@ -43,7 +43,7 @@ public Usuario getIdUsuario(String n, String a){
 		
 		try{
 			Query q;
-			q = entityManager.createQuery("SELECT u.id "
+			q = entityManager.createQuery("SELECT u "
 					+ "FROM Usuario u "
 					+ "WHERE u.nombre=:nom "
 					+ "AND u.apellidos=:apell");
