@@ -354,7 +354,7 @@ public class Controlador {
 		return fechas;
 	}
 	
-	private Seguimiento[] getSegUsuario(int idUsuario){
+	public Seguimiento[] getSegUsuario(int idUsuario){
 		List<Seguimiento> lista = dal.getSegUsuario(idUsuario);
 		Seguimiento[] datos = new Seguimiento[lista.size()];
 		Iterator<Seguimiento> itDatos= lista.iterator();
