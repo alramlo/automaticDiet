@@ -280,42 +280,42 @@ public class AutomaticDiet
 		);
 		menu_usuario.setLayout(gl_menu_usuario);
 		
-//		JPanel menu_admin = new JPanel();
-//		menu_admin.setOpaque(false);
-//		menu_admin.setFont(new Font("Arial", Font.PLAIN, 14));
-//		menu_admin.setAlignmentY(Component.TOP_ALIGNMENT);
-//		menu_admin.setAlignmentX(Component.LEFT_ALIGNMENT);
-//		tabsMenuAdministrador.addTab("Administrador", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_admin, null);
-//		
-//		JButton menu_gestionGrupos = new JButton("<html><p>Gestión</p><p>grupos</p></html>");
-//		menu_gestionGrupos.setSelected(true);
-//		menu_gestionGrupos.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent arg0)
-//			{
-//				//cambiaPanel(new Indicadores_personales());
-//			}
-//		});
-//		menu_gestionGrupos.setOpaque(false);
-//		menu_gestionGrupos.setMargin(new Insets(2, 2, 2, 2));
-//		menu_gestionGrupos.setHorizontalTextPosition(SwingConstants.CENTER);
-//		menu_gestionGrupos.setFont(new Font("Arial", Font.PLAIN, 14));
-//		menu_gestionGrupos.setBorderPainted(false);
-//		menu_gestionGrupos.setBorder(null);
-//		GroupLayout gl_menu_admin = new GroupLayout(menu_admin);
-//		gl_menu_admin.setHorizontalGroup(
-//			gl_menu_admin.createParallelGroup(Alignment.LEADING)
-//				.addGroup(gl_menu_admin.createSequentialGroup()
-//					.addGap(1)
-//					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-//		);
-//		gl_menu_admin.setVerticalGroup(
-//			gl_menu_admin.createParallelGroup(Alignment.LEADING)
-//				.addGroup(gl_menu_admin.createSequentialGroup()
-//					.addGap(5)
-//					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-//		);
-//		menu_admin.setLayout(gl_menu_admin);
+		JPanel menu_admin = new JPanel();
+		menu_admin.setOpaque(false);
+		menu_admin.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_admin.setAlignmentY(Component.TOP_ALIGNMENT);
+		menu_admin.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tabsMenuAdministrador.addTab("Administrador", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_admin, null);
+		
+		JButton menu_gestionGrupos = new JButton("<html><p>Gestión</p><p>grupos</p></html>");
+		menu_gestionGrupos.setSelected(true);
+		menu_gestionGrupos.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				cambiaPanel(new GestionPlatos());
+			}
+		});
+		menu_gestionGrupos.setOpaque(false);
+		menu_gestionGrupos.setMargin(new Insets(2, 2, 2, 2));
+		menu_gestionGrupos.setHorizontalTextPosition(SwingConstants.CENTER);
+		menu_gestionGrupos.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_gestionGrupos.setBorderPainted(false);
+		menu_gestionGrupos.setBorder(null);
+		GroupLayout gl_menu_admin = new GroupLayout(menu_admin);
+		gl_menu_admin.setHorizontalGroup(
+			gl_menu_admin.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_admin.createSequentialGroup()
+					.addGap(1)
+					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_menu_admin.setVerticalGroup(
+			gl_menu_admin.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_menu_admin.createSequentialGroup()
+					.addGap(5)
+					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+		);
+		menu_admin.setLayout(gl_menu_admin);
 			
 	
 		JPanel menu_dietas = new JPanel();

@@ -30,8 +30,9 @@ public class GestionPlatos extends JPanel {
 	private JTextField textFieldNombrePlato;
 	private JTextField textFieldApellidosAutor;
 	private JTextField textFieldNombreAutor;
-	private JTable table;
+	//private JTable table;
 	private Controlador control;
+	private JTable table_1;
 
 	/**
 	 * Create the panel.
@@ -54,19 +55,19 @@ public class GestionPlatos extends JPanel {
 		JButton btnNewButtonEliminar = new JButton("ELIMINAR");
 		btnNewButtonEliminar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/eliminar-icono-4912-32.png")));
 		btnNewButtonEliminar.setFont(new Font("Arial", Font.BOLD, 16));
-		btnNewButtonEliminar.setBounds(100, 548, 145, 41);
+		btnNewButtonEliminar.setBounds(101, 532, 172, 41);
 		add(btnNewButtonEliminar);
 		
 		JButton btnNewButtonAnadir = new JButton("A\u00D1ADIR");
 		btnNewButtonAnadir.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit_add.png")));
 		btnNewButtonAnadir.setFont(new Font("Arial", Font.BOLD, 16));
-		btnNewButtonAnadir.setBounds(307, 548, 145, 41);
+		btnNewButtonAnadir.setBounds(305, 532, 145, 41);
 		add(btnNewButtonAnadir);
 		
 		JButton btnModificar = new JButton("MODIFICAR");
 		btnModificar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit.png")));
 		btnModificar.setFont(new Font("Arial", Font.BOLD, 16));
-		btnModificar.setBounds(516, 548, 159, 41);
+		btnModificar.setBounds(483, 532, 182, 41);
 		add(btnModificar);
 		
 		JPanel panel = new JPanel();
@@ -152,6 +153,10 @@ public class GestionPlatos extends JPanel {
 		panel.add(btnNewButtonBuscar);
 		btnNewButtonBuscar.setFont(new Font("Arial", Font.BOLD, 16));
 		btnNewButtonBuscar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/buscar.png")));
+		
+//		table_1 = new JTable();
+//		table_1.setBounds(29, 504, 744, -282);
+//		add(table_1);
 
 	}
 	
@@ -164,12 +169,20 @@ public class GestionPlatos extends JPanel {
 	}
 	
 	private void mostrar(List<Plato> l){
-		table = new JTable(l.size(),5);
-		table.setBounds(717, 202, -654, 326);
-		add(table);
-		Object[][] o = new Object[l.size()][5];
+		table_1 = new JTable(l.size(),5);
+		table_1.setBounds(717, 202, -654, 326);
+		add(table_1);
+		Object[][] o = new Object[l.size()+100][5];
 		
-		table.setModel(new DefaultTableModel(
+		for(int i=0;i<l.size();i++){
+			o[i][0]=l.get(i).getNombre();
+			o[i][0]="Prueba";
+			o[i][0]="";
+			o[i][0]="";
+			o[i][0]="";
+		}
+		
+		table_1.setModel(new DefaultTableModel(
 				o,
 				new String[] {
 					"Nombre del plato", "Autor", "Calorias", "Precio", "Valoración"
