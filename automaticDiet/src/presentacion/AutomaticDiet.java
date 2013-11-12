@@ -256,7 +256,8 @@ public class AutomaticDiet
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				//cambiaPanel(new Indicadores_personales());
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Indicadores personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				cambiaPanel(new Indicadores_personales());
 			}
 		});
 		menu_indicadores.setOpaque(false);
@@ -293,6 +294,7 @@ public class AutomaticDiet
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				cambiaPanel(new GestionPlatos());
 			}
 		});
@@ -375,6 +377,7 @@ public class AutomaticDiet
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Elaboracion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				cambiaPanel(new ElaboracionPlato());
 			}
 		}
@@ -412,6 +415,7 @@ public class AutomaticDiet
 		menu_buscador_grupos.setBorderPainted(false);
 		menu_buscador_grupos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Buscador de Grupos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				cambiaPanel(new BuscadorGrupo());
 			}
 		});
@@ -445,8 +449,8 @@ public class AutomaticDiet
 	
 	private void _limpiarMenuCentral()
 	{
-//		panel_central.removeAll();
-//		panel_central.revalidate();
-//		panel_central.repaint();
+		panel_central.removeAll();
+		panel_central.revalidate();
+		panel_central.repaint();
 	}
 }

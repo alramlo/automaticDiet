@@ -10,6 +10,7 @@ import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Pais;
 import modelo.Plato;
+import modelo.Seguimiento;
 import modelo.Usuario;
 import excepciones.DAOExcepcion;
 
@@ -29,6 +30,7 @@ public class DAL {
 	private GrupoDAO grupoDAO;
 	private PaisDAO paisDAO;
 	private CiudadDAO ciudadDAO;
+	private SeguimientoDAO seguimientoDao;
 
 
 	private DAL() throws DAOExcepcion {
@@ -119,5 +121,10 @@ public class DAL {
 	
 	public List<Ciudad> getCiudades(String p){
 		return ciudadDAO.getCiudades(p);
+	}
+	
+	//Seguimiento
+	public List<Seguimiento> getSegUsuario(int idUsuario){
+		return seguimientoDao.getSegUsuario(idUsuario);
 	}
 }

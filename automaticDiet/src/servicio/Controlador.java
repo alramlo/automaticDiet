@@ -14,6 +14,7 @@ import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Pais;
 import modelo.Plato;
+import modelo.Seguimiento;
 import modelo.Usuario;
 import persistencia.DAL;
 import excepciones.DAOExcepcion;
@@ -351,6 +352,16 @@ public class Controlador {
 			break;
 	}
 		return fechas;
+	}
+	
+	private Seguimiento[] getSegUsuario(int idUsuario){
+		List<Seguimiento> lista = dal.getSegUsuario(idUsuario);
+		Seguimiento[] datos = new Seguimiento[lista.size()];
+		Iterator<Seguimiento> itDatos= lista.iterator();
+		for(int i=0; itDatos.hasNext(); i++){			
+			datos[i] = itDatos.next();
+		}
+		return datos;
 	}
 }
 
