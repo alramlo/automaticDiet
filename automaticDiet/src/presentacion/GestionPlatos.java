@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -95,6 +96,7 @@ public class GestionPlatos extends JPanel {
 		
 		JButton btnNewButton = new JButton("BUSCAR");
 		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("null")
 			public void actionPerformed(ActionEvent arg0) {
 				//FILTRO NOMBRE PLATO
 				if(!textFieldPlato.getText().equals("") && textFieldNombre.getText().equals("") && textFieldApellidos.getText().equals("")){
@@ -128,7 +130,7 @@ public class GestionPlatos extends JPanel {
 					}
 				}//FIN BUSCAR POR NOMBRE PLATO
 				//BUSCAR POR AUTOR COMPLETO
-				if(textFieldPlato.getText().equals("") && !textFieldNombre.getText().equals("") && !textFieldApellidos.getText().equals("")){
+				else if(textFieldPlato.getText().equals("") && !textFieldNombre.getText().equals("") && !textFieldApellidos.getText().equals("")){
 					Usuario autor = control.getIdUsuario(textFieldNombre.getText(), textFieldApellidos.getText());
 					List<Plato> l = control.buscarPlatosPorAutor(autor);
 					if(l!=null){
@@ -156,6 +158,115 @@ public class GestionPlatos extends JPanel {
 					else
 						JOptionPane.showMessageDialog(null, "No existen platos para ese autor", "Error", JOptionPane.ERROR_MESSAGE);
 				}//FIN BUSCAR POR AUTOR COMPLETO
+				//BUSCAR SOLO POR NOMBRE AUTOR
+				else if(textFieldPlato.getText().equals("") && textFieldApellidos.getText().equals("") && !textFieldNombre.getText().equals("") ){
+					List<Usuario> usuarios = control.getUsuarioPorNombre(textFieldNombre.getText());
+					if(usuarios!=null){
+						List<Plato> platos = new ArrayList<Plato>();
+						for(int i=0;i<usuarios.size();i++){
+							platos.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
+						}
+						if(platos.size()!=0){
+							Object[][] o  = new Object[platos.size()+1][5];
+							o[0][0]="Plato";
+							o[0][1]="Autor";
+							o[0][2]="Calorias";
+							o[0][3]="Precio";
+							o[0][4]="Valoración";
+							for(int i=1;i<=platos.size();i++){
+								o[i][0]=platos.get(i-1).getNombre();
+								o[i][1]=platos.get(i-1).getNombre();
+								o[i][2]=platos.get(i-1).getNombre();
+								o[i][3]=platos.get(i-1).getNombre();
+								o[i][4]=platos.get(i-1).getNombre();
+							}
+							table.setModel(new DefaultTableModel(
+							o,
+							new String[] {
+								"Plato", "Autor", "Calorias", "Precio", "Valoración"
+							}
+						));
+						}else
+							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+					}else
+						JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+				}//FIN BUSCAR POR AUTOR
+				//BUSQUEDA POR APELLIDO
+				else if(textFieldPlato.getText().equals("") && textFieldNombre.getText().equals("") && !textFieldApellidos.getText().equals("")){
+					List<Usuario> usuarios = control.getUsuarioPorApellidos(textFieldApellidos.getText());
+					if(usuarios!=null){
+						List<Plato> platos = new ArrayList<Plato>();
+						for(int i=0;i<usuarios.size();i++){
+							platos.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
+						}
+						if(platos.size()!=0){
+							Object[][] o  = new Object[platos.size()+1][5];
+							o[0][0]="Plato";
+							o[0][1]="Autor";
+							o[0][2]="Calorias";
+							o[0][3]="Precio";
+							o[0][4]="Valoración";
+							for(int i=1;i<=platos.size();i++){
+								o[i][0]=platos.get(i-1).getNombre();
+								o[i][1]=platos.get(i-1).getNombre();
+								o[i][2]=platos.get(i-1).getNombre();
+								o[i][3]=platos.get(i-1).getNombre();
+								o[i][4]=platos.get(i-1).getNombre();
+							}
+							table.setModel(new DefaultTableModel(
+							o,
+							new String[] {
+								"Plato", "Autor", "Calorias", "Precio", "Valoración"
+							}
+						));
+						}else
+							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+					}else
+						JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+				}//FIN BUSQUEDA POR APELLIDOS
+				//BUSQUEDA COMBINANDO PLATO Y AUTOR
+				else{
+					List<Usuario> usuarios=null;
+					if(!textFieldPlato.getText().equals("") && !textFieldNombre.getText().equals("") && textFieldApellidos.getText().equals(""))
+						usuarios= control.getUsuarioPorNombre(textFieldNombre.getText());
+					else if(!textFieldPlato.getText().equals("") && !textFieldApellidos.getText().equals("") && textFieldNombre.getText().equals(""))
+						usuarios= control.getUsuarioPorApellidos(textFieldApellidos.getText());
+					else{
+						usuarios = new ArrayList<Usuario>();
+						usuarios.add(control.getIdUsuario(textFieldNombre.getText(), textFieldApellidos.getText()));
+						System.out.println(usuarios.get(0));
+					}
+					
+					if(usuarios!=null && usuarios.get(0)!=null){
+						List<Plato> platos = new ArrayList<Plato>();
+						for(int i=0;i<usuarios.size();i++){
+							platos.addAll(control.buscarPlatos(textFieldPlato.getText(), usuarios.get(i)));
+						}
+						if(platos.size()!=0){
+							Object[][] o  = new Object[platos.size()+1][5];
+							o[0][0]="Plato";
+							o[0][1]="Autor";
+							o[0][2]="Calorias";
+							o[0][3]="Precio";
+							o[0][4]="Valoración";
+							for(int i=1;i<=platos.size();i++){
+								o[i][0]=platos.get(i-1).getNombre();
+								o[i][1]=platos.get(i-1).getNombre();
+								o[i][2]=platos.get(i-1).getNombre();
+								o[i][3]=platos.get(i-1).getNombre();
+								o[i][4]=platos.get(i-1).getNombre();
+							}
+							table.setModel(new DefaultTableModel(
+							o,
+							new String[] {
+								"Plato", "Autor", "Calorias", "Precio", "Valoración"
+							}
+						));
+						}else
+							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+					}else
+						JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+				}//FIN BUSQUEDA COMBINANDO PLATO Y AUTOR
 				
 			}
 		});

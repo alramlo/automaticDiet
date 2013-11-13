@@ -131,4 +131,12 @@ public class DAL {
 	public List<Plato> buscarPlatosPorAutor(Usuario u){
 		return platoDAO.buscarPlatosPorAutor(u);
 	}
+
+	public List<Usuario> getUsuarioPorNombre(String nombre) {
+		return usuarioDAO.getUsuarioPorNombre(nombre);
+	}
+
+	public List<Usuario> getUsuarioPorApellidos(String apellidos) {
+		return usuarioDAO.getUsuarioPorApellios(apellidos);
+	}
 }

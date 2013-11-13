@@ -367,5 +367,13 @@ public class Controlador {
 	public List<Plato> buscarPlatosPorAutor(Usuario u){
 		return dal.buscarPlatosPorAutor(u);
 	}
+
+	public List<Usuario> getUsuarioPorNombre(String nombre) {
+		return dal.getUsuarioPorNombre(nombre);
+	}
+
+	public List<Usuario> getUsuarioPorApellidos(String apellidos) {
+		return dal.getUsuarioPorApellidos(apellidos);
+	}
 }
 

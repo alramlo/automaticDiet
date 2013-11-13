@@ -77,5 +77,35 @@ public List<Usuario> getNumParticipantes(Grupo g){
 		
 	}
 }
+
+public List<Usuario> getUsuarioPorNombre(String nombre) {
+	try{
+		Query q;
+		q = entityManager.createQuery("SELECT u "
+				+ "FROM Usuario u "
+				+ "WHERE u.nombre=:nom");
+		q.setParameter("nom", nombre);
+		return (List<Usuario>) q.getResultList();
+	}catch(Exception e){
+		System.out.println("Error:"+e);
+		return null;
+		
+	}
+}
+
+public List<Usuario> getUsuarioPorApellios(String apellidos) {
+	try{
+		Query q;
+		q = entityManager.createQuery("SELECT u "
+				+ "FROM Usuario u "
+				+ "WHERE u.apellidos=:apell");
+		q.setParameter("apell", apellidos);
+		return (List<Usuario>) q.getResultList();
+	}catch(Exception e){
+		System.out.println("Error:"+e);
+		return null;
+		
+	}
+}
 	
 }
