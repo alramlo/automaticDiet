@@ -375,5 +375,9 @@ public class Controlador {
 	public List<Usuario> getUsuarioPorApellidos(String apellidos) {
 		return dal.getUsuarioPorApellidos(apellidos);
 	}
+
+	public List<Usuario> getUsuarios() {
+		return dal.getUsuarios();
+	}
 }
 

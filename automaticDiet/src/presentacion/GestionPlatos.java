@@ -146,6 +146,8 @@ public class GestionPlatos extends JPanel {
 				//FILTRO NOMBRE PLATO
 				if(!textFieldPlato.getText().equals("") && textFieldNombre.getText().equals("") && textFieldApellidos.getText().equals("")){
 					try {
+						//List<String> posibles = getFullString(textFieldPlato.getText(),0);
+						//for(int i=0;i<posibles.size();i++)
 						Plato plato = control.consultarPlato(textFieldPlato.getText());
 						if(plato!=null){
 							Object[][] o  = new Object[2][5];
@@ -363,6 +365,7 @@ public class GestionPlatos extends JPanel {
 	
 	private List<String> getFullString(String s, int tipo){
 		List<String> res=new ArrayList<String>();
+		List<Usuario> usuarios = null;
 		switch(tipo){
 			case 0://nombre plato
 				String[] platos = control.todosPlatos();
@@ -373,8 +376,20 @@ public class GestionPlatos extends JPanel {
 				}
 				break;
 			case 1: //nombre usuario
+				usuarios = control.getUsuarios();
+				for(int i=0; i<usuarios.size();i++){
+					if(usuarios.get(i).getNombre().substring(0, s.length()).equals(s)){
+						res.add(usuarios.get(i).getNombre());
+					}
+				}
 				break;
 			case 2://apellidos usuario
+				usuarios = control.getUsuarios();
+				for(int i=0; i<usuarios.size();i++){
+					if(usuarios.get(i).getApellidos().substring(0, s.length()).equals(s)){
+						res.add(usuarios.get(i).getNombre());
+					}
+				}
 				break;
 		}
 		return res;

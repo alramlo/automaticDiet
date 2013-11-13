@@ -139,4 +139,8 @@ public class DAL {
 	public List<Usuario> getUsuarioPorApellidos(String apellidos) {
 		return usuarioDAO.getUsuarioPorApellios(apellidos);
 	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarioDAO.getUsuarios();
+	}
 }

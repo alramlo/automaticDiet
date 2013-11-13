@@ -107,5 +107,18 @@ public List<Usuario> getUsuarioPorApellios(String apellidos) {
 		
 	}
 }
+
+public List<Usuario> getUsuarios() {
+	try{
+		Query q;
+		q = entityManager.createQuery("SELECT u "
+				+ "FROM Usuario u ");
+		return (List<Usuario>) q.getResultList();
+	}catch(Exception e){
+		System.out.println("Error:"+e);
+		return null;
+		
+	}
+}
 	
 }
