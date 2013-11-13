@@ -23,7 +23,7 @@ import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 
-public class GestionPlatos2 extends JPanel {
+public class GestionPlatos extends JPanel {
 	/**
 	 * 
 	 */
@@ -37,7 +37,7 @@ public class GestionPlatos2 extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GestionPlatos2() {
+	public GestionPlatos() {
 		
 		setSize(new Dimension(800, 600));
 		this.setSize(800, 600);
