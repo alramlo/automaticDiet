@@ -295,7 +295,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				cambiaPanel(new GestionPlatos());
+				cambiaPanel(new GestionPlatos2());
 			}
 		});
 		menu_gestionGrupos.setOpaque(false);

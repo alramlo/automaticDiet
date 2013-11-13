@@ -105,7 +105,7 @@ public class PlatoDAO extends AbstractDAO {
 	public List<Plato> buscarPlatosPorAutor(Usuario u){
 		try{
 			Query q;
-			q = entityManager.createQuery("SELECT p FROM Plato p WHERE p.usuario=:nom");
+			q = entityManager.createQuery("SELECT p FROM Plato p WHERE p.usuario.id=:nom");
 			q.setParameter("nom", u.getId());
 			return (List<Plato>)q.getResultList();
 			}catch(Exception e){
