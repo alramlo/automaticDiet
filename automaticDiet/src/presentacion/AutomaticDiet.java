@@ -37,6 +37,8 @@ import java.awt.event.ItemEvent;
 
 import javax.swing.BoxLayout;
 
+import modelo.Usuario;
+
 public class AutomaticDiet
 {
 	
@@ -295,7 +297,9 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				cambiaPanel(new GestionPlatos());
+				Usuario user = new Usuario();
+				user.setDni("11111111a");
+				cambiaPanel(new GestionPlatos(user));
 			}
 		});
 		menu_gestionGrupos.setOpaque(false);

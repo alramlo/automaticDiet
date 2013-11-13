@@ -37,14 +37,17 @@ public class GestionPlatos extends JPanel {
 	private JTextField textFieldApellidos;
 	private JTable table;
 	private Controlador control;
+	private Usuario userConected;
 
 	/**
 	 * Create the panel.
 	 */
-	public GestionPlatos() {
+	public GestionPlatos(Usuario user) {
 		
 		setSize(new Dimension(800, 600));
 		this.setSize(800, 600);
+		
+		userConected=user;
 		
 		try {
 			control=Controlador.dameControlador();
@@ -63,6 +66,7 @@ public class GestionPlatos extends JPanel {
 		JButton btnAadir = new JButton("A\u00D1ADIR");
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//LLAMAR A ALBERTO PASANDOLE EL USUARIO
 			}
 		});
 		btnAadir.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit_add.png")));
@@ -71,6 +75,25 @@ public class GestionPlatos extends JPanel {
 		JButton btnModificar = new JButton("MODIFICAR");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					int fila = table.getSelectedRow();
+					Plato plato = new Plato();
+					plato.setNombre(table.getModel().getValueAt(fila, 0)+"");
+					Plato platoVuelta = control.consultarPlato(plato.getNombre());
+					if(platoVuelta!=null){
+						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni())){
+							//LLAMAR A MODIFICAR DE ALBERTO
+						}
+						else
+							JOptionPane.showMessageDialog(null, "No tiene permisos", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					else
+						JOptionPane.showMessageDialog(null, "No existe el plato", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				} catch (DAOExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnModificar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit.png")));
@@ -79,6 +102,16 @@ public class GestionPlatos extends JPanel {
 		JButton btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					int fila = table.getSelectedRow();
+					Plato plato = new Plato();
+					plato.setNombre(table.getModel().getValueAt(fila,0)+"");
+					Plato platoVuelta = control.consultarPlato(plato.getNombre());
+					//OBTENER LOS PLATOS QUE ESTAN ASIGNADOS EN UNA DIETA, COMPROBAR QUE NO ESTE Y ELIMINAR
+				} catch (DAOExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnEliminar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/eliminar-icono-4912-32.png")));
