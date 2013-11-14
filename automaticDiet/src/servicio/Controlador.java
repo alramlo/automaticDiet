@@ -379,5 +379,14 @@ public class Controlador {
 	public List<Usuario> getUsuarios() {
 		return dal.getUsuarios();
 	}
+
+	public boolean getPlatosEnDieta(int id) {
+		return dal.getPlatosEnDieta(id);
+	}
+
+	public void eliminarPlato(Plato platoVuelta) {
+		dal.eliminarPlato(platoVuelta);
+		
+	}
 }
 

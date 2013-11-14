@@ -18,7 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Plato;
@@ -38,6 +41,8 @@ public class GestionPlatos extends JPanel {
 	private JTable table;
 	private Controlador control;
 	private Usuario userConected;
+	private JButton btnModificar;
+	private JButton btnEliminar;
 
 	/**
 	 * Create the panel.
@@ -56,11 +61,14 @@ public class GestionPlatos extends JPanel {
 			e3.printStackTrace();
 		}
 		
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		
 		table = new JTable();
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(table);
 		
 		JButton btnAadir = new JButton("A\u00D1ADIR");
@@ -72,7 +80,8 @@ public class GestionPlatos extends JPanel {
 		btnAadir.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit_add.png")));
 		btnAadir.setFont(new Font("Arial", Font.BOLD, 16));
 		
-		JButton btnModificar = new JButton("MODIFICAR");
+		btnModificar = new JButton("MODIFICAR");
+		btnModificar.setEnabled(false);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -81,7 +90,7 @@ public class GestionPlatos extends JPanel {
 					plato.setNombre(table.getModel().getValueAt(fila, 0)+"");
 					Plato platoVuelta = control.consultarPlato(plato.getNombre());
 					if(platoVuelta!=null){
-						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni())){
+						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
 							//LLAMAR A MODIFICAR DE ALBERTO
 						}
 						else
@@ -99,7 +108,8 @@ public class GestionPlatos extends JPanel {
 		btnModificar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit.png")));
 		btnModificar.setFont(new Font("Arial", Font.BOLD, 16));
 		
-		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -107,7 +117,16 @@ public class GestionPlatos extends JPanel {
 					Plato plato = new Plato();
 					plato.setNombre(table.getModel().getValueAt(fila,0)+"");
 					Plato platoVuelta = control.consultarPlato(plato.getNombre());
-					//OBTENER LOS PLATOS QUE ESTAN ASIGNADOS EN UNA DIETA, COMPROBAR QUE NO ESTE Y ELIMINAR
+					if(!control.getPlatosEnDieta(platoVuelta.getId())){
+						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
+						//control.eliminarPlato(platoVuelta);
+						JOptionPane.showMessageDialog(null, "Plato eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+						}else
+							JOptionPane.showMessageDialog(null, "No tiene permisos", "Error", JOptionPane.ERROR_MESSAGE);
+
+					}
+					else
+						JOptionPane.showMessageDialog(null, "El plato pertene a una dieta o no tiene permisos y no se puede borrar.", "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (DAOExcepcion e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -179,31 +198,30 @@ public class GestionPlatos extends JPanel {
 				//FILTRO NOMBRE PLATO
 				if(!textFieldPlato.getText().equals("") && textFieldNombre.getText().equals("") && textFieldApellidos.getText().equals("")){
 					try {
-						//List<String> posibles = getFullString(textFieldPlato.getText(),0);
-						//for(int i=0;i<posibles.size();i++)
-						Plato plato = control.consultarPlato(textFieldPlato.getText());
-						if(plato!=null){
-							Object[][] o  = new Object[2][5];
-							o[0][0]="Plato";
-							o[0][1]="Autor";
-							o[0][2]="Calorias";
-							o[0][3]="Precio";
-							o[0][4]="Valoración";
-							o[1][0]=plato.getNombre();
-							o[1][1]=plato.getNombre();
-							o[1][2]=plato.getNombre();
-							o[1][3]=plato.getNombre();
-							o[1][4]=plato.getNombre();
+						List<String> posibles = getFullString(textFieldPlato.getText(),0);
+						if(posibles!=null){
+						Object[][] o  = new Object[posibles.size()+1][5];
+						o[0][0]="Plato";
+						o[0][1]="Autor";
+						o[0][2]="Calorias";
+						o[0][3]="Precio";
+						o[0][4]="Valoración";
+						for(int i=0;i<posibles.size();i++){
+							Plato plato = control.consultarPlato(posibles.get(i));
+							o[i+1][0]=plato.getNombre();
+							o[i+1][1]=plato.getNombre();
+							o[i+1][2]=plato.getNombre();
+							o[i+1][3]=plato.getNombre();
+							o[i+1][4]=plato.getNombre();
+						}
 							table.setModel(new DefaultTableModel(
 							o,
 							new String[] {
 								"Plato", "Autor", "Calorias", "Precio", "Valoración"
 							}
 						));
-						
-						}
-						else
-							JOptionPane.showMessageDialog(null, "No existe el plato", "Error", JOptionPane.ERROR_MESSAGE);
+						}else
+							JOptionPane.showMessageDialog(null, "No existen platos.", "Error", JOptionPane.ERROR_MESSAGE);
 					} catch (DAOExcepcion e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -240,8 +258,13 @@ public class GestionPlatos extends JPanel {
 				}//FIN BUSCAR POR AUTOR COMPLETO
 				//BUSCAR SOLO POR NOMBRE AUTOR
 				else if(textFieldPlato.getText().equals("") && textFieldApellidos.getText().equals("") && !textFieldNombre.getText().equals("") ){
-					List<Usuario> usuarios = control.getUsuarioPorNombre(textFieldNombre.getText());
-					if(usuarios!=null){
+					List<String> posibles = getFullString(textFieldNombre.getText(),1);
+					if(posibles!=null){
+						List<Usuario> usuarios =new ArrayList<Usuario>();
+						for(int i=0;i<posibles.size();i++){	
+							usuarios.addAll(control.getUsuarioPorNombre(posibles.get(i)));
+						}
+						if(usuarios.size()!=0){
 						List<Plato> platos = new ArrayList<Plato>();
 						for(int i=0;i<usuarios.size();i++){
 							platos.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
@@ -270,6 +293,7 @@ public class GestionPlatos extends JPanel {
 							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
 					}else
 						JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}//FIN BUSCAR POR AUTOR
 				//BUSQUEDA POR APELLIDO
 				else if(textFieldPlato.getText().equals("") && textFieldNombre.getText().equals("") && !textFieldApellidos.getText().equals("")){
@@ -393,6 +417,14 @@ public class GestionPlatos extends JPanel {
 		);
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
+		
+		ListSelectionModel lsm = table.getSelectionModel();
+		lsm.addListSelectionListener(new ListSelectionListener() {
+		public void valueChanged(ListSelectionEvent e){
+		         btnModificar.setEnabled(true);
+		         btnEliminar.setEnabled(true);
+		   }
+		});
 
 	}
 	
@@ -411,8 +443,11 @@ public class GestionPlatos extends JPanel {
 			case 1: //nombre usuario
 				usuarios = control.getUsuarios();
 				for(int i=0; i<usuarios.size();i++){
-					if(usuarios.get(i).getNombre().substring(0, s.length()).equals(s)){
-						res.add(usuarios.get(i).getNombre());
+					if(usuarios.get(i).getNombre().length()>=s.length() && usuarios.get(i).getNombre().substring(0, s.length()).equals(s)){
+						if(i==0)
+							res.add(usuarios.get(i).getNombre());
+						else if(!existe(res,usuarios.get(i).getNombre()))
+							res.add(usuarios.get(i).getNombre());
 					}
 				}
 				break;
@@ -426,5 +461,13 @@ public class GestionPlatos extends JPanel {
 				break;
 		}
 		return res;
+	}
+	
+	private boolean existe(List<String> a, String b){
+		for(int i=0;i<a.size();i++){
+			if(a.get(i).equals(b))
+				return true;
+		}
+		return false;
 	}
 }

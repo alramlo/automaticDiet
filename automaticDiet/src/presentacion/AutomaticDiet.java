@@ -298,7 +298,8 @@ public class AutomaticDiet
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				Usuario user = new Usuario();
-				user.setDni("11111111a");
+				user.setDni("44530694A");
+				user.setRol("Administrador");
 				cambiaPanel(new GestionPlatos(user));
 			}
 		});

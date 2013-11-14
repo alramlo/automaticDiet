@@ -115,4 +115,32 @@ public class PlatoDAO extends AbstractDAO {
 			}
 	}
 
+	public boolean getPlatosEnDieta(int id) {
+		try {
+			List<Plato> result=null;
+			Query q;
+				q = entityManager.createQuery("SELECT p "
+						+ "FROM Plato p, PlatoDieta pd "
+						+ "WHERE p.id=pd.plato.id AND "
+						+ "p.id=:ident");
+				q.setParameter("ident", id);
+				result = (List<Plato>)q.getResultList();
+				if(result.size()==0)
+				return false;
+				else return true;
+		} catch (Exception e) {
+			System.out.println("Error: "+e);
+			return true;
+
+		}
+	}
+
+	public void eliminarPlato(Plato platoVuelta) {
+		Query q;
+		q = entityManager.createQuery("DELETE FROM Plato p "
+				+ "WHERE p.id=:ident");
+		q.setParameter("ident", platoVuelta.getId());
+		q.executeUpdate();	
+	}
+
 }

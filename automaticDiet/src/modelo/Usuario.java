@@ -46,6 +46,9 @@ public class Usuario implements Serializable {
 
 	@Column(name="POBLACION")
 	private String poblacion;
+	
+	@Column(name="ROL")
+	private String rol;
 
 	public Usuario() {
 	}
@@ -112,6 +115,14 @@ public class Usuario implements Serializable {
 
 	public void setPoblacion(String poblacion) {
 		this.poblacion = poblacion;
+	}
+	
+	public void setRol(String rol){
+		this.rol = rol;
+	}
+	
+	public String getRol(){
+		return this.rol;
 	}
 
 }

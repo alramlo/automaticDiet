@@ -143,4 +143,12 @@ public class DAL {
 	public List<Usuario> getUsuarios() {
 		return usuarioDAO.getUsuarios();
 	}
+
+	public boolean getPlatosEnDieta(int id) {
+		return platoDAO.getPlatosEnDieta(id);
+	}
+
+	public void eliminarPlato(Plato platoVuelta) {
+		platoDAO.eliminarPlato(platoVuelta);
+	}
 }
