@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Ingrediente;
 import modelo.Plato;
 import modelo.Usuario;
 import servicio.Controlador;
@@ -209,8 +210,8 @@ public class GestionPlatos extends JPanel {
 						for(int i=0;i<posibles.size();i++){
 							Plato plato = control.consultarPlato(posibles.get(i));
 							o[i+1][0]=plato.getNombre();
-							o[i+1][1]=plato.getNombre();
-							o[i+1][2]=plato.getNombre();
+							o[i+1][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
+							o[i+1][2]=getCaloriasPorPlato(plato);
 							o[i+1][3]=plato.getNombre();
 							o[i+1][4]=plato.getNombre();
 						}
@@ -229,32 +230,49 @@ public class GestionPlatos extends JPanel {
 				}//FIN BUSCAR POR NOMBRE PLATO
 				//BUSCAR POR AUTOR COMPLETO
 				else if(textFieldPlato.getText().equals("") && !textFieldNombre.getText().equals("") && !textFieldApellidos.getText().equals("")){
-					Usuario autor = control.getIdUsuario(textFieldNombre.getText(), textFieldApellidos.getText());
-					List<Plato> l = control.buscarPlatosPorAutor(autor);
-					if(l!=null){
-						Object[][] o  = new Object[l.size()+1][5];
-						o[0][0]="Plato";
-						o[0][1]="Autor";
-						o[0][2]="Calorias";
-						o[0][3]="Precio";
-						o[0][4]="Valoración";
-						for(int i=1;i<=l.size();i++){
-							o[i][0]=l.get(i-1).getNombre();
-							o[i][1]=l.get(i-1).getNombre();
-							o[i][2]=l.get(i-1).getNombre();
-							o[i][3]=l.get(i-1).getNombre();
-							o[i][4]=l.get(i-1).getNombre();
+					List<String> posiblesNombres = getFullString(textFieldNombre.getText(),1);
+					List<String> posiblesApellidos = getFullString(textFieldApellidos.getText(),2);
+					if(posiblesNombres!=null && posiblesApellidos!=null){
+						List<Usuario> usuarios =new ArrayList<Usuario>();
+						for(int i=0;i<posiblesNombres.size();i++){	
+							for(int j=0;j<posiblesApellidos.size();j++){	
+								usuarios.add(control.getIdUsuario(posiblesNombres.get(i), posiblesApellidos.get(i)));
+							}
+							//usuarios.addAll(control.getUsuarioPorNombre(posibles.get(i)));
 						}
-						table.setModel(new DefaultTableModel(
-						o,
-						new String[] {
-							"Plato", "Autor", "Calorias", "Precio", "Valoración"
-						}
-					));
-					
+					//Usuario autor = control.getIdUsuario(textFieldNombre.getText(), textFieldApellidos.getText());
+						if(usuarios.size()!=0 && sonUsuariosCorrectos(usuarios)){
+							List<Plato> l = new ArrayList<Plato>();
+							for(int i=0;i<usuarios.size();i++)
+								l.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
+							if(l.size()!=0){
+								Object[][] o  = new Object[l.size()+1][5];
+								o[0][0]="Plato";
+								o[0][1]="Autor";
+								o[0][2]="Calorias";
+								o[0][3]="Precio";
+								o[0][4]="Valoración";
+								for(int i=1;i<=l.size();i++){
+								o[i][0]=l.get(i-1).getNombre();
+								o[i][1]=l.get(i-1).getNombre();
+								o[i][2]=l.get(i-1).getNombre();
+								o[i][3]=l.get(i-1).getNombre();
+								o[i][4]=l.get(i-1).getNombre();
+								}
+								table.setModel(new DefaultTableModel(
+								o,
+								new String[] {
+									"Plato", "Autor", "Calorias", "Precio", "Valoración"
+								}
+										));
+							}
+							else
+								JOptionPane.showMessageDialog(null, "No existen platos para ese usuario", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					else
-						JOptionPane.showMessageDialog(null, "No existen platos para ese autor", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "No existen usuarios con esas características", "Error", JOptionPane.ERROR_MESSAGE);
+					}else
+						JOptionPane.showMessageDialog(null, "No existen usuarios con esas características", "Error", JOptionPane.ERROR_MESSAGE);
 				}//FIN BUSCAR POR AUTOR COMPLETO
 				//BUSCAR SOLO POR NOMBRE AUTOR
 				else if(textFieldPlato.getText().equals("") && textFieldApellidos.getText().equals("") && !textFieldNombre.getText().equals("") ){
@@ -297,53 +315,90 @@ public class GestionPlatos extends JPanel {
 				}//FIN BUSCAR POR AUTOR
 				//BUSQUEDA POR APELLIDO
 				else if(textFieldPlato.getText().equals("") && textFieldNombre.getText().equals("") && !textFieldApellidos.getText().equals("")){
-					List<Usuario> usuarios = control.getUsuarioPorApellidos(textFieldApellidos.getText());
-					if(usuarios!=null){
-						List<Plato> platos = new ArrayList<Plato>();
-						for(int i=0;i<usuarios.size();i++){
-							platos.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
+					List<String> posibles = getFullString(textFieldApellidos.getText(),2);
+					if(posibles!=null){
+						List<Usuario> usuarios =new ArrayList<Usuario>();
+						for(int i=0;i<posibles.size();i++){	
+							usuarios.addAll(control.getUsuarioPorApellidos(posibles.get(i)));
 						}
-						if(platos.size()!=0){
-							Object[][] o  = new Object[platos.size()+1][5];
-							o[0][0]="Plato";
-							o[0][1]="Autor";
-							o[0][2]="Calorias";
-							o[0][3]="Precio";
-							o[0][4]="Valoración";
-							for(int i=1;i<=platos.size();i++){
-								o[i][0]=platos.get(i-1).getNombre();
-								o[i][1]=platos.get(i-1).getNombre();
-								o[i][2]=platos.get(i-1).getNombre();
-								o[i][3]=platos.get(i-1).getNombre();
-								o[i][4]=platos.get(i-1).getNombre();
+						//List<Usuario> usuarios = control.getUsuarioPorApellidos(textFieldApellidos.getText());
+						if(usuarios.size()!=0){
+							List<Plato> platos = new ArrayList<Plato>();
+							for(int i=0;i<usuarios.size();i++){
+								platos.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
 							}
-							table.setModel(new DefaultTableModel(
-							o,
-							new String[] {
-								"Plato", "Autor", "Calorias", "Precio", "Valoración"
-							}
-						));
+							if(platos.size()!=0){
+								Object[][] o  = new Object[platos.size()+1][5];
+								o[0][0]="Plato";
+								o[0][1]="Autor";
+								o[0][2]="Calorias";
+								o[0][3]="Precio";
+								o[0][4]="Valoración";
+								for(int i=1;i<=platos.size();i++){
+									o[i][0]=platos.get(i-1).getNombre();
+									o[i][1]=platos.get(i-1).getNombre();
+									o[i][2]=platos.get(i-1).getNombre();
+									o[i][3]=platos.get(i-1).getNombre();
+									o[i][4]=platos.get(i-1).getNombre();
+								}
+								table.setModel(new DefaultTableModel(
+								o,
+								new String[] {
+									"Plato", "Autor", "Calorias", "Precio", "Valoración"
+								}
+							));
+							}else
+								JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
 						}else
-							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
-					}else
-						JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}//FIN BUSQUEDA POR APELLIDOS
 				//BUSQUEDA COMBINANDO PLATO Y AUTOR
 				else{
 					List<Usuario> usuarios=null;
-					if(!textFieldPlato.getText().equals("") && !textFieldNombre.getText().equals("") && textFieldApellidos.getText().equals(""))
-						usuarios= control.getUsuarioPorNombre(textFieldNombre.getText());
-					else if(!textFieldPlato.getText().equals("") && !textFieldApellidos.getText().equals("") && textFieldNombre.getText().equals(""))
-						usuarios= control.getUsuarioPorApellidos(textFieldApellidos.getText());
-					else{
-						usuarios = new ArrayList<Usuario>();
-						usuarios.add(control.getIdUsuario(textFieldNombre.getText(), textFieldApellidos.getText()));
+					List<String> posiblesPlatos = null;
+					List<String> posiblesNombres = null;
+					List<String> posiblesApellidos = null;
+					if(!textFieldPlato.getText().equals("") && !textFieldNombre.getText().equals("") && textFieldApellidos.getText().equals("")){
+						posiblesPlatos = getFullString(textFieldPlato.getText(),0);
+						posiblesNombres = getFullString(textFieldNombre.getText(),1);
+						if(posiblesNombres!=null && posiblesPlatos!=null){
+							usuarios =new ArrayList<Usuario>();
+							for(int i=0;i<posiblesNombres.size();i++){	
+								usuarios.addAll(control.getUsuarioPorNombre(posiblesNombres.get(i)));
+							}
+						}
+						
+						//usuarios= control.getUsuarioPorNombre(textFieldNombre.getText());
+					}
+					else if(!textFieldPlato.getText().equals("") && !textFieldApellidos.getText().equals("") && textFieldNombre.getText().equals("")){
+						//usuarios= control.getUsuarioPorApellidos(textFieldApellidos.getText());
+						posiblesPlatos = getFullString(textFieldPlato.getText(),0);
+						posiblesApellidos = getFullString(textFieldApellidos.getText(),2);
+						if(posiblesApellidos!=null && posiblesPlatos!=null){
+							usuarios =new ArrayList<Usuario>();
+							for(int i=0;i<posiblesApellidos.size();i++){	
+								usuarios.addAll(control.getUsuarioPorApellidos(posiblesApellidos.get(i)));
+							}
+						}
+					}else{
+						posiblesPlatos = getFullString(textFieldPlato.getText(),0);
+						posiblesApellidos = getFullString(textFieldApellidos.getText(),2);
+						posiblesNombres = getFullString(textFieldNombre.getText(),1);
+						if(posiblesApellidos!=null && posiblesPlatos!=null && posiblesNombres!=null){
+							usuarios = new ArrayList<Usuario>();
+							for(int i=0; i<posiblesNombres.size();i++)
+								for(int j=0;j<posiblesApellidos.size();j++)
+									usuarios.add(control.getIdUsuario(posiblesNombres.get(i), posiblesApellidos.get(j)));
+						}
 					}
 					
-					if(usuarios!=null && usuarios.get(0)!=null){
+					if(usuarios.size()!=0 && usuarios.get(0)!=null){
 						List<Plato> platos = new ArrayList<Plato>();
 						for(int i=0;i<usuarios.size();i++){
-							platos.addAll(control.buscarPlatos(textFieldPlato.getText(), usuarios.get(i)));
+							for(int j=0;j<posiblesPlatos.size();j++){
+							platos.addAll(control.buscarPlatos(posiblesPlatos.get(j), usuarios.get(i)));
+							}
 						}
 						if(platos.size()!=0){
 							Object[][] o  = new Object[platos.size()+1][5];
@@ -454,8 +509,11 @@ public class GestionPlatos extends JPanel {
 			case 2://apellidos usuario
 				usuarios = control.getUsuarios();
 				for(int i=0; i<usuarios.size();i++){
-					if(usuarios.get(i).getApellidos().substring(0, s.length()).equals(s)){
-						res.add(usuarios.get(i).getNombre());
+					if(usuarios.get(i).getApellidos().length()>=s.length() && usuarios.get(i).getApellidos().substring(0, s.length()).equals(s)){
+						if(i==0)
+							res.add(usuarios.get(i).getApellidos());
+						else if(!existe(res,usuarios.get(i).getApellidos()))
+							res.add(usuarios.get(i).getApellidos());
 					}
 				}
 				break;
@@ -469,5 +527,28 @@ public class GestionPlatos extends JPanel {
 				return true;
 		}
 		return false;
+	}
+	
+	private boolean sonUsuariosCorrectos(List<Usuario> l){
+		boolean res=true;
+		for(int i=0; i<l.size();i++)
+			if(l.get(i)==null)
+				return false;
+		return res;
+	}
+	
+	private int getCaloriasPorPlato(Plato p){
+		Ingrediente[] ing;
+		int cal=0;
+		try {
+			ing = control.ingredientesPorPlato(p.getNombre());
+			for(int i=0; i<ing.length;i++){
+				cal+=ing[i].getCalorias();
+			}
+		} catch (DAOExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cal; 
 	}
 }
