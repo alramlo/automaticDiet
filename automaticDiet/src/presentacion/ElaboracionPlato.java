@@ -49,7 +49,7 @@ public class ElaboracionPlato extends JPanel {
 	 * Create the panel.
 	 */
 	public ElaboracionPlato() {
-		this.setSize(800, 600);
+		this.setSize(800, 612);
 		
 		try {
 			control=Controlador.dameControlador();
@@ -150,18 +150,20 @@ public class ElaboracionPlato extends JPanel {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(104)
-					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGap(4)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(imagenPlato, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-							.addGap(6)
-							.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-						.addComponent(lblNewLabel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
+							.addGap(10)
+							.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE)
+							.addGap(24)
+							.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
+						.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
 					.addGap(4))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(99)
+					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(492, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -171,13 +173,13 @@ public class ElaboracionPlato extends JPanel {
 							.addGap(68)
 							.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
 						.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-					.addGap(4)
+					.addGap(18)
 					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-					.addGap(7)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(imagenPlato, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-						.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+					.addGap(15)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(textAreaElaboracion)
+						.addComponent(imagenPlato, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
+					.addGap(10))
 		);
 		setLayout(groupLayout);
 		
