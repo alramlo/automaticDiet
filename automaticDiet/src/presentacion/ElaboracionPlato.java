@@ -30,6 +30,9 @@ import modelo.Plato;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ElaboracionPlato extends JPanel {
 	/**
@@ -46,8 +49,6 @@ public class ElaboracionPlato extends JPanel {
 	 * Create the panel.
 	 */
 	public ElaboracionPlato() {
-		setSize(new Dimension(800, 600));
-		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Elaboración de plato", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
 		
 		try {
@@ -58,8 +59,6 @@ public class ElaboracionPlato extends JPanel {
 			e3.printStackTrace();
 		}
 		
-		setLayout(null);
-		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
 		buttonPanelIngredientes.setIcon(new ImageIcon(ElaboracionPlato.class.getResource("/iconos/ingredients-icon.png")));
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
@@ -68,8 +67,6 @@ public class ElaboracionPlato extends JPanel {
 				new Ingredientes(comboBox.getSelectedItem()+"").setVisible(true);
 			}
 		});
-		buttonPanelIngredientes.setBounds(110, 143, 209, 36);
-		add(buttonPanelIngredientes);
 		
 		textAreaElaboracion = new JTextArea();
 		textAreaElaboracion.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -80,16 +77,11 @@ public class ElaboracionPlato extends JPanel {
 		textAreaElaboracion.setWrapStyleWord(true);
 		textAreaElaboracion.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		textAreaElaboracion.setText("  Descripci\u00F3n de la elaboraci\u00F3n de los platos");
-		textAreaElaboracion.setBounds(425, 186, 365, 402);
-		add(textAreaElaboracion);
 		
 		imagenPlato = new JLabel("");
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		imagenPlato.setBounds(10, 186, 409, 402);
-		add(imagenPlato);
 		
 		comboBox = new JComboBox<String>(control.todosPlatos());
-//		comboBox = new JComboBox<String>();
 		comboBox.setSelectedIndex(1);
 		comboBox.setBounds(425, 145, 365, 36);
 		
@@ -149,15 +141,45 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 48));
-		lblNewLabel_2.setBounds(10, 11, 780, 75);
-		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("\u00A1Cumple tus objetivos facilmente!");
 		lblNewLabel_3.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 20));
-		lblNewLabel_3.setBounds(10, 79, 780, 60);
-		add(lblNewLabel_3);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(104)
+					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(4)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(imagenPlato, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+							.addGap(6)
+							.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNewLabel_3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+						.addComponent(lblNewLabel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
+					.addGap(4))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(68)
+							.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+					.addGap(4)
+					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(imagenPlato, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+						.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		setLayout(groupLayout);
 		
 	}
 	

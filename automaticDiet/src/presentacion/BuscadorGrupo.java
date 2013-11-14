@@ -31,6 +31,9 @@ import servicio.Controlador;
 import excepciones.DominioExcepcion;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class BuscadorGrupo extends JPanel {
 	/**
@@ -61,8 +64,6 @@ public class BuscadorGrupo extends JPanel {
 	 * Create the panel.
 	 */
 	public BuscadorGrupo() {
-		setSize(new Dimension(800, 600));
-		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Buscador de grupo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.setSize(800, 600);
 		
 		try {
@@ -71,31 +72,23 @@ public class BuscadorGrupo extends JPanel {
 			e3.printStackTrace();
 		}
 		
-		setLayout(null);		
-		
 		JLabel lblNewLabel = new JLabel("Nombre:");
-		lblNewLabel.setBounds(10, 28, 78, 14);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JLabel lblNewLabel_1 = new JLabel("Ciudad:");
-		lblNewLabel_1.setBounds(391, 63, 88, 14);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(83, 25, 278, 20);
 		textFieldNombre.setFont(new Font("Arial", Font.BOLD, 16));
 		textFieldNombre.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Hábitos:");
-		lblNewLabel_2.setBounds(10, 95, 78, 14);
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JLabel lblIntereses = new JLabel("Intereses:");
-		lblIntereses.setBounds(391, 95, 88, 14);
 		lblIntereses.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		Box boxHabitos = Box.createVerticalBox();
-		boxHabitos.setBounds(83, 105, 278, 150);
 		boxHabitos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		boxHabitos.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
@@ -121,7 +114,6 @@ public class BuscadorGrupo extends JPanel {
 		chckbxGastronomia.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		Box verticalBox = Box.createVerticalBox();
-		verticalBox.setBounds(469, 105, 280, 150);
 		verticalBox.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		
 		chckbxBajar = new JCheckBox("BAJAR PESO");
@@ -145,7 +137,6 @@ public class BuscadorGrupo extends JPanel {
 		chckbxSubir.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JButton btnBuscar = new JButton("   Buscar");
-		btnBuscar.setBounds(589, 266, 160, 35);
 		btnBuscar.setIcon(new ImageIcon(BuscadorGrupo.class.getResource("/iconos/buscar.png")));
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -211,19 +202,8 @@ public class BuscadorGrupo extends JPanel {
 		});
 		btnBuscar.setFont(new Font("Arial", Font.PLAIN, 16));
 		
-		add(lblNewLabel);
-		add(lblNewLabel_2);
-		add(lblNewLabel_1);
-		add(textFieldNombre);
-		add(btnBuscar);
-		add(boxHabitos);
-		add(lblIntereses);
-		add(verticalBox);
-		
 		JLabel lblPais = new JLabel("Pais:");
 		lblPais.setFont(new Font("Arial", Font.BOLD, 16));
-		lblPais.setBounds(391, 28, 46, 14);
-		add(lblPais);
 		
 		
 		String[] paises= control.getPaises();
@@ -238,14 +218,84 @@ public class BuscadorGrupo extends JPanel {
 				}
 			}
 		});
-		comboBoxPais.setBounds(469, 27, 280, 20);
-		add(comboBoxPais);	
 		
 		String[] ciudades = control.getCiudades(paises[0]);
 		comboBoxCiudad = new JComboBox<String>(ciudades);
-		comboBoxCiudad.setBounds(469, 60, 280, 20);
 		comboBoxCiudad.setFont(new Font("Arial", Font.BOLD, 14));
-		add(comboBoxCiudad);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(583)
+					.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(4)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(boxHabitos, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addGap(73)
+							.addComponent(textFieldNombre, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(30)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(comboBoxCiudad, Alignment.TRAILING, 0, 279, Short.MAX_VALUE)
+								.addComponent(comboBoxPais, Alignment.TRAILING, 0, 279, Short.MAX_VALUE))
+							.addGap(35))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(32)
+							.addComponent(lblIntereses, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(verticalBox, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+							.addContainerGap())))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(9)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
+							.addGap(5))
+						.addComponent(textFieldNombre, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
+							.addGap(5))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(2)
+							.addComponent(comboBoxPais, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
+					.addGap(56)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
+									.addGap(146))
+								.addComponent(lblIntereses, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))
+							.addGap(11))
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(verticalBox, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(boxHabitos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))
+					.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addGap(293))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(51)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBoxCiudad, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE))
+					.addContainerGap(527, Short.MAX_VALUE))
+		);
+		setLayout(groupLayout);
 	}
 	
 	private List<Caracteristica> queCaracteristicas(){
