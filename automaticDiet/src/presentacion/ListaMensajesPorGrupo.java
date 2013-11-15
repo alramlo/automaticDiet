@@ -44,7 +44,7 @@ private static final long serialVersionUID = 1L;
 			tablaMensajesPorGrupo.setBounds(10, 11, 799, 415);
 			tablaMensajesPorGrupo.setModel(tablaMensajesPorGrupoModel);
 			tablaMensajesPorGrupo.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-			tablaMensajesPorGrupo.setRowHeight(25);	
+			tablaMensajesPorGrupo.setRowHeight(30);	
 
 			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 			centerRenderer.setHorizontalAlignment( JLabel.LEFT );

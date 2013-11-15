@@ -24,8 +24,10 @@ import javax.swing.table.TableModel;
 
 import modelo.Denuncia;
 import modelo.Grupo;
+import modelo.Mensaje;
 import persistencia.DenunciaDAO;
 import persistencia.GrupoDAO;
+import persistencia.MensajeDAO;
 
 public class GestionGruposPorAdmin extends JPanel {
 	/**
@@ -40,8 +42,10 @@ public class GestionGruposPorAdmin extends JPanel {
 	private TableModel modelPostsDenunciados;
 	private GrupoDAO grupoDAO;
 	private DenunciaDAO denunciaDAO;
+	private MensajeDAO mensajeDAO;
 	private List<Grupo> listadoDeGrupos;
 	private List<Denuncia> listadoDeDenuncias;
+	private Mensaje mens;
 	
 
 	/**
@@ -50,6 +54,8 @@ public class GestionGruposPorAdmin extends JPanel {
 	public GestionGruposPorAdmin() {
 		grupoDAO = new GrupoDAO();
 		denunciaDAO = new DenunciaDAO();
+		mensajeDAO = new MensajeDAO();
+		
 		setBounds(new Rectangle(0, 0, 800, 600));
 		setLayout(new BorderLayout(0, 0));
 		
@@ -96,6 +102,7 @@ public class GestionGruposPorAdmin extends JPanel {
 				listaMensajes.setVisible(true);
 			}
 		});
+		tableGrupos.setRowHeight(30);
 		tableGrupos.setModel(modelGrupos);
 		scrollPane.setViewportView(tableGrupos);
 		
@@ -120,6 +127,20 @@ public class GestionGruposPorAdmin extends JPanel {
 		
 		modelPostsDenunciados = new TablaConsultaModelPostsDenunciados();
 		tablePostsDenunciados = new JTable();
+		tablePostsDenunciados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int fila = tablePostsDenunciados.rowAtPoint(e.getPoint());
+				String cod = String.valueOf(tablePostsDenunciados.getValueAt(fila, 6));
+				int idMensaje = Integer.valueOf(cod);
+				mens = mensajeDAO.getMensajeById(idMensaje);
+				VerMensajeDenunciado mensajeDenunciado = new VerMensajeDenunciado(mens);
+				mensajeDenunciado.setModal(true);
+				mensajeDenunciado.setLocationRelativeTo(null);
+				mensajeDenunciado.setVisible(true);
+			}
+		});
+		tablePostsDenunciados.setRowHeight(30);
 		tablePostsDenunciados.setModel(modelPostsDenunciados);
 		scrollPanePostsDenunciados.setViewportView(tablePostsDenunciados);
 
@@ -181,7 +202,7 @@ public class GestionGruposPorAdmin extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 		// Columnas de la tabla
-		private String[] columnas = {"ID DENUNCIA", "MOTIVO", "DESCRIPCION", "FECHA", "USUARIO", "MENSAJE"};
+		private String[] columnas = {"ID DENUNCIA", "MOTIVO", "DESCRIPCION", "FECHA", "USUARIO", "MENSAJE", "ID MENSAJE"};
 		// Datos que muestra la tabla
 		private ArrayList<Denuncia> data = new ArrayList<Denuncia>();
 
@@ -204,6 +225,7 @@ public class GestionGruposPorAdmin extends JPanel {
 			case 3: return postDenunciado.getFecha();
 			case 4: return postDenunciado.getUsuario().getNombre()+" "+postDenunciado.getUsuario().getApellidos();
 			case 5: return postDenunciado.getMensaje().getContenido();
+			case 6: return postDenunciado.getMensaje().getId();
 			default: return null;
 			}
 		}

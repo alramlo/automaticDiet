@@ -2,6 +2,7 @@ package persistencia;
 
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import modelo.Mensaje;
@@ -33,5 +34,39 @@ public class MensajeDAO extends AbstractDAO{
 			return null;
 
 		}
+	}
+	
+	public Mensaje getMensajeById(int idMensaje) {
+		try {
+			Query q;
+			q = entityManager.createQuery("SELECT m FROM Mensaje m WHERE m.id =:ident");
+			q.setParameter("ident", idMensaje);
+			
+			return (Mensaje) q.getSingleResult();
+			
+		} catch (Exception e) {
+			System.out.println("Error: "+e);
+			return null;
+
+		}
+	}
+	
+	public Boolean deleteMensaje(Mensaje mensajeBorrado) {
+
+		EntityTransaction trx = entityManager.getTransaction();
+		try{	
+			trx.begin();
+			// falla la siguiente instrucción
+			entityManager.remove(entityManager.merge(mensajeBorrado));
+	        entityManager.flush();
+	        trx.commit();
+	        return true;
+		}catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	         if (trx.isActive())
+	             trx.rollback();
+	     }
 	}
 }
