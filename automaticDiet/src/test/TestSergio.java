@@ -1,7 +1,8 @@
 package test;
 import java.text.ParseException;
 
-import persistencia.CiudadDAO;
+import modelo.Plato;
+import persistencia.PlatoDAO;
 public class TestSergio {
 
 
@@ -49,8 +50,12 @@ public class TestSergio {
 //		List<Plato> l = p.buscarPlatos("Cereales con leche", u);
 //		System.out.println(l.size());
 		
-		CiudadDAO ciudad = new CiudadDAO();
-		System.out.println(ciudad.getCiudades("Italia").get(0).getNombre());
+		//CiudadDAO ciudad = new CiudadDAO();
+		//System.out.println(ciudad.getCiudades("Italia").get(0).getNombre());
+//		Plato p = new Plato();
+//		p.setId(1);
+//		PlatoDAO pd = new PlatoDAO();
+//		System.out.println(pd.getCaloriasPorPlato(p));
 		
 	}
 
