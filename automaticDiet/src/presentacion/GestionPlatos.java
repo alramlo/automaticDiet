@@ -73,34 +73,7 @@ public class GestionPlatos extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
 		add(table);
 		
-		String[] pl = control.todosPlatos();
-		Object[][] o  = new Object[pl.length+1][5];
-		o[0][0]="Plato";
-		o[0][1]="Autor";
-		o[0][2]="Calorias";
-		o[0][3]="Precio";
-		o[0][4]="Valoración";
-		for(int i=0;i<pl.length;i++){
-			Plato plato=null;
-			try {
-					plato = control.consultarPlato(pl[i]);
-					o[i+1][0]=plato.getNombre();
-					o[i+1][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
-					o[i+1][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
-					o[i+1][3]=getInfoPorPlato(plato)[1].toString()+" €";
-					o[i+1][4]=plato.getValoracion();
-				
-			} catch (DAOExcepcion e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-			table.setModel(new DefaultTableModel(
-			o,
-			new String[] {
-				"Plato", "Autor", "Calorias", "Precio", "Valoración"
-			}
-		));
+		poblar();
 		
 		JButton btnAadir = new JButton("A\u00D1ADIR");
 		btnAadir.addActionListener(new ActionListener() {
@@ -150,8 +123,9 @@ public class GestionPlatos extends JPanel {
 					Plato platoVuelta = control.consultarPlato(plato.getNombre());
 					if(!control.getPlatosEnDieta(platoVuelta.getId())){
 						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
-						//control.eliminarPlato(platoVuelta);
+						control.eliminarPlato(platoVuelta);
 						JOptionPane.showMessageDialog(null, "Plato eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+						poblar();
 						}else
 							JOptionPane.showMessageDialog(null, "No tiene permisos", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -585,5 +559,38 @@ public class GestionPlatos extends JPanel {
 			e.printStackTrace();
 		}
 		return ingrs; 
+	}
+	
+	private void poblar(){
+		String[] pl = control.todosPlatos();
+		Object[][] o  = new Object[pl.length+1][5];
+		o[0][0]="Plato";
+		o[0][1]="Autor";
+		o[0][2]="Calorias";
+		o[0][3]="Precio";
+		o[0][4]="Valoración";
+		for(int i=0;i<pl.length;i++){
+			Plato plato=null;
+			try {
+					plato = control.consultarPlato(pl[i]);
+					o[i+1][0]=plato.getNombre();
+					o[i+1][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
+					o[i+1][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
+					o[i+1][3]=getInfoPorPlato(plato)[1].toString()+" €";
+					o[i+1][4]=plato.getValoracion();
+				
+			} catch (DAOExcepcion e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+			table.setModel(new DefaultTableModel(
+			o,
+			new String[] {
+				"Plato", "Autor", "Calorias", "Precio", "Valoración"
+			}
+		));
+			table.setRowHeight(0, 50);
+			//table.setc
 	}
 }

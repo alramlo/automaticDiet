@@ -3,6 +3,8 @@ package persistencia;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import modelo.Ingrediente;
@@ -136,11 +138,22 @@ public class PlatoDAO extends AbstractDAO {
 	}
 
 	public void eliminarPlato(Plato platoVuelta) {
-		Query q;
-		q = entityManager.createQuery("DELETE FROM Plato p "
-				+ "WHERE p.id=:ident");
-		q.setParameter("ident", platoVuelta.getId());
-		q.executeUpdate();	
+		//Query q;
+//		q = entityManager.createQuery("DELETE FROM Plato p "
+//				+ "WHERE p.id=:ident");
+//		q.setParameter("ident", platoVuelta.getId());
+		EntityTransaction trx = entityManager.getTransaction();
+		try{	
+			trx.begin();
+			entityManager.remove(platoVuelta);
+	        entityManager.flush();
+	        trx.commit();
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	         if (trx.isActive())
+	             trx.rollback();
+	     }
 	}
 
 }
