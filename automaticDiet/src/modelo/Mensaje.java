@@ -33,6 +33,9 @@ public class Mensaje implements Serializable {
 
 	@Column(name="CONTENIDO")
 	private String contenido;
+	
+	@Column(name="PUBLICADO")
+	private int publicado;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="FECHA")
@@ -102,6 +105,14 @@ public class Mensaje implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public int getPublicado() {
+		return this.publicado;
+	}
+
+	public void setPublicado(int publ) {
+		this.publicado = publ;
 	}
 
 }
