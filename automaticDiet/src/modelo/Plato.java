@@ -16,8 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-
 
 /**
  * The persistent class for the PLATO database table.
@@ -50,6 +48,9 @@ public class Plato implements Serializable {
 
 	@Column(name="TIPO")
 	private String tipo;
+	
+	@Column(name="VALORACION")
+	private String valoracion;
 
 	//uni-directional many-to-one association to Usuario
 	@ManyToOne
@@ -114,5 +115,14 @@ public class Plato implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public String getValoracion() {
+		return this.valoracion;
+	}
+
+	public void setValoracion(String valor) {
+		this.valoracion = valor;
+	}
+
 
 }
