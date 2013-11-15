@@ -20,9 +20,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Ingrediente;
@@ -562,6 +564,13 @@ public class GestionPlatos extends JPanel {
 	}
 	
 	private void poblar(){
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(tcr);
+		table.getColumnModel().getColumn(1).setCellRenderer(tcr);
+		table.getColumnModel().getColumn(2).setCellRenderer(tcr);
+		table.getColumnModel().getColumn(3).setCellRenderer(tcr);
+		table.getColumnModel().getColumn(4).setCellRenderer(tcr);
 		String[] pl = control.todosPlatos();
 		Object[][] o  = new Object[pl.length+1][5];
 		o[0][0]="Plato";
@@ -591,6 +600,5 @@ public class GestionPlatos extends JPanel {
 			}
 		));
 			table.setRowHeight(0, 50);
-			//table.setc
 	}
 }
