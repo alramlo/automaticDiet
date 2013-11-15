@@ -10,34 +10,31 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import servicio.Controlador;
 import excepciones.DominioExcepcion;
-
-import javax.swing.JComboBox;
-
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-
-import javax.swing.BoxLayout;
-
-import modelo.Usuario;
 
 public class AutomaticDiet
 {
@@ -60,6 +57,7 @@ public class AutomaticDiet
 			{
 				try
 				{
+					UIManager.setLookAndFeel(new NimbusLookAndFeel());
 					AutomaticDiet window = new AutomaticDiet();
 					window.automatic_diet.setLocationRelativeTo(null);
 					window.automatic_diet.setVisible(true);
@@ -294,13 +292,24 @@ public class AutomaticDiet
 		menu_gestionGrupos.setSelected(true);
 		menu_gestionGrupos.addActionListener(new ActionListener()
 		{
+//			public void actionPerformed(ActionEvent arg0)
+//			{
+//				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+//				Usuario user = new Usuario();
+//				user.setDni("44530694A");
+//				user.setRol("Administrador");
+//				cambiaPanel(new GestionPlatos(user));
+//			}
 			public void actionPerformed(ActionEvent arg0)
 			{
-				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				Usuario user = new Usuario();
-				user.setDni("44530694A");
-				user.setRol("Administrador");
-				cambiaPanel(new GestionPlatos(user));
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Grupos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+//				Usuario user = new Usuario();
+//				user.setDni("44530694A");
+//				user.setRol("Administrador");
+				GestionGruposPorAdmin panelGestionGrupos = new GestionGruposPorAdmin();
+				panelGestionGrupos.cargaGrupos();
+				panelGestionGrupos.cargaDenuncias();
+				cambiaPanel(panelGestionGrupos);
 			}
 		});
 		menu_gestionGrupos.setOpaque(false);
