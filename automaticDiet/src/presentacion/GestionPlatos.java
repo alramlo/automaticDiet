@@ -70,7 +70,7 @@ public class GestionPlatos extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		
-		table = new JTable();
+		table = new JTable(1,5);
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
 		add(table);
