@@ -33,6 +33,10 @@ import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class GestionPlatos extends JPanel {
 	/**
@@ -70,14 +74,35 @@ public class GestionPlatos extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		
-		table = new JTable(1,5);
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
-		add(table);
-		
 		poblar();
 		
+		JPanel panel_tabla = new JPanel();
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_tabla, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+					.addComponent(panel_tabla, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		panel_tabla.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_Botones = new JPanel();
+		panel_tabla.add(panel_Botones, BorderLayout.SOUTH);
+		
 		JButton btnAadir = new JButton("A\u00D1ADIR");
+		panel_Botones.add(btnAadir);
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//LLAMAR A ALBERTO PASANDOLE EL USUARIO
@@ -86,7 +111,14 @@ public class GestionPlatos extends JPanel {
 		btnAadir.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit_add.png")));
 		btnAadir.setFont(new Font("Arial", Font.BOLD, 16));
 		
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		panel_Botones.add(horizontalStrut_2);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panel_Botones.add(horizontalStrut);
+		
 		btnModificar = new JButton("MODIFICAR");
+		panel_Botones.add(btnModificar);
 		btnModificar.setEnabled(false);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +146,14 @@ public class GestionPlatos extends JPanel {
 		btnModificar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit.png")));
 		btnModificar.setFont(new Font("Arial", Font.BOLD, 16));
 		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel_Botones.add(horizontalStrut_1);
+		
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		panel_Botones.add(horizontalStrut_3);
+		
 		btnEliminar = new JButton("ELIMINAR");
+		panel_Botones.add(btnEliminar);
 		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,40 +181,17 @@ public class GestionPlatos extends JPanel {
 		});
 		btnEliminar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/eliminar-icono-4912-32.png")));
 		btnEliminar.setFont(new Font("Arial", Font.BOLD, 16));
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(table, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(80)
-							.addComponent(btnAadir, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
-							.addGap(84)
-							.addComponent(btnModificar)
-							.addGap(85)
-							.addComponent(btnEliminar))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 324, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAadir, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		panel_tabla.add(scrollPane, BorderLayout.CENTER);
+		
+		table = new JTable(1,5);
+		scrollPane.setViewportView(table);
+		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
+		add(table);
+		
+		ListSelectionModel lsm = table.getSelectionModel();
 		
 		JLabel lblNewLabel = new JLabel("Plato:");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -478,8 +494,6 @@ public class GestionPlatos extends JPanel {
 		);
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
-		
-		ListSelectionModel lsm = table.getSelectionModel();
 		lsm.addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent e){
 		         btnModificar.setEnabled(true);
