@@ -444,6 +444,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0) {
 				ForoBasico fb = new ForoBasico();
 				fb.cargaForos();
+				fb.cargaAnuncios();
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Temas del foro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				cambiaPanel(fb);
 			}

@@ -28,6 +28,8 @@ import modelo.Mensaje;
 import persistencia.DenunciaDAO;
 import persistencia.GrupoDAO;
 import persistencia.MensajeDAO;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class GestionGruposPorAdmin extends JPanel {
 	/**
@@ -73,7 +75,10 @@ public class GestionGruposPorAdmin extends JPanel {
 		FlowLayout fl_panelBotonesGrupos = (FlowLayout) panelBotonesGrupos.getLayout();
 		fl_panelBotonesGrupos.setAlignOnBaseline(true);
 		fl_panelBotonesGrupos.setAlignment(FlowLayout.RIGHT);
-		panelGrupos.add(panelBotonesGrupos, BorderLayout.NORTH);
+		panelGrupos.add(panelBotonesGrupos, BorderLayout.SOUTH);
+		
+		JLabel lblBuscar = new JLabel("Buscar:");
+		panelBotonesGrupos.add(lblBuscar);
 		
 		tfBuscadorGrupos = new JTextField();
 		panelBotonesGrupos.add(tfBuscadorGrupos);
@@ -83,6 +88,7 @@ public class GestionGruposPorAdmin extends JPanel {
 		panelBotonesGrupos.add(horizontalStrut);
 		
 		JButton btnNuevoGrupo = new JButton("Nuevo Grupo");
+		btnNuevoGrupo.setIcon(new ImageIcon(GestionGruposPorAdmin.class.getResource("/iconos/add-icon1x16.gif")));
 		panelBotonesGrupos.add(btnNuevoGrupo);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -102,7 +108,7 @@ public class GestionGruposPorAdmin extends JPanel {
 				listaMensajes.setVisible(true);
 			}
 		});
-		tableGrupos.setRowHeight(30);
+		tableGrupos.setRowHeight(40);
 		tableGrupos.setModel(modelGrupos);
 		scrollPane.setViewportView(tableGrupos);
 		
@@ -115,7 +121,10 @@ public class GestionGruposPorAdmin extends JPanel {
 		JPanel panelBotonesPostsDenunciados = new JPanel();
 		FlowLayout fl_panelBotonesPostsDenunciados = (FlowLayout) panelBotonesPostsDenunciados.getLayout();
 		fl_panelBotonesPostsDenunciados.setAlignment(FlowLayout.RIGHT);
-		panelPostsDenunciados.add(panelBotonesPostsDenunciados, BorderLayout.NORTH);
+		panelPostsDenunciados.add(panelBotonesPostsDenunciados, BorderLayout.SOUTH);
+		
+		JLabel label = new JLabel("Buscar:");
+		panelBotonesPostsDenunciados.add(label);
 		
 		tfBuscadorPostsDenunciados = new JTextField();
 		tfBuscadorPostsDenunciados.setText("");
@@ -140,7 +149,7 @@ public class GestionGruposPorAdmin extends JPanel {
 				mensajeDenunciado.setVisible(true);
 			}
 		});
-		tablePostsDenunciados.setRowHeight(30);
+		tablePostsDenunciados.setRowHeight(40);
 		tablePostsDenunciados.setModel(modelPostsDenunciados);
 		scrollPanePostsDenunciados.setViewportView(tablePostsDenunciados);
 

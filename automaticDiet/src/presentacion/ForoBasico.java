@@ -1,14 +1,21 @@
 package presentacion;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,8 +35,10 @@ public class ForoBasico extends JPanel {
 	private JTable tableTablonAnuncios;
 	private JTable tableForo;
 	private TablaConsultaModelForos modelForos;
+	private TablaConsultaModelAnuncios modelAnuncios;
 	private ForoDAO foroDAO;
 	private List<Foro> listadoDeForos;
+//	private List<Foro> listadoDeAnuncios;
 
 	/**
 	 * Create the panel.
@@ -46,7 +55,11 @@ public class ForoBasico extends JPanel {
 		add(panelInf, BorderLayout.SOUTH);
 		
 		JButton btnNuevoTema = new JButton("Nuevo Tema");
+		btnNuevoTema.setIcon(new ImageIcon(ForoBasico.class.getResource("/iconos/edit_add.png")));
 		panelInf.add(btnNuevoTema);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panelInf.add(horizontalStrut);
 		
 		JPanel panelForo = new JPanel();
 		add(panelForo, BorderLayout.CENTER);
@@ -54,15 +67,37 @@ public class ForoBasico extends JPanel {
 		
 		JScrollPane scrollPaneTablonAnuncios = new JScrollPane();
 		scrollPaneTablonAnuncios.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tabl\u00F3n de anuncios:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		scrollPaneTablonAnuncios.setBounds(10, 11, 780, 149);
+		scrollPaneTablonAnuncios.setBounds(10, 11, 780, 207);
 		panelForo.add(scrollPaneTablonAnuncios);
 		
+		modelAnuncios = new TablaConsultaModelAnuncios();
 		tableTablonAnuncios = new JTable();
+		tableTablonAnuncios.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int fila = tableForo.rowAtPoint(e.getPoint());
+//			String cod = String.valueOf(tableForo.getValueAt(fila, 0));
+//			int idforo = Integer.valueOf(cod);
+			VerAnuncioEnForo anuncio = new VerAnuncioEnForo(fila);
+			anuncio.setModal(true);
+			anuncio.setLocationRelativeTo(null);
+			anuncio.setVisible(true);
+		}
+	});
+
+		tableTablonAnuncios.setRowHeight(50);
+		tableTablonAnuncios.setModel(modelAnuncios);
+		DefaultTableCellRenderer centerRendererAnuncios = new DefaultTableCellRenderer();
+		centerRendererAnuncios.setHorizontalAlignment( JLabel.LEFT );
+		for(int i=0; i<3; i++)
+		{
+			tableTablonAnuncios.getColumnModel().getColumn(i).setCellRenderer( centerRendererAnuncios );
+		}
 		scrollPaneTablonAnuncios.setViewportView(tableTablonAnuncios);
 		
 		JScrollPane scrollPaneForo = new JScrollPane();
 		scrollPaneForo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Foro:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		scrollPaneForo.setBounds(10, 169, 780, 387);
+		scrollPaneForo.setBounds(10, 229, 780, 288);
 		panelForo.add(scrollPaneForo);
 		
 		modelForos = new TablaConsultaModelForos();
@@ -82,11 +117,11 @@ public class ForoBasico extends JPanel {
 
 		tableForo.setRowHeight(50);
 		tableForo.setModel(modelForos);
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.LEFT );
+		DefaultTableCellRenderer centerRendererForos = new DefaultTableCellRenderer();
+		centerRendererForos.setHorizontalAlignment( JLabel.LEFT );
 		for(int i=0; i<4; i++)
 		{
-			tableForo.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+			tableForo.getColumnModel().getColumn(i).setCellRenderer( centerRendererForos );
 		}
 		scrollPaneForo.setViewportView(tableForo);
 	}
@@ -155,8 +190,88 @@ public class ForoBasico extends JPanel {
 					model.addRow(f);
 				}
 			} catch (Exception e){
-//				JOptionPane.showMessageDialog(this,e.getMessage(),"ERROR AL CARGAR LOS FOROS",
-//						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,e.getMessage(),"ERROR AL CARGAR LOS FOROS",
+						JOptionPane.ERROR_MESSAGE);
+			}
+	}
+	
+	class TablaConsultaModelAnuncios extends AbstractTableModel {
+
+		private static final long serialVersionUID = 1L;
+		// Columnas de la tabla
+		private String[] columnas = {"ID ANUNCIO", "TÍTULO", "FECHA DE CREACIÓN"};
+		// Datos que muestra la tabla
+		private ArrayList<Foro> data = new ArrayList<Foro>();
+
+		public int getColumnCount() {
+			return columnas.length;
+		}
+		public int getRowCount() {
+			return data.size();
+		}
+		public String getColumnName(int col) {
+			return columnas[col];
+		}
+		// Este método se dispara cada vez que la tabla necesita el valor de un campo
+		public Object getValueAt(int row, int col) {
+			Foro g = data.get(row);
+			switch(col){
+			case 0: return g.getId();
+			case 1: return g.getTema();
+			case 2: return g.getFecha();
+			default: return null;
+			}
+		}
+		public void clear(){
+			data.clear();
+		}
+		/*
+		 * JTable uses this method to determine the default renderer/
+		 * editor for each cell. If we didn't implement this method,
+		 * then the last column would contain text ("true"/"false"),
+		 * rather than a check box.
+		 */
+		public Class<? extends Object>getColumnClass(int c) {
+			return getValueAt(0, c).getClass();
+		}
+		public void addRow(Foro row) {
+			data.add(row);
+			this.fireTableDataChanged();
+		}
+		public void delRow(int row) {
+			data.remove(row);
+			this.fireTableDataChanged();
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void cargaAnuncios(){
+		try{
+//				listadoDeAnuncios = foroDAO.getForos();
+//				Iterator<Foro> it = listadoDeForos.iterator();
+
+				TablaConsultaModelAnuncios model = (TablaConsultaModelAnuncios)tableTablonAnuncios.getModel();
+				model.clear();
+				
+				Foro f1 = new Foro();
+				f1.setId(1);
+				f1.setTema("NORMAS");
+				f1.setFecha(new Date(9,23,2013));	
+				model.addRow(f1);
+				Foro f2 = new Foro();
+				f2.setId(2);
+				f2.setTema("SUGERENCIAS");
+				f2.setFecha(new Date(4,25,2012));	
+				model.addRow(f2);
+				Foro f3 = new Foro();
+				f3.setId(1);
+				f3.setTema("CÓMO PREGUNTAR CORRECTAMENTE");
+				f3.setFecha(new Date(12,11,2012));	
+				model.addRow(f3);
+
+			} catch (Exception e){
+				JOptionPane.showMessageDialog(this,e.getMessage(),"ERROR AL CARGAR LOS ANUNCIOS",
+						JOptionPane.ERROR_MESSAGE);
 			}
 	}
 }

@@ -30,7 +30,7 @@ public class ForoDAO extends AbstractDAO{
 		try {
 			Query q;
 			q = entityManager
-					.createQuery("SELECT f FROM Foro f");
+					.createQuery("SELECT f FROM Foro f ORDER BY f.fecha DESC");
 			return (List<Foro>) q.getResultList();
 		} catch (Exception e) {
 			System.out.println("Error: "+e);
