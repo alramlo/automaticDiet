@@ -33,6 +33,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DominioExcepcion;
 
@@ -288,24 +289,33 @@ public class AutomaticDiet
 		menu_admin.setAlignmentX(Component.LEFT_ALIGNMENT);
 		tabsMenuAdministrador.addTab("Administrador", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_admin, null);
 		
+		JButton menu_gestionPlatos = new JButton("<html><p>Gestión</p><p>de platos</p></html>");
+		menu_gestionPlatos.setSelected(true);
+		menu_gestionPlatos.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				Usuario user = new Usuario();
+				user.setDni("44530694A");
+				user.setRol("Administrador");
+				cambiaPanel(new GestionPlatos(user));
+			}
+		});
+		menu_gestionPlatos.setOpaque(false);
+		menu_gestionPlatos.setMargin(new Insets(2, 2, 2, 2));
+		menu_gestionPlatos.setHorizontalTextPosition(SwingConstants.CENTER);
+		menu_gestionPlatos.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_gestionPlatos.setBorderPainted(false);
+		menu_gestionPlatos.setBorder(null);
+		
 		JButton menu_gestionGrupos = new JButton("<html><p>Gestión</p><p>grupos</p></html>");
 		menu_gestionGrupos.setSelected(true);
 		menu_gestionGrupos.addActionListener(new ActionListener()
 		{
-//			public void actionPerformed(ActionEvent arg0)
-//			{
-//				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-//				Usuario user = new Usuario();
-//				user.setDni("44530694A");
-//				user.setRol("Administrador");
-//				cambiaPanel(new GestionPlatos(user));
-//			}
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Grupos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-//				Usuario user = new Usuario();
-//				user.setDni("44530694A");
-//				user.setRol("Administrador");
 				GestionGruposPorAdmin panelGestionGrupos = new GestionGruposPorAdmin();
 				panelGestionGrupos.cargaGrupos();
 				panelGestionGrupos.cargaDenuncias();
@@ -318,18 +328,21 @@ public class AutomaticDiet
 		menu_gestionGrupos.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu_gestionGrupos.setBorderPainted(false);
 		menu_gestionGrupos.setBorder(null);
+		
 		GroupLayout gl_menu_admin = new GroupLayout(menu_admin);
 		gl_menu_admin.setHorizontalGroup(
 			gl_menu_admin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_admin.createSequentialGroup()
 					.addGap(1)
 					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_gestionPlatos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 		);
 		gl_menu_admin.setVerticalGroup(
 			gl_menu_admin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_admin.createSequentialGroup()
-					.addGap(5)
+					.addGap(41)
 					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_gestionPlatos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 		);
 		menu_admin.setLayout(gl_menu_admin);
 			
