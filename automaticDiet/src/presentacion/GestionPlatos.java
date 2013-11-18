@@ -74,8 +74,6 @@ public class GestionPlatos extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		
-		poblar();
-		
 		JPanel panel_tabla = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -577,7 +575,7 @@ public class GestionPlatos extends JPanel {
 		return ingrs; 
 	}
 	
-	private void poblar(){
+	void poblar(){
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(tcr);

@@ -299,7 +299,9 @@ public class AutomaticDiet
 				Usuario user = new Usuario();
 				user.setDni("44530694A");
 				user.setRol("Administrador");
-				cambiaPanel(new GestionPlatos(user));
+				GestionPlatos gp = new GestionPlatos(user);
+				gp.poblar();
+				cambiaPanel(gp);
 			}
 		});
 		menu_gestionPlatos.setOpaque(false);
