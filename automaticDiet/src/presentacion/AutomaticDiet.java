@@ -420,6 +420,23 @@ public class AutomaticDiet
 		menu_foro.setFont(new Font("Arial", Font.PLAIN, 14));
 		tabsMenuUsuario.addTab("Foro", new ImageIcon(AutomaticDiet.class.getResource("/iconos/foro.png")), menu_foro, null);
 		
+		JButton menu_temas_foro = new JButton("<html><p>Temas</p><p>del foro</p></html>");
+		menu_temas_foro.setSelected(true);
+		menu_temas_foro.setOpaque(false);
+		menu_temas_foro.setMargin(new Insets(2, 2, 2, 2));
+		menu_temas_foro.setHorizontalTextPosition(SwingConstants.CENTER);
+		menu_temas_foro.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_temas_foro.setBorderPainted(false);
+		menu_temas_foro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ForoBasico fb = new ForoBasico();
+				fb.cargaForos();
+				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Temas del foro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				cambiaPanel(fb);
+			}
+		});
+		menu_temas_foro.setBorder(null);
+		
 		JButton menu_buscador_grupos = new JButton("<html><p>Buscador</p><p>de grupos</p></html>");
 		menu_buscador_grupos.setSelected(true);
 		menu_buscador_grupos.setOpaque(false);
@@ -434,19 +451,34 @@ public class AutomaticDiet
 			}
 		});
 		menu_buscador_grupos.setBorder(null);
+		
 		GroupLayout gl_menu_foro = new GroupLayout(menu_foro);
 		gl_menu_foro.setHorizontalGroup(
 			gl_menu_foro.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_foro.createSequentialGroup()
 					.addGap(1)
 					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_temas_foro, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 		);
+//		gl_menu_foro.setHorizontalGroup(
+//				gl_menu_foro.createParallelGroup(Alignment.LEADING)
+//					.addGroup(gl_menu_foro.createSequentialGroup()
+//						.addGap(1)
+//						.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
+//			);
 		gl_menu_foro.setVerticalGroup(
 			gl_menu_foro.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_foro.createSequentialGroup()
-					.addGap(5)
+					.addGap(41)
 					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_temas_foro, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 		);
+//		gl_menu_foro.setVerticalGroup(
+//				gl_menu_foro.createParallelGroup(Alignment.LEADING)
+//					.addGroup(gl_menu_foro.createSequentialGroup()
+//						.addGap(5)
+//						.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+//			);
 		menu_foro.setLayout(gl_menu_foro);
 		automatic_diet.getContentPane().setLayout(groupLayout);
 		automatic_diet.setBounds(100, 100, 487, 331);
