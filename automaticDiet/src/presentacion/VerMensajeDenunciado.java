@@ -102,9 +102,15 @@ public class VerMensajeDenunciado extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						Boolean ok = mensajeDAO.deleteMensaje(mensaje);
 						if(ok)
+						{
 							JOptionPane.showMessageDialog(null, "Eliminado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+						}
 						else
+						{
 							JOptionPane.showMessageDialog(null, "No se ha podido eliminar el mensaje", "Error", JOptionPane.ERROR_MESSAGE);
+							dispose();
+						}	
 					}
 				});
 				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 13));

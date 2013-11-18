@@ -13,7 +13,7 @@ public class DenunciaDAO extends AbstractDAO{
 	public List<Denuncia> getDenuncias() {
 		try {
 			Query q;
-			q = entityManager.createQuery("SELECT d FROM Denuncia d");
+			q = entityManager.createQuery("SELECT d FROM Denuncia d, Mensaje m WHERE d.mensaje = m AND m.publicado = 0");
 			
 			return (List<Denuncia>) q.getResultList();
 			

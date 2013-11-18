@@ -13,7 +13,7 @@ public class MensajeDAO extends AbstractDAO{
 	public List<Mensaje> getMensajesByIdGrupo(int idGrupo) {
 		try {
 			Query q;
-			q = entityManager.createQuery("SELECT m FROM Mensaje m WHERE m.grupo.id =:ident");
+			q = entityManager.createQuery("SELECT m FROM Mensaje m WHERE m.grupo.id =:ident ORDER BY m.fecha DESC");
 			q.setParameter("ident", idGrupo);
 			
 			return (List<Mensaje>) q.getResultList();
@@ -54,19 +54,18 @@ public class MensajeDAO extends AbstractDAO{
 	public Boolean deleteMensaje(Mensaje mensajeBorrado) {
 
 		EntityTransaction trx = entityManager.getTransaction();
-		try{	
+		try{
+			
 			trx.begin();
-			// falla la siguiente instrucción
-			entityManager.remove(entityManager.merge(mensajeBorrado));
-	        entityManager.flush();
+			Mensaje mens = entityManager.find(Mensaje.class, mensajeBorrado.getId());
+			mens.setPublicado(1);
 	        trx.commit();
 	        return true;
+	        
 		}catch (Exception e) {
+			trx.rollback();
 	        e.printStackTrace();
 	        return false;
-	    } finally {
-	         if (trx.isActive())
-	             trx.rollback();
-	     }
+	    }
 	}
 }

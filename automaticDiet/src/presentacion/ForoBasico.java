@@ -56,6 +56,7 @@ public class ForoBasico extends JPanel {
 		
 		JButton btnNuevoTema = new JButton("Nuevo Tema");
 		btnNuevoTema.setIcon(new ImageIcon(ForoBasico.class.getResource("/iconos/edit_add.png")));
+		btnNuevoTema.setEnabled(false);
 		panelInf.add(btnNuevoTema);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -260,12 +261,12 @@ public class ForoBasico extends JPanel {
 				model.addRow(f1);
 				Foro f2 = new Foro();
 				f2.setId(2);
-				f2.setTema("SUGERENCIAS");
+				f2.setTema("RECOMENDACIONES");
 				f2.setFecha(new Date(4,25,2012));	
 				model.addRow(f2);
 				Foro f3 = new Foro();
 				f3.setId(1);
-				f3.setTema("CÓMO PREGUNTAR CORRECTAMENTE");
+				f3.setTema("FUNCIONAMIENTO");
 				f3.setFecha(new Date(12,11,2012));	
 				model.addRow(f3);
 

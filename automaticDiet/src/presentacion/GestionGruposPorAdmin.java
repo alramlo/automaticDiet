@@ -147,6 +147,9 @@ public class GestionGruposPorAdmin extends JPanel {
 				mensajeDenunciado.setModal(true);
 				mensajeDenunciado.setLocationRelativeTo(null);
 				mensajeDenunciado.setVisible(true);
+				cargaDenuncias();
+				tablePostsDenunciados.revalidate();
+				tablePostsDenunciados.repaint();
 			}
 		});
 		tablePostsDenunciados.setRowHeight(40);
