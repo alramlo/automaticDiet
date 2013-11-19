@@ -216,8 +216,13 @@ public class AutomaticDiet
 		tabsMenuAdministrador.setBounds(0, 44, 190, 208);
 		tabsMenuAdministrador.setVisible(false);
 		panel_izquierda.add(tabsMenuAdministrador);
+		tabsMenuAdministrador.setFont(new Font("Arial", Font.PLAIN, 12));
+		tabsMenuAdministrador.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		tabsMenuAdministrador.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabsMenuAdministrador.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final JComboBox comboBox = new JComboBox(rolUsuarioAdmin);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
@@ -278,7 +283,7 @@ public class AutomaticDiet
 			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_usuario.createSequentialGroup()
 					.addGap(5)
-					.addComponent(menu_indicadores, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_indicadores, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
 		);
 		menu_usuario.setLayout(gl_menu_usuario);
 		
@@ -335,16 +340,16 @@ public class AutomaticDiet
 		gl_menu_admin.setHorizontalGroup(
 			gl_menu_admin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_admin.createSequentialGroup()
-					.addGap(1)
+					.addGap(0)
 					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 					.addComponent(menu_gestionPlatos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 		);
 		gl_menu_admin.setVerticalGroup(
 			gl_menu_admin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_admin.createSequentialGroup()
-					.addGap(41)
-					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addComponent(menu_gestionPlatos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(44)
+					.addComponent(menu_gestionGrupos, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_gestionPlatos, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 		);
 		menu_admin.setLayout(gl_menu_admin);
 			
@@ -382,7 +387,7 @@ public class AutomaticDiet
 			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_dietas.createSequentialGroup()
 					.addGap(5)
-					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
 		);
 		menu_dietas.setLayout(gl_menu_dietas);
 		
@@ -425,7 +430,7 @@ public class AutomaticDiet
 			gl_menu_platos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_platos.createSequentialGroup()
 					.addGap(5)
-					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
 		);
 		menu_platos.setLayout(gl_menu_platos);
 		
@@ -472,7 +477,7 @@ public class AutomaticDiet
 		gl_menu_foro.setHorizontalGroup(
 			gl_menu_foro.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_foro.createSequentialGroup()
-					.addGap(1)
+					.addGap(0)
 					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
 					.addComponent(menu_temas_foro, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
 		);
@@ -485,9 +490,9 @@ public class AutomaticDiet
 		gl_menu_foro.setVerticalGroup(
 			gl_menu_foro.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_menu_foro.createSequentialGroup()
-					.addGap(41)
-					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addComponent(menu_temas_foro, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(44)
+					.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+					.addComponent(menu_temas_foro, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 		);
 //		gl_menu_foro.setVerticalGroup(
 //				gl_menu_foro.createParallelGroup(Alignment.LEADING)

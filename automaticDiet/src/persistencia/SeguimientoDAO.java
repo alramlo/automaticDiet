@@ -13,14 +13,12 @@ public class SeguimientoDAO extends AbstractDAO
 		try
 		{
 			Query q;
-			q = entityManager.createQuery("SELECT * "
-					+ "FROM Seguimiento s"
-					+ "WHERE s.id =:idUsuario");
-			q.setParameter("idUsuario", idUsuario);
+			q = entityManager.createQuery("SELECT s FROM Seguimiento s WHERE s.usuario2.id = :u ");
+			q.setParameter("u", idUsuario);
 			return (List<Seguimiento>) q.getResultList();
-			
-			
-		}catch(Exception e){
+		}
+		catch(Exception e)
+		{
 			System.out.println("Error:"+e);
 			return null;
 			

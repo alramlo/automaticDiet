@@ -104,11 +104,10 @@ public class VerMensajeDenunciado extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						
 						Object[] options = {"SI","NO"};
-
-						Image imagen = new ImageIcon("/iconos/remove24.png").getImage();						
-						Icon icon = new ImageIcon(imagen);
+						
+						Icon icon = new ImageIcon("src/iconos/eliminar-icono-4912-32.png");
 	
-						int respuesta = JOptionPane.showOptionDialog(null, "¿Desea eliminar el post?", "ALERTA", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, icon, options, options[0]);
+						int respuesta = JOptionPane.showOptionDialog(null, "¿Desea eliminar definitivamente el post?", "CONFIRMACIÓN", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, icon, options, options[0]);
 						if (respuesta == 0 )
 						{
 							Boolean ok = mensajeDAO.deleteMensaje(mensaje);
