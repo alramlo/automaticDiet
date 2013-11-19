@@ -18,11 +18,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 import javax.swing.JSeparator;
 
+import persistencia.DAL;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 import servicio.Controlador;
 import modelo.Ingrediente;
 import modelo.Plato;
+import modelo.PlatoIngrediente;
 import modelo.Usuario;
 
 import java.awt.event.ActionListener;
@@ -35,9 +37,12 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.Toolkit;
+import javax.swing.ListSelectionModel;
+import java.awt.Color;
 
 public class NuevoPlato2 extends JFrame {
 
@@ -45,10 +50,16 @@ public class NuevoPlato2 extends JFrame {
 	private JTextField tNombre;
 	private Plato plato;
 	private static Controlador control;
+	private JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
 	private JTextField tCalorias;
 	private JTextField tPrecio;
 	private JTextField tTiempo;
 	private List<Ingrediente> ingredientes;
+	private List<PlatoIngrediente> platoIngredienteNuevos;
+	private List<Ingrediente> ingredientesEliminar;
+	private PlatoIngrediente piAux;
+	private Boolean esNuevo;
+	private Integer contadorCalorias;
 
 
 	/**
@@ -72,7 +83,16 @@ public class NuevoPlato2 extends JFrame {
 	 * @throws Exception 
 	 */
 	public NuevoPlato2(Plato p, Usuario u) throws Exception {
+		
+		//Comprobamos si el plato es nuevo
+		if(p==null)
+			esNuevo=true;
+		else
+			esNuevo=false;
+		contadorCalorias=0;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NuevoPlato2.class.getResource("/iconos/platos.png")));
+		platoIngredienteNuevos = new ArrayList<PlatoIngrediente>();
+		ingredientesEliminar = new ArrayList<Ingrediente>();
 		
 		//Añadimos el plato pasado por parametro
 		plato=p;
@@ -80,6 +100,8 @@ public class NuevoPlato2 extends JFrame {
 		//Pedimos el controlador
 		control=Controlador.dameControlador();
 				
+		
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 655, 573);
@@ -104,7 +126,9 @@ public class NuevoPlato2 extends JFrame {
 		getContentPane().add(lAutor);
 		
 		JLabel lAutor2 = new JLabel("Autor Leido...");
-		lAutor2.setBounds(95, 18, 122, 14);
+		lAutor2.setFont(new Font("Arial", Font.PLAIN, 16));
+		lAutor2.setForeground(Color.BLUE);
+		lAutor2.setBounds(91, 15, 122, 16);
 		getContentPane().add(lAutor2);
 		
 		JLabel lIngredientes = new JLabel("Ingredientes:");
@@ -113,7 +137,7 @@ public class NuevoPlato2 extends JFrame {
 		getContentPane().add(lIngredientes);
 		
 		final DefaultListModel<Ingrediente> modelo = new DefaultListModel<Ingrediente>();
-		final JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
+		listIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listIngredientes.setModel(modelo);
 		listIngredientes.setBounds(37, 133, 282, 155);
 		getContentPane().add(listIngredientes);
@@ -122,9 +146,18 @@ public class NuevoPlato2 extends JFrame {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(listIngredientes.getSelectedValue()!=null)
+				//si hay un ingrediente seleccionados
+				if(listIngredientes.getSelectedValue()!=null){
+					//eliminamos el platoIngredinte de la lista platoIngredienteNuevo
+					for(PlatoIngrediente aux : platoIngredienteNuevos)
+						if(aux.getIngrediente().getId()==listIngredientes.getSelectedValue().getId())
+							platoIngredienteNuevos.remove(aux);
+					//lo eliminamos de la lista de la pantalla
 					modelo.removeElementAt(listIngredientes.getSelectedIndex());
-				
+					if(esNuevo==false){
+						ingredientesEliminar.add(listIngredientes.getSelectedValue());
+					}
+				}
 			}
 		});
 		btnEliminar.setBounds(329, 164, 89, 23);
@@ -137,7 +170,15 @@ public class NuevoPlato2 extends JFrame {
 					AnadirIngrediente2 ventana = new AnadirIngrediente2(plato);
 					ventana.setModal(true);
 					ventana.setVisible(true);
-					control.getPi();
+					piAux=control.getPi();
+					if(piAux!=null){
+						modelo.addElement(piAux.getIngrediente());
+						piAux.setPlato(plato);
+						platoIngredienteNuevos.add(piAux);
+						contadorCalorias=contadorCalorias+(piAux.getIngrediente().getCalorias()*piAux.getCantidad());
+						tCalorias.setText(contadorCalorias.toString());
+						control.setPi(null);
+					}
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -200,23 +241,23 @@ public class NuevoPlato2 extends JFrame {
 		
 		JLabel lblCalorias = new JLabel("Calorias:");
 		lblCalorias.setFont(new Font("Arial", Font.BOLD, 16));
-		lblCalorias.setBounds(422, 206, 79, 20);
+		lblCalorias.setBounds(438, 206, 79, 20);
 		contentPane.add(lblCalorias);
 		
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setFont(new Font("Arial", Font.BOLD, 16));
-		lblPrecio.setBounds(422, 237, 79, 20);
+		lblPrecio.setBounds(438, 237, 79, 20);
 		contentPane.add(lblPrecio);
 		
 		JLabel lblTiempo = new JLabel("Tiempo:");
 		lblTiempo.setFont(new Font("Arial", Font.BOLD, 16));
-		lblTiempo.setBounds(422, 268, 79, 20);
+		lblTiempo.setBounds(438, 268, 79, 20);
 		contentPane.add(lblTiempo);
 		
 		tCalorias = new JTextField();
 		tCalorias.setEditable(false);
 		tCalorias.setColumns(10);
-		tCalorias.setBounds(511, 206, 79, 20);
+		tCalorias.setBounds(527, 206, 79, 20);
 		contentPane.add(tCalorias);
 		
 		JLabel lContImg = new JLabel("");
@@ -226,17 +267,17 @@ public class NuevoPlato2 extends JFrame {
 		tPrecio = new JTextField();
 		tPrecio.setEditable(false);
 		tPrecio.setColumns(10);
-		tPrecio.setBounds(509, 237, 79, 20);
+		tPrecio.setBounds(525, 237, 79, 20);
 		contentPane.add(tPrecio);
 		
 		tTiempo = new JTextField();
 		tTiempo.setEditable(false);
 		tTiempo.setColumns(10);
-		tTiempo.setBounds(509, 268, 79, 20);
+		tTiempo.setBounds(525, 268, 79, 20);
 		contentPane.add(tTiempo);
 		
 		JLabel label = new JLabel("\u20AC");
-		label.setBounds(593, 242, 46, 14);
+		label.setBounds(609, 242, 12, 14);
 		contentPane.add(label);
 		
 		//Si el usuario es diferente de null se carga
@@ -244,9 +285,9 @@ public class NuevoPlato2 extends JFrame {
 			lAutor2.setText(u.getNombre());
 		
 		//Si el plato pasado por parametro es diferente a null lo cargamos
-		if(p!=null){
+		if(esNuevo==false){
 			
-			
+			tNombre.setText(plato.getNombre());
 			//Sacamos las horas y los minutos de elaboración
 			if(p.getTiempo()!=null){
 				System.out.println("Tiempo: "+p.getTiempo());
@@ -296,22 +337,15 @@ public class NuevoPlato2 extends JFrame {
 			}
     		
     		//Cargamos los ingredientes
-			if(p.getNombre()!=null){
-				ingredientes=control.ingredientesPorPlato2(p.getNombre());
-				System.out.println("Numero de ingredientes: "+ingredientes.size());
-				if(ingredientes!=null){
-					for(Ingrediente i: ingredientes)
-						{
-						modelo.addElement(i);
-						}
-					//listIngredientes.setModel(modelo);
-					System.out.println("La lista es visible= "+listIngredientes.isVisible());
-				}
-			}
+			cargarIngredientes(modelo);
 			
 			//Cargamos la elaboración
 			if(p.getElaboracion()!=null)
 				tElaboracion.setText(p.getElaboracion());
+			
+			//Calculamos las calorias
+			contadorCalorias=control.calcularCalorias(plato.getId()).intValue();
+			tCalorias.setText(contadorCalorias.toString());
 			
 			
 		}
@@ -322,4 +356,19 @@ public class NuevoPlato2 extends JFrame {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void cargarIngredientes(DefaultListModel<Ingrediente> modelo) throws Exception{
+		
+		if(esNuevo==false){
+			ingredientes=control.ingredientesPorPlato2(plato.getNombre());
+			System.out.println("Numero de ingredientes: "+ingredientes.size());
+			if(ingredientes!=null){
+				for(Ingrediente i: ingredientes)
+					modelo.addElement(i);
+					
+			
+			}
+		}
+	}
+	
 }

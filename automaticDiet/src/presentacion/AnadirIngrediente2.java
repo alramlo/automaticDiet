@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
 
 public class AnadirIngrediente2 extends JDialog {
 
@@ -77,6 +78,7 @@ public class AnadirIngrediente2 extends JDialog {
 		contentPanel.add(lblIngredientes);
 		
 		final JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
+		listIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultListModel<Ingrediente> modelo = new DefaultListModel<Ingrediente>();
 		listIngredientes.setMaximumSize(new Dimension(800, 600));
 		listIngredientes.setMinimumSize(new Dimension(50, 50));
@@ -100,6 +102,7 @@ public class AnadirIngrediente2 extends JDialog {
 		contentPanel.add(scrollPane);
 		
 		final JList<Integer> listCantidad = new JList<Integer>();
+		listCantidad.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listCantidad.setBounds(327, 59, 69, 111);
 		DefaultListModel<Integer> modeloC = new DefaultListModel<Integer>();
 		for(int i=1;i<7;i++)
@@ -128,11 +131,15 @@ public class AnadirIngrediente2 extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-					PlatoIngrediente pi = new PlatoIngrediente();
-					pi.setPlato(p);
-					pi.setIngrediente(listIngredientes.getSelectedValue());
-					pi.setCantidad(listCantidad.getSelectedValue());
-					control.setPi(pi);
+					if(listIngredientes.getSelectedValue()!=null && listCantidad.getSelectedValue()!=null){
+						PlatoIngrediente pi = new PlatoIngrediente();
+						pi.setPlato(p);
+						pi.setIngrediente(listIngredientes.getSelectedValue());
+						pi.setCantidad(listCantidad.getSelectedValue());
+						control.setPi(pi);
+					}
+					setVisible(false);
+					dispose();
 						
 					}
 				});
