@@ -170,4 +170,8 @@ public class DAL {
 	public List<Ingrediente> getIngredientes(){
 		return ingredienteDAO.getIngredientes();
 	}
+	
+	public Long contarCalorias(int codigo){
+		return platoDAO.caluclarCalorias(codigo);
+	}
 }

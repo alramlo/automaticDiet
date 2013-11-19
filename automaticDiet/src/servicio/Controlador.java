@@ -43,6 +43,7 @@ public class Controlador {
 			// Objeto para comunicarse con la capa de acceso a datos
 
 			dal = DAL.dameDAL();
+			pi=null;
 //			usuarioActual = null;
 
 		}catch (DAOExcepcion e){
@@ -418,6 +419,10 @@ public class Controlador {
 
 	public void setPi(PlatoIngrediente pi) {
 		this.pi = pi;
+	}
+	
+	public Long calcularCalorias(int codigo){
+		return dal.contarCalorias(codigo);
 	}
 }
 
