@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class VerAnuncioEnForo extends JDialog {
 
@@ -32,7 +33,7 @@ public class VerAnuncioEnForo extends JDialog {
 		this.anuncio = i;
 		
 		setTitle("Anuncio");
-		setBounds(100, 100, 683, 300);
+		setBounds(100, 100, 790, 517);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -44,10 +45,12 @@ public class VerAnuncioEnForo extends JDialog {
 			contentPanel.add(panel, BorderLayout.NORTH);
 			{
 				JLabel lblCreadorDelPost = new JLabel("Creado por:");
+				lblCreadorDelPost.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				panel.add(lblCreadorDelPost);
 			}
 			{
 				JLabel lblFecha = new JLabel("AutomaticDIET");
+				lblFecha.setFont(new Font("Tahoma", Font.BOLD, 12));
 				panel.add(lblFecha);
 			}
 		}
