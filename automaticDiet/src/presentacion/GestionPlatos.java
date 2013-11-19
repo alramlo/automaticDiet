@@ -183,7 +183,6 @@ public class GestionPlatos extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		panel_tabla.add(scrollPane, BorderLayout.CENTER);
 		
-		table = new JTable(1,5);
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
