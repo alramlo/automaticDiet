@@ -31,6 +31,7 @@ public class DAL {
 	private PaisDAO paisDAO;
 	private CiudadDAO ciudadDAO;
 	private SeguimientoDAO seguimientoDao;
+	private IngredienteDAO ingredienteDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -42,6 +43,7 @@ public class DAL {
 		grupoDAO = new GrupoDAO();
 		paisDAO = new PaisDAO();
 		ciudadDAO = new CiudadDAO();
+		ingredienteDAO = new IngredienteDAO(); 
 	}
 	
 	// Patrón Singleton
@@ -150,5 +152,9 @@ public class DAL {
 
 	public void eliminarPlato(Plato platoVuelta) {
 		platoDAO.eliminarPlato(platoVuelta);
+	}
+	
+	public List<Ingrediente> getIngredientes(){
+		return ingredienteDAO.getIngredientes();
 	}
 }
