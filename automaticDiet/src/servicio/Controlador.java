@@ -364,6 +364,17 @@ public class Controlador {
 		return datos;
 	}
 	
+	public void setSeguimiento(Seguimiento s) {
+		if(dal.existeSeg(s))
+		{
+			dal.updateSeg(s);
+		}
+		else
+		{
+			dal.setSeguimiento(s);
+		}
+	}
+	
 	public List<Plato> buscarPlatosPorAutor(Usuario u){
 		return dal.buscarPlatosPorAutor(u);
 	}

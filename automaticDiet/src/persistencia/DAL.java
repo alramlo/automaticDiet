@@ -30,7 +30,7 @@ public class DAL {
 	private GrupoDAO grupoDAO;
 	private PaisDAO paisDAO;
 	private CiudadDAO ciudadDAO;
-	private SeguimientoDAO seguimientoDao;
+	private SeguimientoDAO seguimientoDAO;
 	private IngredienteDAO ingredienteDAO;
 
 
@@ -43,7 +43,8 @@ public class DAL {
 		grupoDAO = new GrupoDAO();
 		paisDAO = new PaisDAO();
 		ciudadDAO = new CiudadDAO();
-		ingredienteDAO = new IngredienteDAO(); 
+		ingredienteDAO = new IngredienteDAO();
+		seguimientoDAO = new SeguimientoDAO();
 	}
 	
 	// Patrón Singleton
@@ -127,7 +128,19 @@ public class DAL {
 	
 	//Seguimiento
 	public List<Seguimiento> getSegUsuario(int idUsuario){
-		return seguimientoDao.getSegUsuario(idUsuario);
+		return seguimientoDAO.getSegUsuario(idUsuario);
+	}
+	
+	public void setSeguimiento(Seguimiento s) {
+		seguimientoDAO.setSeguimiento(s);
+	}
+	
+	public boolean existeSeg(Seguimiento s) {
+		return seguimientoDAO.existeSeg(s);
+	}
+	
+	public void updateSeg(Seguimiento s) {
+		seguimientoDAO.updateSeg(s);
 	}
 	
 	public List<Plato> buscarPlatosPorAutor(Usuario u){
