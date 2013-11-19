@@ -20,7 +20,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -118,9 +117,11 @@ public class Consultar_dieta_asignada extends JPanel
 		btn_detalle.setFont(new Font("Arial", Font.PLAIN, 12));
 		
 		JDateChooser dia_final = new JDateChooser();
+		dia_final.getCalendarButton().setEnabled(false);
 		dia_final.setDateFormatString("dd-MMMM-yyyy");
 		
 		JDateChooser dia_inicio = new JDateChooser();
+		dia_inicio.getCalendarButton().setEnabled(false);
 		dia_inicio.setDateFormatString("dd-MMMM-yyyy");
 		
 		JButton btn_consultar = new JButton("Consultar");
@@ -150,6 +151,7 @@ public class Consultar_dieta_asignada extends JPanel
 			if(fecha_actual.getDate()!=null && cont<28){
 				platos=c.dietaSemanal(1, fecha_actual.getDate());
 				if(platos.length!=0){
+					tabla_dieta.setRowHeight(100);
 				for(int i=1;i<=7;i++){
 					for(int j=1;j<=4;j++){
 						String nom_plato = platos[cont].getNombre();
