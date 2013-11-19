@@ -14,9 +14,11 @@ import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Pais;
 import modelo.Plato;
+import modelo.PlatoIngrediente;
 import modelo.Seguimiento;
 import modelo.Usuario;
 import persistencia.DAL;
+import persistencia.IngredienteDAO;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 
@@ -26,6 +28,7 @@ public class Controlador {
 
 	private static Controlador control = null;
 	private static DAL dal;
+	private PlatoIngrediente pi;
 //	private Caracteristica caracteristica;
 //	private Usuario usuarioActual;
 
@@ -88,6 +91,11 @@ public class Controlador {
 			ingredientes[i]=itIngrediente.next();
 		}
 		return ingredientes;
+	}
+	
+	public List<Ingrediente> ingredientesPorPlato2(String plato) throws Exception{
+		
+		return dal.ingredientesPorPlato(plato);
 	}
 	
 	//grupo
@@ -402,6 +410,14 @@ public class Controlador {
 	
 	public List<Ingrediente> getIngredientes(){
 		return dal.getIngredientes();
+	}
+
+	public PlatoIngrediente getPi() {
+		return pi;
+	}
+
+	public void setPi(PlatoIngrediente pi) {
+		this.pi = pi;
 	}
 }
 

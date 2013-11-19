@@ -159,4 +159,9 @@ public class Ingrediente implements Serializable {
 		this.vitaminas = vitaminas;
 	}
 
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
 }

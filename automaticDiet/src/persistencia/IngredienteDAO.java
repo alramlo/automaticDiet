@@ -13,7 +13,8 @@ public class IngredienteDAO extends AbstractDAO{
 		
 		try{
 			Query q=entityManager.createQuery("SELECT i "
-					+ "FROM Ingrediente i ");
+					+ "FROM Ingrediente i "
+					+ "GROUP BY i.nombre");
 			return (List<Ingrediente>)q.getResultList();
 			
 		}catch(Exception e){
