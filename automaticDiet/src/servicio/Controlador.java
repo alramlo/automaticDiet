@@ -388,5 +388,9 @@ public class Controlador {
 		dal.eliminarPlato(platoVuelta);
 		
 	}
+	
+	public List<Ingrediente> getIngredientes(){
+		return dal.getIngredientes();
+	}
 }
 
