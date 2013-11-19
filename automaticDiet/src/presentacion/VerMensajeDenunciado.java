@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -100,17 +102,27 @@ public class VerMensajeDenunciado extends JDialog {
 				JButton cancelButton = new JButton("Eliminar Post");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						Boolean ok = mensajeDAO.deleteMensaje(mensaje);
-						if(ok)
+						
+						Object[] options = {"SI","NO"};
+
+						Image imagen = new ImageIcon("/iconos/remove24.png").getImage();						
+						Icon icon = new ImageIcon(imagen);
+	
+						int respuesta = JOptionPane.showOptionDialog(null, "¿Desea eliminar el post?", "ALERTA", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, icon, options, options[0]);
+						if (respuesta == 0 )
 						{
-							JOptionPane.showMessageDialog(null, "Eliminado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-							dispose();
+							Boolean ok = mensajeDAO.deleteMensaje(mensaje);
+							if(ok)
+							{
+								JOptionPane.showMessageDialog(null, "Eliminado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+								dispose();
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "No se ha podido eliminar el mensaje", "Error", JOptionPane.ERROR_MESSAGE);
+								dispose();
+							}
 						}
-						else
-						{
-							JOptionPane.showMessageDialog(null, "No se ha podido eliminar el mensaje", "Error", JOptionPane.ERROR_MESSAGE);
-							dispose();
-						}	
 					}
 				});
 				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
