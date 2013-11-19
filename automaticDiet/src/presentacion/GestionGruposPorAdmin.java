@@ -84,34 +84,6 @@ public class GestionGruposPorAdmin extends JPanel {
 		panelBotonesGrupos.add(tfBuscadorGrupos);
 		tfBuscadorGrupos.setColumns(10);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		panelBotonesGrupos.add(horizontalStrut);
-		
-		JButton btnNuevoGrupo = new JButton("Nuevo Grupo");
-		btnNuevoGrupo.setIcon(new ImageIcon(GestionGruposPorAdmin.class.getResource("/iconos/add-icon1x16.gif")));
-		panelBotonesGrupos.add(btnNuevoGrupo);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		panelGrupos.add(scrollPane, BorderLayout.CENTER);
-		
-		modelGrupos = new TablaConsultaModelGrupos();
-		tableGrupos = new JTable();
-		tableGrupos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int fila = tableGrupos.rowAtPoint(e.getPoint());
-				String cod = String.valueOf(tableGrupos.getValueAt(fila, 0));
-				int idGrupo = Integer.valueOf(cod);
-				ListaMensajesPorGrupo listaMensajes = new ListaMensajesPorGrupo(idGrupo);
-				listaMensajes.cargaMensajes();
-				listaMensajes.setModal(true);
-				listaMensajes.setVisible(true);
-			}
-		});
-		tableGrupos.setRowHeight(40);
-		tableGrupos.setModel(modelGrupos);
-		scrollPane.setViewportView(tableGrupos);
-		
 		JPanel panelPostsDenunciados = new JPanel();
 		panelPostsDenunciados.setBorder(new TitledBorder(null, "Posts denunciados:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
 		panelPostsDenunciados.setBounds(10, 314, 780, 275);
@@ -123,6 +95,70 @@ public class GestionGruposPorAdmin extends JPanel {
 		fl_panelBotonesPostsDenunciados.setAlignment(FlowLayout.RIGHT);
 		panelPostsDenunciados.add(panelBotonesPostsDenunciados, BorderLayout.SOUTH);
 		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panelBotonesGrupos.add(horizontalStrut);
+		
+		JButton btnNuevoGrupo = new JButton("Nuevo Grupo");
+		btnNuevoGrupo.setIcon(new ImageIcon(GestionGruposPorAdmin.class.getResource("/iconos/add-icon1x16.gif")));
+		panelBotonesGrupos.add(btnNuevoGrupo);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		panelGrupos.add(scrollPane, BorderLayout.CENTER);
+		modelGrupos = new TablaConsultaModelGrupos();
+		tableGrupos = new JTable();
+		
+		JScrollPane scrollPanePostsDenunciados = new JScrollPane();
+		panelPostsDenunciados.add(scrollPanePostsDenunciados, BorderLayout.CENTER);
+		modelPostsDenunciados = new TablaConsultaModelPostsDenunciados();
+		tablePostsDenunciados = new JTable();
+		
+		tableGrupos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==1){
+					System.out.println("Un solo click !!!");
+					int fila = tableGrupos.rowAtPoint(e.getPoint());
+					int idGrupo = listadoDeGrupos.get(fila).getId();
+					cargaDenunciasPorGrupo(idGrupo);
+					tablePostsDenunciados.revalidate();
+					tablePostsDenunciados.repaint();
+				}
+				if(e.getClickCount()>=2){
+					System.out.println("Dos o más clicks !!!");
+					int fila = tableGrupos.rowAtPoint(e.getPoint());
+//					String cod = String.valueOf(tableGrupos.getValueAt(fila, 0));
+//					int idGrupo = Integer.valueOf(cod);
+					int idGrupo = listadoDeGrupos.get(fila).getId();
+					ListaMensajesPorGrupo listaMensajes = new ListaMensajesPorGrupo(idGrupo);
+					listaMensajes.cargaMensajes();
+					listaMensajes.setModal(true);
+					listaMensajes.setVisible(true);
+				}
+//				int fila = tableGrupos.rowAtPoint(e.getPoint());
+////				String cod = String.valueOf(tableGrupos.getValueAt(fila, 0));
+////				int idGrupo = Integer.valueOf(cod);
+//				int idGrupo = listadoDeGrupos.get(fila).getId();
+//				ListaMensajesPorGrupo listaMensajes = new ListaMensajesPorGrupo(idGrupo);
+//				listaMensajes.cargaMensajes();
+//				listaMensajes.setModal(true);
+//				listaMensajes.setVisible(true);
+			}
+		});
+		tableGrupos.setRowHeight(40);
+		tableGrupos.setModel(modelGrupos);
+		scrollPane.setViewportView(tableGrupos);
+		
+//		JPanel panelPostsDenunciados = new JPanel();
+//		panelPostsDenunciados.setBorder(new TitledBorder(null, "Posts denunciados:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
+//		panelPostsDenunciados.setBounds(10, 314, 780, 275);
+//		panelContenedor.add(panelPostsDenunciados);
+//		panelPostsDenunciados.setLayout(new BorderLayout(0, 0));
+//		
+//		JPanel panelBotonesPostsDenunciados = new JPanel();
+//		FlowLayout fl_panelBotonesPostsDenunciados = (FlowLayout) panelBotonesPostsDenunciados.getLayout();
+//		fl_panelBotonesPostsDenunciados.setAlignment(FlowLayout.RIGHT);
+//		panelPostsDenunciados.add(panelBotonesPostsDenunciados, BorderLayout.SOUTH);
+		
 		JLabel label = new JLabel("Buscar:");
 		panelBotonesPostsDenunciados.add(label);
 		
@@ -131,11 +167,11 @@ public class GestionGruposPorAdmin extends JPanel {
 		panelBotonesPostsDenunciados.add(tfBuscadorPostsDenunciados);
 		tfBuscadorPostsDenunciados.setColumns(10);
 		
-		JScrollPane scrollPanePostsDenunciados = new JScrollPane();
-		panelPostsDenunciados.add(scrollPanePostsDenunciados, BorderLayout.CENTER);
-		
-		modelPostsDenunciados = new TablaConsultaModelPostsDenunciados();
-		tablePostsDenunciados = new JTable();
+//		JScrollPane scrollPanePostsDenunciados = new JScrollPane();
+//		panelPostsDenunciados.add(scrollPanePostsDenunciados, BorderLayout.CENTER);
+//		
+//		modelPostsDenunciados = new TablaConsultaModelPostsDenunciados();
+//		tablePostsDenunciados = new JTable();
 		tablePostsDenunciados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -143,6 +179,7 @@ public class GestionGruposPorAdmin extends JPanel {
 				String cod = String.valueOf(tablePostsDenunciados.getValueAt(fila, 6));
 				int idMensaje = Integer.valueOf(cod);
 				mens = mensajeDAO.getMensajeById(idMensaje);
+//				mens = mensajeDAO.getMensajeById(listadoDeGrupos.get(fila).getId());
 				VerMensajeDenunciado mensajeDenunciado = new VerMensajeDenunciado(mens);
 				mensajeDenunciado.setModal(true);
 				mensajeDenunciado.setLocationRelativeTo(null);
@@ -161,8 +198,35 @@ public class GestionGruposPorAdmin extends JPanel {
 	class TablaConsultaModelGrupos extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
+//		// Columnas de la tabla
+//		private String[] columnas = {"CÓDIGO", "NOMBRE DEL GRUPO", "PRIVADO", "CREADOR", "CIUDAD", "PAIS"};
+//		// Datos que muestra la tabla
+//		private ArrayList<Grupo> data = new ArrayList<Grupo>();
+//
+//		public int getColumnCount() {
+//			return columnas.length;
+//		}
+//		public int getRowCount() {
+//			return data.size();
+//		}
+//		public String getColumnName(int col) {
+//			return columnas[col];
+//		}
+//		// Este método se dispara cada vez que la tabla necesita el valor de un campo
+//		public Object getValueAt(int row, int col) {
+//			Grupo g = data.get(row);
+//			switch(col){
+//			case 0: return g.getId();
+//			case 1: return g.getNombre();
+//			case 2: return g.getPrivado();
+//			case 3: return g.getUsuario().getNombre();
+//			case 4: return g.getCiudad();
+//			case 5: return g.getPais();
+//			default: return null;
+//			}
+//		}
 		// Columnas de la tabla
-		private String[] columnas = {"CÓDIGO", "NOMBRE DEL GRUPO", "PRIVADO", "CREADOR", "CIUDAD", "PAIS"};
+		private String[] columnas = {"NOMBRE DEL GRUPO", "CREADOR", "CIUDAD", "PAIS", "PRIVADO"};
 		// Datos que muestra la tabla
 		private ArrayList<Grupo> data = new ArrayList<Grupo>();
 
@@ -179,12 +243,11 @@ public class GestionGruposPorAdmin extends JPanel {
 		public Object getValueAt(int row, int col) {
 			Grupo g = data.get(row);
 			switch(col){
-			case 0: return g.getId();
-			case 1: return g.getNombre();
-			case 2: return g.getPrivado();
-			case 3: return g.getUsuario().getNombre();
-			case 4: return g.getCiudad();
-			case 5: return g.getPais();
+			case 0: return g.getNombre();
+			case 1: return g.getUsuario().getNombre();
+			case 2: return g.getCiudad();
+			case 3: return g.getPais();
+			case 4: return g.getPrivado();
 			default: return null;
 			}
 		}
@@ -287,6 +350,26 @@ public class GestionGruposPorAdmin extends JPanel {
 		try{
 				
 				listadoDeDenuncias = denunciaDAO.getDenuncias();
+				Iterator<Denuncia> it = listadoDeDenuncias.iterator();
+
+				TablaConsultaModelPostsDenunciados model = (TablaConsultaModelPostsDenunciados)tablePostsDenunciados.getModel();
+				model.clear();
+				
+				Denuncia d = null;
+				while (it.hasNext()){
+					d = it.next();
+					model.addRow(d);
+				}
+			} catch (Exception e){
+				JOptionPane.showMessageDialog(this,e.getMessage(),"ERROR AL CARGAR LOS POST DENUNCIADOS",
+						JOptionPane.ERROR_MESSAGE);
+			}
+	}
+	
+	public void cargaDenunciasPorGrupo(int idGrupo){
+		try{
+				
+				listadoDeDenuncias = denunciaDAO.getDenunciaPorGrupo(idGrupo);
 				Iterator<Denuncia> it = listadoDeDenuncias.iterator();
 
 				TablaConsultaModelPostsDenunciados model = (TablaConsultaModelPostsDenunciados)tablePostsDenunciados.getModel();

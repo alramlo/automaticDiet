@@ -325,7 +325,7 @@ public class AutomaticDiet
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Grupos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				GestionGruposPorAdmin panelGestionGrupos = new GestionGruposPorAdmin();
 				panelGestionGrupos.cargaGrupos();
-				panelGestionGrupos.cargaDenuncias();
+//				panelGestionGrupos.cargaDenuncias();
 				cambiaPanel(panelGestionGrupos);
 			}
 		});
