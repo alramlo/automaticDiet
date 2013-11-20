@@ -1,8 +1,8 @@
 package test;
 import java.text.ParseException;
 
-import modelo.Plato;
 import persistencia.PlatoDAO;
+import modelo.Plato;
 public class TestSergio {
 
 
@@ -56,6 +56,9 @@ public class TestSergio {
 //		p.setId(1);
 //		PlatoDAO pd = new PlatoDAO();
 //		System.out.println(pd.getCaloriasPorPlato(p));
+		PlatoDAO pl = new PlatoDAO();
+		Plato p = pl.platoByNombre("Macedonia");
+		System.out.println(p.getNombre());
 		
 	}
 
