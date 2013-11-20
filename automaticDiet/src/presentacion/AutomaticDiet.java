@@ -214,7 +214,7 @@ public class AutomaticDiet
 		tabsMenuUsuario.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		
-		final JTabbedPane tabsMenuAdministrador = new JTabbedPane(JTabbedPane.TOP);
+		final JTabbedPane tabsMenuAdministrador = new JTabbedPane(JTabbedPane.LEFT);
 		tabsMenuAdministrador.setBounds(0, 44, 190, 208);
 		tabsMenuAdministrador.setVisible(false);
 		panel_izquierda.add(tabsMenuAdministrador);
@@ -265,7 +265,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Indicadores personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				//cambiaPanel(new Indicadores_personales());
+				cambiaPanel(new Indicadores_personales());
 			}
 		});
 		menu_indicadores.setOpaque(false);
@@ -294,7 +294,7 @@ public class AutomaticDiet
 		menu_admin.setFont(new Font("Arial", Font.PLAIN, 14));
 		menu_admin.setAlignmentY(Component.TOP_ALIGNMENT);
 		menu_admin.setAlignmentX(Component.LEFT_ALIGNMENT);
-		tabsMenuAdministrador.addTab("Administrador", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_admin, null);
+		tabsMenuAdministrador.addTab("Administrador", null, menu_admin, null);
 		
 		JButton menu_gestionPlatos = new JButton("<html><p>Gestión</p><p>de platos</p></html>");
 		menu_gestionPlatos.setSelected(true);
