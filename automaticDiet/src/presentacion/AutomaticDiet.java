@@ -31,6 +31,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import modelo.Usuario;
@@ -504,6 +506,30 @@ public class AutomaticDiet
 		automatic_diet.getContentPane().setLayout(groupLayout);
 		automatic_diet.setBounds(100, 100, 487, 331);
 		automatic_diet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		 tabsMenuUsuario.addChangeListener(new ChangeListener(){
+		      public void stateChanged(ChangeEvent e){
+		        switch(tabsMenuUsuario.getSelectedIndex()){
+		        case 0://usuario
+		        	break;
+		        case 1://dietas
+		        	panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Dieta Asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+					cambiaPanel(new Consultar_dieta_asignada(control));
+		        	break;
+		        case 2://platos
+		        	panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Elaboracion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+					cambiaPanel(new ElaboracionPlato());
+		        	break;
+		        case 3://foro
+		        	ForoBasico fb = new ForoBasico();
+					fb.cargaForos();
+					fb.cargaAnuncios();
+					panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Temas del foro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+					cambiaPanel(fb);
+		        	break;
+		        }
+		      }
+		    });
 	}
 	
 	private void cambiaPanel(JPanel nuevo)

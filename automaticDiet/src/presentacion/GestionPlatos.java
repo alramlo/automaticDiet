@@ -81,16 +81,16 @@ public class GestionPlatos extends JPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_tabla, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+						.addComponent(panel_tabla, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+					.addGap(18)
 					.addComponent(panel_tabla, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -183,10 +183,12 @@ public class GestionPlatos extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		panel_tabla.add(scrollPane, BorderLayout.CENTER);
 		
+		table = new JTable(1,5);
+		table.setFont(new Font("Arial", Font.PLAIN, 16));
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	
-		add(table);
+		//add(table);
 		
 		ListSelectionModel lsm = table.getSelectionModel();
 		
@@ -583,22 +585,22 @@ public class GestionPlatos extends JPanel {
 		table.getColumnModel().getColumn(3).setCellRenderer(tcr);
 		table.getColumnModel().getColumn(4).setCellRenderer(tcr);
 		String[] pl = control.todosPlatos();
-		Object[][] o  = new Object[pl.length+1][5];
-		o[0][0]="Plato";
-		o[0][1]="Autor";
-		o[0][2]="Calorias";
-		o[0][3]="Precio";
-		o[0][4]="Valoración";
+		Object[][] o  = new Object[pl.length][5];
+//		o[0][0]="Plato";
+//		o[0][1]="Autor";
+//		o[0][2]="Calorias";
+//		o[0][3]="Precio";
+//		o[0][4]="Valoración";
 		for(int i=0;i<pl.length;i++){
+			table.setRowHeight(i, 100);
 			Plato plato=null;
 			try {
 					plato = control.consultarPlato(pl[i]);
-					o[i+1][0]=plato.getNombre();
-					o[i+1][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
-					o[i+1][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
-					o[i+1][3]=getInfoPorPlato(plato)[1].toString()+" €";
-					o[i+1][4]=plato.getValoracion();
-				
+					o[i][0]=plato.getNombre();
+					o[i][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
+					o[i][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
+					o[i][3]=getInfoPorPlato(plato)[1].toString()+" €";
+					o[i][4]=plato.getValoracion();				
 			} catch (DAOExcepcion e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -610,6 +612,7 @@ public class GestionPlatos extends JPanel {
 				"Plato", "Autor", "Calorias", "Precio", "Valoración"
 			}
 		));
-			table.setRowHeight(0, 50);
+			for(int i=0;i<pl.length;i++)
+				table.setRowHeight(i, 75);
 	}
 }
