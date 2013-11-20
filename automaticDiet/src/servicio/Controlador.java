@@ -459,5 +459,10 @@ public class Controlador {
 	public Usuario getUsuarioPorId(int i) {
 		return dal.getUsuarioPorId(i);
 	}
+
+	public Usuario getUsuarioPorDNI(String dni) {
+		// TODO Auto-generated method stub
+		return dal.getUsuarioPorDNI(dni);
+	}
 }
 

@@ -135,5 +135,20 @@ public Usuario getUsuarioPorId(int i) {
 		
 	}
 }
+
+public Usuario getUsuarioPorDNI(String dni) {
+	try{
+		Query q;
+		q = entityManager.createQuery("SELECT u "
+				+ "FROM Usuario u "
+				+ "WHERE u.dni=:dni");
+		q.setParameter("dni", dni);
+		return (Usuario) q.getSingleResult();
+	}catch(Exception e){
+		System.out.println("Error:"+e);
+		return null;
+		
+	}
+}
 	
 }

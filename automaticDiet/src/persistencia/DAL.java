@@ -211,4 +211,9 @@ public class DAL {
 	public Usuario getUsuarioPorId(int i) {
 		return usuarioDAO.getUsuarioPorId(i);
 	}
+
+	public Usuario getUsuarioPorDNI(String dni) {
+		// TODO Auto-generated method stub
+		return usuarioDAO.getUsuarioPorDNI(dni);
+	}
 }
