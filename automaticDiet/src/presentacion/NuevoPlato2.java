@@ -72,6 +72,10 @@ public class NuevoPlato2 extends JFrame {
 	private Integer contadorCalorias;
 	private Double contadorPrecio;
 	private GestionPlatos gPlatos;
+	private JFormattedTextField tTiempo;
+	private String file;
+	private String dir;
+	private JLabel lContImg;
 
 
 	/**
@@ -258,7 +262,18 @@ public class NuevoPlato2 extends JFrame {
 				plato.setNombre(tNombre.getText());
 				plato.setElaboracion(tElaboracion.getText());
 				plato.setUsuario(usuario);
-				//plato.setTiempo(null);
+				
+				//Transformamos el tiempo
+					SimpleDateFormat f = new SimpleDateFormat("HH:mm");
+					Date fecha;
+					try {
+						fecha = f.parse(tTiempo.getText());
+						plato.setTiempo(fecha);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 				//plato.setImagen(null);
 				
 				if(esNuevo){
@@ -322,7 +337,7 @@ public class NuevoPlato2 extends JFrame {
 		tCalorias.setBounds(520, 180, 79, 29);
 		contentPane.add(tCalorias);
 		
-		JLabel lContImg = new JLabel("");
+		lContImg = new JLabel("");
 		lContImg.setBounds(393, 355, 110, 97);
 		contentPane.add(lContImg);
 		
@@ -338,7 +353,7 @@ public class NuevoPlato2 extends JFrame {
 		
 		MaskFormatter mascara = new MaskFormatter("##:##");
 		mascara.setValueContainsLiteralCharacters(false);
-		JFormattedTextField tTiempo = new JFormattedTextField(mascara);
+		tTiempo = new JFormattedTextField(mascara);
 		tTiempo.setHorizontalAlignment(SwingConstants.CENTER);
 		tTiempo.setBounds(520, 257, 52, 29);
 		contentPane.add(tTiempo);
@@ -351,13 +366,31 @@ public class NuevoPlato2 extends JFrame {
 				// Demonstrate "Open" dialog:
 			      int rVal = c.showOpenDialog(NuevoPlato2.this);
 			      if (rVal == JFileChooser.APPROVE_OPTION) {
-			        //filename.setText(c.getSelectedFile().getName());
-			        //dir.setText(c.getCurrentDirectory().toString());
+			        file=c.getSelectedFile().getName();
+			        dir=c.getCurrentDirectory().toString();
+			        
+			        File fichero=null;
+			        
+					fichero = new File(dir+"\\"+file);
+					System.out.println("Ruta: "+dir+file);
+//						FileOutputStream fos = new FileOutputStream (file);
+//						fos.write(p.getImagen());
+//						fos.close();
+					ImageIcon im=null;
+		    		BufferedImage buffer;
+					try {
+						buffer = ImageIO.read(fichero);
+						im = new ImageIcon(buffer);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    		Image image=im.getImage();
+		    		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
+		    		lContImg.setIcon(new ImageIcon(newImage));
+			        
 			      }
-			      if (rVal == JFileChooser.CANCEL_OPTION) {
-			        //filename.setText("You pressed cancel");
-			        //dir.setText("");
-			      }
+			      
 			}
 		});
 		btnAadirImagen.setBounds(520, 423, 89, 29);
@@ -374,11 +407,12 @@ public class NuevoPlato2 extends JFrame {
 			//Sacamos las horas y los minutos de elaboración
 			if(p.getTiempo()!=null){
 				System.out.println("Tiempo: "+p.getTiempo());
-				DateFormat f = new SimpleDateFormat("kk:mm");
+				SimpleDateFormat f = new SimpleDateFormat("HH:mm");
 				try{
-					Date fecha = (Date) f.parse(p.getTiempo().toString());
-					tTiempo.setText(fecha.toString());
-				}catch(ParseException e){
+					String fecha=f.format(p.getTiempo());
+					tTiempo.setText(fecha);
+					System.out.println("Fecha: "+fecha);
+				}catch(Exception e){
 					System.out.println("Error: "+e);
 					e.printStackTrace();
 				}
