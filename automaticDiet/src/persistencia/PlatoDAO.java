@@ -156,6 +156,42 @@ public class PlatoDAO extends AbstractDAO {
 	     }
 	}
 	
+	public void insertarPlato(Plato p){
+		EntityTransaction trx = entityManager.getTransaction();
+		try{
+			trx.begin();
+			entityManager.persist(p);
+			entityManager.flush();
+			trx.commit();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(trx.isActive())
+				trx.rollback();
+		}
+	}
+	
+	public void updatePlato(Plato p){
+		EntityTransaction trx = entityManager.getTransaction();
+		Plato platoAux; 
+		try{
+			trx.begin();
+			platoAux=entityManager.find(Plato.class, p.getId());
+			platoAux.setNombre(p.getNombre());
+			platoAux.setTiempo(p.getTiempo());
+			platoAux.setImagen(p.getImagen());
+			platoAux.setElaboracion(p.getElaboracion());
+			trx.commit();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(trx.isActive())
+				trx.rollback();
+		}
+	}
+	
 	public Long caluclarCalorias(int codigo){
 		
 		try{

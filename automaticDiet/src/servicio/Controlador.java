@@ -424,5 +424,26 @@ public class Controlador {
 	public Long calcularCalorias(int codigo){
 		return dal.contarCalorias(codigo);
 	}
+	
+	public PlatoIngrediente findPlatoIngrediente(int platoId, int ingredienteId){
+		return dal.findPlatoIngrediente(platoId, ingredienteId);
+	}
+	
+	public void insertarPlato(Plato p){
+		dal.insertarPlato(p);
+	}
+	
+	public void insertarPlatoIngrediente(PlatoIngrediente pi){
+		dal.insertarPlatoIngrediente(pi);
+	}
+	
+	public void eliminarPlatoIngrediente(PlatoIngrediente pi){
+		
+		dal.eliminarPlatoIngrediente(pi);
+	}
+	
+	public void updatePlato(Plato p){
+		dal.updatePlato(p);
+	}
 }
 

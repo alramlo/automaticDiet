@@ -55,6 +55,7 @@ public class NuevoPlato2 extends JFrame {
 	private JPanel contentPane;
 	private JTextField tNombre;
 	private Plato plato;
+	private Usuario usuario;
 	private static Controlador control;
 	private JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
 	private JTextField tCalorias;
@@ -89,18 +90,22 @@ public class NuevoPlato2 extends JFrame {
 	 */
 	public NuevoPlato2(Plato p, Usuario u) throws Exception {
 		
+		usuario=u;
 		//Comprobamos si el plato es nuevo
-		if(p==null)
+		if(p==null){
 			esNuevo=true;
-		else
+			plato = new Plato();
+		}
+		else{
+			//Nos guardamos el plato pasado por parametro
+			plato=p;
 			esNuevo=false;
+		}
+		
 		contadorCalorias=0;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NuevoPlato2.class.getResource("/iconos/platos.png")));
 		platoIngredienteNuevos = new ArrayList<PlatoIngrediente>();
 		ingredientesEliminar = new ArrayList<Ingrediente>();
-		
-		//Añadimos el plato pasado por parametro
-		plato=p;
 		
 		//Pedimos el controlador
 		control=Controlador.dameControlador();
@@ -151,18 +156,31 @@ public class NuevoPlato2 extends JFrame {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				//si hay un ingrediente seleccionados
 				if(listIngredientes.getSelectedValue()!=null){
-					//eliminamos el platoIngredinte de la lista platoIngredienteNuevo
+					PlatoIngrediente piEliminar = null;
 					for(PlatoIngrediente aux : platoIngredienteNuevos)
 						if(aux.getIngrediente().getId()==listIngredientes.getSelectedValue().getId())
-							platoIngredienteNuevos.remove(aux);
-					//lo eliminamos de la lista de la pantalla
-					modelo.removeElementAt(listIngredientes.getSelectedIndex());
+							piEliminar=aux;
+					//eliminamos el platoIngredinte de la lista platoIngredienteNuevo
+					platoIngredienteNuevos.remove(piEliminar);
+					
+					//Si el plato no es nuevo, añadimos el ingrediente a la lista de borrar
 					if(esNuevo==false){
 						ingredientesEliminar.add(listIngredientes.getSelectedValue());
 					}
+					
+					//Si el ingrediente ya había sido introducido anteriormente, recuperamos el PlatoIngrediente de la base de datos
+					if(piEliminar==null)
+						piEliminar=control.findPlatoIngrediente(plato.getId(), listIngredientes.getSelectedValue().getId());
+					
+					//Decrementamos las calorias
+					contadorCalorias=contadorCalorias-(piEliminar.getCantidad()*piEliminar.getIngrediente().getCalorias());
+					tCalorias.setText(contadorCalorias.toString());
+					
+					//eliminamos el ingrediente seleccionado de la lista de ingredientes
+					modelo.removeElementAt(listIngredientes.getSelectedIndex());
+					
 				}
 			}
 		});
@@ -202,7 +220,7 @@ public class NuevoPlato2 extends JFrame {
 		lElaboracion.setBounds(37, 324, 110, 20);
 		contentPane.add(lElaboracion);
 		
-		JTextPane tElaboracion = new JTextPane();
+		final JTextPane tElaboracion = new JTextPane();
 		tElaboracion.setBounds(37, 344, 282, 108);
 		contentPane.add(tElaboracion);
 		
@@ -226,6 +244,32 @@ public class NuevoPlato2 extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				//actualizamos el plato
+				plato.setNombre(tNombre.getText());
+				plato.setElaboracion(tElaboracion.getText());
+				plato.setUsuario(usuario);
+				//plato.setTiempo(null);
+				//plato.setImagen(null);
+				
+				if(esNuevo){
+					//Insertamos el nuevo plato
+					control.insertarPlato(plato);
+					
+				}
+				else{
+					
+					//eliminamos los ingredientes suprimidos que ya estaban persistidos anteriormente 
+					for(Ingrediente i : ingredientesEliminar){
+						PlatoIngrediente platoIngredienteAux = control.findPlatoIngrediente(plato.getId(), i.getId());
+						control.eliminarPlatoIngrediente(platoIngredienteAux);
+					}
+					control.updatePlato(plato);
+				}
+				//Añadimos los ingredientes
+				for(PlatoIngrediente pi : platoIngredienteNuevos)
+					control.insertarPlatoIngrediente(pi);
+				dispose();
 			}
 		});
 		btnGuardar.setBounds(532, 511, 89, 23);

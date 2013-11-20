@@ -20,7 +20,8 @@ public class TestAlberto {
 		Plato p = platoDAO.platoByNombre("Macedonia");
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		List<Usuario> u = usuarioDAO.getUsuarioPorNombre("Alberto");
-		NuevoPlato2 ventana = new NuevoPlato2(p,u.get(0));
+		//NuevoPlato2 ventana = new NuevoPlato2(p,u.get(0));
+		NuevoPlato2 ventana = new NuevoPlato2(null,u.get(0));
 		ventana.setVisible(true);
 	}
 }

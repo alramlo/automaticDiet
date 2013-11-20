@@ -10,6 +10,7 @@ import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Pais;
 import modelo.Plato;
+import modelo.PlatoIngrediente;
 import modelo.Seguimiento;
 import modelo.Usuario;
 import excepciones.DAOExcepcion;
@@ -32,6 +33,7 @@ public class DAL {
 	private CiudadDAO ciudadDAO;
 	private SeguimientoDAO seguimientoDAO;
 	private IngredienteDAO ingredienteDAO;
+	private PlatoIngredienteDAO platoIngredienteDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -45,6 +47,7 @@ public class DAL {
 		ciudadDAO = new CiudadDAO();
 		ingredienteDAO = new IngredienteDAO();
 		seguimientoDAO = new SeguimientoDAO();
+		platoIngredienteDAO = new PlatoIngredienteDAO();
 	}
 	
 	// Patrón Singleton
@@ -173,5 +176,26 @@ public class DAL {
 	
 	public Long contarCalorias(int codigo){
 		return platoDAO.caluclarCalorias(codigo);
+	}
+	
+	public PlatoIngrediente findPlatoIngrediente(int platoId, int ingredienteId){
+		return platoIngredienteDAO.findPlatoIngrediente(platoId, ingredienteId);
+	}
+	
+	public void insertarPlato(Plato p){
+		platoDAO.insertarPlato(p);
+	}
+	
+	public void insertarPlatoIngrediente(PlatoIngrediente pi){
+		platoIngredienteDAO.insertarPlatoIngrediente(pi);
+	}
+	
+	public void eliminarPlatoIngrediente(PlatoIngrediente pi){
+		
+		platoIngredienteDAO.eliminarPlatoIngrediente(pi);
+	}
+	
+	public void updatePlato(Plato p){
+		platoDAO.updatePlato(p);
 	}
 }
