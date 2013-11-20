@@ -2,14 +2,17 @@ package presentacion;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,9 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Caracteristica;
@@ -29,11 +31,6 @@ import modelo.Grupo;
 import modelo.Interes;
 import servicio.Controlador;
 import excepciones.DominioExcepcion;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class BuscadorGrupo extends JPanel {
 	/**
@@ -165,6 +162,7 @@ public class BuscadorGrupo extends JPanel {
 					table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
 					table_1.getColumnModel().getColumn(2).setPreferredWidth(180);
 					table_1.getColumnModel().getColumn(3).setPreferredWidth(180);
+					table_1.setBounds(10, 320, 750, 250);
 					add(table_1);
 					
 					Object[][] o=new Object[grupoVuelta.length+1][5];
@@ -226,74 +224,79 @@ public class BuscadorGrupo extends JPanel {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(583)
-					.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(4)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(boxHabitos, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
-						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(73)
-							.addComponent(textFieldNombre, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addContainerGap()
+							.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(30)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(boxHabitos, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(lblNewLabel)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(textFieldNombre, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
+									.addGap(3)))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(comboBoxCiudad, Alignment.TRAILING, 0, 279, Short.MAX_VALUE)
-								.addComponent(comboBoxPais, Alignment.TRAILING, 0, 279, Short.MAX_VALUE))
-							.addGap(35))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(32)
-							.addComponent(lblIntereses, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(verticalBox, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-							.addContainerGap())))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(30)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(comboBoxPais, 0, 279, Short.MAX_VALUE)
+										.addComponent(comboBoxCiudad, 0, 279, Short.MAX_VALUE)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(26)
+									.addComponent(lblIntereses, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(verticalBox, GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)))))
+					.addGap(35))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(9)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
-							.addGap(5))
-						.addComponent(textFieldNombre, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
-							.addGap(5))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(2)
-							.addComponent(comboBoxPais, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
-					.addGap(56)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGap(9)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
-									.addGap(146))
-								.addComponent(lblIntereses, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))
-							.addGap(11))
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(verticalBox, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(boxHabitos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))
+									.addGap(2)
+									.addComponent(comboBoxPais, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 79, Short.MAX_VALUE)
+										.addComponent(textFieldNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(51)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(comboBoxCiudad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE))
+							.addGap(21)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(15)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(boxHabitos, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+								.addComponent(verticalBox, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 157, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(lblIntereses, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnBuscar, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 					.addGap(293))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(51)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBoxCiudad, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE))
-					.addContainerGap(527, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 	}

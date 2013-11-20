@@ -1,6 +1,8 @@
 package presentacion;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -16,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -33,10 +37,6 @@ import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
-import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import javax.swing.Box;
 
 public class GestionPlatos extends JPanel {
 	/**
@@ -103,7 +103,14 @@ public class GestionPlatos extends JPanel {
 		panel_Botones.add(btnAadir);
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//LLAMAR A ALBERTO PASANDOLE EL USUARIO
+				NuevoPlato2 ventanaPlatos;
+				try {
+					ventanaPlatos = new NuevoPlato2(null,userConected);
+					ventanaPlatos.setVisible(true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnAadir.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/edit_add.png")));
@@ -127,7 +134,13 @@ public class GestionPlatos extends JPanel {
 					Plato platoVuelta = control.consultarPlato(plato.getNombre());
 					if(platoVuelta!=null){
 						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
-							//LLAMAR A MODIFICAR DE ALBERTO
+							try {
+								NuevoPlato2 ventanaPlatos = new NuevoPlato2(platoVuelta,userConected);
+								ventanaPlatos.setVisible(true);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 						else
 							JOptionPane.showMessageDialog(null, "No tiene permisos", "Error", JOptionPane.ERROR_MESSAGE);
