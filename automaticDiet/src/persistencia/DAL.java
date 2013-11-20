@@ -198,4 +198,13 @@ public class DAL {
 	public void updatePlato(Plato p){
 		platoDAO.updatePlato(p);
 	}
+
+	public void eliminarPlatoIngredientePorPlato(PlatoIngrediente platoVuelta) {
+		platoIngredienteDAO.eliminarPlatoIngredientePorPlato(platoVuelta);
+	}
+
+	public List<PlatoIngrediente> getPlatoIntegredientes(Plato platoVuelta) {
+		// TODO Auto-generated method stub
+		return platoIngredienteDAO.getPlatoIngrediente(platoVuelta);
+	}
 }

@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 import modelo.Ingrediente;
 import modelo.Plato;
+import modelo.PlatoIngrediente;
 import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
@@ -175,7 +176,10 @@ public class GestionPlatos extends JPanel {
 					Plato platoVuelta = control.consultarPlato(plato.getNombre());
 					if(!control.getPlatosEnDieta(platoVuelta.getId())){
 						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
+						List<PlatoIngrediente> pi = control.getPlatoIngredientes(platoVuelta);
+						control.eliminarPlatoIngredientePorPlato(pi);
 						control.eliminarPlato(platoVuelta);
+						poblar();
 						JOptionPane.showMessageDialog(null, "Plato eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
 						poblar();
 						}else

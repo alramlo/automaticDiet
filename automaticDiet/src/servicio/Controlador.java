@@ -445,5 +445,15 @@ public class Controlador {
 	public void updatePlato(Plato p){
 		dal.updatePlato(p);
 	}
+
+	public void eliminarPlatoIngredientePorPlato(List<PlatoIngrediente> platoVuelta) {
+		for(int i=0;i<platoVuelta.size();i++)
+		dal.eliminarPlatoIngredientePorPlato(platoVuelta.get(i));
+	}
+
+	public List<PlatoIngrediente> getPlatoIngredientes(Plato platoVuelta) {
+		// TODO Auto-generated method stub
+		return dal.getPlatoIntegredientes(platoVuelta);
+	}
 }
 
