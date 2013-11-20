@@ -71,6 +71,7 @@ public class NuevoPlato2 extends JFrame {
 	private Boolean esNuevo;
 	private Integer contadorCalorias;
 	private BigDecimal contadorPrecio;
+	private GestionPlatos gPlatos;
 
 
 	/**
@@ -80,7 +81,7 @@ public class NuevoPlato2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoPlato2 frame = new NuevoPlato2(null,null);
+					NuevoPlato2 frame = new NuevoPlato2(null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -93,7 +94,7 @@ public class NuevoPlato2 extends JFrame {
 	 * Create the frame.
 	 * @throws Exception 
 	 */
-	public NuevoPlato2(Plato p, Usuario u) throws Exception {
+	public NuevoPlato2(Plato p, Usuario u, GestionPlatos gestionPlatos) throws Exception {
 		setTitle("A\u00F1adir plato");
 		
 		usuario=u;
@@ -107,7 +108,7 @@ public class NuevoPlato2 extends JFrame {
 			plato=p;
 			esNuevo=false;
 		}
-		
+		gPlatos=gestionPlatos;
 		contadorCalorias=0;
 		contadorPrecio=new BigDecimal(0);
 		
@@ -277,7 +278,9 @@ public class NuevoPlato2 extends JFrame {
 				//Añadimos los ingredientes
 				for(PlatoIngrediente pi : platoIngredienteNuevos)
 					control.insertarPlatoIngrediente(pi);
+				gPlatos.poblar();
 				dispose();
+				
 			}
 		});
 		btnGuardar.setBounds(532, 505, 89, 29);

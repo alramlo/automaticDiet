@@ -105,7 +105,7 @@ public class GestionPlatos extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				NuevoPlato2 ventanaPlatos;
 				try {
-					ventanaPlatos = new NuevoPlato2(null,userConected);
+					ventanaPlatos = new NuevoPlato2(null,userConected,GestionPlatos.this);
 					ventanaPlatos.setVisible(true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -135,7 +135,7 @@ public class GestionPlatos extends JPanel {
 					if(platoVuelta!=null){
 						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
 							try {
-								NuevoPlato2 ventanaPlatos = new NuevoPlato2(platoVuelta,userConected);
+								NuevoPlato2 ventanaPlatos = new NuevoPlato2(platoVuelta,userConected,GestionPlatos.this);
 								ventanaPlatos.setVisible(true);
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
