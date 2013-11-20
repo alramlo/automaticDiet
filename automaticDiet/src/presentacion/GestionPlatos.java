@@ -576,12 +576,12 @@ public class GestionPlatos extends JPanel {
 		Ingrediente[] ing;
 		Object ingrs[] = new Object [2]; 
 		int cal=0;
-		BigDecimal precio= new BigDecimal(0.0);
+		Double precio= new Double(0.0);
 		try {
 			ing = control.ingredientesPorPlato(p.getNombre());
 			for(int i=0; i<ing.length;i++){
 				cal+=ing[i].getCalorias();
-				precio= precio.add(ing[i].getPrecio());
+				precio= precio+ing[i].getPrecio();
 			}
 			ingrs[0]=cal;
 			ingrs[1]=precio;

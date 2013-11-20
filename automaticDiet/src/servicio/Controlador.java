@@ -1,5 +1,6 @@
 package servicio;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -463,6 +464,10 @@ public class Controlador {
 	public Usuario getUsuarioPorDNI(String dni) {
 		// TODO Auto-generated method stub
 		return dal.getUsuarioPorDNI(dni);
+	}
+	
+	public Double calcularPrecio(int codigo){
+		return dal.calcularPrecio(codigo);
 	}
 }
 

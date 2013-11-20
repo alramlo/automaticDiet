@@ -49,7 +49,7 @@ public class Ingrediente implements Serializable {
 	private String origen;
 
 	@Column(name="PRECIO")
-	private BigDecimal precio;
+	private Double precio;
 
 	@Column(name="PROTEINAS")
 	private int proteinas;
@@ -127,11 +127,11 @@ public class Ingrediente implements Serializable {
 		this.origen = origen;
 	}
 
-	public BigDecimal getPrecio() {
+	public Double getPrecio() {
 		return this.precio;
 	}
 
-	public void setPrecio(BigDecimal precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 

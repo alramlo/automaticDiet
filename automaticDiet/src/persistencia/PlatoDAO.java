@@ -209,7 +209,7 @@ public class PlatoDAO extends AbstractDAO {
 		}
 	} 
 	
-	public BigDecimal caluclarPrecio(int codigo){
+	public Double calcularPrecio(int codigo){
 		
 		try{
 		Query q;
@@ -218,7 +218,7 @@ public class PlatoDAO extends AbstractDAO {
 				+ "WHERE pi.plato.id=:cod "
 				+ "AND i.id=pi.ingrediente.id");
 		q.setParameter("cod", codigo);
-		return (BigDecimal)q.getSingleResult();
+		return (Double)q.getSingleResult();
 		}catch(Exception e){
 			System.out.println("Error en calcular Calorias --> "+e);
 			return null;

@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -216,4 +217,8 @@ public class DAL {
 		// TODO Auto-generated method stub
 		return usuarioDAO.getUsuarioPorDNI(dni);
 	}
+	
+	public Double calcularPrecio(int codigo){
+		return platoDAO.calcularPrecio(codigo);
+	} 
 }

@@ -70,7 +70,7 @@ public class NuevoPlato2 extends JFrame {
 	private PlatoIngrediente piAux;
 	private Boolean esNuevo;
 	private Integer contadorCalorias;
-	private BigDecimal contadorPrecio;
+	private Double contadorPrecio;
 	private GestionPlatos gPlatos;
 
 
@@ -110,7 +110,7 @@ public class NuevoPlato2 extends JFrame {
 		}
 		gPlatos=gestionPlatos;
 		contadorCalorias=0;
-		contadorPrecio=new BigDecimal(0);
+		contadorPrecio=new Double(0);
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NuevoPlato2.class.getResource("/iconos/platos.png")));
 		platoIngredienteNuevos = new ArrayList<PlatoIngrediente>();
@@ -430,7 +430,9 @@ public class NuevoPlato2 extends JFrame {
 			contadorCalorias=control.calcularCalorias(plato.getId()).intValue();
 			tCalorias.setText(contadorCalorias.toString());
 			
-			//Calculamos el precio			
+			//Calculamos el precio		
+			contadorPrecio=contadorPrecio+control.calcularPrecio(plato.getId());
+			tPrecio.setText(contadorPrecio.toString());
 			
 			
 			
