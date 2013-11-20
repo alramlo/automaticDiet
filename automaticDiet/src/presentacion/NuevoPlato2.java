@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JTextPane;
 import javax.swing.JSeparator;
 
@@ -41,8 +42,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.Toolkit;
+
 import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
+
+import javax.swing.JFormattedTextField;
+import javax.swing.SwingConstants;
 
 public class NuevoPlato2 extends JFrame {
 
@@ -53,7 +59,6 @@ public class NuevoPlato2 extends JFrame {
 	private JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
 	private JTextField tCalorias;
 	private JTextField tPrecio;
-	private JTextField tTiempo;
 	private List<Ingrediente> ingredientes;
 	private List<PlatoIngrediente> platoIngredienteNuevos;
 	private List<Ingrediente> ingredientesEliminar;
@@ -142,6 +147,7 @@ public class NuevoPlato2 extends JFrame {
 		listIngredientes.setBounds(37, 133, 282, 155);
 		getContentPane().add(listIngredientes);
 		
+		//Botón eliminar ingrediente
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,6 +169,7 @@ public class NuevoPlato2 extends JFrame {
 		btnEliminar.setBounds(329, 164, 89, 23);
 		getContentPane().add(btnEliminar);
 		
+		//Botón añadir ingrediente
 		JButton btnBuscar = new JButton("A\u00F1adir");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -257,7 +264,7 @@ public class NuevoPlato2 extends JFrame {
 		tCalorias = new JTextField();
 		tCalorias.setEditable(false);
 		tCalorias.setColumns(10);
-		tCalorias.setBounds(527, 206, 79, 20);
+		tCalorias.setBounds(525, 208, 79, 20);
 		contentPane.add(tCalorias);
 		
 		JLabel lContImg = new JLabel("");
@@ -270,15 +277,16 @@ public class NuevoPlato2 extends JFrame {
 		tPrecio.setBounds(525, 237, 79, 20);
 		contentPane.add(tPrecio);
 		
-		tTiempo = new JTextField();
-		tTiempo.setEditable(false);
-		tTiempo.setColumns(10);
-		tTiempo.setBounds(525, 268, 79, 20);
-		contentPane.add(tTiempo);
-		
 		JLabel label = new JLabel("\u20AC");
 		label.setBounds(609, 242, 12, 14);
 		contentPane.add(label);
+		
+		MaskFormatter mascara = new MaskFormatter("##:##");
+		mascara.setValueContainsLiteralCharacters(false);
+		JFormattedTextField tTiempo = new JFormattedTextField(mascara);
+		tTiempo.setHorizontalAlignment(SwingConstants.CENTER);
+		tTiempo.setBounds(525, 268, 38, 20);
+		contentPane.add(tTiempo);
 		
 		//Si el usuario es diferente de null se carga
 		if(u!=null)
@@ -370,5 +378,4 @@ public class NuevoPlato2 extends JFrame {
 			}
 		}
 	}
-	
 }
