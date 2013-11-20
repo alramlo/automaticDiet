@@ -95,9 +95,9 @@ public class AutomaticDiet
 		automatic_diet = new JFrame();
 		automatic_diet.setIconImage(Toolkit.getDefaultToolkit().getImage(AutomaticDiet.class.getResource("/iconos/logo_icon.png")));
 		automatic_diet.setTitle("Automatic Diet       --- free version ---");
-		automatic_diet.setMaximumSize(new Dimension(1024, 760));
-		automatic_diet.setMinimumSize(new Dimension(1024, 760));
-		automatic_diet.setSize(new Dimension(1024, 760));
+		automatic_diet.setMaximumSize(new Dimension(1032, 768));
+		automatic_diet.setMinimumSize(new Dimension(1032, 768));
+		automatic_diet.setSize(new Dimension(1032, 768));
 		automatic_diet.getContentPane().setSize(new Dimension(1024, 760));
 		
 		panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Bienvenido", TitledBorder.LEADING, TitledBorder.TOP, null, null));

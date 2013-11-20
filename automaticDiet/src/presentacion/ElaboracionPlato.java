@@ -33,6 +33,7 @@ import excepciones.DominioExcepcion;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Component;
 
 public class ElaboracionPlato extends JPanel {
 	/**
@@ -49,7 +50,7 @@ public class ElaboracionPlato extends JPanel {
 	 * Create the panel.
 	 */
 	public ElaboracionPlato() {
-		this.setSize(800, 612);
+		this.setSize(754, 598);
 		
 		try {
 			control=Controlador.dameControlador();
@@ -60,6 +61,7 @@ public class ElaboracionPlato extends JPanel {
 		}
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
+		buttonPanelIngredientes.setMinimumSize(new Dimension(123, 36));
 		buttonPanelIngredientes.setIcon(new ImageIcon(ElaboracionPlato.class.getResource("/iconos/ingredients-icon.png")));
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
@@ -82,8 +84,9 @@ public class ElaboracionPlato extends JPanel {
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		
 		comboBox = new JComboBox<String>(control.todosPlatos());
+//		comboBox = new JComboBox<String>();
 		comboBox.setSelectedIndex(1);
-		comboBox.setBounds(425, 145, 365, 36);
+		comboBox.setBounds(414, 145, 330, 36);
 		
 		estadoInicial();
 		
@@ -146,6 +149,11 @@ public class ElaboracionPlato extends JPanel {
 		lblNewLabel_3.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 20));
+		
+		JLabel lblNewLabel = new JLabel("Receta elaborada por AutomaticDiet.\r\n Todos los derechos reservados.");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -153,10 +161,13 @@ public class ElaboracionPlato extends JPanel {
 					.addGap(4)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE)
-							.addGap(24)
-							.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(15)
+							.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
+							.addGap(31)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNewLabel, 0, 0, Short.MAX_VALUE)
+								.addComponent(textAreaElaboracion, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
+							.addGap(19))
 						.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
 						.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
 					.addGap(4))
@@ -176,10 +187,13 @@ public class ElaboracionPlato extends JPanel {
 					.addGap(18)
 					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
 					.addGap(15)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textAreaElaboracion)
-						.addComponent(imagenPlato, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
-					.addGap(10))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 374, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap(27, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
