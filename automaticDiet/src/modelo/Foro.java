@@ -80,4 +80,12 @@ public class Foro implements Serializable {
 		this.visitar = visitar;
 	}
 
+	public Usuario getCreador() {
+		return creador;
+	}
+
+	public void setCreador(Usuario creador) {
+		this.creador = creador;
+	}
+
 }

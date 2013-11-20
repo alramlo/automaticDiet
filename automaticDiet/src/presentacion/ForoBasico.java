@@ -126,7 +126,7 @@ public class ForoBasico extends JPanel {
 		ocultarColumnasJTable(tableForo, new int[]{0});
 		DefaultTableCellRenderer centerRendererForos = new DefaultTableCellRenderer();
 		centerRendererForos.setHorizontalAlignment( JLabel.LEFT );
-		for(int i=0; i<3; i++)
+		for(int i=0; i<4; i++)
 		{
 			tableForo.getColumnModel().getColumn(i).setCellRenderer( centerRendererForos );
 		}
@@ -137,8 +137,8 @@ public class ForoBasico extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 		// Columnas de la tabla
-		private String[] columnas = {"ID TEMA", "TEMA", "FECHA"};
-//		private String[] columnas = {"ID TEMA", "TEMA", "CREADO POR", "FECHA"};
+//		private String[] columnas = {"ID TEMA", "TEMA", "FECHA"};
+		private String[] columnas = {"ID TEMA", "TEMA", "CREADO POR", "FECHA DE CREACIÓN"};
 		// Datos que muestra la tabla
 		private ArrayList<Foro> data = new ArrayList<Foro>();
 
@@ -157,8 +157,8 @@ public class ForoBasico extends JPanel {
 			switch(col){
 			case 0: return g.getId();
 			case 1: return g.getTema();
-//			case 2: return g.getVisitar();
-			case 2: return new SimpleDateFormat("dd / MM / yyyy").format(g.getFecha());
+			case 2: return g.getCreador().getNombre()+" "+g.getCreador().getApellidos();
+			case 3: return new SimpleDateFormat("dd / MM / yyyy").format(g.getFecha());
 			default: return null;
 			}
 		}
@@ -226,6 +226,7 @@ public class ForoBasico extends JPanel {
 			switch(col){
 			case 0: return g.getId();
 			case 1: return g.getTema();
+//			case 2: return g.getCreador().getNombre()+" "+g.getCreador().getApellidos();
 			case 2: return new SimpleDateFormat("dd / MM / yyyy").format(g.getFecha());
 			default: return null;
 			}
