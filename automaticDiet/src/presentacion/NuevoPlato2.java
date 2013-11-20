@@ -1,58 +1,47 @@
 package presentacion;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
-import javax.swing.JTextPane;
-import javax.swing.JSeparator;
 
-import persistencia.DAL;
-import excepciones.DAOExcepcion;
-import excepciones.DominioExcepcion;
-import servicio.Controlador;
 import modelo.Ingrediente;
 import modelo.Plato;
 import modelo.PlatoIngrediente;
 import modelo.Usuario;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.awt.Toolkit;
-
-import javax.swing.ListSelectionModel;
-
-import java.awt.Color;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.SwingConstants;
-
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import servicio.Controlador;
 
 public class NuevoPlato2 extends JFrame {
 
@@ -491,5 +480,21 @@ public class NuevoPlato2 extends JFrame {
 			
 			}
 		}
+	}
+	
+	private byte[] FileToByte(File f){
+		FileInputStream fis;
+		byte[] zipped=null;
+		try {
+			fis = new FileInputStream(f);
+			zipped = new byte[ (int) f.length()];
+			fis.read(zipped);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}	
+		return zipped;		
 	}
 }
