@@ -455,5 +455,9 @@ public class Controlador {
 		// TODO Auto-generated method stub
 		return dal.getPlatoIntegredientes(platoVuelta);
 	}
+
+	public Usuario getUsuarioPorId(int i) {
+		return dal.getUsuarioPorId(i);
+	}
 }
 

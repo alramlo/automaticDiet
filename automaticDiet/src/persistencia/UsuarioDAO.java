@@ -120,5 +120,20 @@ public List<Usuario> getUsuarios() {
 		
 	}
 }
+
+public Usuario getUsuarioPorId(int i) {
+	try{
+		Query q;
+		q = entityManager.createQuery("SELECT u "
+				+ "FROM Usuario u "
+				+ "WHERE u.id=:id");
+		q.setParameter("id", i);
+		return (Usuario) q.getSingleResult();
+	}catch(Exception e){
+		System.out.println("Error:"+e);
+		return null;
+		
+	}
+}
 	
 }

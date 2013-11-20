@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityTransaction;
@@ -52,8 +53,9 @@ public class SeguimientoDAO extends AbstractDAO
 		try
 		{
 			Query q;
-			q = entityManager.createQuery("SELECT s FROM Seguimiento s WHERE s.id = :i ");
-			q.setParameter("i", s.getId());
+			q = entityManager.createQuery("SELECT s FROM Seguimiento s WHERE s.fecha = :f  AND s.usuario2.id = :u");
+			q.setParameter("f", s.getFecha());
+			q.setParameter("u", s.getUsuario2().getId());
 			
 			return (!q.getResultList().isEmpty());
 		}
@@ -61,7 +63,6 @@ public class SeguimientoDAO extends AbstractDAO
 		{
 			System.out.println("Error:"+e);
 			return false;
-			
 		}
 	}
 	
@@ -72,9 +73,16 @@ public class SeguimientoDAO extends AbstractDAO
 		try
 		{	
 			trx.begin();
-			entityManager.find(Seguimiento.class, s.getId()).setCumplido(s.getCumplido());
-			entityManager.find(Seguimiento.class, s.getId()).setFecha(s.getFecha());
-			entityManager.find(Seguimiento.class, s.getId()).setPeso(s.getPeso());
+			Seguimiento seg = getSeguimiento(s.getUsuario2().getId(), s.getFecha());
+			if (s.getCumplido()!=null)
+			{
+				seg.setCumplido(s.getCumplido());
+			}
+			if (s.getPeso()!=null)
+			{
+				seg.setPeso(s.getPeso());
+			}
+			
 	        trx.commit();
 		}
 		catch (Exception e)
@@ -86,5 +94,22 @@ public class SeguimientoDAO extends AbstractDAO
 	         if (trx.isActive())
 	             trx.rollback();
 	    }
+	}
+
+	private Seguimiento getSeguimiento(int id, Date fecha) {
+		try
+		{
+			Query q;
+			q = entityManager.createQuery("SELECT s FROM Seguimiento s WHERE s.fecha = :f  AND s.usuario2.id = :u");
+			q.setParameter("f", fecha);
+			q.setParameter("u", id);
+			
+			return (Seguimiento) q.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error:"+e);
+		}
+		return null;
 	}
 }

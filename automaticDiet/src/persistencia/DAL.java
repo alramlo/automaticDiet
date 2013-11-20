@@ -207,4 +207,8 @@ public class DAL {
 		// TODO Auto-generated method stub
 		return platoIngredienteDAO.getPlatoIngrediente(platoVuelta);
 	}
+
+	public Usuario getUsuarioPorId(int i) {
+		return usuarioDAO.getUsuarioPorId(i);
+	}
 }
