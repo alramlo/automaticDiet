@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,9 +24,14 @@ import persistencia.MensajeDAO;
 
 public class VerMensajeDenunciado extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private MensajeDAO mensajeDAO;
 	private Mensaje mensaje;
+//	private GestionGruposPorAdmin gga;
 	
 
 	/**
@@ -36,6 +40,7 @@ public class VerMensajeDenunciado extends JDialog {
 	public VerMensajeDenunciado(Mensaje m) {
 		mensajeDAO = new MensajeDAO();
 		this.mensaje = m;
+//		this.gga = gga;
 		
 		setTitle("Post Denunciado");
 		setBounds(100, 100, 450, 300);

@@ -6,8 +6,11 @@ import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,12 +85,14 @@ public class ForoBasico extends JPanel {
 			VerAnuncioEnForo anuncio = new VerAnuncioEnForo(fila);
 			anuncio.setModal(true);
 			anuncio.setLocationRelativeTo(null);
+			ocultarColumnasJTable(tableTablonAnuncios, new int[]{0});
 			anuncio.setVisible(true);
 		}
 	});
 
 		tableTablonAnuncios.setRowHeight(50);
 		tableTablonAnuncios.setModel(modelAnuncios);
+		ocultarColumnasJTable(tableTablonAnuncios, new int[]{0});
 		DefaultTableCellRenderer centerRendererAnuncios = new DefaultTableCellRenderer();
 		centerRendererAnuncios.setHorizontalAlignment( JLabel.LEFT );
 		for(int i=0; i<3; i++)
@@ -118,9 +123,10 @@ public class ForoBasico extends JPanel {
 
 		tableForo.setRowHeight(50);
 		tableForo.setModel(modelForos);
+		ocultarColumnasJTable(tableForo, new int[]{0});
 		DefaultTableCellRenderer centerRendererForos = new DefaultTableCellRenderer();
 		centerRendererForos.setHorizontalAlignment( JLabel.LEFT );
-		for(int i=0; i<4; i++)
+		for(int i=0; i<3; i++)
 		{
 			tableForo.getColumnModel().getColumn(i).setCellRenderer( centerRendererForos );
 		}
@@ -131,7 +137,8 @@ public class ForoBasico extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 		// Columnas de la tabla
-		private String[] columnas = {"ID TEMA", "TEMA", "VISITAR", "FECHA DE CREACIÓN"};
+		private String[] columnas = {"ID TEMA", "TEMA", "FECHA"};
+//		private String[] columnas = {"ID TEMA", "TEMA", "CREADO POR", "FECHA"};
 		// Datos que muestra la tabla
 		private ArrayList<Foro> data = new ArrayList<Foro>();
 
@@ -150,8 +157,8 @@ public class ForoBasico extends JPanel {
 			switch(col){
 			case 0: return g.getId();
 			case 1: return g.getTema();
-			case 2: return g.getVisitar();
-			case 3: return g.getFecha();
+//			case 2: return g.getVisitar();
+			case 2: return new SimpleDateFormat("dd / MM / yyyy").format(g.getFecha());
 			default: return null;
 			}
 		}
@@ -219,7 +226,7 @@ public class ForoBasico extends JPanel {
 			switch(col){
 			case 0: return g.getId();
 			case 1: return g.getTema();
-			case 2: return g.getFecha();
+			case 2: return new SimpleDateFormat("dd / MM / yyyy").format(g.getFecha());
 			default: return null;
 			}
 		}
@@ -257,17 +264,17 @@ public class ForoBasico extends JPanel {
 				Foro f1 = new Foro();
 				f1.setId(1);
 				f1.setTema("NORMAS");
-				f1.setFecha(new Date(9,23,2013));	
+				f1.setFecha(new Date("9/9/2012"));	
 				model.addRow(f1);
 				Foro f2 = new Foro();
 				f2.setId(2);
 				f2.setTema("RECOMENDACIONES");
-				f2.setFecha(new Date(4,25,2012));	
+				f2.setFecha(new Date("18/2/2012"));	
 				model.addRow(f2);
 				Foro f3 = new Foro();
 				f3.setId(1);
 				f3.setTema("FUNCIONAMIENTO");
-				f3.setFecha(new Date(12,11,2012));	
+				f3.setFecha(new Date("28/12/2011"));	
 				model.addRow(f3);
 
 			} catch (Exception e){
@@ -275,4 +282,15 @@ public class ForoBasico extends JPanel {
 						JOptionPane.ERROR_MESSAGE);
 			}
 	}
+	
+	private void ocultarColumnasJTable(JTable tbl, int columna[])
+    {
+        for(int i=0;i<columna.length;i++)
+        {
+             tbl.getColumnModel().getColumn(columna[i]).setMaxWidth(0);
+             tbl.getColumnModel().getColumn(columna[i]).setMinWidth(0);
+             tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMaxWidth(0);
+             tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMinWidth(0);
+        }
+    }
 }
