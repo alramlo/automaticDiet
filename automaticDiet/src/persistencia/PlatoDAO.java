@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -202,6 +203,22 @@ public class PlatoDAO extends AbstractDAO {
 				+ "AND i.id=pi.ingrediente.id");
 		q.setParameter("cod", codigo);
 		return (Long)q.getSingleResult();
+		}catch(Exception e){
+			System.out.println("Error en calcular Calorias --> "+e);
+			return null;
+		}
+	} 
+	
+	public BigDecimal caluclarPrecio(int codigo){
+		
+		try{
+		Query q;
+		q=entityManager.createQuery("SELECT SUM(pi.cantidad*i.precio) "
+				+ "FROM PlatoIngrediente pi, Ingrediente i "
+				+ "WHERE pi.plato.id=:cod "
+				+ "AND i.id=pi.ingrediente.id");
+		q.setParameter("cod", codigo);
+		return (BigDecimal)q.getSingleResult();
 		}catch(Exception e){
 			System.out.println("Error en calcular Calorias --> "+e);
 			return null;

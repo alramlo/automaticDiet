@@ -73,8 +73,8 @@ public class AnadirIngrediente2 extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JLabel lblIngredientes = new JLabel("Ingredientes");
+		lblIngredientes.setBounds(32, 29, 107, 30);
 		lblIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
-		lblIngredientes.setBounds(32, 29, 107, 19);
 		contentPanel.add(lblIngredientes);
 		
 		final JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
@@ -92,8 +92,8 @@ public class AnadirIngrediente2 extends JDialog {
 		//contentPanel.add(listIngredientes);
 		
 			JLabel lblCantidad = new JLabel("Cantidad");
+			lblCantidad.setBounds(327, 29, 94, 30);
 			lblCantidad.setFont(new Font("Arial", Font.BOLD, 16));
-			lblCantidad.setBounds(327, 29, 94, 19);
 			contentPanel.add(lblCantidad);
 		
 		
@@ -102,8 +102,8 @@ public class AnadirIngrediente2 extends JDialog {
 		contentPanel.add(scrollPane);
 		
 		final JList<Integer> listCantidad = new JList<Integer>();
+		listCantidad.setBounds(327, 59, 69, 120);
 		listCantidad.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listCantidad.setBounds(327, 59, 69, 111);
 		DefaultListModel<Integer> modeloC = new DefaultListModel<Integer>();
 		for(int i=1;i<7;i++)
 			modeloC.addElement(i);

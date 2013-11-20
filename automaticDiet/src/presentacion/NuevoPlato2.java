@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -35,6 +36,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +51,8 @@ import java.awt.Color;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
+
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class NuevoPlato2 extends JFrame {
 
@@ -66,6 +70,7 @@ public class NuevoPlato2 extends JFrame {
 	private PlatoIngrediente piAux;
 	private Boolean esNuevo;
 	private Integer contadorCalorias;
+	private BigDecimal contadorPrecio;
 
 
 	/**
@@ -89,6 +94,7 @@ public class NuevoPlato2 extends JFrame {
 	 * @throws Exception 
 	 */
 	public NuevoPlato2(Plato p, Usuario u) throws Exception {
+		setTitle("A\u00F1adir plato");
 		
 		usuario=u;
 		//Comprobamos si el plato es nuevo
@@ -103,6 +109,8 @@ public class NuevoPlato2 extends JFrame {
 		}
 		
 		contadorCalorias=0;
+		contadorPrecio=new BigDecimal(0);
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NuevoPlato2.class.getResource("/iconos/platos.png")));
 		platoIngredienteNuevos = new ArrayList<PlatoIngrediente>();
 		ingredientesEliminar = new ArrayList<Ingrediente>();
@@ -122,11 +130,11 @@ public class NuevoPlato2 extends JFrame {
 		
 		JLabel lNombre = new JLabel("Nombre del plato: ");
 		lNombre.setFont(new Font("Arial", Font.BOLD, 16));
-		lNombre.setBounds(37, 43, 140, 19);
+		lNombre.setBounds(37, 50, 140, 19);
 		getContentPane().add(lNombre);
 		
 		tNombre = new JTextField();
-		tNombre.setBounds(176, 44, 186, 20);
+		tNombre.setBounds(176, 40, 186, 29);
 		getContentPane().add(tNombre);
 		tNombre.setColumns(10);
 		
@@ -138,7 +146,7 @@ public class NuevoPlato2 extends JFrame {
 		JLabel lAutor2 = new JLabel("Autor Leido...");
 		lAutor2.setFont(new Font("Arial", Font.PLAIN, 16));
 		lAutor2.setForeground(Color.BLUE);
-		lAutor2.setBounds(91, 15, 122, 16);
+		lAutor2.setBounds(91, 15, 122, 19);
 		getContentPane().add(lAutor2);
 		
 		JLabel lIngredientes = new JLabel("Ingredientes:");
@@ -184,7 +192,7 @@ public class NuevoPlato2 extends JFrame {
 				}
 			}
 		});
-		btnEliminar.setBounds(329, 164, 89, 23);
+		btnEliminar.setBounds(329, 164, 89, 29);
 		getContentPane().add(btnEliminar);
 		
 		//Botón añadir ingrediente
@@ -212,7 +220,7 @@ public class NuevoPlato2 extends JFrame {
 				
 			}
 		});
-		btnBuscar.setBounds(329, 130, 89, 23);
+		btnBuscar.setBounds(329, 130, 89, 29);
 		getContentPane().add(btnBuscar);
 		
 		JLabel lElaboracion = new JLabel("Elaboraci\u00F3n:");
@@ -221,7 +229,7 @@ public class NuevoPlato2 extends JFrame {
 		contentPane.add(lElaboracion);
 		
 		final JTextPane tElaboracion = new JTextPane();
-		tElaboracion.setBounds(37, 344, 282, 108);
+		tElaboracion.setBounds(37, 344, 282, 129);
 		contentPane.add(tElaboracion);
 		
 		JSeparator separator1 = new JSeparator();
@@ -272,7 +280,7 @@ public class NuevoPlato2 extends JFrame {
 				dispose();
 			}
 		});
-		btnGuardar.setBounds(532, 511, 89, 23);
+		btnGuardar.setBounds(532, 505, 89, 29);
 		contentPane.add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -287,28 +295,28 @@ public class NuevoPlato2 extends JFrame {
 				}
 			}
 		});
-		btnCancelar.setBounds(433, 511, 89, 23);
+		btnCancelar.setBounds(433, 505, 89, 29);
 		contentPane.add(btnCancelar);
 		
 		JLabel lblCalorias = new JLabel("Calorias:");
 		lblCalorias.setFont(new Font("Arial", Font.BOLD, 16));
-		lblCalorias.setBounds(438, 206, 79, 20);
+		lblCalorias.setBounds(443, 180, 69, 20);
 		contentPane.add(lblCalorias);
 		
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setFont(new Font("Arial", Font.BOLD, 16));
-		lblPrecio.setBounds(438, 237, 79, 20);
+		lblPrecio.setBounds(443, 222, 66, 20);
 		contentPane.add(lblPrecio);
 		
 		JLabel lblTiempo = new JLabel("Tiempo:");
 		lblTiempo.setFont(new Font("Arial", Font.BOLD, 16));
-		lblTiempo.setBounds(438, 268, 79, 20);
+		lblTiempo.setBounds(443, 259, 66, 20);
 		contentPane.add(lblTiempo);
 		
 		tCalorias = new JTextField();
 		tCalorias.setEditable(false);
 		tCalorias.setColumns(10);
-		tCalorias.setBounds(525, 208, 79, 20);
+		tCalorias.setBounds(520, 180, 79, 29);
 		contentPane.add(tCalorias);
 		
 		JLabel lContImg = new JLabel("");
@@ -318,19 +326,39 @@ public class NuevoPlato2 extends JFrame {
 		tPrecio = new JTextField();
 		tPrecio.setEditable(false);
 		tPrecio.setColumns(10);
-		tPrecio.setBounds(525, 237, 79, 20);
+		tPrecio.setBounds(520, 220, 79, 26);
 		contentPane.add(tPrecio);
 		
 		JLabel label = new JLabel("\u20AC");
-		label.setBounds(609, 242, 12, 14);
+		label.setBounds(609, 227, 12, 14);
 		contentPane.add(label);
 		
 		MaskFormatter mascara = new MaskFormatter("##:##");
 		mascara.setValueContainsLiteralCharacters(false);
 		JFormattedTextField tTiempo = new JFormattedTextField(mascara);
 		tTiempo.setHorizontalAlignment(SwingConstants.CENTER);
-		tTiempo.setBounds(525, 268, 38, 20);
+		tTiempo.setBounds(520, 257, 52, 29);
 		contentPane.add(tTiempo);
+		
+		JButton btnAadirImagen = new JButton("Modificar");
+		btnAadirImagen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser c = new JFileChooser();
+				// Demonstrate "Open" dialog:
+			      int rVal = c.showOpenDialog(NuevoPlato2.this);
+			      if (rVal == JFileChooser.APPROVE_OPTION) {
+			        //filename.setText(c.getSelectedFile().getName());
+			        //dir.setText(c.getCurrentDirectory().toString());
+			      }
+			      if (rVal == JFileChooser.CANCEL_OPTION) {
+			        //filename.setText("You pressed cancel");
+			        //dir.setText("");
+			      }
+			}
+		});
+		btnAadirImagen.setBounds(520, 423, 89, 29);
+		contentPane.add(btnAadirImagen);
 		
 		//Si el usuario es diferente de null se carga
 		if(u!=null)
@@ -343,7 +371,7 @@ public class NuevoPlato2 extends JFrame {
 			//Sacamos las horas y los minutos de elaboración
 			if(p.getTiempo()!=null){
 				System.out.println("Tiempo: "+p.getTiempo());
-				DateFormat f = new SimpleDateFormat("k:mm");
+				DateFormat f = new SimpleDateFormat("kk:mm");
 				try{
 					Date fecha = (Date) f.parse(p.getTiempo().toString());
 					tTiempo.setText(fecha.toString());
@@ -398,6 +426,9 @@ public class NuevoPlato2 extends JFrame {
 			//Calculamos las calorias
 			contadorCalorias=control.calcularCalorias(plato.getId()).intValue();
 			tCalorias.setText(contadorCalorias.toString());
+			
+			//Calculamos el precio			
+			
 			
 			
 		}
