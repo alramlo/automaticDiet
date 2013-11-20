@@ -60,7 +60,6 @@ public class GestionPlatos extends JPanel {
 		
 		setSize(new Dimension(800, 684));
 		this.setSize(800, 600);
-		
 		userConected=user;
 		
 		try {
