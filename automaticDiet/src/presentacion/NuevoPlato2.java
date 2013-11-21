@@ -28,6 +28,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -42,6 +43,14 @@ import modelo.Plato;
 import modelo.PlatoIngrediente;
 import modelo.Usuario;
 import servicio.Controlador;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.Dialog.ModalExclusionType;
 
 public class NuevoPlato2 extends JFrame {
 
@@ -65,6 +74,7 @@ public class NuevoPlato2 extends JFrame {
 	private String file;
 	private String dir;
 	private JLabel lContImg;
+	private JButton btnEliminar;
 
 
 	/**
@@ -115,7 +125,7 @@ public class NuevoPlato2 extends JFrame {
 		
 		
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 655, 573);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -127,7 +137,19 @@ public class NuevoPlato2 extends JFrame {
 		lNombre.setBounds(37, 50, 140, 19);
 		getContentPane().add(lNombre);
 		
+		
 		tNombre = new JTextField();
+		tNombre.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				System.out.println("Entramos ha modificar el nombre");
+				if(tNombre.getText().contains("0") || tNombre.getText().contains("1") || tNombre.getText().contains("3") || tNombre.getText().contains("4") || tNombre.getText().contains("5") || tNombre.getText().contains("6") || tNombre.getText().contains("7") || tNombre.getText().contains("8") || tNombre.getText().contains("9")|| tNombre.getText().contains("_") || tNombre.getText().contains(".") || tNombre.getText().contains(",") || tNombre.getText().contains(";") || tNombre.getText().contains(":") || tNombre.getText().contains("@") || tNombre.getText().contains("&") || tNombre.getText().contains("#") || tNombre.getText().contains("$") || tNombre.getText().contains("!") || tNombre.getText().contains("\"") || tNombre.getText().contains("º") || tNombre.getText().contains("ª") || tNombre.getText().contains("\\") || tNombre.getText().contains("%") || tNombre.getText().contains("/") || tNombre.getText().contains("(") || tNombre.getText().contains(")") || tNombre.getText().contains("=") || tNombre.getText().contains("^") || tNombre.getText().contains("*") || tNombre.getText().contains("¨") || tNombre.getText().contains("{") || tNombre.getText().contains("}") || tNombre.getText().contains("<") || tNombre.getText().contains(">") || tNombre.getText().contains("+") || tNombre.getText().contains("[") || tNombre.getText().contains("]") || tNombre.getText().contains("'") || tNombre.getText().contains("?") || tNombre.getText().contains("¿")){
+					JOptionPane.showMessageDialog(null, "El nombre del plato no puede contener números ni caracteres especiales", "Error", JOptionPane.ERROR_MESSAGE);
+					tNombre.setText("");
+				}
+			}
+		});
+		
 		tNombre.setBounds(176, 40, 186, 29);
 		getContentPane().add(tNombre);
 		tNombre.setColumns(10);
@@ -149,13 +171,25 @@ public class NuevoPlato2 extends JFrame {
 		getContentPane().add(lIngredientes);
 		
 		final DefaultListModel<Ingrediente> modelo = new DefaultListModel<Ingrediente>();
+		
+		listIngredientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(listIngredientes.getSelectedValue()!=null)
+					NuevoPlato2.this.btnEliminar.setEnabled(true);
+			}
+		});
+		
+		
+		
 		listIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listIngredientes.setModel(modelo);
 		listIngredientes.setBounds(37, 133, 282, 155);
 		getContentPane().add(listIngredientes);
 		
 		//Botón eliminar ingrediente
-		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//si hay un ingrediente seleccionados
@@ -179,6 +213,12 @@ public class NuevoPlato2 extends JFrame {
 					//Decrementamos las calorias
 					contadorCalorias=contadorCalorias-(piEliminar.getCantidad()*piEliminar.getIngrediente().getCalorias());
 					tCalorias.setText(contadorCalorias.toString());
+					if(modelo.size()==1)
+						contadorPrecio=0.0;
+					else
+						contadorPrecio=contadorPrecio-(piEliminar.getCantidad()*piEliminar.getIngrediente().getPrecio());
+					Float aux = contadorPrecio.floatValue();
+					tPrecio.setText(aux.toString()); 
 					
 					//eliminamos el ingrediente seleccionado de la lista de ingredientes
 					modelo.removeElementAt(listIngredientes.getSelectedIndex());
@@ -204,6 +244,9 @@ public class NuevoPlato2 extends JFrame {
 						platoIngredienteNuevos.add(piAux);
 						contadorCalorias=contadorCalorias+(piAux.getIngrediente().getCalorias()*piAux.getCantidad());
 						tCalorias.setText(contadorCalorias.toString());
+						contadorPrecio=contadorPrecio+(piAux.getIngrediente().getPrecio()*piAux.getCantidad());
+						Float aux = contadorPrecio.floatValue();
+						tPrecio.setText(aux.toString());
 						control.setPi(null);
 					}
 					
@@ -247,43 +290,62 @@ public class NuevoPlato2 extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//actualizamos el plato
-				plato.setNombre(tNombre.getText());
-				plato.setElaboracion(tElaboracion.getText());
-				plato.setUsuario(usuario);
-				
-				//Transformamos el tiempo
-					SimpleDateFormat f = new SimpleDateFormat("HH:mm");
-					Date fecha;
-					try {
-						fecha = f.parse(tTiempo.getText());
-						plato.setTiempo(fecha);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-				//plato.setImagen(null);
-				
-				if(esNuevo){
-					//Insertamos el nuevo plato
-					control.insertarPlato(plato);
-					
+				if(tNombre.getText()=="" || tElaboracion.getText()=="" || usuario==null || tTiempo.getText()=="" || dir==null || file==null){
+					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else{
 					
-					//eliminamos los ingredientes suprimidos que ya estaban persistidos anteriormente 
-					for(Ingrediente i : ingredientesEliminar){
-						PlatoIngrediente platoIngredienteAux = control.findPlatoIngrediente(plato.getId(), i.getId());
-						control.eliminarPlatoIngrediente(platoIngredienteAux);
+					if(control.buscarPlatos(tNombre.getText(), usuario).size()>0){
+						JOptionPane.showMessageDialog(null, "El plato ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					control.updatePlato(plato);
+					else{
+						
+						//actualizamos el plato
+						plato.setNombre(tNombre.getText());
+						plato.setElaboracion(tElaboracion.getText());
+						plato.setUsuario(usuario);
+						
+						//Transformamos el tiempo
+							SimpleDateFormat f = new SimpleDateFormat("HH:mm");
+							Date fecha;
+							try {
+								fecha = f.parse(tTiempo.getText());
+								plato.setTiempo(fecha);
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+						//Metemos la imagen
+						File fichero=null; 
+						if(dir!=null&&file!=null){
+							fichero = new File(dir+"\\"+file);
+							if(fichero!=null)
+								plato.setImagen(NuevoPlato2.this.FileToByte(fichero));
+						}
+						
+						if(esNuevo){
+							//Insertamos el nuevo plato
+							control.insertarPlato(plato);
+							
+						}
+						else{
+							
+							//eliminamos los ingredientes suprimidos que ya estaban persistidos anteriormente 
+							for(Ingrediente i : ingredientesEliminar){
+								PlatoIngrediente platoIngredienteAux = control.findPlatoIngrediente(plato.getId(), i.getId());
+								control.eliminarPlatoIngrediente(platoIngredienteAux);
+							}
+							control.updatePlato(plato);
+						}
+						//Añadimos los ingredientes
+						for(PlatoIngrediente pi : platoIngredienteNuevos)
+							control.insertarPlatoIngrediente(pi);
+						gPlatos.poblar();
+						JOptionPane.showMessageDialog(null, "Plato guardado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+						}
 				}
-				//Añadimos los ingredientes
-				for(PlatoIngrediente pi : platoIngredienteNuevos)
-					control.insertarPlatoIngrediente(pi);
-				gPlatos.poblar();
-				dispose();
 				
 			}
 		});
@@ -347,7 +409,7 @@ public class NuevoPlato2 extends JFrame {
 		tTiempo.setBounds(520, 257, 52, 29);
 		contentPane.add(tTiempo);
 		
-		JButton btnAadirImagen = new JButton("Modificar");
+		JButton btnAadirImagen = new JButton("Añadir IMG");
 		btnAadirImagen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -382,7 +444,7 @@ public class NuevoPlato2 extends JFrame {
 			      
 			}
 		});
-		btnAadirImagen.setBounds(520, 423, 89, 29);
+		btnAadirImagen.setBounds(532, 422, 89, 29);
 		contentPane.add(btnAadirImagen);
 		
 		//Si el usuario es diferente de null se carga
@@ -482,7 +544,7 @@ public class NuevoPlato2 extends JFrame {
 		}
 	}
 	
-	private byte[] FileToByte(File f){
+	public byte[] FileToByte(File f){
 		FileInputStream fis;
 		byte[] zipped=null;
 		try {
