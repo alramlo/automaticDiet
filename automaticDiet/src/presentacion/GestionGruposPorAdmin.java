@@ -140,6 +140,7 @@ public class GestionGruposPorAdmin extends JPanel {
 		});
 		tableGrupos.setRowHeight(40);
 		tableGrupos.setModel(modelGrupos);
+		ajustarTamaños(tableGrupos, new int[]{0,300});
 		ocultarColumnasJTable(tableGrupos, new int[]{0});
 		scrollPane.setViewportView(tableGrupos);
 	
@@ -181,6 +182,7 @@ public class GestionGruposPorAdmin extends JPanel {
 		});
 		tablePostsDenunciados.setRowHeight(40);
 		tablePostsDenunciados.setModel(modelPostsDenunciados);
+		ajustarTamaños(tablePostsDenunciados, new int[]{0,0,120,280});
 		ocultarColumnasJTable(tablePostsDenunciados, new int[]{0,1});
 		scrollPanePostsDenunciados.setViewportView(tablePostsDenunciados);
 
@@ -364,6 +366,14 @@ public class GestionGruposPorAdmin extends JPanel {
              tbl.getColumnModel().getColumn(columna[i]).setMinWidth(0);
              tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMaxWidth(0);
              tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMinWidth(0);
+        }
+    }
+	
+	private void ajustarTamaños(JTable tbl, int anchos[])
+    {
+        for(int i=0;i<anchos.length;i++)
+        {
+             tbl.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
     }
 	

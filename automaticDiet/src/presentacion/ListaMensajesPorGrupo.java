@@ -1,6 +1,7 @@
 package presentacion;
 
 import java.awt.Dimension;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -44,7 +45,10 @@ private static final long serialVersionUID = 1L;
 			tablaMensajesPorGrupo.setBounds(10, 11, 799, 415);
 			tablaMensajesPorGrupo.setModel(tablaMensajesPorGrupoModel);
 			tablaMensajesPorGrupo.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-			tablaMensajesPorGrupo.setRowHeight(38);	
+			tablaMensajesPorGrupo.setRowHeight(38);
+			
+			ajustarTamaños(tablaMensajesPorGrupo, new int []{0, 350});
+			ocultarColumnasJTable(tablaMensajesPorGrupo, new int[]{0});
 
 			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 			centerRenderer.setHorizontalAlignment( JLabel.LEFT );
@@ -67,10 +71,10 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	class TablaMensajesPorGrupoModel extends AbstractTableModel {
-
+		
 		private static final long serialVersionUID = 1L;
 		// Columnas de la tabla
-		private String[] columnas = {"ID MENSAJE", "CONTENIDO", "FECHA", "CREADOR"};
+		private String[] columnas = {"ID MENSAJE", "CONTENIDO", "CREADOR", "FECHA"};
 		// Datos que muestra la tabla
 		private ArrayList<Mensaje> data = new ArrayList<Mensaje>();
 
@@ -89,8 +93,8 @@ private static final long serialVersionUID = 1L;
 			switch(col){
 			case 0: return men.getId();
 			case 1: return men.getContenido();
-			case 2: return men.getFecha();
-			case 3: return men.getUsuario().getNombre()+" "+men.getUsuario().getApellidos();
+			case 2: return men.getUsuario().getNombre()+" "+men.getUsuario().getApellidos();
+			case 3: return new SimpleDateFormat("dd / MM / yyyy").format(men.getFecha()) ;
 			default: return null;
 			}
 		}
@@ -121,17 +125,6 @@ private static final long serialVersionUID = 1L;
 				
 				listadoMensajes = mensajeDAO.getMensajesByIdGrupo(idGrupo);
 				Iterator<Mensaje> it = listadoMensajes.iterator();
-			
-//				List<Mensaje> lm = new ArrayList<Mensaje>();
-//				Mensaje m = new Mensaje();
-//				Grupo g = new Grupo();
-//				g.setId(5);
-//				g.setNombre("Grupo cinco");
-//				m.setContenido("Hola esto es el contenido");
-//				m.setId(999);	
-//				m.setGrupo(g);
-//				lm.add(m);
-//				Iterator<Mensaje> it = lm.iterator();
 				
 				TablaMensajesPorGrupoModel model = (TablaMensajesPorGrupoModel)tablaMensajesPorGrupo.getModel();
 				model.clear();
@@ -147,4 +140,22 @@ private static final long serialVersionUID = 1L;
 			}
 	}
 
+	private void ocultarColumnasJTable(JTable tbl, int columna[])
+    {
+        for(int i=0;i<columna.length;i++)
+        {
+             tbl.getColumnModel().getColumn(columna[i]).setMaxWidth(0);
+             tbl.getColumnModel().getColumn(columna[i]).setMinWidth(0);
+             tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMaxWidth(0);
+             tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMinWidth(0);
+        }
+    }
+	
+	private void ajustarTamaños(JTable tbl, int anchos[])
+    {
+        for(int i=0;i<anchos.length;i++)
+        {
+             tbl.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+        }
+    }
 }
