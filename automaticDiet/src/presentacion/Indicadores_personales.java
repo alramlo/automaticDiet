@@ -469,10 +469,12 @@ public class Indicadores_personales extends JPanel {
 	
 	private void pintaDias(int m, int y)
 	{
+		Calendar cal = calendario.getCalendar().getInstance();
+		cal.setTime(calendario.getDate());
 		datos_usuario = control.getSegUsuario(1);
-		calendario.getCalendar();
+		cal.set(Calendar.DAY_OF_MONTH,1);
 		Calendar.getInstance();
-		int inicio = Calendar.DAY_OF_WEEK;
+		int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
 		Component dias[] = calendario.getDayChooser().getDayPanel().getComponents();
 		
 		for (int i = 0; i< datos_usuario.length; i++)
@@ -493,10 +495,10 @@ public class Indicadores_personales extends JPanel {
 				{
 					if(datos_usuario[i].getCumplido().compareToIgnoreCase("si")==0)
 					{
-						dias[inicio + dia].setBackground(Color.GREEN);
+						dias[5 + inicio + dia].setBackground(Color.GREEN);
 					}
 					else
-						dias[inicio + dia].setBackground(Color.RED);
+						dias[5 + inicio + dia].setBackground(Color.RED);
 				}
 			}
 			
