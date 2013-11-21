@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -30,6 +31,7 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.ListSelectionModel;
 
 public class AnadirIngrediente2 extends JDialog {
@@ -137,9 +139,13 @@ public class AnadirIngrediente2 extends JDialog {
 						pi.setIngrediente(listIngredientes.getSelectedValue());
 						pi.setCantidad(listCantidad.getSelectedValue());
 						control.setPi(pi);
+						setVisible(false);
+						dispose();
 					}
-					setVisible(false);
-					dispose();
+					else{
+						JOptionPane.showMessageDialog(null, "No se pueden añadir ingredientes en blanco a la lista", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					
 						
 					}
 				});
