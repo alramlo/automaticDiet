@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -239,18 +238,13 @@ public class GestionPlatos extends JPanel {
 						List<String> posibles = getFullString(textFieldPlato.getText(),0);
 						if(posibles!=null){
 						Object[][] o  = new Object[posibles.size()+1][5];
-						o[0][0]="Plato";
-						o[0][1]="Autor";
-						o[0][2]="Calorias";
-						o[0][3]="Precio";
-						o[0][4]="Valoración";
 						for(int i=0;i<posibles.size();i++){
 							Plato plato = control.consultarPlato(posibles.get(i));
-							o[i+1][0]=plato.getNombre();
-							o[i+1][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
-							o[i+1][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
-							o[i+1][3]=getInfoPorPlato(plato)[1].toString()+" €";
-							o[i+1][4]=plato.getValoracion();
+							o[i][0]=plato.getNombre();
+							o[i][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
+							o[i][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
+							o[i][3]=getInfoPorPlato(plato)[1].toString()+" €";
+							o[i][4]=plato.getValoracion();
 						}
 							table.setModel(new DefaultTableModel(
 							o,
@@ -258,6 +252,8 @@ public class GestionPlatos extends JPanel {
 								"Plato", "Autor", "Calorias", "Precio", "Valoración"
 							}
 						));
+							for(int i=0;i<posibles.size();i++)
+								table.setRowHeight(i, 75);
 						}else
 							JOptionPane.showMessageDialog(null, "No existen platos.", "Error", JOptionPane.ERROR_MESSAGE);
 					} catch (DAOExcepcion e) {
@@ -284,17 +280,17 @@ public class GestionPlatos extends JPanel {
 								l.addAll(control.buscarPlatosPorAutor(usuarios.get(i)));
 							if(l.size()!=0){
 								Object[][] o  = new Object[l.size()+1][5];
-								o[0][0]="Plato";
-								o[0][1]="Autor";
-								o[0][2]="Calorias";
-								o[0][3]="Precio";
-								o[0][4]="Valoración";
+//								o[0][0]="Plato";
+//								o[0][1]="Autor";
+//								o[0][2]="Calorias";
+//								o[0][3]="Precio";
+//								o[0][4]="Valoración";
 								for(int i=0;i<l.size();i++){
-									o[i+1][0]=l.get(i).getNombre();
-									o[i+1][1]=l.get(i).getUsuario().getNombre()+" "+l.get(i).getUsuario().getApellidos();
-									o[i+1][2]=(int)getInfoPorPlato(l.get(i))[0]+" KCal";
-									o[i+1][3]=getInfoPorPlato(l.get(i))[1].toString()+" €";
-									o[i+1][4]=l.get(i).getValoracion();
+									o[i][0]=l.get(i).getNombre();
+									o[i][1]=l.get(i).getUsuario().getNombre()+" "+l.get(i).getUsuario().getApellidos();
+									o[i][2]=(int)getInfoPorPlato(l.get(i))[0]+" KCal";
+									o[i][3]=getInfoPorPlato(l.get(i))[1].toString()+" €";
+									o[i][4]=l.get(i).getValoracion();
 								}
 								table.setModel(new DefaultTableModel(
 								o,
@@ -302,6 +298,8 @@ public class GestionPlatos extends JPanel {
 									"Plato", "Autor", "Calorias", "Precio", "Valoración"
 								}
 										));
+								for(int i=0;i<l.size();i++)
+									table.setRowHeight(i, 75);
 							}
 							else
 								JOptionPane.showMessageDialog(null, "No existen platos para ese usuario", "Error", JOptionPane.ERROR_MESSAGE);
@@ -326,17 +324,17 @@ public class GestionPlatos extends JPanel {
 						}
 						if(platos.size()!=0){
 							Object[][] o  = new Object[platos.size()+1][5];
-							o[0][0]="Plato";
-							o[0][1]="Autor";
-							o[0][2]="Calorias";
-							o[0][3]="Precio";
-							o[0][4]="Valoración";
-							for(int i=1;i<=platos.size();i++){
-								o[i][0]=platos.get(i-1).getNombre();
-								o[i][1]=platos.get(i-1).getUsuario().getNombre()+" "+platos.get(i-1).getUsuario().getApellidos();
-								o[i][2]=(int)getInfoPorPlato(platos.get(i-1))[0]+" KCal";
-								o[i][3]=getInfoPorPlato(platos.get(i-1))[1].toString()+" €";
-								o[i][4]=platos.get(i-1).getValoracion();
+//							o[0][0]="Plato";
+//							o[0][1]="Autor";
+//							o[0][2]="Calorias";
+//							o[0][3]="Precio";
+//							o[0][4]="Valoración";
+							for(int i=0;i<platos.size();i++){
+								o[i][0]=platos.get(i).getNombre();
+								o[i][1]=platos.get(i).getUsuario().getNombre()+" "+platos.get(i).getUsuario().getApellidos();
+								o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
+								o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+								o[i][4]=platos.get(i).getValoracion();
 							}
 							table.setModel(new DefaultTableModel(
 							o,
@@ -344,6 +342,8 @@ public class GestionPlatos extends JPanel {
 								"Plato", "Autor", "Calorias", "Precio", "Valoración"
 							}
 						));
+							for(int i=0;i<platos.size();i++)
+								table.setRowHeight(i, 75);
 						}else
 							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
 					}else
@@ -366,17 +366,17 @@ public class GestionPlatos extends JPanel {
 							}
 							if(platos.size()!=0){
 								Object[][] o  = new Object[platos.size()+1][5];
-								o[0][0]="Plato";
-								o[0][1]="Autor";
-								o[0][2]="Calorias";
-								o[0][3]="Precio";
-								o[0][4]="Valoración";
-								for(int i=1;i<=platos.size();i++){
-									o[i][0]=platos.get(i-1).getNombre();
-									o[i][1]=platos.get(i-1).getUsuario().getNombre()+" "+platos.get(i-1).getUsuario().getApellidos();
-									o[i][2]=(int)getInfoPorPlato(platos.get(i-1))[0]+" KCal";
-									o[i][3]=getInfoPorPlato(platos.get(i-1))[1].toString()+" €";
-									o[i][4]=platos.get(i-1).getValoracion();
+//								o[0][0]="Plato";
+//								o[0][1]="Autor";
+//								o[0][2]="Calorias";
+//								o[0][3]="Precio";
+//								o[0][4]="Valoración";
+								for(int i=0;i<platos.size();i++){
+									o[i][0]=platos.get(i).getNombre();
+									o[i][1]=platos.get(i).getUsuario().getNombre()+" "+platos.get(i).getUsuario().getApellidos();
+									o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
+									o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+									o[i][4]=platos.get(i).getValoracion();
 								}
 								table.setModel(new DefaultTableModel(
 								o,
@@ -384,14 +384,19 @@ public class GestionPlatos extends JPanel {
 									"Plato", "Autor", "Calorias", "Precio", "Valoración"
 								}
 							));
+								for(int i=0;i<platos.size();i++)
+									table.setRowHeight(i, 75);
 							}else
 								JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
 						}else
 							JOptionPane.showMessageDialog(null, "No existe un autor con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}//FIN BUSQUEDA POR APELLIDOS
+				//SIN BUSQUEDA
+				else if(textFieldApellidos.getText().equals("") && textFieldNombre.getText().equals("") && textFieldPlato.getText().equals("")){
+					poblar();
 				//BUSQUEDA COMBINANDO PLATO Y AUTOR
-				else{
+				}else{
 					List<Usuario> usuarios=null;
 					List<String> posiblesPlatos = null;
 					List<String> posiblesNombres = null;
@@ -439,17 +444,17 @@ public class GestionPlatos extends JPanel {
 						}
 						if(platos.size()!=0){
 							Object[][] o  = new Object[platos.size()+1][5];
-							o[0][0]="Plato";
-							o[0][1]="Autor";
-							o[0][2]="Calorias";
-							o[0][3]="Precio";
-							o[0][4]="Valoración";
-							for(int i=1;i<=platos.size();i++){
-								o[i][0]=platos.get(i-1).getNombre();
-								o[i][1]=platos.get(i-1).getUsuario().getNombre()+" "+platos.get(i-1).getUsuario().getApellidos();
-								o[i][2]=(int)getInfoPorPlato(platos.get(i-1))[0]+" KCal";
-								o[i][3]=getInfoPorPlato(platos.get(i-1))[1].toString()+" €";
-								o[i][4]=platos.get(i-1).getValoracion();
+//							o[0][0]="Plato";
+//							o[0][1]="Autor";
+//							o[0][2]="Calorias";
+//							o[0][3]="Precio";
+//							o[0][4]="Valoración";
+							for(int i=0;i<platos.size();i++){
+								o[i][0]=platos.get(i).getNombre();
+								o[i][1]=platos.get(i).getUsuario().getNombre()+" "+platos.get(i).getUsuario().getApellidos();
+								o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
+								o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+								o[i][4]=platos.get(i).getValoracion();
 							}
 							table.setModel(new DefaultTableModel(
 							o,
@@ -457,6 +462,8 @@ public class GestionPlatos extends JPanel {
 								"Plato", "Autor", "Calorias", "Precio", "Valoración"
 							}
 						));
+							for(int i=0;i<platos.size();i++)
+								table.setRowHeight(i, 75);
 						}else
 							JOptionPane.showMessageDialog(null, "No existen platos para autores con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
 					}else
