@@ -1,6 +1,7 @@
 package presentacion;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -15,25 +16,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 import modelo.Plato;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Component;
 
 public class ElaboracionPlato extends JPanel {
 	/**
