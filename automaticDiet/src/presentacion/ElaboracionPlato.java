@@ -111,22 +111,35 @@ public class ElaboracionPlato extends JPanel {
 							} catch (FileNotFoundException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							}
-							catch (IOException e1) {
+							}catch(java.lang.NullPointerException e3){
+								e3.printStackTrace();
+							
+							}catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							ImageIcon im=null;
 			        		BufferedImage buffer;
+			        		int width=0,height=0;
 							try {
 								buffer = ImageIO.read(file);
 								im = new ImageIcon(buffer);
+								width=buffer.getWidth();
+								height=buffer.getHeight();
+								
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 			        		Image image=im.getImage();
-			        		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
+			        		Image newImage;
+			        		if(width>366 || height> 373){
+			        			imagenPlato.setSize(3*width/4, 3*height/4);
+			        			newImage = image.getScaledInstance(3*width/4, 3*height/4, java.awt.Image.SCALE_SMOOTH);
+			        		}else{
+			        			imagenPlato.setSize(width, height);
+			        			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+			        		}
 			        		imagenPlato.setIcon(new ImageIcon(newImage));
 						}
 						} catch (DAOExcepcion e2) {
@@ -222,15 +235,24 @@ public class ElaboracionPlato extends JPanel {
 			}
 			ImageIcon im=null;
     		BufferedImage buffer;
+    		int width=0,height=0;
 			try {
 				buffer = ImageIO.read(file);
 				im = new ImageIcon(buffer);
+				width=buffer.getWidth();
+				height=buffer.getHeight();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
     		Image image=im.getImage();
-    		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
+    		Image newImage;
+    		if(width>366 || height> 373){
+    			newImage = image.getScaledInstance(3*width/4, 3*height/4, java.awt.Image.SCALE_SMOOTH);
+    			//imagenPlato.setBorder(null);
+    		}else{
+    			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+    		}
     		imagenPlato.setIcon(new ImageIcon(newImage));
 		}
 		} catch (DAOExcepcion e2) {
