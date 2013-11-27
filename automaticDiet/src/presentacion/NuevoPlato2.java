@@ -290,12 +290,12 @@ public class NuevoPlato2 extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(tNombre.getText()=="" || tElaboracion.getText()=="" || usuario==null || tTiempo.getText()=="" || dir==null || file==null){
+				if(tNombre.getText().equals("") || tElaboracion.getText().equals("") || usuario==null || tTiempo.getText().equals("")){
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else{
 					
-					if(control.buscarPlatos(tNombre.getText(), usuario).size()>0){
+					if(control.buscarPlatos(tNombre.getText(), usuario).size()>0 && esNuevo){
 						JOptionPane.showMessageDialog(null, "El plato ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					else{
