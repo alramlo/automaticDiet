@@ -35,6 +35,7 @@ public class DAL {
 	private SeguimientoDAO seguimientoDAO;
 	private IngredienteDAO ingredienteDAO;
 	private PlatoIngredienteDAO platoIngredienteDAO;
+	private DietaDAO dietaDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -49,6 +50,7 @@ public class DAL {
 		ingredienteDAO = new IngredienteDAO();
 		seguimientoDAO = new SeguimientoDAO();
 		platoIngredienteDAO = new PlatoIngredienteDAO();
+		dietaDAO = new DietaDAO();
 	}
 	
 	// Patrón Singleton
@@ -220,5 +222,10 @@ public class DAL {
 	
 	public Double calcularPrecio(int codigo){
 		return platoDAO.calcularPrecio(codigo);
+	}
+
+	public long getSemanasDieta(Date date, Usuario user) {
+		return dietaDAO.getSemanasDieta(date,user);
+		
 	} 
 }

@@ -469,5 +469,13 @@ public class Controlador {
 	public Double calcularPrecio(int codigo){
 		return dal.calcularPrecio(codigo);
 	}
+
+	public long getSemanasDieta(Date date, Usuario user) {
+		long l = dal.getSemanasDieta(date,user);
+		if(l==-1)
+			return -1;
+		else
+		return  ((l/5)/4)/7;
+	}
 }
 

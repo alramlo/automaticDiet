@@ -1,8 +1,11 @@
 package test;
 import java.text.ParseException;
 
-import persistencia.PlatoDAO;
-import modelo.Plato;
+import modelo.Usuario;
+
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+
+import persistencia.DietaDAO;
 public class TestSergio {
 
 
@@ -56,9 +59,15 @@ public class TestSergio {
 //		p.setId(1);
 //		PlatoDAO pd = new PlatoDAO();
 //		System.out.println(pd.getCaloriasPorPlato(p));
-		PlatoDAO pl = new PlatoDAO();
-		Plato p = pl.platoByNombre("Macedonia");
-		System.out.println(p.getNombre());
+//		PlatoDAO pl = new PlatoDAO();
+//		Plato p = pl.platoByNombre("Macedonia");
+//		System.out.println(p.getNombre());
+		
+//		DietaDAO d = new DietaDAO();
+//		Usuario u = new Usuario();
+//		DateTime dt = new DateTime();
+//		u.setId(1);
+//		System.out.println("Platos "+d.getSemanasDieta(, u ).size());
 		
 	}
 

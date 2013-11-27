@@ -24,9 +24,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Plato;
+import modelo.Usuario;
 import servicio.Controlador;
 
 import com.toedter.calendar.JDateChooser;
+
+import excepciones.DominioExcepcion;
 
 public class Consultar_dieta_asignada extends JPanel
 {
@@ -34,6 +37,7 @@ public class Consultar_dieta_asignada extends JPanel
 	private JTable tabla_dieta;
 	private JDateChooser fecha_actual = new JDateChooser();
 	private int cont;
+	private JLabel lblPaginacion;
 	JButton btn_lista_compra = new JButton("Lista de la compra");
 	JButton btn_modificar = new JButton("Modificar dieta");
 	JButton btn_detalle = new JButton("Ver detalles");
@@ -46,6 +50,7 @@ public class Consultar_dieta_asignada extends JPanel
 	public Consultar_dieta_asignada(final Controlador c)
 	{
 		this.setSize(768, 580);
+		
 		
 		tabla_dieta = new JTable(/*new Tabla_dieta_semanal(c)*/);
 		tabla_dieta.setEnabled(false);
@@ -119,39 +124,52 @@ public class Consultar_dieta_asignada extends JPanel
 		JDateChooser dia_final = new JDateChooser();
 		dia_final.getCalendarButton().setEnabled(false);
 		dia_final.setDateFormatString("dd-MMMM-yyyy");
+		dia_final.setVisible(false);
 		
 		JDateChooser dia_inicio = new JDateChooser();
 		dia_inicio.getCalendarButton().setEnabled(false);
 		dia_inicio.setDateFormatString("dd-MMMM-yyyy");
+		dia_inicio.setVisible(false);
 		
 		JButton btn_consultar = new JButton("Consultar");
 		btn_consultar.setEnabled(false);
 		btn_consultar.setFont(new Font("Arial", Font.PLAIN, 14));
+		btn_consultar.setVisible(false);
 		
 		JLabel lblFechaInicial = new JLabel("fecha inicial");
+		lblFechaInicial.setVisible(false);
 		
 		JLabel lblFechaFinal = new JLabel("fecha final");
+		lblFechaFinal.setVisible(false);
 		
 		JLabel lblConsultar = new JLabel("Consultar");
 		lblConsultar.setForeground(Color.BLUE);
 		lblConsultar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConsultar.setFont(new Font("Arial", Font.BOLD, 14));
+		lblConsultar.setVisible(false);
 		
 		JLabel lblHistrico = new JLabel(" hist\u00F3rico");
 		lblHistrico.setForeground(Color.BLUE);
 		lblHistrico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHistrico.setFont(new Font("Arial", Font.BOLD, 14));
+		lblHistrico.setVisible(false);
 		
 		cont=0;
 		fecha_actual.setDate(new Date());
 		fecha_actual.getDateEditor().addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent e){
-			
+			Usuario u = new Usuario();
+			u.setId(1);
+			try{
+			lblPaginacion.setText("1/"+paginar(fecha_actual.getDate(),u)+"");
+			}catch(NullPointerException e9){
+				
+			}
 			try{
 			if(fecha_actual.getDate()!=null && cont<28){
 				platos=c.dietaSemanal(1, fecha_actual.getDate());
 				if(platos.length!=0){
-					tabla_dieta.setRowHeight(100);
+					tabla_dieta.setRowHeight(75);
 				for(int i=1;i<=7;i++){
 					for(int j=1;j<=4;j++){
 						String nom_plato = platos[cont].getNombre();
@@ -187,6 +205,24 @@ public class Consultar_dieta_asignada extends JPanel
 		fecha_actual.setBorder(null);
 		fecha_actual.setDate(new Date());
 		
+		JButton btnAnterior = new JButton("");
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnAnterior.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/anterior.gif")));
+		
+		JButton buttonSiguiente = new JButton("");
+		buttonSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buttonSiguiente.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/siguiente.gif")));
+		
+		lblPaginacion = new JLabel("");
+		lblPaginacion.setFont(new Font("Arial", Font.BOLD, 16));
+		//lblPaginacion.setText(paginar(new Date())+"");
+		
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -194,30 +230,43 @@ public class Consultar_dieta_asignada extends JPanel
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(tabla_dieta, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btn_detalle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btn_modificar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btn_lista_compra, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lblHistrico, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblConsultar, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-							.addGap(18)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(dia_inicio, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblFechaInicial, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblFechaFinal)
-								.addComponent(dia_final, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addComponent(btn_consultar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(lblHistrico, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblConsultar, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+									.addGap(18)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(dia_inicio, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblFechaInicial, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblFechaFinal)
+										.addComponent(dia_final, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
+									.addComponent(btn_consultar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblPaginacion, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+											.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(btn_detalle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btn_modificar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btn_lista_compra, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+							.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(tabla_dieta, GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+							.addGap(8))))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(138)
+					.addComponent(btnAnterior, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
+					.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+					.addGap(143))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -230,8 +279,13 @@ public class Consultar_dieta_asignada extends JPanel
 							.addComponent(btn_lista_compra, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE))
 						.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(lblPaginacion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnAnterior, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+						.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE))
+					.addGap(18)
 					.addComponent(tabla_dieta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
@@ -252,5 +306,17 @@ public class Consultar_dieta_asignada extends JPanel
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
+	}
+	
+	private long paginar(Date date, Usuario u){
+		long semanas=0;
+		try {
+			semanas = Controlador.dameControlador().getSemanasDieta(date,u);
+		} catch (DominioExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return semanas;
 	}
 }

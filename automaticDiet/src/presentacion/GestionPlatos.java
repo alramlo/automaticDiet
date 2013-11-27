@@ -190,6 +190,9 @@ public class GestionPlatos extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				btnEliminar.setEnabled(false);
+				btnModificar.setEnabled(false);
 			}
 		});
 		btnEliminar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/eliminar-icono-4912-32.png")));
