@@ -1,6 +1,5 @@
 package servicio;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +9,7 @@ import java.util.List;
 
 import modelo.Caracteristica;
 import modelo.Ciudad;
+import modelo.Dieta;
 import modelo.Grupo;
 import modelo.Ingrediente;
 import modelo.Interes;
@@ -19,7 +19,6 @@ import modelo.PlatoIngrediente;
 import modelo.Seguimiento;
 import modelo.Usuario;
 import persistencia.DAL;
-import persistencia.IngredienteDAO;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
 
@@ -476,6 +475,22 @@ public class Controlador {
 			return -1;
 		else
 		return  ((l/5)/4)/7;
+	}
+
+	public String[] getDietas(Usuario user) {
+		List<Dieta> dietas = dal.getDietas(user);
+		String [] nombresDietas = new String[dietas.size()];
+		
+		Iterator<Dieta> itDietas = dietas.iterator();
+		for(int i=0; itDietas.hasNext(); i++){
+			Dieta d = itDietas.next();
+			nombresDietas[i]=d.getNombre();
+		}
+		return nombresDietas;
+	}
+
+	public Dieta getDietaPorNombre(String nombre) {
+		return dal.getDietaPorNombre(nombre);
 	}
 }
 

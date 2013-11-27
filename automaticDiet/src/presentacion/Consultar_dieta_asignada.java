@@ -4,25 +4,29 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Dieta;
 import modelo.Plato;
 import modelo.Usuario;
 import servicio.Controlador;
@@ -35,9 +39,14 @@ public class Consultar_dieta_asignada extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private JTable tabla_dieta;
-	private JDateChooser fecha_actual = new JDateChooser();
 	private int cont;
+	private JComboBox<String> comboBoxDietas;
 	private JLabel lblPaginacion;
+	private final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+	private JButton btnAnterior,buttonSiguiente;
+	private int en=0,contSemanas=1;
+	private long semanas;
+	private Dieta dieta;
 	JButton btn_lista_compra = new JButton("Lista de la compra");
 	JButton btn_modificar = new JButton("Modificar dieta");
 	JButton btn_detalle = new JButton("Ver detalles");
@@ -155,72 +164,100 @@ public class Consultar_dieta_asignada extends JPanel
 		lblHistrico.setVisible(false);
 		
 		cont=0;
-		fecha_actual.setDate(new Date());
-		fecha_actual.getDateEditor().addPropertyChangeListener(new PropertyChangeListener(){
-			public void propertyChange(PropertyChangeEvent e){
-			Usuario u = new Usuario();
-			u.setId(1);
-			try{
-			lblPaginacion.setText("1/"+paginar(fecha_actual.getDate(),u)+"");
-			}catch(NullPointerException e9){
-				
-			}
-			try{
-			if(fecha_actual.getDate()!=null && cont<28){
-				platos=c.dietaSemanal(1, fecha_actual.getDate());
-				if(platos.length!=0){
-					tabla_dieta.setRowHeight(75);
-				for(int i=1;i<=7;i++){
-					for(int j=1;j<=4;j++){
-						String nom_plato = platos[cont].getNombre();
-						int indice = nom_plato.lastIndexOf(" ");
-						if(indice > 0)
-						{
-							String s1 = nom_plato.substring(0, nom_plato.lastIndexOf(" "));
-							String s2 = nom_plato.substring(nom_plato.lastIndexOf(" "), nom_plato.length());
-							nom_plato = "<html><p>"+s1+"</p><p>"+s2+"</p></html>";
-						}
-						
-					tabla_dieta.setValueAt(nom_plato,j , i);
-					cont++;
-					}
-				}
-				}else{
-					for(int i=1;i<=7;i++){
-						for(int j=1;j<=4;j++){
-						tabla_dieta.setValueAt("",j , i);
-						}
-					}
-				}
-				cont=0;
-				}
-			}catch(java.lang.IllegalStateException a){}
-			}
-		});
-		fecha_actual.getCalendarButton().setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		fecha_actual.getCalendarButton().setContentAreaFilled(false);
-		fecha_actual.setOpaque(false);
-		fecha_actual.setFont(new Font("Arial", Font.PLAIN, 22));
-		fecha_actual.setDateFormatString(" dd / MMMM / yyyy");
-		fecha_actual.setBorder(null);
-		fecha_actual.setDate(new Date());
 		
-		JButton btnAnterior = new JButton("");
+		btnAnterior = new JButton("");
 		btnAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Calendar fecha = new GregorianCalendar();
+				fecha.setTime(dieta.getFechaInicial());
+				fecha.add(fecha.DATE, (7*contSemanas-1));
+				Plato[] pl = c.dietaSemanal(dieta.getUsuario().getId(), fecha.getTime());
+				if(pl.length!=0){
+						cont=0;
+						tabla_dieta.setRowHeight(75);
+						for(int i=0;i<7;i++){
+							for(int j=0;j<4;j++){
+								String nom_plato = pl[cont].getNombre();
+								int indice = nom_plato.lastIndexOf(" ");
+								cont++;
+								if(indice > 0){
+									String s1 = nom_plato.substring(0, nom_plato.lastIndexOf(" "));
+									String s2 = nom_plato.substring(nom_plato.lastIndexOf(" "), nom_plato.length());
+									nom_plato = "<html><p>"+s1+"</p><p>"+s2+"</p></html>";
+									tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+								}else{
+									tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+								}
+							}
+						}
+						contSemanas--;
+						lblPaginacion.setText(contSemanas+"/"+semanas);
+						btnAnterior.setEnabled(false);
+						if(contSemanas>=semanas){
+							buttonSiguiente.setEnabled(false);
+							btnAnterior.setEnabled(true);
+						}
+						else buttonSiguiente.setEnabled(true);
+				}
 			}
 		});
 		btnAnterior.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/anterior.gif")));
 		
-		JButton buttonSiguiente = new JButton("");
+		buttonSiguiente = new JButton("");
 		buttonSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Calendar fecha = new GregorianCalendar();
+				fecha.setTime(dieta.getFechaInicial());
+				fecha.add(fecha.DATE, (7*contSemanas-1));
+				Plato[] pl = c.dietaSemanal(dieta.getUsuario().getId(), fecha.getTime());
+				if(pl.length!=0){
+						cont=0;
+						tabla_dieta.setRowHeight(75);
+						for(int i=0;i<7;i++){
+							for(int j=0;j<4;j++){
+								String nom_plato = pl[cont].getNombre();
+								int indice = nom_plato.lastIndexOf(" ");
+								cont++;
+								if(indice > 0){
+									String s1 = nom_plato.substring(0, nom_plato.lastIndexOf(" "));
+									String s2 = nom_plato.substring(nom_plato.lastIndexOf(" "), nom_plato.length());
+									nom_plato = "<html><p>"+s1+"</p><p>"+s2+"</p></html>";
+									tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+								}else{
+									tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+								}
+							}
+						}
+						contSemanas++;
+						lblPaginacion.setText(contSemanas+"/"+semanas);
+						btnAnterior.setEnabled(false);
+						if(contSemanas>=semanas){
+							buttonSiguiente.setEnabled(false);
+							btnAnterior.setEnabled(true);
+						}
+						else buttonSiguiente.setEnabled(true);
+				}
 			}
 		});
 		buttonSiguiente.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/siguiente.gif")));
 		
 		lblPaginacion = new JLabel("");
 		lblPaginacion.setFont(new Font("Arial", Font.BOLD, 16));
+		
+		Usuario user = new Usuario();
+		user.setId(1);
+		String[] dietas = c.getDietas(user);
+		
+		comboBoxDietas = new JComboBox<String>(dietas);
+		
+		comboBoxDietas.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent evento) {
+				inicializar(c);
+			}
+		});
+		
+		JLabel lblNewLabel = new JLabel("DIETAS:");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		//lblPaginacion.setText(paginar(new Date())+"");
 		
 		
@@ -250,7 +287,9 @@ public class Consultar_dieta_asignada extends JPanel
 									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 										.addComponent(lblPaginacion, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
 										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-											.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblNewLabel)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(comboBoxDietas, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
 											.addGap(18)
 											.addComponent(btn_detalle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 									.addPreferredGap(ComponentPlacement.RELATED)
@@ -272,17 +311,20 @@ public class Consultar_dieta_asignada extends JPanel
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+							.addComponent(comboBoxDietas, GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btn_modificar, 0, 0, Short.MAX_VALUE)
+								.addComponent(btn_detalle, 0, 0, Short.MAX_VALUE))
+							.addComponent(btn_lista_compra, GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)))
+					.addGap(30)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(btn_detalle, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-							.addComponent(btn_modificar, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-							.addComponent(btn_lista_compra, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE))
-						.addComponent(fecha_actual, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(lblPaginacion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnAnterior, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
-						.addComponent(buttonSiguiente, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE))
+						.addComponent(btnAnterior, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE)
+						.addComponent(buttonSiguiente, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 37, Short.MAX_VALUE))
 					.addGap(18)
 					.addComponent(tabla_dieta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
@@ -306,6 +348,7 @@ public class Consultar_dieta_asignada extends JPanel
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
+		inicializar(c);
 	}
 	
 	private long paginar(Date date, Usuario u){
@@ -318,5 +361,55 @@ public class Consultar_dieta_asignada extends JPanel
 		}
 		
 		return semanas;
+	}
+	
+	private void inicializar(Controlador c){
+		String nombre = comboBoxDietas.getSelectedItem()+"";
+		dieta = c.getDietaPorNombre(nombre);
+		semanas = (((dieta.getFechaFinal().getTime()-dieta.getFechaInicial().getTime())/ MILLSECS_PER_DAY)+1)/7;
+		Plato[] pl = c.dietaSemanal(dieta.getUsuario().getId(), dieta.getFechaInicial());
+		if(pl.length!=0){
+				cont=0;
+				tabla_dieta.setRowHeight(75);
+				for(int i=0;i<7;i++){
+					for(int j=0;j<4;j++){
+						String nom_plato = pl[cont].getNombre();
+						int indice = nom_plato.lastIndexOf(" ");
+						cont++;
+						if(indice > 0){
+							String s1 = nom_plato.substring(0, nom_plato.lastIndexOf(" "));
+							String s2 = nom_plato.substring(nom_plato.lastIndexOf(" "), nom_plato.length());
+							nom_plato = "<html><p>"+s1+"</p><p>"+s2+"</p></html>";
+							tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+						}else{
+							tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+						}
+					}
+				}
+				lblPaginacion.setText(contSemanas+"/"+semanas);
+				btnAnterior.setEnabled(false);
+				if(semanas<=1) buttonSiguiente.setEnabled(false);
+				else buttonSiguiente.setEnabled(true);
+		}else{
+			tabla_dieta.setModel(new DefaultTableModel(
+					new Object[][] {
+						{"", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"},
+						{"Desayuno", null, null, null, null, null, null, null},
+						{"Almuerzo", null, null, null, null, null, null, null},
+						{"Merienda", null, null, null, null, null, null, null},
+						{"Cena", null, null, null, null, null, null, null},
+					},
+					new String[] {
+						"", "Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado", "Domingo"
+					}
+				));
+			lblPaginacion.setText("");
+			btnAnterior.setEnabled(false);
+			buttonSiguiente.setEnabled(false);
+			if(en==0){
+				JOptionPane.showMessageDialog(null, "La dieta no tiene platos", "Info", JOptionPane.INFORMATION_MESSAGE);
+				en++;
+			}
+		}
 	}
 }

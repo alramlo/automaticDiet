@@ -6,6 +6,7 @@ import java.util.List;
 
 import modelo.Caracteristica;
 import modelo.Ciudad;
+import modelo.Dieta;
 import modelo.Grupo;
 import modelo.Ingrediente;
 import modelo.Interes;
@@ -227,5 +228,13 @@ public class DAL {
 	public long getSemanasDieta(Date date, Usuario user) {
 		return dietaDAO.getSemanasDieta(date,user);
 		
+	}
+
+	public List<Dieta> getDietas(Usuario user) {
+		return dietaDAO.getDietas(user);
+	}
+
+	public Dieta getDietaPorNombre(String nombre) {
+		return dietaDAO.getDietaPorNombre(nombre);
 	} 
 }

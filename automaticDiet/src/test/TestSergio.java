@@ -1,11 +1,10 @@
 package test;
+import java.sql.Date;
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-import modelo.Usuario;
-
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-
-import persistencia.DietaDAO;
+import persistencia.UsuarioDAO;
 public class TestSergio {
 
 
@@ -68,6 +67,15 @@ public class TestSergio {
 //		DateTime dt = new DateTime();
 //		u.setId(1);
 //		System.out.println("Platos "+d.getSemanasDieta(, u ).size());
+		
+		Calendar calendar = new GregorianCalendar(2013,9,21); 
+		Calendar calendar2 = new GregorianCalendar(2013,9,27); 
+		Date d = new Date(calendar.getTimeInMillis());
+		Date d2 = new Date(calendar2.getTimeInMillis());
+		System.out.println(d.toString());
+		System.out.println(d2.toString());
+		UsuarioDAO dD = new UsuarioDAO();
+		System.out.println("platos "+dD.dietaSemanal(1, d, d2).size());
 		
 	}
 

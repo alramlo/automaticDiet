@@ -1,9 +1,12 @@
 package persistencia;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Query;
 
+import modelo.Dieta;
+import modelo.Plato;
 import modelo.Usuario;
 
 public class DietaDAO extends AbstractDAO{
@@ -28,6 +31,39 @@ public class DietaDAO extends AbstractDAO{
 			
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Dieta> getDietas(Usuario user) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT d "
+					+ "FROM Dieta d "
+					+ "WHERE d.usuario.id=:ident ");
+			q.setParameter("ident", user.getId());;
+			return (List<Dieta>) q.getResultList();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+		}
+	}
+
+	public Dieta getDietaPorNombre(String nombre) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT d "
+					+ "FROM Dieta d "
+					+ "WHERE d.nombre=:nom ");
+			q.setParameter("nom", nombre);;
+			return (Dieta) q.getSingleResult();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+		}
 	}
 
 }

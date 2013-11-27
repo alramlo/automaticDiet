@@ -22,12 +22,15 @@ public class UsuarioDAO extends AbstractDAO{
 		try{
 			Query q;
 			q = entityManager.createQuery("SELECT p "
-					+ "FROM Plato p, PlatoDieta pd, Dieta d, Usuario u "
+					+ "FROM Plato p, PlatoDieta pd, Dieta d "
 					+ "WHERE pd.dia>=:fechaI "
 					+ "AND pd.dia<=:fechaF "
-					+ "AND pd.plato.id=p.id");
+					+ "AND pd.plato.id=p.id "
+					+ "AND pd.dieta.id=d.id "
+					+ "AND d.usuario.id=:idUs");
 			q.setParameter("fechaI", fechaIni);
 			q.setParameter("fechaF", fechaFin);
+			q.setParameter("idUs", idUsuario);
 			return (List<Plato>) q.getResultList();
 			
 			
