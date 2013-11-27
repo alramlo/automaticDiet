@@ -7,6 +7,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,16 +48,12 @@ import modelo.PlatoIngrediente;
 import modelo.Usuario;
 import servicio.Controlador;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.Dialog.ModalExclusionType;
-
 public class NuevoPlato2 extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7631627484409625280L;
 	private JPanel contentPane;
 	private JTextField tNombre;
 	private Plato plato;
@@ -429,15 +429,22 @@ public class NuevoPlato2 extends JFrame {
 //						fos.close();
 					ImageIcon im=null;
 		    		BufferedImage buffer;
+		    		int width=0,height=0;
 					try {
 						buffer = ImageIO.read(fichero);
 						im = new ImageIcon(buffer);
+						width=buffer.getWidth();
+						height=buffer.getHeight();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 		    		Image image=im.getImage();
-		    		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
+		    		Image newImage;
+		    		if(width>112 || height>98)
+		    			newImage= image.getScaledInstance(width/3, height/3, java.awt.Image.SCALE_SMOOTH);
+		    		else
+		    			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 		    		lContImg.setIcon(new ImageIcon(newImage));
 			        
 			      }
@@ -487,15 +494,22 @@ public class NuevoPlato2 extends JFrame {
 				}
 				ImageIcon im=null;
 	    		BufferedImage buffer;
+	    		int width=0,height=0;
 				try {
 					buffer = ImageIO.read(file);
 					im = new ImageIcon(buffer);
+					width=buffer.getWidth();
+					height=buffer.getHeight();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 	    		Image image=im.getImage();
-	    		Image newImage = image.getScaledInstance(408, 402, java.awt.Image.SCALE_SMOOTH);
+	    		Image newImage;
+	    		if(width>112 || height>98)
+	    			newImage= image.getScaledInstance(width/3, height/3, java.awt.Image.SCALE_SMOOTH);
+	    		else
+	    			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 	    		lContImg.setIcon(new ImageIcon(newImage));
 			}
     		
