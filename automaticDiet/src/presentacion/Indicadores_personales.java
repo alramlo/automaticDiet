@@ -70,6 +70,7 @@ public class Indicadores_personales extends JPanel {
 	private Seguimiento[] datos_usuario;
 	private Date today = calendario.getDate();
 	private Date aReg = today;
+	private Date currentDay = today;
 	private int mes, year;
 	private SimpleDateFormat sdf;
 	
@@ -132,8 +133,8 @@ public class Indicadores_personales extends JPanel {
 			{
 				mes = calendario.getMonthChooser().getMonth()+1;
 				pintaDias(mes, year);
-				cumplimiento.setVisible(false);
-				pesaje.setVisible(false);
+				diaSeleccionado(null);
+				poderRegistrar(false);
 			}
 		});
 		calendario.getYearChooser().addPropertyChangeListener(new PropertyChangeListener() {
@@ -141,8 +142,8 @@ public class Indicadores_personales extends JPanel {
 			{
 				year = calendario.getYearChooser().getYear();
 				pintaDias(mes, year);
-				cumplimiento.setVisible(false);
-				pesaje.setVisible(false);
+				diaSeleccionado(null);
+				poderRegistrar(false);
 			}
 		});
 		calendario.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
@@ -150,15 +151,14 @@ public class Indicadores_personales extends JPanel {
 			{
 				pintaDias(mes, year);
 				aReg = calendario.getDate();
+				diaSeleccionado(aReg);
 				if(aReg.after(today))
 				{
-					cumplimiento.setVisible(false);
-					pesaje.setVisible(false);
+					poderRegistrar(false);
 				}
 				else
 				{
-					cumplimiento.setVisible(true);
-					pesaje.setVisible(true);
+					poderRegistrar(true);
 				}
 			}
 		});
@@ -225,8 +225,6 @@ public class Indicadores_personales extends JPanel {
 				s.setFecha(aReg);
 				s.setPeso(new BigDecimal((double)peso.getValue()));
 				registrar(s);
-				
-				pesaje.setVisible(false);
 			}
 		});
 		
@@ -275,8 +273,6 @@ public class Indicadores_personales extends JPanel {
 				s.setFecha(aReg);
 				s.setCumplido("SI");
 				registrar(s);
-				
-				cumplimiento.setVisible(false);
 			}
 		});
 		
@@ -295,8 +291,6 @@ public class Indicadores_personales extends JPanel {
 				s.setFecha(aReg);
 				s.setCumplido("NO");
 				registrar(s);
-				
-				cumplimiento.setVisible(false);
 			}
 		});
 		
@@ -328,6 +322,10 @@ public class Indicadores_personales extends JPanel {
 		);
 		cumplimiento.setLayout(gl_cumplimiento);
 		registro.setLayout(gl_registro);
+		diaSeleccionado(today);
+		
+		
+		//PANEL DE GRAFICA DE CONTROL DE PESO
 		
 		tabbedPane.addTab("Grafica de Control de peso", new ImageIcon(Indicadores_personales.class.getResource("/iconos/grafica.png")), panel, null);
 		
@@ -409,17 +407,14 @@ public class Indicadores_personales extends JPanel {
 		setLayout(groupLayout);
 		
 		pintaDias(mes, year);
-		cumplimiento.setVisible(false);
-		pesaje.setVisible(false);
 	}
 	
-	// Panel Grafica de peso
 	private JFreeChart grafica(int m, int y)
 	{
 		JFreeChart grafica = ChartFactory.createXYLineChart("", "Dia", "Peso (en Kg)", obtenerDatos(m, y), PlotOrientation.VERTICAL, false, false, false);
 		XYLineAndShapeRenderer  renderer  = (XYLineAndShapeRenderer) ((XYPlot) grafica.getPlot()).getRenderer();   
 		grafica.getXYPlot().getDomainAxis().setRange(1, 31);
-		grafica.getXYPlot().getRangeAxis().setRange(60, 90);
+		grafica.getXYPlot().getRangeAxis().setRange(10, 150);
         renderer.setBaseShapesVisible(true);
         renderer.setBaseShapesFilled (true);
         renderer.setSeriesPaint(0, Color.RED);
@@ -461,10 +456,52 @@ public class Indicadores_personales extends JPanel {
 		contenidoGraf.repaint();
 	}
 	
+	private void diaSeleccionado(Date d)
+	{
+		if(d!=null)
+		{
+			Calendar cal = calendario.getCalendar().getInstance();
+			cal.setTime(calendario.getDate());
+			cal.set(Calendar.DAY_OF_MONTH,1);
+			Calendar.getInstance();
+			int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
+			Component dias[] = calendario.getDayChooser().getDayPanel().getComponents();
+			sdf = new SimpleDateFormat("dd");
+			int dia = Integer.parseInt(sdf.format(d));
+			dias[5 + inicio + dia].setFont(new Font("Arial", Font.BOLD, 48));
+			
+			dia = Integer.parseInt(sdf.format(currentDay));
+			dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
+			
+			currentDay = d;
+		}
+		else
+		{
+			Calendar cal = calendario.getCalendar().getInstance();
+			cal.setTime(calendario.getDate());
+			cal.set(Calendar.DAY_OF_MONTH,1);
+			Calendar.getInstance();
+			int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
+			Component dias[] = calendario.getDayChooser().getDayPanel().getComponents();
+			sdf = new SimpleDateFormat("dd");
+			int dia = Integer.parseInt(sdf.format(currentDay));
+			dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
+		}
+	}
+	
 	private void registrar(Seguimiento s)
 	{
 		control.setSeguimiento(s);
 		pintaDias(mes, year);
+	}
+	private void poderRegistrar(boolean b)
+	{
+		btnNo.setEnabled(b);
+		btnSi.setEnabled(b);
+		btnReg.setEnabled(b);
+		peso.setEnabled(b);
+		lblCuantoKg.setEnabled(b);
+		lblHasCumplido.setEnabled(b);
 	}
 	
 	private void pintaDias(int m, int y)
