@@ -47,6 +47,9 @@ public class Dieta implements Serializable {
 
 	@Column(name="NOMBRE")
 	private String nombre;
+	
+	@Column(name="DESCRIPCION")
+	private String descripcion;
 
 	//uni-directional many-to-one association to Usuario
 	@ManyToOne
@@ -110,6 +113,14 @@ public class Dieta implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 }
