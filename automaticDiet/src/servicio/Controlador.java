@@ -488,6 +488,18 @@ public class Controlador {
 		}
 		return nombresDietas;
 	}
+	
+	public String[] getPlatosDieta(int id) {
+		List<Plato> platos = dal.getPlatosDieta(id);
+		String [] nombresPlatos = new String[platos.size()];
+		
+		Iterator<Plato> itPlato = platos.iterator();
+		for(int i=0; itPlato.hasNext(); i++){
+			Plato d = itPlato.next();
+			nombresPlatos[i]=d.getNombre();
+		}
+		return nombresPlatos;
+	}
 
 	public Dieta getDietaPorNombre(String nombre) {
 		return dal.getDietaPorNombre(nombre);

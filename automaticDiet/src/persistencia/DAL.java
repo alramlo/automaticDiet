@@ -237,4 +237,8 @@ public class DAL {
 	public Dieta getDietaPorNombre(String nombre) {
 		return dietaDAO.getDietaPorNombre(nombre);
 	} 
+	
+	public List<Plato> getPlatosDieta(int id){
+		return platoDAO.getPlatosDieta(id);
+	}
 }

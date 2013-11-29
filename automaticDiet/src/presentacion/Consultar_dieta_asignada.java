@@ -6,12 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -192,12 +199,15 @@ public class Consultar_dieta_asignada extends JPanel
 						}
 						contSemanas--;
 						lblPaginacion.setText(contSemanas+"/"+semanas);
-						btnAnterior.setEnabled(false);
-						if(contSemanas>=semanas){
+						if(contSemanas==1){
+							btnAnterior.setEnabled(false);
+						}
+						else btnAnterior.setEnabled(true);
+						if(contSemanas==semanas){
 							buttonSiguiente.setEnabled(false);
-							btnAnterior.setEnabled(true);
 						}
 						else buttonSiguiente.setEnabled(true);
+						
 				}
 			}
 		});
@@ -231,11 +241,14 @@ public class Consultar_dieta_asignada extends JPanel
 						contSemanas++;
 						lblPaginacion.setText(contSemanas+"/"+semanas);
 						btnAnterior.setEnabled(false);
-						if(contSemanas>=semanas){
+						if(contSemanas==semanas){
 							buttonSiguiente.setEnabled(false);
-							btnAnterior.setEnabled(true);
 						}
 						else buttonSiguiente.setEnabled(true);
+						if(contSemanas==1)
+							btnAnterior.setEnabled(false);
+						else
+							btnAnterior.setEnabled(true);
 				}
 			}
 		});
@@ -365,12 +378,25 @@ public class Consultar_dieta_asignada extends JPanel
 	
 	private void inicializar(Controlador c){
 		String nombre = comboBoxDietas.getSelectedItem()+"";
+		Object[][] data  = new Object[5][8];
 		dieta = c.getDietaPorNombre(nombre);
 		semanas = (((dieta.getFechaFinal().getTime()-dieta.getFechaInicial().getTime())/ MILLSECS_PER_DAY)+1)/7;
 		Plato[] pl = c.dietaSemanal(dieta.getUsuario().getId(), dieta.getFechaInicial());
 		if(pl.length!=0){
 				cont=0;
 				tabla_dieta.setRowHeight(75);
+				DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+				data[0][1]="Lunes";
+				data[0][2]="Martes";
+				data[0][3]="Miercoles";
+				data[0][4]="Jueves";
+				data[0][5]="Viernes";
+				data[0][6]="Sabado";
+				data[0][7]="Domingo";
+				data[1][0]="Desayuno";
+				data[2][0]="Comida";
+				data[3][0]="Merienda";
+				data[4][0]="Cena";
 				for(int i=0;i<7;i++){
 					for(int j=0;j<4;j++){
 						String nom_plato = pl[cont].getNombre();
@@ -380,12 +406,16 @@ public class Consultar_dieta_asignada extends JPanel
 							String s1 = nom_plato.substring(0, nom_plato.lastIndexOf(" "));
 							String s2 = nom_plato.substring(nom_plato.lastIndexOf(" "), nom_plato.length());
 							nom_plato = "<html><p>"+s1+"</p><p>"+s2+"</p></html>";
-							tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+							data[j+1][i+1]=nom_plato;
 						}else{
-							tabla_dieta.setValueAt(nom_plato,j+1 , i+1);
+							data[j+1][i+1]=nom_plato;
 						}
 					}
 				}
+//				tabla_dieta.repaint();
+				tabla_dieta.setModel(new DefaultTableModel(data,new String[] {
+						"", "Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado", "Domingo"
+					}));
 				lblPaginacion.setText(contSemanas+"/"+semanas);
 				btnAnterior.setEnabled(false);
 				if(semanas<=1) buttonSiguiente.setEnabled(false);
@@ -411,5 +441,49 @@ public class Consultar_dieta_asignada extends JPanel
 				en++;
 			}
 		}
+	}
+	
+	private File byteToFile(Plato p){
+		File file=null;
+		try {
+			file = new File("automaticDiet");
+			FileOutputStream fos = new FileOutputStream (file);
+			fos.write(p.getImagen());
+			fos.close();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch(java.lang.NullPointerException e3){
+			e3.printStackTrace();
+		
+		}catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return file;
+//		ImageIcon im=null;
+//		BufferedImage buffer;
+//		//int width=0,height=0;
+//		try {
+//			buffer = ImageIO.read(file);
+//			im = new ImageIcon(buffer);
+////			width=buffer.getWidth();
+////			height=buffer.getHeight();
+//			
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		return im;
+//		Image image=im.getImage();
+//		Image newImage;
+//		if(width>366 || height> 373){
+//			imagenPlato.setSize(3*width/4, 3*height/4);
+//			newImage = image.getScaledInstance(3*width/4, 3*height/4, java.awt.Image.SCALE_SMOOTH);
+//		}else{
+//			imagenPlato.setSize(width, height);
+//			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+//		}
+//		imagenPlato.setIcon(new ImageIcon(newImage));
 	}
 }

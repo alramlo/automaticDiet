@@ -16,20 +16,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+import modelo.Dieta;
 import modelo.Plato;
+import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
@@ -39,10 +38,11 @@ public class ElaboracionPlato extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -35301839624147280L;
-	private JComboBox<String> comboBox;
+	private JComboBox<String> comboBoxPlatos;
 	private JLabel imagenPlato;
 	private JTextArea textAreaElaboracion;
 	private static Controlador control;
+	private JComboBox<String> comboBoxDietas;
 	Plato platoVuelta;
 
 	/**
@@ -60,16 +60,18 @@ public class ElaboracionPlato extends JPanel {
 		}
 		
 		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
+		buttonPanelIngredientes.setBounds(510, 27, 209, 36);
 		buttonPanelIngredientes.setMinimumSize(new Dimension(123, 36));
 		buttonPanelIngredientes.setIcon(new ImageIcon(ElaboracionPlato.class.getResource("/iconos/ingredients-icon.png")));
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
 		buttonPanelIngredientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new Ingredientes(comboBox.getSelectedItem()+"").setVisible(true);
+				new Ingredientes(comboBoxPlatos.getSelectedItem()+"").setVisible(true);
 			}
 		});
 		
 		textAreaElaboracion = new JTextArea();
+		textAreaElaboracion.setBounds(389, 234, 330, 329);
 		textAreaElaboracion.setFont(new Font("Arial", Font.PLAIN, 18));
 		textAreaElaboracion.setAutoscrolls(false);
 		textAreaElaboracion.setBackground(UIManager.getColor("Button.background"));
@@ -80,23 +82,45 @@ public class ElaboracionPlato extends JPanel {
 		textAreaElaboracion.setText("  Descripci\u00F3n de la elaboraci\u00F3n de los platos");
 		
 		imagenPlato = new JLabel("");
+		imagenPlato.setBounds(34, 234, 325, 329);
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		
-		comboBox = new JComboBox<String>(control.todosPlatos());
+		
+		Usuario u = new Usuario();
+		u.setId(1);
+		String[] nomDietas = control.getDietas(u);
+		comboBoxDietas = new JComboBox<String>(nomDietas);
+		comboBoxDietas.setBounds(29, 136, 330, 36);
+		comboBoxDietas.setSelectedIndex(1);
+		
+		comboBoxDietas.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent evento) {
+				if ( evento.getStateChange() == ItemEvent.SELECTED )
+				{
+					Dieta dieta = control.getDietaPorNombre(comboBoxDietas.getSelectedItem()+"");
+					String[] nomPlatos = control.getPlatosDieta(dieta.getId());
+					for(int i=0;i<nomPlatos.length;i++)
+						comboBoxPlatos.addItem(nomPlatos[i]);
+				}
+			}
+		});
+		
+		comboBoxPlatos = new JComboBox<String>(/*control.todosPlatos()*/);
+		comboBoxPlatos.setBounds(389, 136, 330, 36);
 //		comboBox = new JComboBox<String>();
-		comboBox.setSelectedIndex(1);
-		comboBox.setBounds(414, 145, 330, 36);
+		comboBoxPlatos.setSelectedIndex(1);
+		comboBoxPlatos.setEnabled(false);
 		
 		estadoInicial();
 		
-		comboBox.addItemListener(new ItemListener() {
+		comboBoxPlatos.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evento) {
 				// determina si está seleccionada el estado correspondiente
 				if ( evento.getStateChange() == ItemEvent.SELECTED )
 				{
 				
 						try {
-							platoVuelta = control.consultarPlato(comboBox.getSelectedItem().toString());
+							platoVuelta = control.consultarPlato(comboBoxPlatos.getSelectedItem().toString());
 						if(platoVuelta!=null){
 							textAreaElaboracion.setText(platoVuelta.getElaboracion());
 							String[] vector = new String[1];
@@ -150,70 +174,41 @@ public class ElaboracionPlato extends JPanel {
 				
 			}
 		});
-		add(comboBox);
-		
-		JLabel lblNewLabel_2 = new JLabel("AutomaticDiet");
-		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 48));
-		
-		JLabel lblNewLabel_3 = new JLabel("\u00A1Cumple tus objetivos facilmente!");
-		lblNewLabel_3.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 20));
+		add(comboBoxPlatos);
 		
 		JLabel lblNewLabel = new JLabel("Receta elaborada por AutomaticDiet.\r\n Todos los derechos reservados.");
+		lblNewLabel.setBounds(416, 573, 0, 18);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(4)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(15)
-							.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
-							.addGap(31)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lblNewLabel, 0, 0, Short.MAX_VALUE)
-								.addComponent(textAreaElaboracion, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
-							.addGap(19))
-						.addComponent(lblNewLabel_3, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
-						.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
-					.addGap(4))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(99)
-					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(492, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(68)
-							.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-					.addGap(15)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 374, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addContainerGap(27, Short.MAX_VALUE))
-		);
-		setLayout(groupLayout);
+		
+		JLabel lblNewLabel_1 = new JLabel("RECETA:");
+		lblNewLabel_1.setBounds(389, 204, 73, 19);
+		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 16));
+		
+		JLabel lblPlatos = new JLabel("PLATOS:");
+		lblPlatos.setBounds(389, 93, 73, 19);
+		lblPlatos.setFont(new Font("Arial", Font.BOLD, 16));
+		
+		JLabel lblDietas = new JLabel("DIETAS:");
+		lblDietas.setBounds(29, 93, 73, 19);
+		lblDietas.setFont(new Font("Arial", Font.BOLD, 16));
+		setLayout(null);
+		add(comboBoxPlatos);
+		add(lblNewLabel_1);
+		add(lblNewLabel);
+		add(imagenPlato);
+		add(lblDietas);
+		add(comboBoxDietas);
+		add(textAreaElaboracion);
+		add(lblPlatos);
+		add(buttonPanelIngredientes);
 		
 	}
 	
 	private void estadoInicial(){
 		try {
-			platoVuelta = control.consultarPlato(comboBox.getItemAt(1).toString());
+			platoVuelta = control.consultarPlato(comboBoxPlatos.getItemAt(1).toString());
 		if(platoVuelta!=null){
 			textAreaElaboracion.setText(platoVuelta.getElaboracion());
 			String[] vector = new String[1];

@@ -137,6 +137,22 @@ public class PlatoDAO extends AbstractDAO {
 
 		}
 	}
+	
+	public List<Plato> getPlatosDieta(int id) {
+		try {
+			List<Plato> result=null;
+			Query q;
+				q = entityManager.createQuery("SELECT p "
+						+ "FROM Plato p, PlatoDieta pd "
+						+ "WHERE p.id=pd.plato.id AND "
+						+ "p.id=:ident");
+				q.setParameter("ident", id);
+				return (List<Plato>)q.getResultList();
+		} catch (Exception e) {
+			System.out.println("Error: "+e);
+		}
+		return null;
+	}
 
 	public void eliminarPlato(Plato platoVuelta) {
 		//Query q;
