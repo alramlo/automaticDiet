@@ -364,17 +364,17 @@ public class Consultar_dieta_asignada extends JPanel
 		inicializar(c);
 	}
 	
-	private long paginar(Date date, Usuario u){
-		long semanas=0;
-		try {
-			semanas = Controlador.dameControlador().getSemanasDieta(date,u);
-		} catch (DominioExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return semanas;
-	}
+//	private long paginar(Date date, Usuario u){
+//		long semanas=0;
+//		try {
+//			semanas = Controlador.dameControlador().getSemanasDieta(date,u);
+//		} catch (DominioExcepcion e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return semanas;
+//	}
 	
 	private void inicializar(Controlador c){
 		String nombre = comboBoxDietas.getSelectedItem()+"";

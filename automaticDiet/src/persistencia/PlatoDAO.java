@@ -142,10 +142,10 @@ public class PlatoDAO extends AbstractDAO {
 		try {
 			List<Plato> result=null;
 			Query q;
-				q = entityManager.createQuery("SELECT p "
+				q = entityManager.createQuery("SELECT DISTINCT p "
 						+ "FROM Plato p, PlatoDieta pd "
 						+ "WHERE p.id=pd.plato.id AND "
-						+ "p.id=:ident");
+						+ "pd.dieta.id=:ident");
 				q.setParameter("ident", id);
 				return (List<Plato>)q.getResultList();
 		} catch (Exception e) {

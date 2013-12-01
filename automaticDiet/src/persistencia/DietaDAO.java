@@ -39,7 +39,8 @@ public class DietaDAO extends AbstractDAO{
 			Query q;
 			q = entityManager.createQuery("SELECT d "
 					+ "FROM Dieta d "
-					+ "WHERE d.usuario.id=:ident ");
+					+ "WHERE d.usuario.id=:ident "
+					+ "ORDER BY d.fechaInicial DESC");
 			q.setParameter("ident", user.getId());;
 			return (List<Dieta>) q.getResultList();
 		

@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -43,6 +44,7 @@ public class ElaboracionPlato extends JPanel {
 	private JTextArea textAreaElaboracion;
 	private static Controlador control;
 	private JComboBox<String> comboBoxDietas;
+	private JButton buttonPanelIngredientes;
 	Plato platoVuelta;
 
 	/**
@@ -59,7 +61,7 @@ public class ElaboracionPlato extends JPanel {
 			e3.printStackTrace();
 		}
 		
-		JButton buttonPanelIngredientes = new JButton("Panel Ingredientes");
+		buttonPanelIngredientes = new JButton("Panel Ingredientes");
 		buttonPanelIngredientes.setBounds(520, 27, 209, 36);
 		buttonPanelIngredientes.setMinimumSize(new Dimension(123, 36));
 		buttonPanelIngredientes.setIcon(new ImageIcon(ElaboracionPlato.class.getResource("/iconos/ingredients-icon.png")));
@@ -91,7 +93,7 @@ public class ElaboracionPlato extends JPanel {
 		String[] nomDietas = control.getDietas(u);
 		comboBoxDietas = new JComboBox<String>(nomDietas);
 		comboBoxDietas.setBounds(29, 136, 330, 36);
-		comboBoxDietas.setSelectedIndex(1);
+		comboBoxDietas.setSelectedIndex(nomDietas.length-1);
 		
 		comboBoxDietas.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evento) {
@@ -99,8 +101,17 @@ public class ElaboracionPlato extends JPanel {
 				{
 					Dieta dieta = control.getDietaPorNombre(comboBoxDietas.getSelectedItem()+"");
 					String[] nomPlatos = control.getPlatosDieta(dieta.getId());
-					for(int i=0;i<nomPlatos.length;i++)
-						comboBoxPlatos.addItem(nomPlatos[i]);
+					if(nomPlatos.length!=0){
+						for(int i=0;i<nomPlatos.length;i++)
+							comboBoxPlatos.addItem(nomPlatos[i]);
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Esta dieta no contiene platos asociados", "Info", JOptionPane.INFORMATION_MESSAGE);
+						comboBoxPlatos.setEnabled(false);
+						imagenPlato.setVisible(false);
+						textAreaElaboracion.setVisible(false);
+						buttonPanelIngredientes.setVisible(false);
+					}
 				}
 			}
 		});
@@ -122,7 +133,11 @@ public class ElaboracionPlato extends JPanel {
 						try {
 							platoVuelta = control.consultarPlato(comboBoxPlatos.getSelectedItem().toString());
 						if(platoVuelta!=null){
+							textAreaElaboracion.setVisible(true);
+							imagenPlato.setVisible(true);
+							buttonPanelIngredientes.setVisible(true);
 							textAreaElaboracion.setText(platoVuelta.getElaboracion());
+							comboBoxPlatos.setEnabled(true);
 							String[] vector = new String[1];
 							vector[0]=((Plato)platoVuelta).getNombre();
 //							comboBox=new JComboBox<String>(vector);
@@ -157,14 +172,19 @@ public class ElaboracionPlato extends JPanel {
 							}
 			        		Image image=im.getImage();
 			        		Image newImage;
-			        		if(width>366 || height> 373){
-			        			imagenPlato.setSize(3*width/4, 3*height/4);
+			        		System.out.println("w  "+width);
+			        		System.out.println("h  "+height);
+			        		if(width>390 || height> 330){
+			        			imagenPlato.setSize(3*width/5, 3*height/5);
 			        			newImage = image.getScaledInstance(3*width/4, 3*height/4, java.awt.Image.SCALE_SMOOTH);
 			        		}else{
 			        			imagenPlato.setSize(width, height);
 			        			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 			        		}
 			        		imagenPlato.setIcon(new ImageIcon(newImage));
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Esta dieta no contiene platos asociados", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
 						} catch (DAOExcepcion e2) {
 							// TODO Auto-generated catch block
@@ -211,53 +231,62 @@ public class ElaboracionPlato extends JPanel {
 		try {
 			if(comboBoxDietas.getModel().getSize()>0){
 				dieta = control.getDietaPorNombre(comboBoxDietas.getSelectedItem()+"");
-				comboBoxPlatos.setEnabled(true);
+				comboBoxPlatos.setEnabled(true); 
 				String[] nomPlatos = control.getPlatosDieta(dieta.getId());
 				for(int i=0;i<nomPlatos.length;i++)
 					comboBoxPlatos.addItem(nomPlatos[i]);
-				
+				if(comboBoxPlatos.getModel().getSize()!=0){	
 					platoVuelta = control.consultarPlato(comboBoxPlatos.getItemAt(1).toString());
 					if(platoVuelta!=null){
-				textAreaElaboracion.setText(platoVuelta.getElaboracion());
-				String[] vector = new String[1];
-				vector[0]=((Plato)platoVuelta).getNombre();
-	//			comboBox=new JComboBox<String>(vector);
-				File file=null;
-				try {
-					file = new File("automaticDiet");
-					FileOutputStream fos = new FileOutputStream (file);
-					fos.write(((Plato) platoVuelta).getImagen());
-					fos.close();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+						textAreaElaboracion.setText(platoVuelta.getElaboracion());
+						String[] vector = new String[1];
+						vector[0]=((Plato)platoVuelta).getNombre();
+	//					comboBox=new JComboBox<String>(vector);
+						File file=null;
+						try {
+							file = new File("automaticDiet");
+							FileOutputStream fos = new FileOutputStream (file);
+							fos.write(((Plato) platoVuelta).getImagen());
+							fos.close();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						ImageIcon im=null;
+						BufferedImage buffer;
+						int width=0,height=0;
+					try {
+						buffer = ImageIO.read(file);
+						im = new ImageIcon(buffer);
+						width=buffer.getWidth();
+						height=buffer.getHeight();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    		Image image=im.getImage();
+		    		Image newImage;
+		    		if(width>320 || height> 230){
+		    			newImage = image.getScaledInstance(3*width/4, 3*height/4, java.awt.Image.SCALE_SMOOTH);
+		    			//imagenPlato.setBorder(null);
+		    		}else{
+		    			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+		    		}
+		    		imagenPlato.setIcon(new ImageIcon(newImage));
+					}
 				}
-				catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				else{
+					//NO HAY PLATOS
+					JOptionPane.showMessageDialog(null, "Esta dieta no contiene platos asociados", "Info", JOptionPane.INFORMATION_MESSAGE);
+					comboBoxPlatos.setEnabled(false);
+					imagenPlato.setVisible(false);
+					textAreaElaboracion.setVisible(false);
+					buttonPanelIngredientes.setVisible(false);
 				}
-				ImageIcon im=null;
-	    		BufferedImage buffer;
-	    		int width=0,height=0;
-				try {
-					buffer = ImageIO.read(file);
-					im = new ImageIcon(buffer);
-					width=buffer.getWidth();
-					height=buffer.getHeight();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	    		Image image=im.getImage();
-	    		Image newImage;
-	    		if(width>366 || height> 373){
-	    			newImage = image.getScaledInstance(3*width/4, 3*height/4, java.awt.Image.SCALE_SMOOTH);
-	    			//imagenPlato.setBorder(null);
-	    		}else{
-	    			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-	    		}
-	    		imagenPlato.setIcon(new ImageIcon(newImage));
-			}
 			}
 			} catch (DAOExcepcion e2) {
 				// TODO Auto-generated catch block
