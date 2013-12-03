@@ -29,8 +29,10 @@ public class Controlador {
 	private static Controlador control = null;
 	private static DAL dal;
 	private PlatoIngrediente pi;
+	private Usuario usuarioActual;
+	
 //	private Caracteristica caracteristica;
-//	private Usuario usuarioActual;
+
 
 
 
@@ -43,8 +45,8 @@ public class Controlador {
 			// Objeto para comunicarse con la capa de acceso a datos
 
 			dal = DAL.dameDAL();
+			usuarioActual = null;
 			pi=null;
-//			usuarioActual = null;
 
 		}catch (DAOExcepcion e){
 			throw new DominioExcepcion(e);
@@ -503,6 +505,32 @@ public class Controlador {
 
 	public Dieta getDietaPorNombre(String nombre) {
 		return dal.getDietaPorNombre(nombre);
+	}
+	
+	// Métodos para el login
+	public void logout() {
+		usuarioActual = null;
+	}	
+	public Usuario getUsuarioActual() {
+		return usuarioActual;
+	}
+	public void setUsuarioActual(Usuario us) {
+		this.usuarioActual = us;
+	}
+	public Usuario getUsuarioPorUsername(String u) throws DAOExcepcion{
+		return dal.getUsuarioPorUsername(u);
+	}
+	public boolean addUsuario(Usuario usuario)throws DAOExcepcion{
+		Usuario yaExiste = dal.getUsuarioPorUsername(usuario.getUsername());
+		if(yaExiste==null)
+		{
+			return false;
+		}
+		else
+		{
+			dal.addUsuario(usuario);
+			return true;
+		}
 	}
 }
 

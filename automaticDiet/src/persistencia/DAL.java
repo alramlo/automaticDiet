@@ -1,6 +1,5 @@
 package persistencia;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -164,6 +163,14 @@ public class DAL {
 
 	public List<Usuario> getUsuarios() {
 		return usuarioDAO.getUsuarios();
+	}
+	
+	public Usuario getUsuarioPorUsername(String username){
+		return usuarioDAO.getUsuarioPorUsername(username);
+	}
+	
+	public void addUsuario(Usuario usuario){
+		usuarioDAO.addUsuario(usuario);
 	}
 
 	public boolean getPlatosEnDieta(int id) {
