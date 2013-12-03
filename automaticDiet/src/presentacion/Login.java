@@ -29,6 +29,7 @@ import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
+import java.awt.Color;
 
 public class Login extends JDialog
 {
@@ -82,56 +83,62 @@ public class Login extends JDialog
 			setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/iconos/logo_icon.png")));
 //			Icon hospital = new ImageIcon(getClass().getResource( "/recursos/hospital-red-2-icon.png" ) );
 			setTitle("AutomaticDiet - Login");
-			setBounds(100,100,395,300);
+			setBounds(100,100,448,325);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5,5,5,5));
 			getContentPane().add(contentPanel,BorderLayout.CENTER);
 			contentPanel.setLayout(null);
 			{
 				JLabel lblUser = new JLabel("Nombre de usuario:");
-				lblUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				lblUser.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				lblUser.setVerticalAlignment(SwingConstants.BOTTOM);
 				lblUser.setHorizontalAlignment(SwingConstants.LEFT);
-				lblUser.setBounds(28, 32, 151, 28);
+				lblUser.setBounds(28, 32, 193, 28);
 				contentPanel.add(lblUser);
 			}
 			{
 				tfUser = new JTextField();
 				tfUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				tfUser.setBounds(28, 61, 151, 34);
+				tfUser.setBounds(28, 61, 193, 34);
 				contentPanel.add(tfUser);
 				tfUser.setColumns(10);
 
 			}
 			{
 				JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
-				lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				lblContrasea.setVerticalAlignment(SwingConstants.BOTTOM);
 				lblContrasea.setHorizontalAlignment(SwingConstants.LEFT);
-				lblContrasea.setBounds(28, 100, 151, 28);
+				lblContrasea.setBounds(28, 106, 193, 28);
 				contentPanel.add(lblContrasea);
 			}
 			{
 				tfPass = new JPasswordField();
 				tfPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				tfPass.setBounds(28, 129, 151, 35);
+				tfPass.setBounds(28, 135, 193, 35);
 				contentPanel.add(tfPass);
 				tfPass.setColumns(10);
 
 			}
 			
-			buttonHospital = new JButton("");
+			buttonHospital = new JButton("Registrarse");
+			buttonHospital.setBackground(new Color(0, 139, 139));
+			buttonHospital.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			buttonHospital.setIcon(null);
+			buttonHospital.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
 			buttonHospital.addMouseListener(new BtnCargarBbddMouseListener());
-			buttonHospital.setIcon(new ImageIcon( Login.class.getResource( "/recursos/hospital-red-2-icon.png" ) ));
-			buttonHospital.setBounds(214, 36, 127, 128);
+			buttonHospital.setBounds(247, 221, 150, 34);
 			contentPanel.add(buttonHospital);
 			{
-				JButton okButton=new JButton("Entrar");
-				okButton.setBounds(126, 209, 127, 42);
+				JButton okButton=new JButton("");
+				okButton.setBounds(247, 32, 150, 150);
 				contentPanel.add(okButton);
 				okButton.setMinimumSize(new Dimension(80, 28));
 				okButton.setMaximumSize(new Dimension(100, 30));
-				okButton.setIcon(new ImageIcon(Login.class.getResource("/recursos/eliminar-icono-4912-32.png")));
+				okButton.setIcon(new ImageIcon(Login.class.getResource("/iconos/logo_icon.png")));
 				okButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				okButton.setHorizontalTextPosition(SwingConstants.RIGHT);
 				okButton.setPreferredSize(new Dimension(80, 30));
