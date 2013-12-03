@@ -33,6 +33,8 @@ import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ElaboracionPlato extends JPanel {
 	/**
@@ -62,7 +64,6 @@ public class ElaboracionPlato extends JPanel {
 		}
 		
 		buttonPanelIngredientes = new JButton("Panel Ingredientes");
-		buttonPanelIngredientes.setBounds(520, 27, 209, 36);
 		buttonPanelIngredientes.setMinimumSize(new Dimension(123, 36));
 		buttonPanelIngredientes.setIcon(new ImageIcon(ElaboracionPlato.class.getResource("/iconos/ingredients-icon.png")));
 		buttonPanelIngredientes.setFont(new Font("Arial", Font.BOLD, 16));
@@ -73,7 +74,6 @@ public class ElaboracionPlato extends JPanel {
 		});
 		
 		textAreaElaboracion = new JTextArea();
-		textAreaElaboracion.setBounds(399, 234, 330, 329);
 		textAreaElaboracion.setFont(new Font("Arial", Font.PLAIN, 18));
 		textAreaElaboracion.setAutoscrolls(false);
 		textAreaElaboracion.setBackground(UIManager.getColor("Button.background"));
@@ -84,7 +84,6 @@ public class ElaboracionPlato extends JPanel {
 		textAreaElaboracion.setText("  Descripci\u00F3n de la elaboraci\u00F3n de los platos");
 		
 		imagenPlato = new JLabel("");
-		imagenPlato.setBounds(34, 234, 325, 329);
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		
 		
@@ -92,7 +91,6 @@ public class ElaboracionPlato extends JPanel {
 		u.setId(1);
 		String[] nomDietas = control.getDietas(u);
 		comboBoxDietas = new JComboBox<String>(nomDietas);
-		comboBoxDietas.setBounds(29, 136, 330, 36);
 		comboBoxDietas.setSelectedIndex(nomDietas.length-1);
 		
 		comboBoxDietas.addItemListener(new ItemListener() {
@@ -102,6 +100,10 @@ public class ElaboracionPlato extends JPanel {
 					Dieta dieta = control.getDietaPorNombre(comboBoxDietas.getSelectedItem()+"");
 					String[] nomPlatos = control.getPlatosDieta(dieta.getId());
 					if(nomPlatos.length!=0){
+						comboBoxPlatos.setEnabled(true);
+						imagenPlato.setVisible(true);
+						textAreaElaboracion.setVisible(true);
+						buttonPanelIngredientes.setVisible(true);
 						for(int i=0;i<nomPlatos.length;i++)
 							comboBoxPlatos.addItem(nomPlatos[i]);
 					}
@@ -117,7 +119,6 @@ public class ElaboracionPlato extends JPanel {
 		});
 		
 		comboBoxPlatos = new JComboBox<String>(/*control.todosPlatos()*/);
-		comboBoxPlatos.setBounds(399, 136, 330, 36);
 //		comboBox = new JComboBox<String>();
 		//comboBoxPlatos.setSelectedIndex(1);
 		comboBoxPlatos.setEnabled(false);
@@ -194,35 +195,73 @@ public class ElaboracionPlato extends JPanel {
 				
 			}
 		});
-		add(comboBoxPlatos);
 		
 		JLabel lblNewLabel = new JLabel("Receta elaborada por AutomaticDiet.\r\n Todos los derechos reservados.");
-		lblNewLabel.setBounds(416, 573, 0, 18);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		JLabel lblNewLabel_1 = new JLabel("RECETA:");
-		lblNewLabel_1.setBounds(399, 204, 73, 19);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JLabel lblPlatos = new JLabel("PLATOS:");
-		lblPlatos.setBounds(399, 93, 73, 19);
 		lblPlatos.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JLabel lblDietas = new JLabel("DIETAS:");
-		lblDietas.setBounds(29, 93, 73, 19);
 		lblDietas.setFont(new Font("Arial", Font.BOLD, 16));
-		setLayout(null);
-		add(comboBoxPlatos);
-		add(lblNewLabel_1);
-		add(lblNewLabel);
-		add(imagenPlato);
-		add(lblDietas);
-		add(comboBoxDietas);
-		add(textAreaElaboracion);
-		add(lblPlatos);
-		add(buttonPanelIngredientes);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(34)
+					.addComponent(lblDietas, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+					.addGap(292)
+					.addComponent(lblPlatos, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(399)
+					.addComponent(lblNewLabel_1))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(34)
+					.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 209, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(416)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addGap(34)
+						.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE)
+						.addGap(40)
+						.addComponent(textAreaElaboracion))
+					.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+						.addGap(29)
+						.addComponent(comboBoxDietas, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)
+						.addGap(40)
+						.addComponent(comboBoxPlatos, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(36)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblDietas)
+						.addComponent(lblPlatos))
+					.addGap(11)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(comboBoxDietas, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBoxPlatos, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addComponent(lblNewLabel_1)
+					.addGap(14)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(imagenPlato, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)
+							.addGap(39)
+							.addComponent(buttonPanelIngredientes, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textAreaElaboracion, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE))
+					.addGap(23)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
+		);
+		setLayout(groupLayout);
 		
 	}
 	

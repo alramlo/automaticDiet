@@ -205,12 +205,12 @@ public class AutomaticDiet
 
 		
 		final JTabbedPane tabsMenuUsuario = new JTabbedPane(JTabbedPane.LEFT);
+		tabsMenuUsuario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabsMenuUsuario.setBounds(0, 44, 190, 208);
 		tabsMenuUsuario.setVisible(false);
 		panel_izquierda.add(tabsMenuUsuario);
 		tabsMenuUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
 		tabsMenuUsuario.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		tabsMenuUsuario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabsMenuUsuario.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		
@@ -241,53 +241,14 @@ public class AutomaticDiet
 				{
 					tabsMenuAdministrador.setVisible(false);
 					tabsMenuUsuario.setVisible(true);
-					_limpiarMenuCentral();
+					//_limpiarMenuCentral();
+					 cambiaPanel(new Indicadores_personales());
 				}
 			}
 		});
 		comboBox.setSelectedIndex(-1);
 		comboBox.setBounds(0, 0, 190, 26);
 		panel_izquierda.add(comboBox);
-		
-		
-		
-		JPanel menu_usuario = new JPanel();
-		menu_usuario.setOpaque(false);
-		menu_usuario.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_usuario.setAlignmentY(Component.TOP_ALIGNMENT);
-		menu_usuario.setAlignmentX(Component.LEFT_ALIGNMENT);
-		tabsMenuUsuario.addTab("Usuario", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
-
-		JButton menu_indicadores = new JButton("<html><p>Indicadores</p><p>personales</p></html>");
-		menu_indicadores.setSelected(true);
-		menu_indicadores.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Indicadores personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				cambiaPanel(new Indicadores_personales());
-			}
-		});
-		menu_indicadores.setOpaque(false);
-		menu_indicadores.setMargin(new Insets(2, 2, 2, 2));
-		menu_indicadores.setHorizontalTextPosition(SwingConstants.CENTER);
-		menu_indicadores.setFont(new Font("Arial", Font.PLAIN, 14));
-		menu_indicadores.setBorderPainted(false);
-		menu_indicadores.setBorder(null);
-		GroupLayout gl_menu_usuario = new GroupLayout(menu_usuario);
-		gl_menu_usuario.setHorizontalGroup(
-			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_menu_usuario.createSequentialGroup()
-					.addGap(1)
-					.addComponent(menu_indicadores, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_menu_usuario.setVerticalGroup(
-			gl_menu_usuario.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_menu_usuario.createSequentialGroup()
-					.addGap(5)
-					.addComponent(menu_indicadores, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
-		);
-		menu_usuario.setLayout(gl_menu_usuario);
 		
 		JPanel menu_admin = new JPanel();
 		menu_admin.setOpaque(false);
@@ -354,87 +315,75 @@ public class AutomaticDiet
 					.addComponent(menu_gestionPlatos, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 		);
 		menu_admin.setLayout(gl_menu_admin);
-			
-	
-		JPanel menu_dietas = new JPanel();
-		menu_dietas.setOpaque(false);
-		menu_dietas.setFont(new Font("Arial", Font.PLAIN, 14));
-		tabsMenuUsuario.addTab("Dietas", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_dietas, null);		
-		
-		JButton menu_dieta_asignada = new JButton("<html><p>Dieta</p><p>asignada</p></html>");
-		menu_dieta_asignada.setSelected(true);
-		menu_dieta_asignada.setOpaque(false);
-		menu_dieta_asignada.setBorderPainted(false);
-		menu_dieta_asignada.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Dieta Asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				cambiaPanel(new Consultar_dieta_asignada(control));
-			}
-		}
-		);
-		menu_dieta_asignada.setBorder(null);
-		menu_dieta_asignada.setHorizontalTextPosition(SwingConstants.CENTER);
-		menu_dieta_asignada.setMargin(new Insets(2, 2, 2, 2));
-		menu_dieta_asignada.setFont(new Font("Arial", Font.PLAIN, 14));
-		GroupLayout gl_menu_dietas = new GroupLayout(menu_dietas);
-		gl_menu_dietas.setHorizontalGroup(
-			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_menu_dietas.createSequentialGroup()
-					.addGap(1)
-					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_menu_dietas.setVerticalGroup(
-			gl_menu_dietas.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_menu_dietas.createSequentialGroup()
-					.addGap(5)
-					.addComponent(menu_dieta_asignada, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
-		);
-		menu_dietas.setLayout(gl_menu_dietas);
 		
 		
-//		JPanel menu_gestionPlatos = new JPanel();
-//		menu_gestionPlatos.setOpaque(false);
-//		menu_gestionPlatos.setFont(new Font("Arial", Font.PLAIN, 14));
-//		tabsMenuAdministrador.addTab("Gestión Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/dietas.png")), menu_gestionPlatos, null);
 		
+		JPanel menu_usuario = new JPanel();
+		menu_usuario.setOpaque(false);
+		menu_usuario.setFont(new Font("Arial", Font.PLAIN, 14));
+		menu_usuario.setAlignmentY(Component.TOP_ALIGNMENT);
+		menu_usuario.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tabsMenuUsuario.addTab("Mis dietas", new ImageIcon(AutomaticDiet.class.getResource("/iconos/usuario.png")), menu_usuario, null);
 		
-		JPanel menu_platos = new JPanel();
-		menu_platos.setOpaque(false);
-		menu_platos.setFont(new Font("Arial", Font.PLAIN, 14));
-		tabsMenuUsuario.addTab("Platos", new ImageIcon(AutomaticDiet.class.getResource("/iconos/platos.png")), menu_platos, null);
-		
-		JButton menu_elaboracion = new JButton("Elaboración");
-		menu_elaboracion.setSelected(true);
-		menu_elaboracion.setOpaque(false);
-		menu_elaboracion.setBorderPainted(false);
-		menu_elaboracion.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Elaboracion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				cambiaPanel(new ElaboracionPlato());
-			}
-		}
-		);
-		menu_elaboracion.setBorder(null);
-		menu_elaboracion.setHorizontalTextPosition(SwingConstants.CENTER);
-		menu_elaboracion.setFont(new Font("Arial", Font.PLAIN, 14));
-		GroupLayout gl_menu_platos = new GroupLayout(menu_platos);
-		gl_menu_platos.setHorizontalGroup(
-			gl_menu_platos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_menu_platos.createSequentialGroup()
-					.addGap(1)
-					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_menu_platos.setVerticalGroup(
-			gl_menu_platos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_menu_platos.createSequentialGroup()
-					.addGap(5)
-					.addComponent(menu_elaboracion, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
-		);
-		menu_platos.setLayout(gl_menu_platos);
+				JButton menu_indicadores = new JButton("<html><p>Indicadores</p><p>personales</p></html>");
+				menu_indicadores.setBounds(0, 5, 73, 44);
+				menu_indicadores.setSelected(true);
+				menu_indicadores.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{
+						panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Indicadores personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						cambiaPanel(new Indicadores_personales());
+					}
+				});
+				menu_indicadores.setOpaque(false);
+				menu_indicadores.setMargin(new Insets(2, 2, 2, 2));
+				menu_indicadores.setHorizontalTextPosition(SwingConstants.CENTER);
+				menu_indicadores.setFont(new Font("Arial", Font.PLAIN, 14));
+				menu_indicadores.setBorderPainted(false);
+				menu_indicadores.setBorder(null);
+				
+				JButton menu_dieta_asignada2 = new JButton("<html>Consultar<br>            dieta</html>");
+				menu_dieta_asignada2.setBounds(0, 60, 73, 44);
+				menu_dieta_asignada2.setSelected(true);
+				menu_dieta_asignada2.setOpaque(false);
+				menu_dieta_asignada2.setMargin(new Insets(2, 2, 2, 2));
+				menu_dieta_asignada2.setHorizontalTextPosition(SwingConstants.CENTER);
+				menu_dieta_asignada2.setFont(new Font("Arial", Font.PLAIN, 14));
+				menu_dieta_asignada2.setBorderPainted(false);
+				menu_dieta_asignada2.setBorder(null);
+				
+				JButton menu_elaboracion2 = new JButton("Platos");
+				menu_elaboracion2.setBounds(0, 115, 73, 44);
+				menu_elaboracion2.setSelected(true);
+				menu_elaboracion2.setOpaque(false);
+				menu_elaboracion2.setMargin(new Insets(2, 2, 2, 2));
+				menu_elaboracion2.setHorizontalTextPosition(SwingConstants.CENTER);
+				menu_elaboracion2.setFont(new Font("Arial", Font.PLAIN, 14));
+				menu_elaboracion2.setBorderPainted(false);
+				menu_elaboracion2.setBorder(null);
+				menu_usuario.setLayout(null);
+				menu_usuario.add(menu_indicadores);
+				menu_usuario.add(menu_dieta_asignada2);
+				menu_usuario.add(menu_elaboracion2);
+				menu_dieta_asignada2.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{
+						panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Dieta Asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						cambiaPanel(new Consultar_dieta_asignada(control));
+					}
+				}
+				);
+				menu_elaboracion2.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{
+						panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Elaboracion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						cambiaPanel(new ElaboracionPlato());
+					}
+				}
+				);
 		
 		
 		JPanel menu_foro = new JPanel();
@@ -512,15 +461,15 @@ public class AutomaticDiet
 		        switch(tabsMenuUsuario.getSelectedIndex()){
 		        case 0://usuario
 		        	break;
-		        case 1://dietas
-		        	panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Dieta Asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-					cambiaPanel(new Consultar_dieta_asignada(control));
-		        	break;
-		        case 2://platos
-		        	panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Elaboracion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-					cambiaPanel(new ElaboracionPlato());
-		        	break;
-		        case 3://foro
+//		        case 1://dietas
+//		        	panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Dieta Asignada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+//					cambiaPanel(new Consultar_dieta_asignada(control));
+//		        	break;
+//		        case 2://platos
+//		        	panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Elaboracion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+//					cambiaPanel(new ElaboracionPlato());
+//		        	break;
+		        case 1://foro
 		        	ForoBasico fb = new ForoBasico();
 					fb.cargaForos();
 					fb.cargaAnuncios();
