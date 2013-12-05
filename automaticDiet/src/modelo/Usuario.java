@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -55,6 +56,10 @@ public class Usuario implements Serializable {
 	
 	@Column(name="PASSWORD")
 	private String password;
+	
+	@Lob
+	@Column(name="IMAGEN")
+	private byte[] imagen;
 
 	public Usuario() {
 	}
@@ -145,6 +150,14 @@ public class Usuario implements Serializable {
 	
 	public String getPassword(){
 		return this.password;
+	}
+	
+	public void setImagen(byte[] img){
+		this.imagen = img;
+	}
+	
+	public byte[] getImagen(){
+		return this.imagen;
 	}
 
 }
