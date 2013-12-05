@@ -1,24 +1,21 @@
 package presentacion;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,8 +36,6 @@ import modelo.Usuario;
 import servicio.Controlador;
 
 import com.toedter.calendar.JDateChooser;
-
-import excepciones.DominioExcepcion;
 
 public class Consultar_dieta_asignada extends JPanel
 {
@@ -216,6 +211,7 @@ public class Consultar_dieta_asignada extends JPanel
 		buttonSiguiente = new JButton("");
 		buttonSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				Calendar fecha = new GregorianCalendar();
 				fecha.setTime(dieta.getFechaInicial());
 				fecha.add(fecha.DATE, (7*contSemanas-1));
@@ -266,6 +262,7 @@ public class Consultar_dieta_asignada extends JPanel
 		comboBoxDietas.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evento) {
 				inicializar(c);
+				tabla_dieta.setDefaultRenderer (Object.class, new MiRender());
 			}
 		});
 		
@@ -362,6 +359,7 @@ public class Consultar_dieta_asignada extends JPanel
 		);
 		setLayout(groupLayout);
 		inicializar(c);
+		tabla_dieta.setDefaultRenderer (Object.class, new MiRender());
 	}
 	
 //	private long paginar(Date date, Usuario u){
@@ -443,6 +441,7 @@ public class Consultar_dieta_asignada extends JPanel
 		}
 	}
 	
+	
 	private File byteToFile(Plato p){
 		File file=null;
 		try {
@@ -483,7 +482,32 @@ public class Consultar_dieta_asignada extends JPanel
 //		}else{
 //			imagenPlato.setSize(width, height);
 //			newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-//		}
+//		} 
 //		imagenPlato.setIcon(new ImageIcon(newImage));
 	}
+}
+
+ class MiRender extends DefaultTableCellRenderer
+{
+   public Component getTableCellRendererComponent(JTable table,
+      Object value,
+      boolean isSelected,
+      boolean hasFocus,
+      int row,
+      int column)
+   {
+      super.getTableCellRendererComponent (table, value, isSelected, hasFocus, row, column);
+      this.setOpaque(true);
+      this.setFont(new Font("Arial Black", Font.PLAIN, 12));
+      this.setHorizontalAlignment(SwingConstants.CENTER);
+         if(row==0 || column==0 ){
+        	 this.setBackground(Color.LIGHT_GRAY);
+         }     
+         else{
+        	 
+        	 this.setBackground(Color.WHITE);
+         }
+        this.setBorder(new LineBorder(Color.BLACK));
+      return this;
+   }
 }
