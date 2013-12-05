@@ -517,12 +517,12 @@ public class Controlador {
 	public void setUsuarioActual(Usuario us) {
 		this.usuarioActual = us;
 	}
-	public Usuario getUsuarioPorUsername(String u) throws DAOExcepcion{
+	public List<Usuario> getUsuarioPorUsername(String u) throws DAOExcepcion{
 		return dal.getUsuarioPorUsername(u);
 	}
 	public boolean addUsuario(Usuario usuario)throws DAOExcepcion{
-		Usuario yaExiste = dal.getUsuarioPorUsername(usuario.getUsername());
-		if(yaExiste==null)
+		List<Usuario> yaExiste = dal.getUsuarioPorUsername(usuario.getUsername());
+		if(yaExiste.size()>0)
 		{
 			return false;
 		}

@@ -146,13 +146,13 @@ public class UsuarioDAO extends AbstractDAO {
 		}
 	}
 
-	public Usuario getUsuarioPorUsername(String uName) {
+	public List<Usuario> getUsuarioPorUsername(String uName) {
 		try {
 			Query q;
 			q = entityManager.createQuery("SELECT u " + "FROM Usuario u "
 					+ "WHERE u.username=:username");
 			q.setParameter("username", uName);
-			return (Usuario) q.getSingleResult();
+			return (List<Usuario>) q.getResultList();
 		} catch (Exception e) {
 			System.out.println("Error:" + e);
 			return null;

@@ -165,7 +165,7 @@ public class DAL {
 		return usuarioDAO.getUsuarios();
 	}
 	
-	public Usuario getUsuarioPorUsername(String username){
+	public List<Usuario> getUsuarioPorUsername(String username){
 		return usuarioDAO.getUsuarioPorUsername(username);
 	}
 	

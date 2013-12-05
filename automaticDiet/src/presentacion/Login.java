@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
 import excepciones.DominioExcepcion;
+
 import java.awt.Color;
 
 public class Login extends JDialog
@@ -42,6 +44,8 @@ public class Login extends JDialog
 	private JTextField tfUser;
 	private JPasswordField tfPass;
 	private JButton buttonHospital;
+	
+	private List<Usuario> listaUsuarios;
 
 
 	/**
@@ -125,10 +129,6 @@ public class Login extends JDialog
 			buttonHospital.setBackground(new Color(0, 139, 139));
 			buttonHospital.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			buttonHospital.setIcon(null);
-			buttonHospital.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-				}
-			});
 			buttonHospital.addMouseListener(new BtnCargarBbddMouseListener());
 			buttonHospital.setBounds(247, 221, 150, 34);
 			contentPanel.add(buttonHospital);
@@ -155,8 +155,9 @@ public class Login extends JDialog
 							tfPass.setText("");
 							tfUser.setText("");
 							
-							try {
-								us=control.getUsuarioPorUsername(user);
+							try {								
+								listaUsuarios=control.getUsuarioPorUsername(user);
+								us=listaUsuarios.get(0);
 							} catch (DAOExcepcion e) { e.printStackTrace();	}
 							
 							if(us==null){
@@ -230,10 +231,12 @@ public class Login extends JDialog
 			u1.setRol("Usuario");
 			u1.setUsername("psm");
 			
-			c.addUsuario(u1);
-
+			if(c.addUsuario(u1))
+				JOptionPane.showMessageDialog( null, "Se ha añadido el usuario a la BBDD", "Insertar usurario", JOptionPane.INFORMATION_MESSAGE );
+			else
+				JOptionPane.showMessageDialog( null, "No se ha podido añadir el usuario", "Inicialización de la BBDD", JOptionPane.INFORMATION_MESSAGE );
 			
-			JOptionPane.showMessageDialog( null, "La base de datos se ha inicializado correctamente", "Inicialización de la BBDD", JOptionPane.INFORMATION_MESSAGE );
+			
 		}catch (DAOExcepcion e){
 			
 //			System.out.print("Dominio Excepcion: "+e);
