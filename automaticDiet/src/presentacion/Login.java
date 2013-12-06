@@ -151,68 +151,85 @@ public class Login extends JDialog
 							tfPass.setText("");
 							tfUser.setText("");
 							
-							try {								
-								listaUsuarios=control.getUsuarioPorUsername(user);
-								us=listaUsuarios.get(0);
-							} catch (DAOExcepcion e) { e.printStackTrace();	}
-							
-							if(us==null){
-								JOptionPane.showMessageDialog(null, String.format("ERROR: USUARIO INCORRECTO", JOptionPane.ERROR_MESSAGE));
-							}
-							else if(us.getPassword().equals(pass))
+							try {	
+									if(user.equals(""))
 									{
-											control.setUsuarioActual(us);
-											
-											JOptionPane.showMessageDialog(null, String.format("LOGIN CORRECTO", JOptionPane.INFORMATION_MESSAGE));
-											
-											if(control.getUsuarioActual().getRol().equals("Usuario"))
-											{							
-												AutomaticDiet ventanaUsuario = new AutomaticDiet();
-												ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
-												ventanaUsuario.getAutomatic_diet().setVisible(true);
-												
-												try {
-													finalize();
-													dispose();
-												} catch (Throwable e) {
-													e.printStackTrace();
-												}
-											}
-											else if(control.getUsuarioActual().getRol().equals("Administrador"))
+										JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca un nombre de usuario", JOptionPane.ERROR_MESSAGE));
+									}
+									else if(pass.equals(""))
+										{
+											JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca una contraseña", JOptionPane.ERROR_MESSAGE));
+										}
+										else
 											{
-												AutomaticDiet ventanaUsuario = new AutomaticDiet();
-												ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
-												ventanaUsuario.getAutomatic_diet().setVisible(true);
-												try {
-													finalize();
-													dispose();
-												} catch (Throwable e) {
-													e.printStackTrace();
+												listaUsuarios=control.getUsuarioPorUsername(user);
+												if(listaUsuarios.size()>=1)
+												{
+													us=listaUsuarios.get(0);
 												}
 
-											}
-											else if(control.getUsuarioActual().getRol().equals("Colaborador"))									
-											{
-												AutomaticDiet ventanaUsuario = new AutomaticDiet();
-												ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
-												ventanaUsuario.getAutomatic_diet().setVisible(true);
-												try {
-													finalize();
-													dispose();
-												} catch (Throwable e) {
-													e.printStackTrace();
+												if(us==null){
+													JOptionPane.showMessageDialog(null, String.format("ERROR: USUARIO INCORRECTO", JOptionPane.ERROR_MESSAGE));
 												}
-											}
-											else
-											{
-												System.out.println("En Login");
-												JOptionPane.showMessageDialog(null, String.format("ERROR: ROL DEL USUARIO DESCONOCIDO", JOptionPane.ERROR_MESSAGE));
-											}
-									}
-								else
-								{
-									JOptionPane.showMessageDialog(null, String.format("ERROR: CONTRASEÑA INCORRECTA", JOptionPane.ERROR_MESSAGE));
-								}
+												else if(us.getPassword().equals(pass))
+														{
+																control.setUsuarioActual(us);
+																
+																JOptionPane.showMessageDialog(null, String.format("LOGIN CORRECTO", JOptionPane.INFORMATION_MESSAGE));
+																
+																if(control.getUsuarioActual().getRol().equals("Usuario"))
+																{							
+																	AutomaticDiet ventanaUsuario = new AutomaticDiet();
+																	ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+																	ventanaUsuario.getAutomatic_diet().setVisible(true);
+																	
+																	try {
+																		finalize();
+																		dispose();
+																	} catch (Throwable e) {
+																		e.printStackTrace();
+																	}
+																}
+																else if(control.getUsuarioActual().getRol().equals("Administrador"))
+																{
+																	AutomaticDiet ventanaUsuario = new AutomaticDiet();
+																	ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+																	ventanaUsuario.getAutomatic_diet().setVisible(true);
+																	try {
+																		finalize();
+																		dispose();
+																	} catch (Throwable e) {
+																		e.printStackTrace();
+																	}
+
+																}
+																else if(control.getUsuarioActual().getRol().equals("Colaborador"))									
+																{
+																	AutomaticDiet ventanaUsuario = new AutomaticDiet();
+																	ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+																	ventanaUsuario.getAutomatic_diet().setVisible(true);
+																	try {
+																		finalize();
+																		dispose();
+																	} catch (Throwable e) {
+																		e.printStackTrace();
+																	}
+																}
+																else
+																{
+																	System.out.println("En Login");
+																	JOptionPane.showMessageDialog(null, String.format("ERROR: ROL DEL USUARIO DESCONOCIDO", JOptionPane.ERROR_MESSAGE));
+																}
+														}
+													else
+													{
+														JOptionPane.showMessageDialog(null, String.format("ERROR: CONTRASEÑA INCORRECTA", JOptionPane.ERROR_MESSAGE));
+													}
+											}							
+
+							} catch (DAOExcepcion e) { e.printStackTrace();	}
+							
+
 				}});
 			}
 			
