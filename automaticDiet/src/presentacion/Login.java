@@ -1,6 +1,7 @@
 package presentacion;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -9,10 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,9 +28,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DAOExcepcion;
-import excepciones.DominioExcepcion;
-
-import java.awt.Color;
 
 public class Login extends JDialog
 {
@@ -170,23 +166,47 @@ public class Login extends JDialog
 											JOptionPane.showMessageDialog(null, String.format("LOGIN CORRECTO", JOptionPane.INFORMATION_MESSAGE));
 											
 											if(control.getUsuarioActual().getRol().equals("Usuario"))
-											{
+											{							
+												AutomaticDiet ventanaUsuario = new AutomaticDiet();
+												ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+												ventanaUsuario.getAutomatic_diet().setVisible(true);
 												
-
+												try {
+													finalize();
+													dispose();
+												} catch (Throwable e) {
+													e.printStackTrace();
+												}
 											}
 											else if(control.getUsuarioActual().getRol().equals("Administrador"))
 											{
-												
+												AutomaticDiet ventanaUsuario = new AutomaticDiet();
+												ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+												ventanaUsuario.getAutomatic_diet().setVisible(true);
+												try {
+													finalize();
+													dispose();
+												} catch (Throwable e) {
+													e.printStackTrace();
+												}
 
 											}
 											else if(control.getUsuarioActual().getRol().equals("Colaborador"))									
 											{
-//												AppJefe ventanaJefe = new AppJefe(control,  getContentPane());
-//												ventanaJefe.setVisible(true);
+												AutomaticDiet ventanaUsuario = new AutomaticDiet();
+												ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+												ventanaUsuario.getAutomatic_diet().setVisible(true);
+												try {
+													finalize();
+													dispose();
+												} catch (Throwable e) {
+													e.printStackTrace();
+												}
 											}
 											else
 											{
-												// Dato incorrecto en el atributo Rol del usuario
+												System.out.println("En Login");
+												JOptionPane.showMessageDialog(null, String.format("ERROR: ROL DEL USUARIO DESCONOCIDO", JOptionPane.ERROR_MESSAGE));
 											}
 									}
 								else
@@ -207,46 +227,54 @@ public class Login extends JDialog
 		}
 	}
 	
-	public static void crearDatos(Controlador c){
-		try{
-
-			Calendar calendario = Calendar.getInstance();
-			String dia = Integer.toString(calendario.get(Calendar.DATE));
-			String mes = Integer.toString(calendario.get(Calendar.MONTH+1));
-			String anyo = Integer.toString(calendario.get(Calendar.YEAR));
-			String hora = Integer.toString(calendario.get(Calendar.HOUR));
-			String min = Integer.toString(calendario.get(Calendar.MINUTE));
-			String seg = Integer.toString(calendario.get(Calendar.SECOND));
-			String fecha = dia+"/"+mes+"/"+anyo+" "+hora+":"+min+":"+seg;
-
-			Usuario u1 = new Usuario();
-			u1.setApellidos("Sancho Monrabal");
-			u1.setCorreo("josanmon@inf.upv.es");
-			u1.setDireccion("Camino de Vera S/N");
-			u1.setDni("22334569E");
-			u1.setNombre("Pepe");
-			u1.setPais("España");
-			u1.setPassword("psm");
-			u1.setPoblacion("Valencia");
-			u1.setRol("Usuario");
-			u1.setUsername("psm");
-			
-			if(c.addUsuario(u1))
-				JOptionPane.showMessageDialog( null, "Se ha añadido el usuario a la BBDD", "Insertar usurario", JOptionPane.INFORMATION_MESSAGE );
-			else
-				JOptionPane.showMessageDialog( null, "No se ha podido añadir el usuario", "Inicialización de la BBDD", JOptionPane.INFORMATION_MESSAGE );
-			
-			
-		}catch (DAOExcepcion e){
-			
-//			System.out.print("Dominio Excepcion: "+e);
-			JOptionPane.showMessageDialog( null, "La base de datos ya está inicializada", "Advertencia", JOptionPane.WARNING_MESSAGE );
-		}
-	}
+//	public static void crearDatos(Controlador c){
+//		try{
+//
+//			Calendar calendario = Calendar.getInstance();
+//			String dia = Integer.toString(calendario.get(Calendar.DATE));
+//			String mes = Integer.toString(calendario.get(Calendar.MONTH+1));
+//			String anyo = Integer.toString(calendario.get(Calendar.YEAR));
+//			String hora = Integer.toString(calendario.get(Calendar.HOUR));
+//			String min = Integer.toString(calendario.get(Calendar.MINUTE));
+//			String seg = Integer.toString(calendario.get(Calendar.SECOND));
+//			String fecha = dia+"/"+mes+"/"+anyo+" "+hora+":"+min+":"+seg;
+//
+//			Usuario u1 = new Usuario();
+//			u1.setApellidos("Sancho Monrabal");
+//			u1.setCorreo("josanmon@inf.upv.es");
+//			u1.setDireccion("Camino de Vera S/N");
+//			u1.setDni("22334569E");
+//			u1.setNombre("Pepe");
+//			u1.setPais("España");
+//			u1.setPassword("psm");
+//			u1.setPoblacion("Valencia");
+//			u1.setRol("Usuario");
+//			u1.setUsername("psm");
+//			
+//			if(c.addUsuario(u1))
+//				JOptionPane.showMessageDialog( null, "Se ha añadido el usuario a la BBDD", "Insertar usurario", JOptionPane.INFORMATION_MESSAGE );
+//			else
+//				JOptionPane.showMessageDialog( null, "No se ha podido añadir el usuario", "Insertar usurario", JOptionPane.INFORMATION_MESSAGE );
+//			
+//			
+//		}catch (DAOExcepcion e){
+//			
+////			System.out.print("Dominio Excepcion: "+e);
+//			JOptionPane.showMessageDialog( null, "La base de datos ya está inicializada", "Advertencia", JOptionPane.WARNING_MESSAGE );
+//		}
+//	}
+	
 	private class BtnCargarBbddMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			crearDatos(control);
 		}
+	}
+	
+	public static void crearDatos(Controlador c){
+		Registrar_usuario ventanaRegistro = new Registrar_usuario();
+		ventanaRegistro.setModal(true);
+		ventanaRegistro.setLocationRelativeTo(null);
+		ventanaRegistro.setVisible(true);
 	}
 }
