@@ -2,7 +2,6 @@ package presentacion;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -259,7 +258,10 @@ public class AutomaticDiet
 		{
 			tabsMenuUsuario.setVisible(false);
 			tabsMenuAdministrador.setVisible(true);
-			_limpiarMenuCentral();
+			//_limpiarMenuCentral();
+			GestionPlatos gp = new GestionPlatos(control.getUsuarioActual());
+			gp.poblar();
+			cambiaPanel(gp);
 		}		
 		else if(rolUsuarioActual.equals("Usuario"))
 		{

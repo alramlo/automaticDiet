@@ -525,6 +525,7 @@ public class GestionPlatos extends JPanel {
 		         btnEliminar.setEnabled(true);
 		   }
 		});
+		
 
 	}
 	
