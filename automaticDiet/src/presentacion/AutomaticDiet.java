@@ -3,15 +3,12 @@ package presentacion;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -19,21 +16,19 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import modelo.Usuario;
 import servicio.Controlador;
@@ -43,35 +38,37 @@ public class AutomaticDiet
 {
 	
 	private JFrame automatic_diet;
+
 	JPanel panel_central = new JPanel();
 	private Controlador control;
 	private JLabel iconCabecera;
-	private static String [] rolUsuarioAdmin = {"Administrador","Usuario Registrado"};
+	private String rolUsuarioActual;
+//	private static String [] rolUsuarioAdmin = {"Administrador","Usuario Registrado"};
 	
 
-	/**
-	 * Método para lanzar la aplicación
-	 **/
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable() 
-		{
-			public void run()
-			{
-				try
-				{
-					UIManager.setLookAndFeel(new NimbusLookAndFeel());
-					AutomaticDiet window = new AutomaticDiet();
-					window.automatic_diet.setLocationRelativeTo(null);
-					window.automatic_diet.setVisible(true);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Método para lanzar la aplicación
+//	 **/
+//	public static void main(String[] args)
+//	{
+//		EventQueue.invokeLater(new Runnable() 
+//		{
+//			public void run()
+//			{
+//				try
+//				{
+//					UIManager.setLookAndFeel(new NimbusLookAndFeel());
+//					AutomaticDiet window = new AutomaticDiet();
+//					window.automatic_diet.setLocationRelativeTo(null);
+//					window.automatic_diet.setVisible(true);
+//				}
+//				catch (Exception e)
+//				{
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Constructor de la aplicación.
@@ -81,9 +78,9 @@ public class AutomaticDiet
 		try {
 			control=Controlador.dameControlador();
 		} catch (DominioExcepcion e3) {
-			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
+		rolUsuarioActual = control.getUsuarioActual().getRol();
 		initialize();
 	}
 
@@ -224,31 +221,67 @@ public class AutomaticDiet
 		tabsMenuAdministrador.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		final JComboBox comboBox = new JComboBox(rolUsuarioAdmin);
-		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				System.out.println(comboBox.getSelectedIndex()+" Arg0: "+arg0);
-				
-				if(comboBox.getSelectedIndex()==0)
-				{
-					tabsMenuUsuario.setVisible(false);
-					tabsMenuAdministrador.setVisible(true);
-					_limpiarMenuCentral();
-				}
-				
-				if(comboBox.getSelectedIndex()==1)
-				{
-					tabsMenuAdministrador.setVisible(false);
-					tabsMenuUsuario.setVisible(true);
-					//_limpiarMenuCentral();
-					 cambiaPanel(new Indicadores_personales());
-				}
-			}
-		});
-		comboBox.setSelectedIndex(-1);
-		comboBox.setBounds(0, 0, 190, 26);
-		panel_izquierda.add(comboBox);
+		
+		
+		
+//		@SuppressWarnings({ "unchecked", "rawtypes" })
+//		final JComboBox comboBox = new JComboBox(rolUsuarioAdmin);
+//		comboBox.addItemListener(new ItemListener() {
+//			public void itemStateChanged(ItemEvent arg0) {
+//				System.out.println(comboBox.getSelectedIndex()+" Arg0: "+arg0);
+//				
+//				if(comboBox.getSelectedIndex()==0)
+//				{
+//					tabsMenuUsuario.setVisible(false);
+//					tabsMenuAdministrador.setVisible(true);
+//					_limpiarMenuCentral();
+//				}
+//				
+//				if(comboBox.getSelectedIndex()==1)
+//				{
+//					tabsMenuAdministrador.setVisible(false);
+//					tabsMenuUsuario.setVisible(true);
+//					//_limpiarMenuCentral();
+//					 cambiaPanel(new Indicadores_personales());
+//				}
+//			}
+//		});
+//		comboBox.setSelectedIndex(-1);
+//		comboBox.setBounds(0, 0, 190, 26);
+//		panel_izquierda.add(comboBox);
+		
+		
+		
+		
+
+		if(rolUsuarioActual.equals("Administrador") || rolUsuarioActual.equals("Colaborador"))
+		{
+			tabsMenuUsuario.setVisible(false);
+			tabsMenuAdministrador.setVisible(true);
+			//_limpiarMenuCentral();
+			GestionPlatos gp = new GestionPlatos(control.getUsuarioActual());
+			gp.poblar();
+			cambiaPanel(gp);
+		}		
+		else if(rolUsuarioActual.equals("Usuario"))
+		{
+			tabsMenuAdministrador.setVisible(false);
+			tabsMenuUsuario.setVisible(true);
+			//_limpiarMenuCentral();
+			 cambiaPanel(new Indicadores_personales());
+		}
+		else
+		{
+			System.out.println("En Pantalla Principal");
+			JOptionPane.showMessageDialog(null, String.format("ERROR: ROL DEL USUARIO DESCONOCIDO", JOptionPane.ERROR_MESSAGE));
+		}
+
+		
+		
+		
+		
+		
+		
 		
 		JPanel menu_admin = new JPanel();
 		menu_admin.setOpaque(false);
@@ -264,10 +297,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				Usuario user = new Usuario();
-				user.setDni("44530694A");
-				user.setRol("Administrador");
-				GestionPlatos gp = new GestionPlatos(user);
+				GestionPlatos gp = new GestionPlatos(control.getUsuarioActual());
 				gp.poblar();
 				cambiaPanel(gp);
 			}
@@ -479,6 +509,10 @@ public class AutomaticDiet
 		        }
 		      }
 		    });
+	}
+	
+	public JFrame getAutomatic_diet() {
+		return automatic_diet;
 	}
 	
 	private void cambiaPanel(JPanel nuevo)
