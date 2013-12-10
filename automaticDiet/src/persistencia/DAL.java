@@ -252,4 +252,8 @@ public class DAL {
 	public List<Grupo> getGrupos(Usuario user) {
 		return grupoDAO.getGrupos(user);
 	}
+	
+	public Ingrediente findIngrediente(int id){
+		return ingredienteDAO.findIngrediente(id);
+	}
 }

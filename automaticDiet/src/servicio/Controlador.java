@@ -536,5 +536,9 @@ public class Controlador {
 	public List<Grupo> getGrupos(Usuario user) {
 		return dal.getGrupos(user);
 	}
+	
+	public Ingrediente findIngrediente(int id){
+		return dal.findIngrediente(id);
+	}
 }
 

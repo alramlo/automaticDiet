@@ -43,6 +43,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import modelo.Ingrediente;
+import modelo.IngredienteLista;
 import modelo.Plato;
 import modelo.PlatoIngrediente;
 import modelo.Usuario;
@@ -59,7 +60,7 @@ public class NuevoPlato2 extends JFrame {
 	private Plato plato;
 	private Usuario usuario;
 	private static Controlador control;
-	private JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
+	private JList<IngredienteLista> listIngredientes = new JList<IngredienteLista>();
 	private JTextField tCalorias;
 	private JTextField tPrecio;
 	private List<Ingrediente> ingredientes;
@@ -170,7 +171,7 @@ public class NuevoPlato2 extends JFrame {
 		lIngredientes.setBounds(37, 102, 140, 20);
 		getContentPane().add(lIngredientes);
 		
-		final DefaultListModel<Ingrediente> modelo = new DefaultListModel<Ingrediente>();
+		final DefaultListModel<IngredienteLista> modelo = new DefaultListModel<IngredienteLista>();
 		
 		listIngredientes.addMouseListener(new MouseAdapter() {
 			@Override
@@ -203,7 +204,7 @@ public class NuevoPlato2 extends JFrame {
 					
 					//Si el plato no es nuevo, añadimos el ingrediente a la lista de borrar
 					if(esNuevo==false){
-						ingredientesEliminar.add(listIngredientes.getSelectedValue());
+						ingredientesEliminar.add(control.findIngrediente(listIngredientes.getSelectedValue().getId()));
 					}
 					
 					//Si el ingrediente ya había sido introducido anteriormente, recuperamos el PlatoIngrediente de la base de datos
@@ -239,7 +240,12 @@ public class NuevoPlato2 extends JFrame {
 					ventana.setVisible(true);
 					piAux=control.getPi();
 					if(piAux!=null){
-						modelo.addElement(piAux.getIngrediente());
+						IngredienteLista il = new IngredienteLista();
+						Ingrediente ingredienteAux = control.findIngrediente(piAux.getIngrediente().getId()); 
+						il.setId(ingredienteAux.getId());
+						il.setNombre(ingredienteAux.getNombre());
+						il.setCantidad(piAux.getCantidad());
+						modelo.addElement(il);
 						piAux.setPlato(plato);
 						platoIngredienteNuevos.add(piAux);
 						contadorCalorias=contadorCalorias+(piAux.getIngrediente().getCalorias()*piAux.getCantidad());
@@ -334,7 +340,8 @@ public class NuevoPlato2 extends JFrame {
 							//eliminamos los ingredientes suprimidos que ya estaban persistidos anteriormente 
 							for(Ingrediente i : ingredientesEliminar){
 								PlatoIngrediente platoIngredienteAux = control.findPlatoIngrediente(plato.getId(), i.getId());
-								control.eliminarPlatoIngrediente(platoIngredienteAux);
+								if(platoIngredienteAux!=null)
+									control.eliminarPlatoIngrediente(platoIngredienteAux);
 							}
 							control.updatePlato(plato);
 						}
@@ -565,15 +572,19 @@ public class NuevoPlato2 extends JFrame {
 		
 	}
 	
-	public void cargarIngredientes(DefaultListModel<Ingrediente> modelo) throws Exception{
-		
+	public void cargarIngredientes(DefaultListModel<IngredienteLista> modelo) throws Exception{
+		IngredienteLista il;
 		if(esNuevo==false){
 			ingredientes=control.ingredientesPorPlato2(plato.getNombre());
 			System.out.println("Numero de ingredientes: "+ingredientes.size());
 			if(ingredientes!=null){
-				for(Ingrediente i: ingredientes)
-					modelo.addElement(i);
-					
+				for(Ingrediente in: ingredientes){
+					il = new IngredienteLista();
+					il.setNombre(in.getNombre());
+					il.setId(in.getId());
+					il.setCantidad(control.findPlatoIngrediente(plato.getId(), in.getId()).getCantidad());
+					modelo.addElement(il);
+				}
 			
 			}
 		}
