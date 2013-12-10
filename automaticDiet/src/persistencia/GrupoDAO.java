@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import modelo.Caracteristica;
 import modelo.Grupo;
 import modelo.Interes;
+import modelo.Usuario;
 
 public class GrupoDAO extends AbstractDAO{
 
@@ -67,6 +68,22 @@ public class GrupoDAO extends AbstractDAO{
 				q.setParameter("ident", grupo.getId());
 				
 				return (List<Interes>)q.getResultList(); 
+		} catch (Exception e) {
+			System.out.println("Error: "+e);
+			return null;
+		}
+	}
+
+	public List<Grupo> getGrupos(Usuario user) {
+		try {
+			Query q;
+			q = entityManager.createQuery("SELECT g "
+					+ "FROM Usuario u, UsuarioGrupo ug, Grupo g "
+					+ "WHERE ug.usuario.id=u.id AND "
+					+ "ug.grupo.id=g.id AND u.id=:ident");
+				q.setParameter("ident", user.getId());
+				
+				return (List<Grupo>)q.getResultList(); 
 		} catch (Exception e) {
 			System.out.println("Error: "+e);
 			return null;

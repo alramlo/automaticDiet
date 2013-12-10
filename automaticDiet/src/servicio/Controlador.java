@@ -532,5 +532,9 @@ public class Controlador {
 			return true;
 		}
 	}
+
+	public List<Grupo> getGrupos(Usuario user) {
+		return dal.getGrupos(user);
+	}
 }
 

@@ -24,12 +24,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import excepciones.DominioExcepcion;
 import modelo.Denuncia;
 import modelo.Grupo;
 import modelo.Mensaje;
+import modelo.Usuario;
 import persistencia.DenunciaDAO;
 import persistencia.GrupoDAO;
 import persistencia.MensajeDAO;
+import servicio.Controlador;
 
 public class GestionGruposPorAdmin extends JPanel {
 	/**
@@ -176,7 +179,12 @@ public class GestionGruposPorAdmin extends JPanel {
 				tablePostsDenunciados.revalidate();
 				tablePostsDenunciados.repaint();
 
-				refrescarTablaGrupos();
+				try {
+					refrescarTablaGrupos(Controlador.dameControlador().getUsuarioActual());
+				} catch (DominioExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -297,10 +305,10 @@ public class GestionGruposPorAdmin extends JPanel {
 		}
 	}
 	
-	public void cargaGrupos(){
+	public void cargaGrupos(Usuario user){
 		try{
 				
-				listadoDeGrupos = grupoDAO.getGrupos();
+				listadoDeGrupos = Controlador.dameControlador().getGrupos(user);
 				Iterator<Grupo> it = listadoDeGrupos.iterator();
 
 				TablaConsultaModelGrupos model = (TablaConsultaModelGrupos)tableGrupos.getModel();
@@ -377,9 +385,9 @@ public class GestionGruposPorAdmin extends JPanel {
         }
     }
 	
-	private void refrescarTablaGrupos()
+	private void refrescarTablaGrupos(Usuario user)
 	{	
-		cargaGrupos();	
+		cargaGrupos(user);	
 		tableGrupos.revalidate();
 		tableGrupos.repaint();
 	}

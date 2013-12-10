@@ -248,4 +248,8 @@ public class DAL {
 	public List<Plato> getPlatosDieta(int id){
 		return platoDAO.getPlatosDieta(id);
 	}
+
+	public List<Grupo> getGrupos(Usuario user) {
+		return grupoDAO.getGrupos(user);
+	}
 }
