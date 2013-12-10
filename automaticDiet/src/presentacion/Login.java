@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import modelo.Usuario;
@@ -83,7 +85,7 @@ public class Login extends JDialog
 			setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/iconos/logo_icon.png")));
 //			Icon hospital = new ImageIcon(getClass().getResource( "/recursos/hospital-red-2-icon.png" ) );
 			setTitle("AutomaticDiet - Login");
-			setBounds(100,100,448,325);
+			setBounds(100,100,511,364);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5,5,5,5));
 			getContentPane().add(contentPanel,BorderLayout.CENTER);
@@ -93,13 +95,13 @@ public class Login extends JDialog
 				lblUser.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				lblUser.setVerticalAlignment(SwingConstants.BOTTOM);
 				lblUser.setHorizontalAlignment(SwingConstants.LEFT);
-				lblUser.setBounds(28, 32, 193, 28);
+				lblUser.setBounds(29, 32, 219, 28);
 				contentPanel.add(lblUser);
 			}
 			{
 				tfUser = new JTextField();
 				tfUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				tfUser.setBounds(28, 61, 193, 34);
+				tfUser.setBounds(29, 61, 220, 34);
 				contentPanel.add(tfUser);
 				tfUser.setColumns(10);
 
@@ -109,128 +111,170 @@ public class Login extends JDialog
 				lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				lblContrasea.setVerticalAlignment(SwingConstants.BOTTOM);
 				lblContrasea.setHorizontalAlignment(SwingConstants.LEFT);
-				lblContrasea.setBounds(28, 106, 193, 28);
+				lblContrasea.setBounds(29, 106, 219, 28);
 				contentPanel.add(lblContrasea);
 			}
 			{
 				tfPass = new JPasswordField();
 				tfPass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				tfPass.setBounds(28, 135, 193, 35);
+				tfPass.setBounds(29, 135, 220, 34);
 				contentPanel.add(tfPass);
 				tfPass.setColumns(10);
 
 			}
-			
-			buttonHospital = new JButton("Registrarse");
-			buttonHospital.setBackground(new Color(0, 139, 139));
-			buttonHospital.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			buttonHospital.setIcon(null);
-			buttonHospital.addMouseListener(new BtnCargarBbddMouseListener());
-			buttonHospital.setBounds(247, 221, 150, 34);
-			contentPanel.add(buttonHospital);
 			{
 				JButton okButton=new JButton("");
-				okButton.setBounds(247, 32, 150, 150);
+				okButton.setVerifyInputWhenFocusTarget(false);
+				okButton.setRequestFocusEnabled(false);
+				okButton.setRolloverEnabled(false);
+				okButton.setBorderPainted(false);
+				okButton.setFocusable(false);
+				okButton.setFocusTraversalKeysEnabled(false);
+				okButton.setFocusPainted(false);
+				okButton.setBorder(UIManager.getBorder("Button.border"));
+				okButton.setBounds(278, 38, 188, 188);
 				contentPanel.add(okButton);
 				okButton.setMinimumSize(new Dimension(80, 28));
 				okButton.setMaximumSize(new Dimension(100, 30));
 				okButton.setIcon(new ImageIcon(Login.class.getResource("/iconos/logo_icon.png")));
 				okButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				okButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+				okButton.setHorizontalTextPosition(SwingConstants.CENTER);
 				okButton.setPreferredSize(new Dimension(80, 30));
 				okButton.setActionCommand("OK");
 				getRootPane().setDefaultButton(okButton);
 				
-				okButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							control.logout();
-							String user, pass;
-							Usuario us=null;
-							user = new String(tfUser.getText());
-							pass = new String(tfPass.getPassword());
-							tfPass.setText("");
-							tfUser.setText("");
-							
-							try {	
-									if(user.equals(""))
+				JButton btnEntrar = new JButton("Entrar");
+				btnEntrar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						control.logout();
+						String user, pass;
+						Usuario us=null;
+						user = new String(tfUser.getText());
+						pass = new String(tfPass.getPassword());
+						tfPass.setText("");
+						tfUser.setText("");
+						
+						try {	
+								if(user.equals(""))
+								{
+									JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca un nombre de usuario", JOptionPane.ERROR_MESSAGE));
+								}
+								else if(pass.equals(""))
 									{
-										JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca un nombre de usuario", JOptionPane.ERROR_MESSAGE));
+										JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca una contraseña", JOptionPane.ERROR_MESSAGE));
 									}
-									else if(pass.equals(""))
+									else
 										{
-											JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca una contraseña", JOptionPane.ERROR_MESSAGE));
-										}
-										else
+											listaUsuarios=control.getUsuarioPorUsername(user);
+											if(listaUsuarios.size()>=1)
 											{
-												listaUsuarios=control.getUsuarioPorUsername(user);
-												if(listaUsuarios.size()>=1)
-												{
-													us=listaUsuarios.get(0);
-												}
+												us=listaUsuarios.get(0);
+											}
 
-												if(us==null){
-													JOptionPane.showMessageDialog(null, String.format("ERROR: USUARIO INCORRECTO", JOptionPane.ERROR_MESSAGE));
-												}
-												else if(us.getPassword().equals(pass))
-														{
-																control.setUsuarioActual(us);
-																
-																JOptionPane.showMessageDialog(null, String.format("LOGIN CORRECTO", JOptionPane.INFORMATION_MESSAGE));
-																
-																if(control.getUsuarioActual().getRol().equals("Usuario"))
-																{							
-																	AutomaticDiet ventanaUsuario = new AutomaticDiet();
-																	ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
-																	ventanaUsuario.getAutomatic_diet().setVisible(true);
-																	
-																	try {
-																		finalize();
-																		dispose();
-																	} catch (Throwable e) {
-																		e.printStackTrace();
-																	}
-																}
-																else if(control.getUsuarioActual().getRol().equals("Administrador"))
-																{
-																	AutomaticDiet ventanaUsuario = new AutomaticDiet();
-																	ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
-																	ventanaUsuario.getAutomatic_diet().setVisible(true);
-																	try {
-																		finalize();
-																		dispose();
-																	} catch (Throwable e) {
-																		e.printStackTrace();
-																	}
-
-																}
-																else if(control.getUsuarioActual().getRol().equals("Colaborador"))									
-																{
-																	AutomaticDiet ventanaUsuario = new AutomaticDiet();
-																	ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
-																	ventanaUsuario.getAutomatic_diet().setVisible(true);
-																	try {
-																		finalize();
-																		dispose();
-																	} catch (Throwable e) {
-																		e.printStackTrace();
-																	}
-																}
-																else
-																{
-																	System.out.println("En Login");
-																	JOptionPane.showMessageDialog(null, String.format("ERROR: ROL DEL USUARIO DESCONOCIDO", JOptionPane.ERROR_MESSAGE));
-																}
-														}
-													else
+											if(us==null){
+												JOptionPane.showMessageDialog(null, String.format("ERROR: USUARIO INCORRECTO", JOptionPane.ERROR_MESSAGE));
+											}
+											else if(us.getPassword().equals(pass))
 													{
-														JOptionPane.showMessageDialog(null, String.format("ERROR: CONTRASEÑA INCORRECTA", JOptionPane.ERROR_MESSAGE));
+															control.setUsuarioActual(us);
+															
+//															JOptionPane.showMessageDialog(null, String.format("LOGIN CORRECTO", JOptionPane.INFORMATION_MESSAGE));
+
+															if(control.getUsuarioActual().getRol().equals("Usuario"))
+															{			
+																AutomaticDiet ventanaUsuario = new AutomaticDiet();
+																ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+																ventanaUsuario.getAutomatic_diet().setVisible(true);
+																
+																Bienvenida bienvenida = new Bienvenida();
+																bienvenida.start();
+																
+																try {
+																	finalize();
+																	dispose();
+																} catch (Throwable e) {
+																	e.printStackTrace();
+																}
+															}
+															else if(control.getUsuarioActual().getRol().equals("Administrador"))
+															{
+																AutomaticDiet ventanaUsuario = new AutomaticDiet();
+																ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+																ventanaUsuario.getAutomatic_diet().setVisible(true);
+																try {
+																	finalize();
+																	dispose();
+																} catch (Throwable e) {
+																	e.printStackTrace();
+																}
+
+															}
+															else if(control.getUsuarioActual().getRol().equals("Colaborador"))									
+															{
+																AutomaticDiet ventanaUsuario = new AutomaticDiet();
+																ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+																ventanaUsuario.getAutomatic_diet().setVisible(true);
+																try {
+																	finalize();
+																	dispose();
+																} catch (Throwable e) {
+																	e.printStackTrace();
+																}
+															}
+															else
+															{
+																System.out.println("En Login");
+																JOptionPane.showMessageDialog(null, String.format("ERROR: ROL DEL USUARIO DESCONOCIDO", JOptionPane.ERROR_MESSAGE));
+															}
 													}
-											}							
+												else
+												{
+													JOptionPane.showMessageDialog(null, String.format("ERROR: CONTRASEÑA INCORRECTA", JOptionPane.ERROR_MESSAGE));
+												}
+										}							
 
-							} catch (DAOExcepcion e) { e.printStackTrace();	}
+						} catch (DAOExcepcion e) { e.printStackTrace();	}
+					}
+				});
+				btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				btnEntrar.setBackground(SystemColor.activeCaption);
+				btnEntrar.setBounds(83, 192, 100, 34);
+				contentPanel.add(btnEntrar);
+				
+				JPanel panel = new JPanel();
+				panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+				panel.setBounds(10, 254, 475, 61);
+				contentPanel.add(panel);
+				panel.setLayout(null);
+				{
+					JLabel lblNewLabel = new JLabel("\u00BFTodav\u00EDa no tienes cuenta?");
+					lblNewLabel.setBounds(20, 16, 219, 34);
+					panel.add(lblNewLabel);
+					lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+					lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				}
+				
+				buttonHospital = new JButton("Registrarse");
+				buttonHospital.setBounds(266, 16, 188, 34);
+				panel.add(buttonHospital);
+				buttonHospital.setBackground(SystemColor.inactiveCaption);
+				buttonHospital.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				buttonHospital.setIcon(null);
+				{
+					JLabel label = new JLabel("");
+					label.setHorizontalTextPosition(SwingConstants.CENTER);
+					label.setHorizontalAlignment(SwingConstants.CENTER);
+					label.setIcon(new ImageIcon(Login.class.getResource("/iconos/logo_icon.png")));
+					label.setBounds(278, 38, 188, 188);
+					contentPanel.add(label);
+				}
+				buttonHospital.addMouseListener(new BtnCargarBbddMouseListener());
+				
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
 							
-
-				}});
+					}
+				});
 			}
 			
 		} catch (Exception e) { e.printStackTrace(); }
