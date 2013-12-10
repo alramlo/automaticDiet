@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import modelo.Dieta;
-import modelo.Plato;
 import modelo.Usuario;
 
 public class DietaDAO extends AbstractDAO{

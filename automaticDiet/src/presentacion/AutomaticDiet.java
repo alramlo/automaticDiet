@@ -4,12 +4,23 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -30,7 +41,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import modelo.Usuario;
 import servicio.Controlador;
 import excepciones.DominioExcepcion;
 
@@ -142,10 +152,11 @@ public class AutomaticDiet
 		panel_superior.setLayout(gl_panel_superior);
 		
 		JPanel panel_perfil = new JPanel();
-		panel_perfil.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), "Scarlett Johansson", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_perfil.setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 2, true), control.getUsuarioActual().getUsername(), TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/perfil_scarlet.jpg")));
+		//label.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/userIcon.jpg")));
+		label.setIcon(new ImageIcon(control.getUsuarioActual().getImagen()));
 		label.setHorizontalTextPosition(SwingConstants.CENTER);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));

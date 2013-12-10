@@ -250,14 +250,18 @@ public class Consultar_dieta_asignada extends JPanel
 		});
 		buttonSiguiente.setIcon(new ImageIcon(Consultar_dieta_asignada.class.getResource("/iconos/siguiente.gif")));
 		
+		
 		lblPaginacion = new JLabel("");
 		lblPaginacion.setFont(new Font("Arial", Font.BOLD, 16));
-		
-		Usuario user = new Usuario();
-		user.setId(1);
-		String[] dietas = c.getDietas(user);
+		String[] dietas = c.getDietas(c.getUsuarioActual());
 		
 		comboBoxDietas = new JComboBox<String>(dietas);
+		
+		if(comboBoxDietas.getItemCount()==0){
+			btnAnterior.setEnabled(false);
+			buttonSiguiente.setEnabled(false);
+			comboBoxDietas.setEnabled(false);
+		}
 		
 		comboBoxDietas.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evento) {
@@ -358,7 +362,10 @@ public class Consultar_dieta_asignada extends JPanel
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
+		if(comboBoxDietas.getItemCount()>0)
 		inicializar(c);
+		else
+			JOptionPane.showMessageDialog(null, c.getUsuarioActual().getNombre()+" no tienes dietas asociadas", "Info", JOptionPane.INFORMATION_MESSAGE);
 		tabla_dieta.setDefaultRenderer (Object.class, new MiRender());
 	}
 	

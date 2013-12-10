@@ -86,11 +86,16 @@ public class ElaboracionPlato extends JPanel {
 		imagenPlato = new JLabel("");
 		imagenPlato.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		
-		
-		Usuario u = new Usuario();
-		u.setId(1);
-		String[] nomDietas = control.getDietas(u);
+		Usuario user = control.getUsuarioActual();
+		String[] nomDietas = control.getDietas(user);
 		comboBoxDietas = new JComboBox<String>(nomDietas);
+		
+		if(comboBoxDietas.getItemCount()==0){
+			comboBoxDietas.setEnabled(false);
+			buttonPanelIngredientes.setEnabled(false);
+			JOptionPane.showMessageDialog(null, user.getNombre()+" no tienes platos asignados.", "Info", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
 		comboBoxDietas.setSelectedIndex(nomDietas.length-1);
 		
 		comboBoxDietas.addItemListener(new ItemListener() {
