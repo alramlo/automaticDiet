@@ -33,6 +33,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class AnadirIngrediente2 extends JDialog {
 
@@ -40,13 +42,16 @@ public class AnadirIngrediente2 extends JDialog {
 	private static Controlador control;
 	private PlatoIngrediente platoIngrediente;
 	private Plato plato;
+	private List<Ingrediente> listaIngredientesPersistidos;
+	private List<PlatoIngrediente> listaIngredientesNuevos;
+	private JButton okButton;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			AnadirIngrediente2 dialog = new AnadirIngrediente2(null);
+			AnadirIngrediente2 dialog = new AnadirIngrediente2(null,null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -58,13 +63,16 @@ public class AnadirIngrediente2 extends JDialog {
 	 * Create the dialog.
 	 * @throws DominioExcepcion 
 	 */
-	public AnadirIngrediente2(final Plato p) throws Exception {
+	public AnadirIngrediente2(final Plato p, List<PlatoIngrediente> listaNuevos) throws Exception {
 		
 		
 		//Obtener el controlador
 		control=Controlador.dameControlador();
-		
 		plato=p;
+		this.listaIngredientesNuevos=listaNuevos;
+		this.listaIngredientesPersistidos=control.ingredientesPorPlato2(plato.getNombre());
+		
+		
 		
 		setTitle("A\u00F1adir Ingrediente");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AnadirIngrediente2.class.getResource("/iconos/add-icon1x16.gif")));
@@ -80,6 +88,20 @@ public class AnadirIngrediente2 extends JDialog {
 		contentPanel.add(lblIngredientes);
 		
 		final JList<Ingrediente> listIngredientes = new JList<Ingrediente>();
+		listIngredientes.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				Boolean todoOk = true;
+				for(Ingrediente i : listaIngredientesPersistidos)
+					if(i.getId()==listIngredientes.getSelectedValue().getId())
+						todoOk=false;
+				for (PlatoIngrediente pi : listaIngredientesNuevos)
+					if(pi.getIngrediente().getId()==listIngredientes.getSelectedValue().getId())
+						todoOk=false;
+				
+				okButton.setEnabled(todoOk);
+				
+			}
+		});
 		listIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultListModel<Ingrediente> modelo = new DefaultListModel<Ingrediente>();
 		listIngredientes.setMaximumSize(new Dimension(800, 600));
@@ -87,8 +109,9 @@ public class AnadirIngrediente2 extends JDialog {
 		listIngredientes.setBounds(32, 59, 269, 137);
 		
 		List<Ingrediente> listaIngrediente = control.getIngredientes();
-		for(Ingrediente i : listaIngrediente)
+		for(Ingrediente i : listaIngrediente){
 			modelo.addElement(i);
+		}
 		
 		listIngredientes.setModel(modelo);	
 		//contentPanel.add(listIngredientes);
@@ -129,7 +152,7 @@ public class AnadirIngrediente2 extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						

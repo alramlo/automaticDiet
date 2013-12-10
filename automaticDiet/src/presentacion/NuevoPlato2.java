@@ -235,7 +235,7 @@ public class NuevoPlato2 extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AnadirIngrediente2 ventana = new AnadirIngrediente2(plato);
+					AnadirIngrediente2 ventana = new AnadirIngrediente2(plato, platoIngredienteNuevos);
 					ventana.setModal(true);
 					ventana.setVisible(true);
 					piAux=control.getPi();
