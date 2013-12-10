@@ -297,10 +297,7 @@ public class AutomaticDiet
 			public void actionPerformed(ActionEvent arg0)
 			{
 				panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestion de Platos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				Usuario user = new Usuario();
-				user.setDni("44530694A");
-				user.setRol("Administrador");
-				GestionPlatos gp = new GestionPlatos(user);
+				GestionPlatos gp = new GestionPlatos(control.getUsuarioActual());
 				gp.poblar();
 				cambiaPanel(gp);
 			}
