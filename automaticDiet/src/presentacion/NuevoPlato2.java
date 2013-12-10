@@ -291,7 +291,7 @@ public class NuevoPlato2 extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(tNombre.getText().equals("") || tElaboracion.getText().equals("") || usuario==null || tTiempo.getText().equals("")){
-					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Los campos nombre, elaboración y tiempo son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else{
 					
@@ -453,6 +453,27 @@ public class NuevoPlato2 extends JFrame {
 		});
 		btnAadirImagen.setBounds(532, 422, 89, 29);
 		contentPane.add(btnAadirImagen);
+		
+		JLabel label_oblig = new JLabel("*");
+		label_oblig.setHorizontalAlignment(SwingConstants.CENTER);
+		label_oblig.setForeground(Color.RED);
+		label_oblig.setFont(new Font("Arial", Font.BOLD, 16));
+		label_oblig.setBounds(27, 50, 12, 19);
+		contentPane.add(label_oblig);
+		
+		JLabel label_1 = new JLabel("*");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setForeground(Color.RED);
+		label_1.setFont(new Font("Arial", Font.BOLD, 16));
+		label_1.setBounds(27, 324, 12, 19);
+		contentPane.add(label_1);
+		
+		JLabel label_2 = new JLabel("*");
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setForeground(Color.RED);
+		label_2.setFont(new Font("Arial", Font.BOLD, 16));
+		label_2.setBounds(432, 264, 12, 19);
+		contentPane.add(label_2);
 		
 		//Si el usuario es diferente de null se carga
 		if(u!=null)

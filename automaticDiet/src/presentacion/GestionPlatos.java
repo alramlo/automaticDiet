@@ -245,8 +245,10 @@ public class GestionPlatos extends JPanel {
 							Plato plato = control.consultarPlato(posibles.get(i));
 							o[i][0]=plato.getNombre();
 							o[i][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
-							o[i][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
-							o[i][3]=getInfoPorPlato(plato)[1].toString()+" €";
+							//o[i][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
+							//o[i][3]=getInfoPorPlato(plato)[1].toString()+" €";
+							o[i][2]=control.calcularCalorias(plato.getId())+" KCal";
+							o[i][3]=control.calcularPrecio(plato.getId())+" €";
 							o[i][4]=plato.getValoracion();
 						}
 							table.setModel(new DefaultTableModel(
@@ -291,8 +293,10 @@ public class GestionPlatos extends JPanel {
 								for(int i=0;i<l.size();i++){
 									o[i][0]=l.get(i).getNombre();
 									o[i][1]=l.get(i).getUsuario().getNombre()+" "+l.get(i).getUsuario().getApellidos();
-									o[i][2]=(int)getInfoPorPlato(l.get(i))[0]+" KCal";
-									o[i][3]=getInfoPorPlato(l.get(i))[1].toString()+" €";
+									//o[i][2]=(int)getInfoPorPlato(l.get(i))[0]+" KCal";
+									//o[i][3]=getInfoPorPlato(l.get(i))[1].toString()+" €";
+									o[i][2]=control.calcularCalorias(l.get(i).getId())+" KCal";
+									o[i][3]=control.calcularPrecio(l.get(i).getId())+" €";
 									o[i][4]=l.get(i).getValoracion();
 								}
 								table.setModel(new DefaultTableModel(
@@ -335,8 +339,10 @@ public class GestionPlatos extends JPanel {
 							for(int i=0;i<platos.size();i++){
 								o[i][0]=platos.get(i).getNombre();
 								o[i][1]=platos.get(i).getUsuario().getNombre()+" "+platos.get(i).getUsuario().getApellidos();
-								o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
-								o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+								//o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
+								//o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+								o[i][2]=control.calcularCalorias(platos.get(i).getId())+" KCal";
+								o[i][3]=control.calcularPrecio(platos.get(i).getId())+" €";
 								o[i][4]=platos.get(i).getValoracion();
 							}
 							table.setModel(new DefaultTableModel(
@@ -377,8 +383,10 @@ public class GestionPlatos extends JPanel {
 								for(int i=0;i<platos.size();i++){
 									o[i][0]=platos.get(i).getNombre();
 									o[i][1]=platos.get(i).getUsuario().getNombre()+" "+platos.get(i).getUsuario().getApellidos();
-									o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
-									o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+									//o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
+									//o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+									o[i][2]=control.calcularCalorias(platos.get(i).getId())+" KCal";
+									o[i][3]=control.calcularPrecio(platos.get(i).getId())+" €";
 									o[i][4]=platos.get(i).getValoracion();
 								}
 								table.setModel(new DefaultTableModel(
@@ -455,8 +463,10 @@ public class GestionPlatos extends JPanel {
 							for(int i=0;i<platos.size();i++){
 								o[i][0]=platos.get(i).getNombre();
 								o[i][1]=platos.get(i).getUsuario().getNombre()+" "+platos.get(i).getUsuario().getApellidos();
-								o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
-								o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+								//o[i][2]=(int)getInfoPorPlato(platos.get(i))[0]+" KCal";
+								o[i][2]=control.calcularCalorias(platos.get(i).getId())+" KCal";
+								//o[i][3]=getInfoPorPlato(platos.get(i))[1].toString()+" €";
+								o[i][3]=control.calcularPrecio(platos.get(i).getId())+" €";
 								o[i][4]=platos.get(i).getValoracion();
 							}
 							table.setModel(new DefaultTableModel(
@@ -624,8 +634,10 @@ public class GestionPlatos extends JPanel {
 					plato = control.consultarPlato(pl[i]);
 					o[i][0]=plato.getNombre();
 					o[i][1]=plato.getUsuario().getNombre()+" "+plato.getUsuario().getApellidos();
-					o[i][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
-					o[i][3]=getInfoPorPlato(plato)[1].toString()+" €";
+					//o[i][2]=(int)getInfoPorPlato(plato)[0]+" KCal";
+					//o[i][3]=getInfoPorPlato(plato)[1].toString()+" €";
+					o[i][2]=control.calcularCalorias(plato.getId())+" KCal";
+					o[i][3]=control.calcularPrecio(plato.getId())+" €";
 					o[i][4]=plato.getValoracion();				
 			} catch (DAOExcepcion e1) {
 				// TODO Auto-generated catch block
