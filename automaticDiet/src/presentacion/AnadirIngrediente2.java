@@ -91,12 +91,14 @@ public class AnadirIngrediente2 extends JDialog {
 		listIngredientes.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				Boolean todoOk = true;
-				for(Ingrediente i : listaIngredientesPersistidos)
-					if(i.getId()==listIngredientes.getSelectedValue().getId())
-						todoOk=false;
-				for (PlatoIngrediente pi : listaIngredientesNuevos)
-					if(pi.getIngrediente().getId()==listIngredientes.getSelectedValue().getId())
-						todoOk=false;
+				if(listaIngredientesPersistidos!=null)
+					for(Ingrediente i : listaIngredientesPersistidos)
+						if(i.getId()==listIngredientes.getSelectedValue().getId())
+							todoOk=false;
+				if(listaIngredientesNuevos!=null)
+					for (PlatoIngrediente pi : listaIngredientesNuevos)
+						if(pi.getIngrediente().getId()==listIngredientes.getSelectedValue().getId())
+							todoOk=false;
 				
 				okButton.setEnabled(todoOk);
 				
