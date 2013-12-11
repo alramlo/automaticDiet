@@ -31,6 +31,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Registrar_usuario extends JDialog {
@@ -53,6 +55,7 @@ public class Registrar_usuario extends JDialog {
 	
 	private String file;
 	private String dir;
+	private Image image;
 	
 	private Controlador control;
 
@@ -94,6 +97,7 @@ public class Registrar_usuario extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			crear = new JButton("Registrar");
+			crear.setBounds(279, 526, 100, 30);
 			crear.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -124,6 +128,10 @@ public class Registrar_usuario extends JDialog {
 						{
 							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
+						else if ( image ==null)
+						{
+							JOptionPane.showMessageDialog(null, "Seleccione una imagen para su usuario", "Info", JOptionPane.INFORMATION_MESSAGE);
+						}
 						else
 						{
 							Usuario user = new Usuario();
@@ -136,6 +144,13 @@ public class Registrar_usuario extends JDialog {
 							user.setCorreo(mail.getText());
 							user.setUsername(usuario.getText());
 							user.setPassword(pass.getText());
+			
+							File fichero=null; 
+							if(dir!=null&&file!=null){
+								fichero = new File(dir+"\\"+file);
+								if(fichero!=null)
+									user.setImagen(FileToByte(fichero));
+							}
 							
 							control.addUsuario(user);
 						}
@@ -152,55 +167,70 @@ public class Registrar_usuario extends JDialog {
 		}
 		
 		JLabel lblDni = new JLabel("DNI:");
+		lblDni.setBounds(15, 18, 80, 20);
 		lblDni.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setBounds(167, 51, 62, 25);
 		lblNombre.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblApellidos = new JLabel("Apellidos:");
+		lblApellidos.setBounds(15, 88, 80, 20);
 		lblApellidos.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n:");
+		lblDireccin.setBounds(15, 123, 80, 20);
 		lblDireccin.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblPais = new JLabel("Pais:");
+		lblPais.setBounds(15, 158, 80, 20);
 		lblPais.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblPoblacin = new JLabel("Poblaci\u00F3n:");
+		lblPoblacin.setBounds(15, 193, 80, 20);
 		lblPoblacin.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setBounds(15, 228, 80, 20);
 		lblEmail.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		ciudad = new JTextField();
+		ciudad.setBounds(105, 192, 274, 23);
 		ciudad.setFont(new Font("Arial", Font.PLAIN, 14));
 		ciudad.setColumns(10);
 		
 		mail = new JTextField();
+		mail.setBounds(105, 227, 274, 23);
 		mail.setFont(new Font("Arial", Font.PLAIN, 14));
 		mail.setColumns(10);
 		
 		pais = new JTextField();
+		pais.setBounds(105, 157, 274, 23);
 		pais.setFont(new Font("Arial", Font.PLAIN, 14));
 		pais.setColumns(10);
 		
 		direccion = new JTextField();
+		direccion.setBounds(105, 122, 274, 23);
 		direccion.setFont(new Font("Arial", Font.PLAIN, 14));
 		direccion.setColumns(10);
 		
 		apellidos = new JTextField();
+		apellidos.setBounds(105, 87, 274, 23);
 		apellidos.setFont(new Font("Arial", Font.PLAIN, 14));
 		apellidos.setColumns(10);
 		
 		nombre = new JTextField();
+		nombre.setBounds(239, 52, 140, 23);
 		nombre.setFont(new Font("Arial", Font.PLAIN, 14));
 		nombre.setColumns(10);
 		
 		dni = new JTextField();
+		dni.setBounds(105, 17, 274, 23);
 		dni.setFont(new Font("Arial", Font.PLAIN, 14));
 		dni.setColumns(10);
 		
 		btn_imagen = new JButton("IMAGEN");
+		btn_imagen.setBounds(147, 391, 120, 120);
 		btn_imagen.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -234,7 +264,7 @@ public class Registrar_usuario extends JDialog {
 						e1.printStackTrace();
 					}
 
-					Image image=im.getImage();
+					image=im.getImage();
 					Image newImage;
 					if(width>112 || height>98)
 					{
@@ -252,125 +282,69 @@ public class Registrar_usuario extends JDialog {
 		btn_imagen.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		usuario = new JTextField();
+		usuario.setFont(new Font("Arial", Font.PLAIN, 14));
+		usuario.setBounds(159, 280, 220, 23);
 		usuario.setColumns(10);
 		
-		JLabel lblUsuario = new JLabel("Usuario:");
+		JLabel lblUsuario = new JLabel("Nombre de usuario:");
+		lblUsuario.setBounds(15, 280, 134, 20);
 		lblUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		pass = new JTextField();
+		pass.setFont(new Font("Arial", Font.PLAIN, 14));
+		pass.setBounds(159, 314, 220, 23);
 		pass.setColumns(10);
 		
 		lblPass = new JLabel("Contrase\u00F1a:");
+		lblPass.setBounds(15, 314, 134, 20);
 		lblPass.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		rpass = new JTextField();
+		rpass.setFont(new Font("Arial", Font.PLAIN, 14));
+		rpass.setBounds(159, 348, 220, 23);
 		rpass.setColumns(10);
 		
-		lblRepetir = new JLabel("Repetir:");
+		lblRepetir = new JLabel("Repetir contrase\u00F1a:");
+		lblRepetir.setBounds(15, 348, 134, 20);
 		lblRepetir.setFont(new Font("Arial", Font.PLAIN, 14));
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap(10, Short.MAX_VALUE)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(apellidos, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE))
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addComponent(lblDireccin, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-										.addComponent(direccion, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE))
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblPoblacin, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
-										.addGap(10)
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
-											.addComponent(pais, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
-											.addComponent(ciudad, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
-											.addComponent(mail, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)))
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblDni, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
-										.addGap(10)
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(dni, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
-											.addComponent(nombre, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)))
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblPass, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
-										.addGap(10)
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(usuario, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
-											.addComponent(pass, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)))))
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addGap(132)
-								.addComponent(btn_imagen, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addComponent(lblRepetir, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(rpass)))
-						.addComponent(crear, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDni, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(dni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(apellidos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDireccin, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(direccion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPais, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(pais, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPoblacin, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ciudad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(mail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(30)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(usuario, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblUsuario, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(pass, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPass, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(rpass, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblRepetir, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-					.addComponent(btn_imagen, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-					.addGap(15)
-					.addComponent(crear, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		contentPanel.setLayout(gl_contentPanel);
+		contentPanel.setLayout(null);
+		contentPanel.add(lblApellidos);
+		contentPanel.add(apellidos);
+		contentPanel.add(lblDireccin);
+		contentPanel.add(direccion);
+		contentPanel.add(lblPoblacin);
+		contentPanel.add(lblEmail);
+		contentPanel.add(lblPais);
+		contentPanel.add(pais);
+		contentPanel.add(ciudad);
+		contentPanel.add(mail);
+		contentPanel.add(lblNombre);
+		contentPanel.add(lblDni);
+		contentPanel.add(dni);
+		contentPanel.add(nombre);
+		contentPanel.add(lblUsuario);
+		contentPanel.add(lblPass);
+		contentPanel.add(usuario);
+		contentPanel.add(pass);
+		contentPanel.add(btn_imagen);
+		contentPanel.add(lblRepetir);
+		contentPanel.add(rpass);
+		contentPanel.add(crear);
+	}
+	
+	private byte[] FileToByte(File f){
+		FileInputStream fis;
+		byte[] zipped=null;
+		try {
+			fis = new FileInputStream(f);
+			zipped = new byte[ (int) f.length()];
+			fis.read(zipped);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}	
+		return zipped;		
 	}
 }
