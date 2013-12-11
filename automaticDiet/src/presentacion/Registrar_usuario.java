@@ -91,13 +91,13 @@ public class Registrar_usuario extends JDialog {
 		setFont(new Font("Arial", Font.PLAIN, 14));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Nuevo Usuario");
-		setBounds(100, 100, 400, 600);
+		setBounds(100, 100, 500, 460);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			crear = new JButton("Registrar");
-			crear.setBounds(279, 526, 100, 30);
+			crear.setBounds(384, 391, 100, 30);
 			crear.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -167,70 +167,70 @@ public class Registrar_usuario extends JDialog {
 		}
 		
 		JLabel lblDni = new JLabel("DNI:");
-		lblDni.setBounds(15, 18, 80, 20);
+		lblDni.setBounds(15, 204, 48, 20);
 		lblDni.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(167, 51, 62, 25);
+		lblNombre.setBounds(207, 202, 62, 25);
 		lblNombre.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblApellidos = new JLabel("Apellidos:");
-		lblApellidos.setBounds(15, 88, 80, 20);
+		lblApellidos.setBounds(15, 238, 62, 20);
 		lblApellidos.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n:");
-		lblDireccin.setBounds(15, 123, 80, 20);
+		lblDireccin.setBounds(15, 273, 63, 20);
 		lblDireccin.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblPais = new JLabel("Pais:");
-		lblPais.setBounds(15, 158, 80, 20);
+		lblPais.setBounds(15, 308, 80, 20);
 		lblPais.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblPoblacin = new JLabel("Poblaci\u00F3n:");
-		lblPoblacin.setBounds(15, 193, 80, 20);
+		lblPoblacin.setBounds(207, 308, 80, 20);
 		lblPoblacin.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(15, 228, 80, 20);
+		lblEmail.setBounds(15, 149, 80, 20);
 		lblEmail.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		ciudad = new JTextField();
-		ciudad.setBounds(105, 192, 274, 23);
+		ciudad.setBounds(279, 307, 205, 23);
 		ciudad.setFont(new Font("Arial", Font.PLAIN, 14));
 		ciudad.setColumns(10);
 		
 		mail = new JTextField();
-		mail.setBounds(105, 227, 274, 23);
+		mail.setBounds(87, 148, 397, 23);
 		mail.setFont(new Font("Arial", Font.PLAIN, 14));
 		mail.setColumns(10);
 		
 		pais = new JTextField();
-		pais.setBounds(105, 157, 274, 23);
+		pais.setBounds(87, 306, 110, 23);
 		pais.setFont(new Font("Arial", Font.PLAIN, 14));
 		pais.setColumns(10);
 		
 		direccion = new JTextField();
-		direccion.setBounds(105, 122, 274, 23);
+		direccion.setBounds(87, 273, 397, 23);
 		direccion.setFont(new Font("Arial", Font.PLAIN, 14));
 		direccion.setColumns(10);
 		
 		apellidos = new JTextField();
-		apellidos.setBounds(105, 87, 274, 23);
+		apellidos.setBounds(87, 238, 397, 23);
 		apellidos.setFont(new Font("Arial", Font.PLAIN, 14));
 		apellidos.setColumns(10);
 		
 		nombre = new JTextField();
-		nombre.setBounds(239, 52, 140, 23);
+		nombre.setBounds(279, 203, 205, 23);
 		nombre.setFont(new Font("Arial", Font.PLAIN, 14));
 		nombre.setColumns(10);
 		
 		dni = new JTextField();
-		dni.setBounds(105, 17, 274, 23);
+		dni.setBounds(87, 203, 110, 23);
 		dni.setFont(new Font("Arial", Font.PLAIN, 14));
 		dni.setColumns(10);
 		
 		btn_imagen = new JButton("IMAGEN");
-		btn_imagen.setBounds(147, 391, 120, 120);
+		btn_imagen.setBounds(15, 14, 100, 100);
 		btn_imagen.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -276,6 +276,7 @@ public class Registrar_usuario extends JDialog {
 					}
 					
 					btn_imagen.setIcon(new ImageIcon(newImage));
+					btn_imagen.setText("");
 				}
 			}
 		});
@@ -283,29 +284,29 @@ public class Registrar_usuario extends JDialog {
 		
 		usuario = new JTextField();
 		usuario.setFont(new Font("Arial", Font.PLAIN, 14));
-		usuario.setBounds(159, 280, 220, 23);
+		usuario.setBounds(259, 21, 225, 23);
 		usuario.setColumns(10);
 		
 		JLabel lblUsuario = new JLabel("Nombre de usuario:");
-		lblUsuario.setBounds(15, 280, 134, 20);
+		lblUsuario.setBounds(125, 22, 124, 20);
 		lblUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		pass = new JTextField();
 		pass.setFont(new Font("Arial", Font.PLAIN, 14));
-		pass.setBounds(159, 314, 220, 23);
+		pass.setBounds(259, 53, 225, 23);
 		pass.setColumns(10);
 		
 		lblPass = new JLabel("Contrase\u00F1a:");
-		lblPass.setBounds(15, 314, 134, 20);
+		lblPass.setBounds(125, 54, 134, 20);
 		lblPass.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		rpass = new JTextField();
 		rpass.setFont(new Font("Arial", Font.PLAIN, 14));
-		rpass.setBounds(159, 348, 220, 23);
+		rpass.setBounds(259, 85, 225, 23);
 		rpass.setColumns(10);
 		
 		lblRepetir = new JLabel("Repetir contrase\u00F1a:");
-		lblRepetir.setBounds(15, 348, 134, 20);
+		lblRepetir.setBounds(125, 86, 134, 20);
 		lblRepetir.setFont(new Font("Arial", Font.PLAIN, 14));
 		contentPanel.setLayout(null);
 		contentPanel.add(lblApellidos);
