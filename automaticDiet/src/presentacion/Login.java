@@ -161,7 +161,7 @@ public class Login extends JDialog
 								}
 								else if(pass.equals(""))
 									{
-										JOptionPane.showMessageDialog(null, String.format("ERROR: Introduzca una contraseña", JOptionPane.ERROR_MESSAGE));
+										JOptionPane.showMessageDialog(null, String.format("ERROR: USUARIO INCORRECTO", JOptionPane.ERROR_MESSAGE));
 									}
 									else
 										{
@@ -229,7 +229,7 @@ public class Login extends JDialog
 													}
 												else
 												{
-													JOptionPane.showMessageDialog(null, String.format("ERROR: CONTRASEÑA INCORRECTA", JOptionPane.ERROR_MESSAGE));
+													JOptionPane.showMessageDialog(null, String.format("ERROR: USUARIO INCORRECTO", JOptionPane.ERROR_MESSAGE));
 												}
 										}							
 

@@ -156,7 +156,12 @@ public class AutomaticDiet
 		
 		JLabel label = new JLabel("");
 		//label.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/userIcon.jpg")));
+		try{
 		label.setIcon(new ImageIcon(control.getUsuarioActual().getImagen()));
+		}
+		catch(NullPointerException e){
+			System.err.println(e);
+		}
 		label.setHorizontalTextPosition(SwingConstants.CENTER);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
