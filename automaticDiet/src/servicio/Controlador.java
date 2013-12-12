@@ -491,6 +491,11 @@ public class Controlador {
 		return nombresDietas;
 	}
 	
+	public List<Dieta> getListDietas(Usuario user) {
+		return dal.getDietas(user);
+		
+	}
+	
 	public String[] getPlatosDieta(int id) {
 		List<Plato> platos = dal.getPlatosDieta(id);
 		String [] nombresPlatos = new String[platos.size()];
