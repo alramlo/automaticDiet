@@ -13,6 +13,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -48,9 +49,9 @@ public class Registrar_usuario extends JDialog {
 	private JTextField dni;
 	private JButton btn_imagen;
 	private JTextField usuario;
-	private JTextField pass;
+	private JPasswordField pass;
 	private JLabel lblPass;
-	private JTextField rpass;
+	private JPasswordField rpass;
 	private JLabel lblRepetir;
 	
 	private String file;
@@ -291,7 +292,7 @@ public class Registrar_usuario extends JDialog {
 		lblUsuario.setBounds(125, 22, 124, 20);
 		lblUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
 		
-		pass = new JTextField();
+		pass = new JPasswordField();
 		pass.setFont(new Font("Arial", Font.PLAIN, 14));
 		pass.setBounds(259, 53, 225, 23);
 		pass.setColumns(10);
@@ -300,7 +301,7 @@ public class Registrar_usuario extends JDialog {
 		lblPass.setBounds(125, 54, 134, 20);
 		lblPass.setFont(new Font("Arial", Font.PLAIN, 14));
 		
-		rpass = new JTextField();
+		rpass = new JPasswordField();
 		rpass.setFont(new Font("Arial", Font.PLAIN, 14));
 		rpass.setBounds(259, 85, 225, 23);
 		rpass.setColumns(10);
