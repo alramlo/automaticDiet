@@ -214,7 +214,7 @@ public class AutomaticDiet
 		
 		final JTabbedPane tabsMenuUsuario = new JTabbedPane(JTabbedPane.LEFT);
 		tabsMenuUsuario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		tabsMenuUsuario.setBounds(0, 44, 190, 208);
+		tabsMenuUsuario.setBounds(0, 44, 190, 237);
 		tabsMenuUsuario.setVisible(false);
 		panel_izquierda.add(tabsMenuUsuario);
 		tabsMenuUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -380,7 +380,7 @@ public class AutomaticDiet
 				menu_indicadores.setOpaque(false);
 				menu_indicadores.setMargin(new Insets(2, 2, 2, 2));
 				menu_indicadores.setHorizontalTextPosition(SwingConstants.CENTER);
-				menu_indicadores.setFont(new Font("Arial", Font.PLAIN, 14));
+				menu_indicadores.setFont(new Font("Arial", Font.PLAIN, 12));
 				menu_indicadores.setBorderPainted(false);
 				menu_indicadores.setBorder(null);
 				
@@ -407,6 +407,25 @@ public class AutomaticDiet
 				menu_usuario.add(menu_indicadores);
 				menu_usuario.add(menu_dieta_asignada2);
 				menu_usuario.add(menu_elaboracion2);
+				
+				JButton gestionDietas = new JButton("Gesti\u00F3n");
+				gestionDietas.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						panel_central.setBorder(new TitledBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(128, 128, 128)), "Gestión de mis dietas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						cambiaPanel(new GestionDietas());
+						
+					}
+				});
+				gestionDietas.setSelected(true);
+				gestionDietas.setOpaque(false);
+				gestionDietas.setMargin(new Insets(2, 2, 2, 2));
+				gestionDietas.setHorizontalTextPosition(SwingConstants.CENTER);
+				gestionDietas.setFont(new Font("Arial", Font.PLAIN, 14));
+				gestionDietas.setBorderPainted(false);
+				gestionDietas.setBorder(null);
+				gestionDietas.setBounds(0, 170, 73, 44);
+				menu_usuario.add(gestionDietas);
 				menu_dieta_asignada2.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent arg0)
