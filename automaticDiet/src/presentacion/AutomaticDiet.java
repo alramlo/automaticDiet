@@ -4,23 +4,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -517,6 +506,25 @@ public class AutomaticDiet
 //						.addComponent(menu_buscador_grupos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 //			);
 		menu_foro.setLayout(gl_menu_foro);
+		
+		JButton logoutButton = new JButton("LOGOUT");
+		if(control.getUsuarioActual()==null){
+			logoutButton.setEnabled(false);
+		}
+		else{
+			logoutButton.setEnabled(true);
+		}
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				control.setUsuarioActual(null);
+				new Login().setVisible(true);
+				automatic_diet.dispose();
+			}
+		});
+		logoutButton.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/gnome_logout.png")));
+		logoutButton.setFont(new Font("Arial", Font.BOLD, 16));
+		logoutButton.setBounds(10, 301, 180, 32);
+		panel_izquierda.add(logoutButton);
 		automatic_diet.getContentPane().setLayout(groupLayout);
 		automatic_diet.setBounds(100, 100, 487, 331);
 		automatic_diet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
