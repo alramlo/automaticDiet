@@ -256,4 +256,8 @@ public class DAL {
 	public Ingrediente findIngrediente(int id){
 		return ingredienteDAO.findIngrediente(id);
 	}
+	
+	public List<Dieta> getDietasLibres(){
+		return dietaDAO.getDietasLibres();
+	}
 }

@@ -41,6 +41,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GestionDietas extends JPanel {
 
@@ -50,6 +52,8 @@ public class GestionDietas extends JPanel {
 
 	private Controlador control;
 	private Usuario userConected;
+	private JButton buttonAnadir;
+	private JButton buttonModificar;
 	private final JButton btnEliminar = new JButton("Eliminar");
 	private JTable table;
 	private List<Dieta> listaDietas;
@@ -66,11 +70,13 @@ public class GestionDietas extends JPanel {
 		add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JButton buttonAnadir = new JButton("A\u00F1adir");
+		buttonAnadir = new JButton("A\u00F1adir");
 		panel.add(buttonAnadir);
 
-		JButton buttonModificar = new JButton("Modificar");
+		buttonModificar = new JButton("Modificar");
+		buttonModificar.setEnabled(false);
 		panel.add(buttonModificar);
+		btnEliminar.setEnabled(false);
 		panel.add(btnEliminar);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -78,6 +84,26 @@ public class GestionDietas extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				System.out.println("Modificamos la tabla");
+				//System.out.println((Date)table.getValueAt(table.getSelectedRow(), 2));
+				Dieta dietaAux =  control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
+				Date fechaActual = new Date();
+				if(fechaActual.compareTo(dietaAux.getFechaInicial())<0){
+					buttonModificar.setEnabled(true);
+					btnEliminar.setEnabled(true);
+				}
+				else{
+					buttonModificar.setEnabled(false);
+					btnEliminar.setEnabled(false);
+					
+				}
+				
+			}
+		});
 		scrollPane.setViewportView(table);
 		table.setFont(new Font("Arial", Font.PLAIN, 16));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

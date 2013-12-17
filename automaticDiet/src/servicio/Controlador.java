@@ -545,5 +545,9 @@ public class Controlador {
 	public Ingrediente findIngrediente(int id){
 		return dal.findIngrediente(id);
 	}
+	
+	public List<Dieta> getDietasLibres(){
+		return dal.getDietasLibres();
+	}
 }
 
