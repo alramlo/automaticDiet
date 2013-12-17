@@ -99,7 +99,7 @@ public class NuevoPlato2 extends JFrame {
 	 * @throws Exception 
 	 */
 	public NuevoPlato2(Plato p, Usuario u, GestionPlatos gestionPlatos) throws Exception {
-		setTitle("A\u00F1adir plato");
+		setTitle("A\u00F1adir/Modificar plato");
 		
 		usuario=u;
 		//Comprobamos si el plato es nuevo
