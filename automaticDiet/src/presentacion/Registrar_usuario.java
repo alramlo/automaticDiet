@@ -35,11 +35,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
 
 public class Registrar_usuario extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5075395504482939331L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton crear;
 	private JTextField ciudad;
@@ -159,6 +164,20 @@ public class Registrar_usuario extends JDialog {
 									user.setImagen(FileToByte(fichero));
 							}
 							control.addUsuario(user);
+							control.setUsuarioActual(user);
+							AutomaticDiet ventanaUsuario = new AutomaticDiet();
+							ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
+							ventanaUsuario.getAutomatic_diet().setVisible(true);
+							
+							Bienvenida bienvenida = new Bienvenida();
+							bienvenida.start();
+							
+							try {
+								finalize();
+								dispose();
+							} catch (Throwable e2) {
+								e2.printStackTrace();
+							}
 						}
 						
 					}

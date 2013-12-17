@@ -42,6 +42,7 @@ public class Login extends JDialog
 	private JTextField tfUser;
 	private JPasswordField tfPass;
 	private JButton buttonHospital;
+	static private Login login;
 	
 	private List<Usuario> listaUsuarios;
 
@@ -58,7 +59,7 @@ public class Login extends JDialog
 				try
 				{
 					UIManager.setLookAndFeel(new NimbusLookAndFeel());
-					Login login = new Login();
+					login = new Login();
 					login.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					login.setLocationRelativeTo(null);
 					login.setVisible(true);
@@ -343,8 +344,9 @@ public class Login extends JDialog
 	
 	public static void crearDatos(Controlador c){
 		Registrar_usuario ventanaRegistro = new Registrar_usuario();
-		ventanaRegistro.setModal(true);
-		ventanaRegistro.setLocationRelativeTo(null);
+		//ventanaRegistro.setModal(true);
+		//ventanaRegistro.setLocationRelativeTo(null);
+		login.dispose();
 		ventanaRegistro.setVisible(true);
 	}
 }
