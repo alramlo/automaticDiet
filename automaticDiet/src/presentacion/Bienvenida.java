@@ -53,26 +53,25 @@ public class Bienvenida extends Thread {
 		 */
 		public BienvenidaJDialog() throws DominioExcepcion, InterruptedException {
 			control = Controlador.dameControlador();
-
+			
 			setIconImage(Toolkit.getDefaultToolkit().getImage(BienvenidaJDialog.class.getResource("/iconos/logo_icon.png")));
 			setTitle("AutomaticDiet - Bienvenida");
-			control = Controlador.dameControlador();
-			setBounds(100, 100, 484, 412);
+			setBounds(100, 100, 484, 500);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
 			contentPanel.setLayout(null);
 			
-			JLabel lblHola = new JLabel("Hola "+control.getUsuarioActual().getNombre()+" "+control.getUsuarioActual().getApellidos());
+			JLabel lblHola = new JLabel("\u00A1 Hola "+control.getUsuarioActual().getNombre()+" "+control.getUsuarioActual().getApellidos()+" !");
 			lblHola.setFont(new Font("Arial", Font.PLAIN, 23));
 			lblHola.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblHola.setHorizontalAlignment(SwingConstants.CENTER);
-			lblHola.setBounds(0, 9, 468, 42);
+			lblHola.setBounds(10, 79, 448, 42);
 			contentPanel.add(lblHola);
 			
 			JPanel panel = new JPanel();
 			panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-			panel.setBounds(10, 62, 448, 301);
+			panel.setBounds(10, 132, 448, 301);
 			contentPanel.add(panel);
 			panel.setLayout(null);
 			
@@ -97,6 +96,13 @@ public class Bienvenida extends Thread {
 			label_2.setFont(new Font("Tahoma", Font.PLAIN, 51));
 			label_2.setBounds(3, 216, 441, 80);
 			panel.add(label_2);
+			
+			JLabel lblNewLabel = new JLabel("Login Correcto");
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setForeground(Color.BLUE);
+			lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 30));
+			lblNewLabel.setBounds(10, 11, 448, 57);
+			contentPanel.add(lblNewLabel);
 
 		}
 		
