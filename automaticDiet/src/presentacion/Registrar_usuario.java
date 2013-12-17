@@ -106,6 +106,7 @@ public class Registrar_usuario extends JDialog {
 			{
 				public void actionPerformed(ActionEvent e)
 				{
+					System.out.println( pass.getPassword() );
 					try {
 						if (  	   nombre.getText().isEmpty()
 								|| apellidos.getText().isEmpty()
@@ -119,7 +120,6 @@ public class Registrar_usuario extends JDialog {
 						}
 						else if ( control.getUsuarioPorUsername(usuario.getText()).size()>0)
 						{
-							System.out.println("USUARIO" + control.getUsuarioPorUsername(usuario.getText()));
 							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nick" + usuario.getText(), "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else if ( dni.getText().length() != 9)
@@ -148,8 +148,9 @@ public class Registrar_usuario extends JDialog {
 							user.setPais(pais.getText());
 							user.setPoblacion(ciudad.getText());
 							user.setCorreo(mail.getText());
+							user.setRol("Usuario");
 							user.setUsername(usuario.getText());
-							user.setPassword(pass.getPassword().toString());
+							user.setPassword(new String(pass.getPassword()));
 			
 							File fichero=null; 
 							if(dir!=null&&file!=null){
@@ -157,15 +158,6 @@ public class Registrar_usuario extends JDialog {
 								if(fichero!=null)
 									user.setImagen(FileToByte(fichero));
 							}
-							System.out.println( "\n"+user.getDni()+
-												"\n"+user.getNombre()+
-												"\n"+user.getApellidos()+
-												"\n"+user.getDireccion()+
-												"\n"+user.getPais()+
-												"\n"+user.getPoblacion()+
-												"\n"+user.getCorreo()+
-												"\n"+user.getPassword().toString()+
-												"\n"+user.getUsername());
 							control.addUsuario(user);
 						}
 						
