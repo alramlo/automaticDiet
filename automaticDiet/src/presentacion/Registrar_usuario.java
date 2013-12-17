@@ -90,7 +90,6 @@ public class Registrar_usuario extends JDialog {
 		
 		
 		setResizable(false);
-		setAlwaysOnTop(true);
 		setMaximumSize(new Dimension(600, 800));
 		setMinimumSize(new Dimension(300, 400));
 		setFont(new Font("Arial", Font.PLAIN, 14));
@@ -108,28 +107,29 @@ public class Registrar_usuario extends JDialog {
 				public void actionPerformed(ActionEvent e)
 				{
 					try {
-						if ( dni.getText().length() < 8 )
-						{
-							JOptionPane.showMessageDialog(null, "El DNI no es correcto", "Info", JOptionPane.INFORMATION_MESSAGE);
-						}
-						else if (  nombre.getText()	   ==null
-								|| apellidos.getText() ==null
-								|| direccion.getText() ==null
-								|| pais.getText()	   ==null
-								|| ciudad.getText()	   ==null
-								|| mail.getText()	   ==null
-								|| usuario.getText()   ==null )
+						if (  	   nombre.getText().isEmpty()
+								|| apellidos.getText().isEmpty()
+								|| direccion.getText().isEmpty()
+								|| pais.getText().isEmpty()
+								|| ciudad.getText().isEmpty()
+								|| mail.getText().isEmpty()
+								|| usuario.getText().isEmpty() )
 						{
 							JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos", "Info", JOptionPane.INFORMATION_MESSAGE);
-						} else if ( control.getUsuarioPorUsername(usuario.getText()) != null)
-						{
-							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nick", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
-						else if ( pass.getText().length() < 6 )
+						else if ( control.getUsuarioPorUsername(usuario.getText()).isEmpty())
+						{
+							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nick" + usuario.getText(), "Info", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else if ( dni.getText().length() != 9)
+						{
+							JOptionPane.showMessageDialog(null, "El DNI no es correcto, formato 12345678A", "Info", JOptionPane.INFORMATION_MESSAGE);
+						} 
+						else if ( pass.getPassword().length < 6 )
 						{
 							JOptionPane.showMessageDialog(null, "Contraseña demasiado debil, introduzca al menos 6 caracteres", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
-						else if ( pass.getText() != rpass.getText() )
+						else if ( pass.getPassword().equals(rpass.getPassword()) )
 						{
 							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -148,7 +148,7 @@ public class Registrar_usuario extends JDialog {
 							user.setPoblacion(ciudad.getText());
 							user.setCorreo(mail.getText());
 							user.setUsername(usuario.getText());
-							user.setPassword(pass.getText());
+							user.setPassword(pass.getPassword().toString());
 			
 							File fichero=null; 
 							if(dir!=null&&file!=null){
@@ -156,7 +156,15 @@ public class Registrar_usuario extends JDialog {
 								if(fichero!=null)
 									user.setImagen(FileToByte(fichero));
 							}
-							
+							System.out.println( "\n"+user.getDni()+
+												"\n"+user.getNombre()+
+												"\n"+user.getApellidos()+
+												"\n"+user.getDireccion()+
+												"\n"+user.getPais()+
+												"\n"+user.getPoblacion()+
+												"\n"+user.getCorreo()+
+												"\n"+user.getPassword().toString()+
+												"\n"+user.getUsername());
 							control.addUsuario(user);
 						}
 						
@@ -303,7 +311,7 @@ public class Registrar_usuario extends JDialog {
 		
 		btn_imagen = new JButton("IM\u00C1GEN\r\n");
 		btn_imagen.setToolTipText("Carga una im\u00E1gen");
-		btn_imagen.setBounds(19, 25, 125, 133);
+		btn_imagen.setBounds(14, 18, 140, 140);
 		panel_2.add(btn_imagen);
 		btn_imagen.addActionListener(new ActionListener()
 		{
@@ -315,14 +323,12 @@ public class Registrar_usuario extends JDialog {
 				
 				if (rVal == JFileChooser.APPROVE_OPTION)
 				{
-					file=c.getSelectedFile().getName();
-					dir=c.getCurrentDirectory().toString();
+					file = c.getSelectedFile().getName();
+					dir  = c.getCurrentDirectory().toString();
 
-					File fichero=null;
+					File fichero = new File(dir+"\\"+file);
 
-					fichero = new File(dir+"\\"+file);
-
-					ImageIcon im=null;
+					ImageIcon im = null;
 					BufferedImage buffer;
 					int width=0,height=0;
 
@@ -340,9 +346,9 @@ public class Registrar_usuario extends JDialog {
 
 					image=im.getImage();
 					Image newImage;
-					if(width>112 || height>98)
+					if(width!=140 || height!=140)
 					{
-						newImage= image.getScaledInstance(width/3, height/3, java.awt.Image.SCALE_SMOOTH);
+						newImage= image.getScaledInstance(140, 140, java.awt.Image.SCALE_SMOOTH);
 					}
 					else
 					{
@@ -350,7 +356,7 @@ public class Registrar_usuario extends JDialog {
 					}
 					
 					btn_imagen.setIcon(new ImageIcon(newImage));
-					btn_imagen.setText("");
+					btn_imagen.setText(null);
 				}
 			}
 		});

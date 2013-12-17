@@ -9,6 +9,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -17,6 +18,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import modelo.Dieta;
 import modelo.Seguimiento;
 
 import org.jfree.chart.ChartFactory;
@@ -47,12 +49,20 @@ import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class Indicadores_personales extends JPanel {
 
 	/**
 	 * 
 	 */
+	private Date ini_dieta;
+	private Date fin_dieta;
+	private Dieta dieta_select;
+	private JComboBox<String> dietas;
+	private JComboBox<String> comboBox;
+	
 	private Controlador control;
 	private JPanel registro = new JPanel();
 	private JPanel contenidoGraf;
@@ -71,18 +81,22 @@ public class Indicadores_personales extends JPanel {
 	
 	private Seguimiento[] datos_usuario;
 	private Date today = calendario.getDate();
-	private Date aReg = today;
-	private Date currentDay = today;
+	private Date aReg = null;
+	private Date currentDay = null;
 	private int mes, year;
+	private int mes_ini, year_ini, mes_fin, year_fin;
 	private SimpleDateFormat sdf;
 	
 	ChartPanel grafica_panel;
-	JMonthChooser monthChooser;
-	JYearChooser yearChooser;
 	
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel panel = new JPanel();
+	private final JLabel lblFechaDeFin = new JLabel("Fecha de fin");
+	private JTextField fini;
+	private JTextField ffin;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Constructor del panel Indicadores personales
@@ -96,10 +110,19 @@ public class Indicadores_personales extends JPanel {
 			e3.printStackTrace();
 		}
 		
-		datos_usuario = control.getSegUsuario(1);
+		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
+//		datos_usuario = control.getSegUsuario(11);
+		
+		String[] dietas_usuario = control.getDietas(control.getUsuarioActual());
+//		String[] dietas_usuario = control.getDietas(control.getUsuarioPorId(11));
+		
+//		dietas = new JComboBox();
+		dietas = new JComboBox<String>(dietas_usuario);
 		
 		mes = calendario.getCalendar().getInstance().MONTH;
 		year = calendario.getYearChooser().getYear();
+		dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
+		
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -158,6 +181,11 @@ public class Indicadores_personales extends JPanel {
 				{
 					poderRegistrar(false);
 				}
+				else if(aReg.before(ini_dieta) || aReg.after(fin_dieta))
+				{
+					poderRegistrar(false);
+					JOptionPane.showMessageDialog(null, "Esta fecha no tiene dieta asignada", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
 				else
 				{
 					poderRegistrar(true);
@@ -188,6 +216,28 @@ public class Indicadores_personales extends JPanel {
 		calendario.setWeekdayForeground(new Color(0, 0, 0));
 		calendario.setFont(new Font("Arial", Font.PLAIN, 20));
 		calendario.setDecorationBackgroundColor(new Color(255, 153, 102));
+		
+		dietas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
+				comboBox.setSelectedIndex(dietas.getSelectedIndex());
+				diasDieta();
+				pintaDias(mes_ini, year_ini);
+			}
+		});
+		
+		dietas.setFont(new Font("Arial", Font.PLAIN, 16));
+		
+		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio");
+		lblFechaDeInicio.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		fini = new JTextField();
+		fini.setFont(new Font("Arial", Font.PLAIN, 14));
+		fini.setColumns(10);
+		
+		ffin = new JTextField();
+		ffin.setFont(new Font("Arial", Font.PLAIN, 14));
+		ffin.setColumns(10);
 		GroupLayout gl_registro = new GroupLayout(registro);
 		gl_registro.setHorizontalGroup(
 			gl_registro.createParallelGroup(Alignment.LEADING)
@@ -201,19 +251,43 @@ public class Indicadores_personales extends JPanel {
 							.addComponent(cumplimiento, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
 							.addGap(20)
 							.addComponent(pesaje, GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-							.addGap(10))))
+							.addGap(10))
+						.addGroup(gl_registro.createSequentialGroup()
+							.addComponent(dietas, 0, 381, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_registro.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblFechaDeFin, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+								.addComponent(lblFechaDeInicio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 87, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_registro.createParallelGroup(Alignment.LEADING)
+								.addComponent(fini, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+								.addComponent(ffin, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+							.addContainerGap())))
 		);
 		gl_registro.setVerticalGroup(
 			gl_registro.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_registro.createSequentialGroup()
-					.addContainerGap(77, Short.MAX_VALUE)
-					.addComponent(calendario, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap()
+					.addGroup(gl_registro.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_registro.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblFechaDeInicio, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+							.addComponent(fini, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(dietas, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_registro.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFechaDeFin, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+						.addGroup(gl_registro.createSequentialGroup()
+							.addGap(8)
+							.addComponent(ffin)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(calendario, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
 					.addGap(10)
-					.addGroup(gl_registro.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(cumplimiento, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-						.addComponent(pesaje, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_registro.createParallelGroup(Alignment.LEADING)
+						.addComponent(cumplimiento, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+						.addComponent(pesaje, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
 					.addGap(10))
 		);
+		lblFechaDeFin.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		
 		lblCuantoKg.setHorizontalAlignment(SwingConstants.CENTER);
@@ -242,11 +316,11 @@ public class Indicadores_personales extends JPanel {
 			gl_pesaje.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pesaje.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_pesaje.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_pesaje.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblCuantoKg, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_pesaje.createSequentialGroup()
+						.addGroup(gl_pesaje.createSequentialGroup()
 							.addComponent(peso, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
 							.addComponent(btnReg, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
@@ -254,8 +328,8 @@ public class Indicadores_personales extends JPanel {
 			gl_pesaje.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pesaje.createSequentialGroup()
 					.addGap(10)
-					.addComponent(lblCuantoKg, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+					.addComponent(lblCuantoKg, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+					.addGap(24)
 					.addGroup(gl_pesaje.createParallelGroup(Alignment.TRAILING)
 						.addComponent(btnReg, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 						.addComponent(peso, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
@@ -305,10 +379,10 @@ public class Indicadores_personales extends JPanel {
 				.addGroup(gl_cumplimiento.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_cumplimiento.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblHasCumplido, GroupLayout.PREFERRED_SIZE, 220, Short.MAX_VALUE)
+						.addComponent(lblHasCumplido, GroupLayout.PREFERRED_SIZE, 353, Short.MAX_VALUE)
 						.addGroup(gl_cumplimiento.createSequentialGroup()
 							.addComponent(btnSi, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
 							.addComponent(btnNo, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
@@ -316,8 +390,8 @@ public class Indicadores_personales extends JPanel {
 			gl_cumplimiento.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_cumplimiento.createSequentialGroup()
 					.addGap(10)
-					.addComponent(lblHasCumplido, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+					.addComponent(lblHasCumplido, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+					.addGap(24)
 					.addGroup(gl_cumplimiento.createParallelGroup(Alignment.TRAILING)
 						.addComponent(btnSi, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNo, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
@@ -331,28 +405,38 @@ public class Indicadores_personales extends JPanel {
 		
 		tabbedPane.addTab("Grafica de Control de peso", new ImageIcon(Indicadores_personales.class.getResource("/iconos/grafica.png")), panel, null);
 		
-		monthChooser = new JMonthChooser();
-		monthChooser.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent arg0)
-			{
-				pintaGrafica(monthChooser.getMonth()+1, yearChooser.getYear());
-			}
-		});
-		monthChooser.getComboBox().setFont(new Font("Arial", Font.PLAIN, 18));
-		monthChooser.getSpinner().setFont(new Font("Arial", Font.PLAIN, 16));
-		
-		yearChooser = new JYearChooser();
-		yearChooser.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent arg0)
-			{
-				pintaGrafica(monthChooser.getMonth()+1, yearChooser.getYear());
-			}
-		});
-		yearChooser.setFont(new Font("Arial", Font.PLAIN, 18));
-		
 		contenidoGraf = new JPanel();
+		
+//		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>(dietas_usuario);
+		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		dieta_select = control.getDietaPorNombre((String) comboBox.getItemAt(comboBox.getSelectedIndex()));
+		
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dieta_select = control.getDietaPorNombre((String) comboBox.getItemAt(comboBox.getSelectedIndex()));
+				dietas.setSelectedIndex(comboBox.getSelectedIndex());
+				diasDieta();
+				pintaGrafica(mes_ini, year_ini);
+			}
+		});
+		
+		
+		textField = new JTextField();
+		textField.setText((String) null);
+		textField.setFont(new Font("Arial", Font.PLAIN, 14));
+		textField.setColumns(10);
+		
+		JLabel label = new JLabel("Fecha de inicio");
+		label.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		JLabel label_1 = new JLabel("Fecha de fin");
+		label_1.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		textField_1 = new JTextField();
+		textField_1.setText((String) null);
+		textField_1.setFont(new Font("Arial", Font.PLAIN, 14));
+		textField_1.setColumns(10);
 		
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -363,54 +447,44 @@ public class Indicadores_personales extends JPanel {
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(contenidoGraf, GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(0, 513, Short.MAX_VALUE)
-							.addComponent(monthChooser, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-							.addGap(2)
-							.addComponent(yearChooser, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 381, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(391)
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
+			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(monthChooser, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addComponent(yearChooser, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(contenidoGraf, GroupLayout.PREFERRED_SIZE, 465, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(contenidoGraf, GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		contenidoGraf.setLayout(new BoxLayout(contenidoGraf, BoxLayout.X_AXIS));
 		
-		grafica_panel = new ChartPanel(grafica(mes, year));
+		grafica_panel = new ChartPanel(grafica(mes_ini, year_ini));
 		contenidoGraf.add(grafica_panel);
-		GroupLayout gl_yearChooser = new GroupLayout(yearChooser);
-		gl_yearChooser.setHorizontalGroup(
-			gl_yearChooser.createParallelGroup(Alignment.LEADING)
-				.addComponent(yearChooser.getSpinner(), GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-		);
-		gl_yearChooser.setVerticalGroup(
-			gl_yearChooser.createParallelGroup(Alignment.LEADING)
-				.addComponent(yearChooser.getSpinner(), GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-		);
-		yearChooser.setLayout(gl_yearChooser);
-		GroupLayout gl_monthChooser = new GroupLayout(monthChooser);
-		gl_monthChooser.setHorizontalGroup(
-			gl_monthChooser.createParallelGroup(Alignment.LEADING)
-				.addComponent(monthChooser.getSpinner(), GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-		);
-		gl_monthChooser.setVerticalGroup(
-			gl_monthChooser.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_monthChooser.createSequentialGroup()
-					.addComponent(monthChooser.getSpinner(), GroupLayout.PREFERRED_SIZE, 28, Short.MAX_VALUE)
-					.addGap(0))
-		);
-		monthChooser.setLayout(gl_monthChooser);
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		
-		pintaDias(mes, year);
-		diaSeleccionado(today);
+		diasDieta();
+		pintaGrafica(mes_ini, year_ini);
+		pintaDias(mes_ini, year_ini);
 	}
 	
 	private JFreeChart grafica(int m, int y)
@@ -462,38 +536,65 @@ public class Indicadores_personales extends JPanel {
 	
 	private void diaSeleccionado(Date d)
 	{
+		Calendar cal = calendario.getCalendar().getInstance();
+		cal.setTime(calendario.getDate());
+		datos_usuario = control.getSegUsuario(1);
+		cal.set(Calendar.DAY_OF_MONTH,1);
+		Calendar.getInstance();
+		int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
+		Component dias[] = calendario.getDayChooser().getDayPanel().getComponents();
+		
 		if(d!=null)
 		{
-			Calendar cal = calendario.getCalendar().getInstance();
-			cal.setTime(calendario.getDate());
-			cal.set(Calendar.DAY_OF_MONTH,1);
-			Calendar.getInstance();
-			
-			int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
 			if(inicio ==0)
 			{
 				inicio = 7;
 			}
 			
-			Component dias[] = calendario.getDayChooser().getDayPanel().getComponents();
 			sdf = new SimpleDateFormat("dd");
 			int dia = Integer.parseInt(sdf.format(d));
-			dias[5 + inicio + dia].setFont(new Font("Arial", Font.BOLD, 48));
+			dias[5 + inicio + dia].setFont(new Font("Arial", Font.BOLD, 24));
+			dias[5 + inicio + dia].setBackground(Color.BLUE);
 			
-			dia = Integer.parseInt(sdf.format(currentDay));
-			dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
+			if(currentDay!=null)
+			{
+				dia = Integer.parseInt(sdf.format(currentDay));
+				dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
+			}
 			
 			currentDay = d;
 		}
-		else
+		else if (currentDay !=null)
 		{
-			
-			Component dias[] = calendario.getDayChooser().getDayPanel().getComponents();
-			for (int i = 5; i< dias.length;++i)
-			{
-				dias[i].setFont(new Font("Arial", Font.PLAIN, 20));
-			}
+			sdf = new SimpleDateFormat("dd");
+			int dia = Integer.parseInt(sdf.format(currentDay));
+			dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
 		}
+	}
+	
+	private void diasDieta()
+	{
+		
+		ini_dieta = dieta_select.getFechaInicial();
+		fin_dieta = dieta_select.getFechaFinal();
+		
+		sdf = new SimpleDateFormat("dd / MMMM / yyyy");
+		System.out.println(sdf.format(ini_dieta));
+		fini.setText(sdf.format(ini_dieta));
+		textField.setText(sdf.format(ini_dieta));
+		ffin.setText(sdf.format(fin_dieta));
+		textField_1.setText(sdf.format(fin_dieta));
+		
+		sdf = new SimpleDateFormat("MM");
+		mes_ini = Integer.parseInt(sdf.format(ini_dieta));
+		mes_fin = Integer.parseInt(sdf.format(fin_dieta));
+		calendario.getMonthChooser().setMonth(mes_ini-1);
+		
+		sdf = new SimpleDateFormat("yyyy");
+		year_ini = Integer.parseInt(sdf.format(ini_dieta));
+		year_fin = Integer.parseInt(sdf.format(fin_dieta));
+		calendario.getYearChooser().setYear(year_ini);
+		
 	}
 	
 	private void registrar(Seguimiento s)
