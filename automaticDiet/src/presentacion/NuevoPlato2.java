@@ -321,7 +321,7 @@ public class NuevoPlato2 extends JFrame {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 								esNuevo=false;
-								JOptionPane.showMessageDialog(null, "El tiempo es requerido", "Info", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Los campos nombre, elaboración y tiempo son obligatorios.", "Info", JOptionPane.INFORMATION_MESSAGE);
 							}
 						
 						//Metemos la imagen
