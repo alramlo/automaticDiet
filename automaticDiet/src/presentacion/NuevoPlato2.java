@@ -320,6 +320,8 @@ public class NuevoPlato2 extends JFrame {
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
+								esNuevo=false;
+								JOptionPane.showMessageDialog(null, "El tiempo es requerido", "Info", JOptionPane.INFORMATION_MESSAGE);
 							}
 						
 						//Metemos la imagen
@@ -346,11 +348,13 @@ public class NuevoPlato2 extends JFrame {
 							control.updatePlato(plato);
 						}
 						//Añadimos los ingredientes
-						for(PlatoIngrediente pi : platoIngredienteNuevos)
-							control.insertarPlatoIngrediente(pi);
-						gPlatos.poblar();
-						JOptionPane.showMessageDialog(null, "Plato guardado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
-						dispose();
+							for(PlatoIngrediente pi : platoIngredienteNuevos)
+								control.insertarPlatoIngrediente(pi);
+							gPlatos.poblar();
+							if(esNuevo){
+							JOptionPane.showMessageDialog(null, "Plato guardado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+							}
 						}
 				}
 				
@@ -554,11 +558,15 @@ public class NuevoPlato2 extends JFrame {
 				tElaboracion.setText(p.getElaboracion());
 			
 			//Calculamos las calorias
-			contadorCalorias=control.calcularCalorias(plato.getId()).intValue();
+			Long calorias = control.calcularCalorias(plato.getId());
+			if(calorias!=null)
+			contadorCalorias=calorias.intValue();
 			tCalorias.setText(contadorCalorias.toString());
 			
-			//Calculamos el precio		
-			contadorPrecio=contadorPrecio+control.calcularPrecio(plato.getId());
+			//Calculamos el precio	
+			Double precio = control.calcularPrecio(plato.getId());
+			if(precio!=null)
+			contadorPrecio=contadorPrecio+precio;
 			tPrecio.setText(contadorPrecio.toString());
 			
 			

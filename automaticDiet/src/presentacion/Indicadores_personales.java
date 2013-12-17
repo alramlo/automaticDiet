@@ -174,6 +174,7 @@ public class Indicadores_personales extends JPanel {
 		calendario.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent arg0)
 			{
+				if(datos_usuario.length!=0){
 				pintaDias(mes, year);
 				aReg = calendario.getDate();
 				diaSeleccionado(aReg);
@@ -190,6 +191,7 @@ public class Indicadores_personales extends JPanel {
 				{
 					poderRegistrar(true);
 				}
+			}
 			}
 		});
 		
@@ -221,6 +223,7 @@ public class Indicadores_personales extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
 				comboBox.setSelectedIndex(dietas.getSelectedIndex());
+				if(datos_usuario.length!=0)
 				diasDieta();
 				pintaDias(mes_ini, year_ini);
 			}
@@ -416,6 +419,7 @@ public class Indicadores_personales extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				dieta_select = control.getDietaPorNombre((String) comboBox.getItemAt(comboBox.getSelectedIndex()));
 				dietas.setSelectedIndex(comboBox.getSelectedIndex());
+				if(datos_usuario.length!=0)
 				diasDieta();
 				pintaGrafica(mes_ini, year_ini);
 			}
@@ -482,6 +486,7 @@ public class Indicadores_personales extends JPanel {
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		
+		if(datos_usuario.length!=0)
 		diasDieta();
 		pintaGrafica(mes_ini, year_ini);
 		pintaDias(mes_ini, year_ini);
@@ -538,7 +543,7 @@ public class Indicadores_personales extends JPanel {
 	{
 		Calendar cal = calendario.getCalendar().getInstance();
 		cal.setTime(calendario.getDate());
-		datos_usuario = control.getSegUsuario(1);
+		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
 		cal.set(Calendar.DAY_OF_MONTH,1);
 		Calendar.getInstance();
 		int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
