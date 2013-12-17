@@ -516,14 +516,14 @@ public class AutomaticDiet
 		}
 		logoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				control.setUsuarioActual(null);
+				control.logout();
 				new Login().setVisible(true);
 				automatic_diet.dispose();
 			}
 		});
 		logoutButton.setIcon(new ImageIcon(AutomaticDiet.class.getResource("/iconos/gnome_logout.png")));
 		logoutButton.setFont(new Font("Arial", Font.BOLD, 16));
-		logoutButton.setBounds(10, 301, 180, 32);
+		logoutButton.setBounds(10, 559, 180, 32);
 		panel_izquierda.add(logoutButton);
 		automatic_diet.getContentPane().setLayout(groupLayout);
 		automatic_diet.setBounds(100, 100, 487, 331);
