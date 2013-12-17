@@ -49,6 +49,24 @@ public class DietaDAO extends AbstractDAO{
 			return null;
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Dieta> getDietasASC(Usuario user) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT d "
+					+ "FROM Dieta d "
+					+ "WHERE d.usuario.id=:ident "
+					+ "ORDER BY d.fechaInicial");
+			q.setParameter("ident", user.getId());;
+			return (List<Dieta>) q.getResultList();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+		}
+	}
 
 	public Dieta getDietaPorNombre(String nombre) {
 		try{

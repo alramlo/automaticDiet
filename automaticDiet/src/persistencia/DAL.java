@@ -238,7 +238,7 @@ public class DAL {
 	}
 
 	public List<Dieta> getDietas(Usuario user) {
-		return dietaDAO.getDietas(user);
+		return dietaDAO.getDietasASC(user);
 	}
 
 	public Dieta getDietaPorNombre(String nombre) {
