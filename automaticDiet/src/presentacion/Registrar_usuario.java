@@ -117,8 +117,9 @@ public class Registrar_usuario extends JDialog {
 						{
 							JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
-						else if ( control.getUsuarioPorUsername(usuario.getText()).isEmpty())
+						else if ( control.getUsuarioPorUsername(usuario.getText()).size()>0)
 						{
+							System.out.println("USUARIO" + control.getUsuarioPorUsername(usuario.getText()));
 							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nick" + usuario.getText(), "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else if ( dni.getText().length() != 9)
