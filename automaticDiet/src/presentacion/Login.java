@@ -201,6 +201,10 @@ public class Login extends JDialog
 																AutomaticDiet ventanaUsuario = new AutomaticDiet();
 																ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
 																ventanaUsuario.getAutomatic_diet().setVisible(true);
+																
+																Bienvenida bienvenida = new Bienvenida();
+																bienvenida.start();
+																
 																try {
 																	finalize();
 																	dispose();
@@ -214,6 +218,11 @@ public class Login extends JDialog
 																AutomaticDiet ventanaUsuario = new AutomaticDiet();
 																ventanaUsuario.getAutomatic_diet().setLocationRelativeTo(null);
 																ventanaUsuario.getAutomatic_diet().setVisible(true);
+																
+																Bienvenida bienvenida = new Bienvenida();
+																bienvenida.start();
+																
+																
 																try {
 																	finalize();
 																	dispose();
