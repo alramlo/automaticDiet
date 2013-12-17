@@ -158,15 +158,6 @@ public class Registrar_usuario extends JDialog {
 								if(fichero!=null)
 									user.setImagen(FileToByte(fichero));
 							}
-							System.out.println( "\n"+user.getDni()+
-												"\n"+user.getNombre()+
-												"\n"+user.getApellidos()+
-												"\n"+user.getDireccion()+
-												"\n"+user.getPais()+
-												"\n"+user.getPoblacion()+
-												"\n"+user.getCorreo()+
-												"\n"+user.getPassword().toString()+
-												"\n"+user.getUsername());
 							control.addUsuario(user);
 						}
 						
