@@ -125,7 +125,7 @@ public class Registrar_usuario extends JDialog {
 						}
 						else if ( control.getUsuarioPorUsername(usuario.getText()).size()>0)
 						{
-							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nick" + usuario.getText(), "Info", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Ya existe un usuario con el nombre de usuario: " + usuario.getText(), "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else if ( dni.getText().length() != 9)
 						{
@@ -135,7 +135,7 @@ public class Registrar_usuario extends JDialog {
 						{
 							JOptionPane.showMessageDialog(null, "Contraseña demasiado debil, introduzca al menos 6 caracteres", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
-						else if ( pass.getPassword().equals(rpass.getPassword()) )
+						else if ( !pass.getPassword().equals(rpass.getPassword()) )
 						{
 							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
