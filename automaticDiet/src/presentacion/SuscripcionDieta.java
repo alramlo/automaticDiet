@@ -58,7 +58,6 @@ public class SuscripcionDieta extends JFrame {
 		setResizable(false);
 		setTitle("A\u00F1adir / modificar Suscripci\u00F3n");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SuscripcionDieta.class.getResource("/iconos/platos.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 391, 441);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,18 +71,12 @@ public class SuscripcionDieta extends JFrame {
 		for(Dieta d : listaDietas)
 			modelo.addElement(d);
 		
-		JList<Dieta> listDietas = new JList();
-		listDietas.setBounds(32, 77, 160, -25);
-		contentPane.add(listDietas);
-		listDietas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listDietas.setModel(modelo);
-		
 		JLabel lblNewLabel = new JLabel("Dieta");
 		lblNewLabel.setBounds(32, 23, 46, 14);
 		contentPane.add(lblNewLabel);
 		
 		JDateChooser fecha = new JDateChooser();
-		fecha.setBounds(206, 48, 137, 20);
+		fecha.setBounds(206, 48, 143, 28);
 		contentPane.add(fecha);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha Inicio");
@@ -91,11 +84,11 @@ public class SuscripcionDieta extends JFrame {
 		contentPane.add(lblFechaInicio);
 		
 		JLabel lblDuracinEnSemanas = new JLabel("Duraci\u00F3n en Semanas");
-		lblDuracinEnSemanas.setBounds(206, 103, 110, 14);
+		lblDuracinEnSemanas.setBounds(206, 97, 110, 14);
 		contentPane.add(lblDuracinEnSemanas);
 		
 		JSpinner duracion = new JSpinner();
-		duracion.setBounds(206, 128, 46, 20);
+		duracion.setBounds(206, 118, 55, 28);
 		contentPane.add(duracion);
 		
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
@@ -126,6 +119,12 @@ public class SuscripcionDieta extends JFrame {
 		scrollPane.setBounds(32, 47, 143, 101);
 		contentPane.add(scrollPane);
 		
+		JList<Dieta> listDietas = new JList();
+		listDietas.setBounds(32, 77, 160, -25);
+		listDietas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listDietas.setModel(modelo);
+		scrollPane.setViewportView(listDietas);
+		//contentPane.add(listDietas);
 		
 		
 		}catch(Exception e){
