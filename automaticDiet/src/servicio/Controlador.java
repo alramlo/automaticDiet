@@ -553,5 +553,13 @@ public class Controlador {
 	public long getSemanasDieta(Integer cod) {
 		return dal.getSemanasDieta(cod);
 	}
+	
+	public void incribirseEnDieta(Integer codigo, Date fecha, Usuario user){
+		dal.incribirseEnDieta(codigo, fecha, user);
+	}
+	
+	public void desincribirseEnDieta(Integer codigo){
+		dal.desincribirseEnDieta(codigo);
+	}
 }
 

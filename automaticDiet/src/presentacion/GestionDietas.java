@@ -75,7 +75,7 @@ public class GestionDietas extends JPanel {
 		buttonAnadir = new JButton("A\u00F1adir");
 		buttonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SuscripcionDieta ventana = new SuscripcionDieta(null);
+				SuscripcionDieta ventana = new SuscripcionDieta(null, GestionDietas.this);
 				ventana.setVisible(true);
 				//piAux=control.getPi();
 				//if(piAux!=null){
@@ -87,12 +87,21 @@ public class GestionDietas extends JPanel {
 		buttonModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Dieta dietaAux =  control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
-				SuscripcionDieta ventana = new SuscripcionDieta(dietaAux);
+				SuscripcionDieta ventana = new SuscripcionDieta(dietaAux, GestionDietas.this);
 				ventana.setVisible(true);
 			}
 		});
 		buttonModificar.setEnabled(false);
 		panel.add(buttonModificar);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Dieta dietaAux = control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
+				control.desincribirseEnDieta(dietaAux.getId());
+				poblar();
+		
+			}
+		});
 		btnEliminar.setEnabled(false);
 		panel.add(btnEliminar);
 

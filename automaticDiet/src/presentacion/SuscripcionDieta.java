@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 
 import com.toedter.calendar.JDateChooser;
 
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -26,10 +27,14 @@ import servicio.Controlador;
 import modelo.Dieta;
 
 import javax.swing.JScrollPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+
+import java.awt.Dialog.ModalExclusionType;
 
 
 public class SuscripcionDieta extends JFrame {
@@ -40,6 +45,7 @@ public class SuscripcionDieta extends JFrame {
 	private JDateChooser fecha;
 	private JTextPane descripcion;
 	private JList<Dieta> listDietas;
+	private Dieta dietaAux;
 	
 
 	/**
@@ -49,7 +55,7 @@ public class SuscripcionDieta extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SuscripcionDieta frame = new SuscripcionDieta(null);
+					SuscripcionDieta frame = new SuscripcionDieta(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +67,8 @@ public class SuscripcionDieta extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SuscripcionDieta(Dieta dietaModificar) {
+	public SuscripcionDieta(final Dieta dietaModificar, final GestionDietas gestionDietas) {
+		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		
 		try{
 		control = Controlador.dameControlador();
@@ -121,6 +128,25 @@ public class SuscripcionDieta extends JFrame {
 		contentPane.add(separator_1);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(dietaModificar!=null){
+					control.incribirseEnDieta(dietaModificar.getId(), fecha.getDate(), control.getUsuarioActual());
+					JOptionPane.showMessageDialog(null, "Se ha modificado la suscripción correctamente", "Info", JOptionPane.INFORMATION_MESSAGE);
+		
+				}
+				else{
+					control.incribirseEnDieta(dietaAux.getId(), fecha.getDate(), control.getUsuarioActual());
+					JOptionPane.showMessageDialog(null, "Se ha suscrito correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+				if (gestionDietas!=null)
+					gestionDietas.poblar();
+				
+				setVisible(false);
+				dispose();
+			}
+		});
 		btnOk.setBounds(174, 375, 89, 23);
 		contentPane.add(btnOk);
 		
@@ -142,7 +168,7 @@ public class SuscripcionDieta extends JFrame {
 		listDietas = new JList();
 		listDietas.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				Dieta dietaAux = control.getDietaPorNombre(listDietas.getSelectedValue().getNombre());
+				dietaAux = control.getDietaPorNombre(listDietas.getSelectedValue().getNombre());
 				descripcion.setText(dietaAux.getDescripcion());
 				Long dur = control.getSemanasDieta(dietaAux.getId());
 				duracion.setValue(dur.intValue());
@@ -172,6 +198,7 @@ public class SuscripcionDieta extends JFrame {
 		
 		}catch(Exception e){
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error de aplicación.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

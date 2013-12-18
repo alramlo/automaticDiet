@@ -3,9 +3,11 @@ package persistencia;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import modelo.Dieta;
+import modelo.Plato;
 import modelo.Usuario;
 
 public class DietaDAO extends AbstractDAO{
@@ -115,6 +117,42 @@ public class DietaDAO extends AbstractDAO{
 		}catch(Exception e){
 			System.out.println("Error:"+e);
 			return null;
+		}
+	}
+	
+	public void incribirseEnDieta(Integer codigo, Date fecha, Usuario user){
+		EntityTransaction trx = entityManager.getTransaction();
+		Dieta dietaAux; 
+		try{
+			trx.begin();
+			dietaAux=entityManager.find(Dieta.class, codigo);
+			dietaAux.setFechaInicial(fecha);
+			dietaAux.setUsuario(user);
+			trx.commit();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(trx.isActive())
+				trx.rollback();
+		}
+	}
+	
+	public void desincribirseEnDieta(Integer codigo){
+		EntityTransaction trx = entityManager.getTransaction();
+		Dieta dietaAux; 
+		try{
+			trx.begin();
+			dietaAux=entityManager.find(Dieta.class, codigo);
+			dietaAux.setFechaInicial(null);
+			dietaAux.setUsuario(null);
+			trx.commit();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(trx.isActive())
+				trx.rollback();
 		}
 	}
 
