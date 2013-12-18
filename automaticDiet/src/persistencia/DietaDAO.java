@@ -31,6 +31,24 @@ public class DietaDAO extends AbstractDAO{
 		}
 		
 	}
+	
+	public long getSemanasDieta(Integer cod) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT COUNT(pd)/4 "
+					+ "FROM PlatoDieta pd "
+					+ "WHERE pd.dieta.id=:cod ");
+			q.setParameter("cod", cod);
+			return (long) q.getSingleResult();
+			
+			
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return -1;
+			
+		}
+		
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Dieta> getDietas(Usuario user) {

@@ -84,6 +84,13 @@ public class GestionDietas extends JPanel {
 		panel.add(buttonAnadir);
 
 		buttonModificar = new JButton("Modificar");
+		buttonModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Dieta dietaAux =  control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
+				SuscripcionDieta ventana = new SuscripcionDieta(dietaAux);
+				ventana.setVisible(true);
+			}
+		});
 		buttonModificar.setEnabled(false);
 		panel.add(buttonModificar);
 		btnEliminar.setEnabled(false);

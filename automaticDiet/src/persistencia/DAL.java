@@ -260,4 +260,8 @@ public class DAL {
 	public List<Dieta> getDietasLibres(){
 		return dietaDAO.getDietasLibres();
 	}
+	
+	public long getSemanasDieta(Integer cod) {
+		return dietaDAO.getSemanasDieta(cod);
+	}
 }

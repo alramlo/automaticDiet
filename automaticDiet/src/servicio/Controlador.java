@@ -549,5 +549,9 @@ public class Controlador {
 	public List<Dieta> getDietasLibres(){
 		return dal.getDietasLibres();
 	}
+	
+	public long getSemanasDieta(Integer cod) {
+		return dal.getSemanasDieta(cod);
+	}
 }
 

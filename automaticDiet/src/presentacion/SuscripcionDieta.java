@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
@@ -23,13 +24,23 @@ import javax.swing.ListSelectionModel;
 
 import servicio.Controlador;
 import modelo.Dieta;
+
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 
 public class SuscripcionDieta extends JFrame {
 
 	private JPanel contentPane;
 	private Controlador control;
+	private JSpinner duracion;
+	private JDateChooser fecha;
+	private JTextPane descripcion;
+	private JList<Dieta> listDietas;
+	
 
 	/**
 	 * Launch the application.
@@ -75,7 +86,7 @@ public class SuscripcionDieta extends JFrame {
 		lblNewLabel.setBounds(32, 23, 46, 14);
 		contentPane.add(lblNewLabel);
 		
-		JDateChooser fecha = new JDateChooser();
+		fecha = new JDateChooser();
 		fecha.setBounds(206, 48, 143, 28);
 		contentPane.add(fecha);
 		
@@ -83,21 +94,23 @@ public class SuscripcionDieta extends JFrame {
 		lblFechaInicio.setBounds(206, 23, 67, 14);
 		contentPane.add(lblFechaInicio);
 		
-		JLabel lblDuracinEnSemanas = new JLabel("Duraci\u00F3n en Semanas");
+		JLabel lblDuracinEnSemanas = new JLabel("Duraci\u00F3n en dias");
 		lblDuracinEnSemanas.setBounds(206, 97, 110, 14);
 		contentPane.add(lblDuracinEnSemanas);
 		
-		JSpinner duracion = new JSpinner();
+		duracion = new JSpinner();
 		duracion.setBounds(206, 118, 55, 28);
 		contentPane.add(duracion);
+		duracion.setEnabled(false);
 		
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
 		lblDescripcin.setBounds(32, 188, 67, 14);
 		contentPane.add(lblDescripcin);
 		
-		JTextPane descripcion = new JTextPane();
+		descripcion = new JTextPane();
 		descripcion.setBounds(32, 213, 336, 112);
 		contentPane.add(descripcion);
+		descripcion.setEnabled(false);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(32, 173, 336, 14);
@@ -112,6 +125,13 @@ public class SuscripcionDieta extends JFrame {
 		contentPane.add(btnOk);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+		
+				setVisible(false);
+				dispose();
+			}
+		});
 		btnCancelar.setBounds(273, 375, 89, 23);
 		contentPane.add(btnCancelar);
 		
@@ -119,13 +139,36 @@ public class SuscripcionDieta extends JFrame {
 		scrollPane.setBounds(32, 47, 143, 101);
 		contentPane.add(scrollPane);
 		
-		JList<Dieta> listDietas = new JList();
-		listDietas.setBounds(32, 77, 160, -25);
+		listDietas = new JList();
+		listDietas.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				Dieta dietaAux = control.getDietaPorNombre(listDietas.getSelectedValue().getNombre());
+				descripcion.setText(dietaAux.getDescripcion());
+				Long dur = control.getSemanasDieta(dietaAux.getId());
+				duracion.setValue(dur.intValue());
+				System.out.println("Duración: "+dur.intValue());
+				
+			}
+		});
+		listDietas.setBounds(32, 77, 160, 28);
 		listDietas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listDietas.setModel(modelo);
 		scrollPane.setViewportView(listDietas);
 		//contentPane.add(listDietas);
 		
+		if(dietaModificar!=null){
+			
+			listDietas.setVisible(false);
+			scrollPane.setVisible(false);
+			JTextField nombreDieta = new JTextField();
+			nombreDieta.setBounds(32, 47, 143, 28);
+			nombreDieta.setText(dietaModificar.getNombre());
+			nombreDieta.setEditable(false);
+			contentPane.add(nombreDieta);
+			fecha.setDate(dietaModificar.getFechaInicial());
+			descripcion.setText(dietaModificar.getDescripcion());
+			//lblDuracinEnSemanas.setText(control.);
+		}
 		
 		}catch(Exception e){
 			e.printStackTrace();
