@@ -43,6 +43,8 @@ import java.util.List;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionDietas extends JPanel {
 
@@ -71,6 +73,14 @@ public class GestionDietas extends JPanel {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		buttonAnadir = new JButton("A\u00F1adir");
+		buttonAnadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SuscripcionDieta ventana = new SuscripcionDieta(null);
+				ventana.setVisible(true);
+				//piAux=control.getPi();
+				//if(piAux!=null){
+			}
+		});
 		panel.add(buttonAnadir);
 
 		buttonModificar = new JButton("Modificar");

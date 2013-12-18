@@ -74,7 +74,7 @@ public class DietaDAO extends AbstractDAO{
 			Query q;
 			q = entityManager.createQuery("SELECT d "
 					+ "FROM Dieta d "
-					+ "WHERE d.usuario.id IS NULL");
+					+ "WHERE d.usuario = null");
 			return (List<Dieta>) q.getResultList();
 		
 		}catch(Exception e){
