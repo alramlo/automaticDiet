@@ -316,6 +316,7 @@ public class AutomaticDiet
 		
 		JButton menu_gestionGrupos = new JButton("<html><p>Gestión</p><p>grupos</p></html>");
 		menu_gestionGrupos.setSelected(true);
+		menu_gestionGrupos.setEnabled(false);
 		menu_gestionGrupos.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -441,11 +442,14 @@ public class AutomaticDiet
 		
 		
 		JPanel menu_foro = new JPanel();
+		menu_foro.setVisible(false);
+		menu_foro.setEnabled(false);
 		menu_foro.setOpaque(false);
 		menu_foro.setFont(new Font("Arial", Font.PLAIN, 14));
 		tabsMenuUsuario.addTab("Foro", new ImageIcon(AutomaticDiet.class.getResource("/iconos/foro.png")), menu_foro, null);
 		
 		JButton menu_temas_foro = new JButton("<html><p>Temas</p><p>del foro</p></html>");
+		menu_temas_foro.setEnabled(false);
 		menu_temas_foro.setSelected(true);
 		menu_temas_foro.setOpaque(false);
 		menu_temas_foro.setMargin(new Insets(2, 2, 2, 2));
@@ -464,6 +468,7 @@ public class AutomaticDiet
 		menu_temas_foro.setBorder(null);
 		
 		JButton menu_buscador_grupos = new JButton("<html><p>Buscador</p><p>de grupos</p></html>");
+		menu_buscador_grupos.setEnabled(false);
 		menu_buscador_grupos.setSelected(true);
 		menu_buscador_grupos.setOpaque(false);
 		menu_buscador_grupos.setMargin(new Insets(2, 2, 2, 2));
