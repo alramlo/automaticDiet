@@ -1,7 +1,6 @@
 package presentacion;
 
 import java.awt.Dimension;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,6 +24,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JLabel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -99,6 +100,7 @@ public class GestionDietas extends JPanel {
 				Dieta dietaAux = control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
 				control.desincribirseEnDieta(dietaAux.getId());
 				poblar();
+				JOptionPane.showMessageDialog(null, "La suscripción se ha eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
 		
 			}
 		});

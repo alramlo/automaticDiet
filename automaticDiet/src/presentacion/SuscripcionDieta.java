@@ -135,29 +135,49 @@ public class SuscripcionDieta extends JFrame {
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Boolean ok = true;
 				Calendar fechaFin = Calendar.getInstance();
 				fechaFin.setTime(fecha.getDate());
 				fechaFin.add(Calendar.DATE, dur.intValue());
 				System.out.println("Fecha inicio: "+fecha.getDate()+" Fecha fin: "+fechaFin.getTime());
-				if(dietaModificar!=null){
+				
+				List<Dieta> listaDietas = control.getListDietas(control.getUsuarioActual());
+				for(Dieta d:listaDietas){
+					if ( dietaModificar==null || (dietaModificar!=null && d.getId()!=dietaModificar.getId()) )
+						if( (fecha.getDate().compareTo(d.getFechaInicial())==0) 
+								|| ( (fecha.getDate().compareTo(d.getFechaInicial())>0) && (fecha.getDate().compareTo(d.getFechaFinal())<0) ) 
+								|| ( fecha.getDate().compareTo(d.getFechaFinal())==0) ){
+							ok=false;
+						}
 					
-					control.incribirseEnDieta(dietaModificar.getId(), fecha.getDate(),fechaFin.getTime(), control.getUsuarioActual());
-					JOptionPane.showMessageDialog(null, "Se ha modificado la suscripción correctamente", "Info", JOptionPane.INFORMATION_MESSAGE);
-		
+				}
+				
+				if (ok){
+					
+				
+					if(dietaModificar!=null){
+						
+						control.incribirseEnDieta(dietaModificar.getId(), fecha.getDate(),fechaFin.getTime(), control.getUsuarioActual());
+						JOptionPane.showMessageDialog(null, "Se ha modificado la suscripción correctamente", "Info", JOptionPane.INFORMATION_MESSAGE);
+			
+					}
+					else{
+				
+						control.incribirseEnDieta(dietaAux.getId(), fecha.getDate(),fechaFin.getTime(), control.getUsuarioActual());
+						JOptionPane.showMessageDialog(null, "Se ha suscrito correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+					if (gestionDietas!=null){
+						gestionDietas.poblar();
+						gestionDietas.desactivarBotones();
+					}
+					
+					setVisible(false);
+					dispose();
 				}
 				else{
-			
-					control.incribirseEnDieta(dietaAux.getId(), fecha.getDate(),fechaFin.getTime(), control.getUsuarioActual());
-					JOptionPane.showMessageDialog(null, "Se ha suscrito correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No puede suscribirse en varias dietas para el mismo periodo.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
-				if (gestionDietas!=null){
-					gestionDietas.poblar();
-					gestionDietas.desactivarBotones();
-				}
-				
-				setVisible(false);
-				dispose();
 			}
 		});
 		btnOk.setBounds(174, 375, 89, 23);
