@@ -120,13 +120,14 @@ public class DietaDAO extends AbstractDAO{
 		}
 	}
 	
-	public void incribirseEnDieta(Integer codigo, Date fecha, Usuario user){
+	public void incribirseEnDieta(Integer codigo, Date fechaIni, Date fechFin, Usuario user){
 		EntityTransaction trx = entityManager.getTransaction();
 		Dieta dietaAux; 
 		try{
 			trx.begin();
 			dietaAux=entityManager.find(Dieta.class, codigo);
-			dietaAux.setFechaInicial(fecha);
+			dietaAux.setFechaInicial(fechaIni);
+			dietaAux.setFechaFinal(fechFin);
 			dietaAux.setUsuario(user);
 			trx.commit();
 			
@@ -145,6 +146,7 @@ public class DietaDAO extends AbstractDAO{
 			trx.begin();
 			dietaAux=entityManager.find(Dieta.class, codigo);
 			dietaAux.setFechaInicial(null);
+			dietaAux.setFechaFinal(null);
 			dietaAux.setUsuario(null);
 			trx.commit();
 			

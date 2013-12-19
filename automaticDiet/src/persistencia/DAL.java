@@ -265,8 +265,8 @@ public class DAL {
 		return dietaDAO.getSemanasDieta(cod);
 	}
 	
-	public void incribirseEnDieta(Integer codigo, Date fecha, Usuario user){
-		dietaDAO.incribirseEnDieta(codigo, fecha, user);
+	public void incribirseEnDieta(Integer codigo, Date fechaIni, Date fechaFin, Usuario user){
+		dietaDAO.incribirseEnDieta(codigo, fechaIni, fechaFin, user);
 	}
 	
 	public void desincribirseEnDieta(Integer codigo){

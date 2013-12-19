@@ -200,5 +200,10 @@ public class GestionDietas extends JPanel {
 			e1.printStackTrace();
 		}
 	}
+	
+	public void desactivarBotones(){
+		btnEliminar.setEnabled(false);
+		buttonModificar.setEnabled(false);
+	}
 
 }

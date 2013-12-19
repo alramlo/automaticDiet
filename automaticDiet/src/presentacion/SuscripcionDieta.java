@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Toolkit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JList;
@@ -46,6 +48,8 @@ public class SuscripcionDieta extends JFrame {
 	private JTextPane descripcion;
 	private JList<Dieta> listDietas;
 	private Dieta dietaAux;
+	private Long dur;
+	private JButton btnOk;
 	
 
 	/**
@@ -96,6 +100,7 @@ public class SuscripcionDieta extends JFrame {
 		fecha = new JDateChooser();
 		fecha.setBounds(206, 48, 143, 28);
 		contentPane.add(fecha);
+		fecha.setDate(new Date());
 		
 		JLabel lblFechaInicio = new JLabel("Fecha Inicio");
 		lblFechaInicio.setBounds(206, 23, 67, 14);
@@ -127,21 +132,29 @@ public class SuscripcionDieta extends JFrame {
 		separator_1.setBounds(32, 350, 336, 14);
 		contentPane.add(separator_1);
 		
-		JButton btnOk = new JButton("OK");
+		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Calendar fechaFin = Calendar.getInstance();
+				fechaFin.setTime(fecha.getDate());
+				fechaFin.add(Calendar.DATE, dur.intValue());
+				System.out.println("Fecha inicio: "+fecha.getDate()+" Fecha fin: "+fechaFin.getTime());
 				if(dietaModificar!=null){
-					control.incribirseEnDieta(dietaModificar.getId(), fecha.getDate(), control.getUsuarioActual());
+					
+					control.incribirseEnDieta(dietaModificar.getId(), fecha.getDate(),fechaFin.getTime(), control.getUsuarioActual());
 					JOptionPane.showMessageDialog(null, "Se ha modificado la suscripción correctamente", "Info", JOptionPane.INFORMATION_MESSAGE);
 		
 				}
 				else{
-					control.incribirseEnDieta(dietaAux.getId(), fecha.getDate(), control.getUsuarioActual());
+			
+					control.incribirseEnDieta(dietaAux.getId(), fecha.getDate(),fechaFin.getTime(), control.getUsuarioActual());
 					JOptionPane.showMessageDialog(null, "Se ha suscrito correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
-				if (gestionDietas!=null)
+				if (gestionDietas!=null){
 					gestionDietas.poblar();
+					gestionDietas.desactivarBotones();
+				}
 				
 				setVisible(false);
 				dispose();
@@ -149,6 +162,8 @@ public class SuscripcionDieta extends JFrame {
 		});
 		btnOk.setBounds(174, 375, 89, 23);
 		contentPane.add(btnOk);
+		if(dietaModificar==null)
+			btnOk.setEnabled(false);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -170,9 +185,10 @@ public class SuscripcionDieta extends JFrame {
 			public void valueChanged(ListSelectionEvent arg0) {
 				dietaAux = control.getDietaPorNombre(listDietas.getSelectedValue().getNombre());
 				descripcion.setText(dietaAux.getDescripcion());
-				Long dur = control.getSemanasDieta(dietaAux.getId());
+				dur = control.getSemanasDieta(dietaAux.getId());
 				duracion.setValue(dur.intValue());
 				System.out.println("Duración: "+dur.intValue());
+				btnOk.setEnabled(true);
 				
 			}
 		});
@@ -193,6 +209,8 @@ public class SuscripcionDieta extends JFrame {
 			contentPane.add(nombreDieta);
 			fecha.setDate(dietaModificar.getFechaInicial());
 			descripcion.setText(dietaModificar.getDescripcion());
+			dur=control.getSemanasDieta(dietaModificar.getId());
+			duracion.setValue(dur);
 			//lblDuracinEnSemanas.setText(control.);
 		}
 		

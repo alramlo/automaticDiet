@@ -554,8 +554,8 @@ public class Controlador {
 		return dal.getSemanasDieta(cod);
 	}
 	
-	public void incribirseEnDieta(Integer codigo, Date fecha, Usuario user){
-		dal.incribirseEnDieta(codigo, fecha, user);
+	public void incribirseEnDieta(Integer codigo, Date fechaIni, Date fechaFin, Usuario user){
+		dal.incribirseEnDieta(codigo, fechaIni, fechaFin, user);
 	}
 	
 	public void desincribirseEnDieta(Integer codigo){
