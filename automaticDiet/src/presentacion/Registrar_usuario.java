@@ -111,6 +111,8 @@ public class Registrar_usuario extends JDialog {
 			{
 				public void actionPerformed(ActionEvent e)
 				{
+					System.out.println(pass.getPassword());
+					System.out.println(rpass.getPassword());
 					System.out.println( pass.getPassword() );
 					try {
 						if (  	   nombre.getText().isEmpty()
@@ -135,7 +137,8 @@ public class Registrar_usuario extends JDialog {
 						{
 							JOptionPane.showMessageDialog(null, "Contraseña demasiado debil, introduzca al menos 6 caracteres", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}
-						else if ( !pass.getPassword().equals(rpass.getPassword()) )
+						//else if ( pass.getPassword().equals(rpass.getPassword()) )
+						else if (!control.mismaPassword(pass.getPassword(), rpass.getPassword()) )
 						{
 							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Info", JOptionPane.INFORMATION_MESSAGE);
 						}

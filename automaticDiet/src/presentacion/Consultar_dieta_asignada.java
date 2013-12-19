@@ -385,6 +385,7 @@ public class Consultar_dieta_asignada extends JPanel
 		String nombre = comboBoxDietas.getSelectedItem()+"";
 		Object[][] data  = new Object[5][8];
 		dieta = c.getDietaPorNombre(nombre);
+		Dieta d = dieta;
 		semanas = (((dieta.getFechaFinal().getTime()-dieta.getFechaInicial().getTime())/ MILLSECS_PER_DAY)+1)/7;
 		Plato[] pl = c.dietaSemanal(dieta.getUsuario().getId(), dieta.getFechaInicial());
 		if(pl.length!=0){
@@ -421,6 +422,7 @@ public class Consultar_dieta_asignada extends JPanel
 				tabla_dieta.setModel(new DefaultTableModel(data,new String[] {
 						"", "Lunes", "Martes", "Mi\u00E9rcoles", "Jueves", "Viernes", "S\u00E1bado", "Domingo"
 					}));
+				tabla_dieta.repaint();
 				lblPaginacion.setText(contSemanas+"/"+semanas);
 				btnAnterior.setEnabled(false);
 				if(semanas<=1) buttonSiguiente.setEnabled(false);

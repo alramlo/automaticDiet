@@ -32,6 +32,11 @@ public class UsuarioDAO extends AbstractDAO {
 			q.setParameter("fechaI", fechaIni);
 			q.setParameter("fechaF", fechaFin);
 			q.setParameter("idUs", idUsuario);
+			System.out.println("SELECT p "
+			+ "FROM Plato p, PlatoDieta pd, Dieta d "
+			+ "WHERE pd.dia>="+fechaIni+" AND pd.dia<="+fechaFin
+			+ "AND pd.plato.id=p.id " + " AND pd.dieta.id=d.id "
+			+ "AND d.usuario.id=:"+idUsuario);
 			return (List<Plato>) q.getResultList();
 
 		} catch (Exception e) {

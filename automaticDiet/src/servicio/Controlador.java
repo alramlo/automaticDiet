@@ -112,7 +112,8 @@ public class Controlador {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(fecha);
 		Calendar[] fechas=getFechaIniFin(cal.get(Calendar.DAY_OF_WEEK),cal);
-		
+		System.out.println("ini: "+fechas[0].getTime());
+		System.out.println("fin: "+fechas[1].getTime());
 		List<Plato> listaPlatos = dal.dietaSemanal(idUsuario, fechas[0].getTime(), fechas[1].getTime());
 		Plato [] platos = new Plato[listaPlatos.size()];
 		
@@ -560,6 +561,21 @@ public class Controlador {
 	
 	public void desincribirseEnDieta(Integer codigo){
 		dal.desincribirseEnDieta(codigo);
+	}
+	
+	public boolean mismaPassword (char[] pass1, char[] pass2){
+		boolean cent = true;
+		if(pass1.length!=pass2.length){
+			cent = false;
+		} else {
+			for(int i = 0; i < pass1.length; i++){
+				if(pass1[i]!=pass2[i]){
+					cent = false;
+					i=pass1.length;
+				}
+			}
+		}
+		return cent;
 	}
 }
 
