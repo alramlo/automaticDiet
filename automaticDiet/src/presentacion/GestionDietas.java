@@ -1,54 +1,40 @@
 package presentacion;
 
-import java.awt.Dimension;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Insets;
-
-import javax.swing.JPanel;
-
-import modelo.Dieta;
-import modelo.Plato;
-import modelo.Usuario;
-import excepciones.DAOExcepcion;
-import excepciones.DominioExcepcion;
-import servicio.Controlador;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-
 import java.awt.BorderLayout;
-
-import javax.swing.JTable;
-import javax.swing.JButton;
-
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import modelo.Dieta;
+import modelo.Usuario;
+import servicio.Controlador;
+import javax.swing.ImageIcon;
 
 public class GestionDietas extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5886304159243079275L;
 	/**
 	 * Create the panel.
 	 */
@@ -74,6 +60,8 @@ public class GestionDietas extends JPanel {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		buttonAnadir = new JButton("A\u00F1adir");
+		buttonAnadir.setFont(new Font("Arial", Font.BOLD, 14));
+		buttonAnadir.setIcon(new ImageIcon(GestionDietas.class.getResource("/iconos/edit_add.png")));
 		buttonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SuscripcionDieta ventana = new SuscripcionDieta(null, GestionDietas.this);
@@ -85,6 +73,8 @@ public class GestionDietas extends JPanel {
 		panel.add(buttonAnadir);
 
 		buttonModificar = new JButton("Modificar");
+		buttonModificar.setIcon(new ImageIcon(GestionDietas.class.getResource("/iconos/edit.png")));
+		buttonModificar.setFont(new Font("Arial", Font.BOLD, 14));
 		buttonModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Dieta dietaAux =  control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
@@ -94,6 +84,8 @@ public class GestionDietas extends JPanel {
 		});
 		buttonModificar.setEnabled(false);
 		panel.add(buttonModificar);
+		btnEliminar.setIcon(new ImageIcon(GestionDietas.class.getResource("/iconos/eliminar-icono-4912-32.png")));
+		btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
