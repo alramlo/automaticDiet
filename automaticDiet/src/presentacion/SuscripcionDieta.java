@@ -138,7 +138,7 @@ public class SuscripcionDieta extends JFrame {
 				Boolean ok = true;
 				Calendar fechaFin = Calendar.getInstance();
 				fechaFin.setTime(fecha.getDate());
-				fechaFin.add(Calendar.DATE, dur.intValue());
+				fechaFin.add(Calendar.DATE, dur.intValue()-1);
 				System.out.println("Fecha inicio: "+fecha.getDate()+" Fecha fin: "+fechaFin.getTime());
 				
 				List<Dieta> listaDietas = control.getListDietas(control.getUsuarioActual());

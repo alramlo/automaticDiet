@@ -15,6 +15,7 @@ import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Pais;
 import modelo.Plato;
+import modelo.PlatoDieta;
 import modelo.PlatoIngrediente;
 import modelo.Seguimiento;
 import modelo.Usuario;
@@ -557,8 +558,33 @@ public class Controlador {
 	
 	public void incribirseEnDieta(Integer codigo, Date fechaIni, Date fechaFin, Usuario user){
 		dal.incribirseEnDieta(codigo, fechaIni, fechaFin, user);
+		GregorianCalendar date = new GregorianCalendar();
+		date.setTime(fechaIni);
+		String[] numPlatos = this.getPlatosDieta(codigo);
+		List<Integer> codigosPlatoDieta = this.getIdsPlatoDietaByIdDieta(codigo);
+		List<PlatoDieta> pd = this.getPlatoDietaAmodicar(codigo);
+		dal.setPlatosDietas(codigosPlatoDieta,codigo,date, numPlatos.length);
+		for(int i=0; i<pd.size();i++){
+			pd.get(i).setId(pd.get(pd.size()-1).getId()+i+1);
+			pd.get(i).setDia(null);
+			this.setPlatoDietaOriginal(pd.get(i));
+		}
 	}
 	
+	private void setPlatoDietaOriginal(PlatoDieta platoDieta) {
+		dal.setPlatoDietaOriginal(platoDieta);
+		
+	}
+
+	private List<PlatoDieta> getPlatoDietaAmodicar(Integer codigo) {
+		// TODO Auto-generated method stub
+		return dal.getPlatoDietaAmodicar(codigo);
+	}
+
+	private List<Integer> getIdsPlatoDietaByIdDieta(Integer codigo) {
+		return dal.getIdsPlatoDietaByIdDieta(codigo);
+	}
+
 	public void desincribirseEnDieta(Integer codigo){
 		dal.desincribirseEnDieta(codigo);
 	}

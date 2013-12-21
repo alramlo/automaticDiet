@@ -1,6 +1,7 @@
 package persistencia;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import modelo.Caracteristica;
@@ -11,6 +12,7 @@ import modelo.Ingrediente;
 import modelo.Interes;
 import modelo.Pais;
 import modelo.Plato;
+import modelo.PlatoDieta;
 import modelo.PlatoIngrediente;
 import modelo.Seguimiento;
 import modelo.Usuario;
@@ -36,6 +38,7 @@ public class DAL {
 	private IngredienteDAO ingredienteDAO;
 	private PlatoIngredienteDAO platoIngredienteDAO;
 	private DietaDAO dietaDAO;
+	private PlatoDietaDAO platoDietaDAO;
 
 
 	private DAL() throws DAOExcepcion {
@@ -51,6 +54,7 @@ public class DAL {
 		seguimientoDAO = new SeguimientoDAO();
 		platoIngredienteDAO = new PlatoIngredienteDAO();
 		dietaDAO = new DietaDAO();
+		platoDietaDAO = new PlatoDietaDAO();
 	}
 	
 	// Patrón Singleton
@@ -271,5 +275,23 @@ public class DAL {
 	
 	public void desincribirseEnDieta(Integer codigo){
 		dietaDAO.desincribirseEnDieta(codigo);
+	}
+
+	public void setPlatosDietas(List<Integer> codigosPlatoDieta, Integer codigo, GregorianCalendar fechaIni, int numPlatos) {
+		platoDietaDAO.setPlatosDietas(codigosPlatoDieta,codigo,fechaIni, numPlatos);
+		
+	}
+
+	public List<Integer> getIdsPlatoDietaByIdDieta(Integer codigo) {
+		return platoDietaDAO.getIdsPlatoDietaByIdDieta(codigo);
+	}
+
+	public List<PlatoDieta> getPlatoDietaAmodicar(Integer codigo) {
+		// TODO Auto-generated method stub
+		return platoDietaDAO.getPlatoDietaAmodicar(codigo);
+	}
+
+	public void setPlatoDietaOriginal(PlatoDieta platoDieta) {
+		platoDietaDAO.setPlatoDietaOriginal(platoDieta);
 	}
 }
