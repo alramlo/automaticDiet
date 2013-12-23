@@ -45,9 +45,6 @@ import java.util.Date;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-import com.toedter.calendar.JMonthChooser;
-import com.toedter.calendar.JYearChooser;
-
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -57,11 +54,15 @@ public class Indicadores_personales extends JPanel {
 	/**
 	 * 
 	 */
+	private String[] dietas_usuario;
+	
 	private Date ini_dieta;
 	private Date fin_dieta;
 	private Dieta dieta_select;
-	private JComboBox<String> dietas;
-	private JComboBox<String> comboBox;
+	
+	//combos con las dietas
+	private JComboBox<String> dietas = new JComboBox<>();
+	private JComboBox<String> comboBox = new JComboBox<>();
 	
 	private Controlador control;
 	private JPanel registro = new JPanel();
@@ -110,18 +111,19 @@ public class Indicadores_personales extends JPanel {
 			e3.printStackTrace();
 		}
 		
-		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
+		
+//		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
 //		datos_usuario = control.getSegUsuario(11);
 		
-		String[] dietas_usuario = control.getDietas(control.getUsuarioActual());
+//		String[] dietas_usuario = control.getDietas(control.getUsuarioActual());
 //		String[] dietas_usuario = control.getDietas(control.getUsuarioPorId(11));
 		
 //		dietas = new JComboBox();
-		dietas = new JComboBox<String>(dietas_usuario);
+//		dietas = new JComboBox<String>(dietas_usuario);
 		
-		mes = calendario.getCalendar().getInstance().MONTH;
-		year = calendario.getYearChooser().getYear();
-		dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
+//		mes = calendario.getCalendar().getInstance().MONTH;
+//		year = calendario.getYearChooser().getYear();
+//		dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
 		
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -153,47 +155,25 @@ public class Indicadores_personales extends JPanel {
 		cumplimiento.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		
 		pesaje.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		calendario.getMonthChooser().addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0)
-			{
-				mes = calendario.getMonthChooser().getMonth()+1;
-				pintaDias(mes, year);
-				diaSeleccionado(null);
-				poderRegistrar(false);
-			}
-		});
-		calendario.getYearChooser().addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0)
-			{
-				year = calendario.getYearChooser().getYear();
-				pintaDias(mes, year);
-				diaSeleccionado(null);
-				poderRegistrar(false);
-			}
-		});
-		calendario.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0)
-			{
-				if(datos_usuario.length!=0){
-				pintaDias(mes, year);
-				aReg = calendario.getDate();
-				diaSeleccionado(aReg);
-				if(aReg.after(today))
-				{
-					poderRegistrar(false);
-				}
-				else if(aReg.before(ini_dieta) || aReg.after(fin_dieta))
-				{
-					poderRegistrar(false);
-					JOptionPane.showMessageDialog(null, "Esta fecha no tiene dieta asignada", "Info", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else
-				{
-					poderRegistrar(true);
-				}
-			}
-			}
-		});
+//		calendario.getMonthChooser().addPropertyChangeListener(new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent arg0)
+//			{
+//				mes = calendario.getMonthChooser().getMonth()+1;
+//				pintaDias(mes, year);
+//				diaSeleccionado(null);
+//				poderRegistrar(false);
+//			}
+//		});
+//		calendario.getYearChooser().addPropertyChangeListener(new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent arg0)
+//			{
+//				year = calendario.getYearChooser().getYear();
+//				pintaDias(mes, year);
+//				diaSeleccionado(null);
+//				poderRegistrar(false);
+//			}
+//		});
+		
 		
 		calendario.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		calendario.getMonthChooser().getSpinner().setFont(new Font("Arial", Font.PLAIN, 16));
@@ -219,17 +199,9 @@ public class Indicadores_personales extends JPanel {
 		calendario.setFont(new Font("Arial", Font.PLAIN, 20));
 		calendario.setDecorationBackgroundColor(new Color(255, 153, 102));
 		
-		dietas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
-				comboBox.setSelectedIndex(dietas.getSelectedIndex());
-				if(datos_usuario.length!=0)
-				diasDieta();
-				pintaDias(mes_ini, year_ini);
-			}
-		});
 		
-		dietas.setFont(new Font("Arial", Font.PLAIN, 16));
+		
+
 		
 		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio");
 		lblFechaDeInicio.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -411,9 +383,7 @@ public class Indicadores_personales extends JPanel {
 		contenidoGraf = new JPanel();
 		
 //		comboBox = new JComboBox();
-		comboBox = new JComboBox<String>(dietas_usuario);
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
-		dieta_select = control.getDietaPorNombre((String) comboBox.getItemAt(comboBox.getSelectedIndex()));
+//		comboBox = new JComboBox<String>(dietas_usuario);
 		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -481,16 +451,96 @@ public class Indicadores_personales extends JPanel {
 		);
 		contenidoGraf.setLayout(new BoxLayout(contenidoGraf, BoxLayout.X_AXIS));
 		
-		grafica_panel = new ChartPanel(grafica(mes_ini, year_ini));
-		contenidoGraf.add(grafica_panel);
+		
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		
-		if(datos_usuario.length!=0)
-		diasDieta();
-		pintaGrafica(mes_ini, year_ini);
-		pintaDias(mes_ini, year_ini);
+//		if(datos_usuario.length!=0)
+//		diasDieta();
+//		pintaGrafica(mes_ini, year_ini);
+//		pintaDias(mes_ini, year_ini);*/
+		
+		inicializacionCalendario();
+		inicializacionGrafica();
 	}
+	
+	
+	private void inicializacionCalendario()
+	{
+		//obtener los datos del usuario
+		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
+		dietas_usuario = control.getDietas(control.getUsuarioActual());
+		
+		if(dietas_usuario.length < 1)
+		{
+			System.out.println("NO TIENE DIETAS");
+			calendario.setEnabled(false);
+			calendario.getDayChooser().setEnabled(false);
+		}
+		
+		else
+		{
+			//obtener y mostrar las dietas en el combobox
+			
+			dietas = new JComboBox<String>(dietas_usuario);
+			dietas.setFont(new Font("Arial", Font.PLAIN, 16));
+			
+			//establecer la dieta seleccionada y las fechas de inicio
+			dieta_select = control.getDietaPorNombreYusuario(dietas.getItemAt(dietas.getSelectedIndex()), control.getUsuarioActual());
+
+			diasDieta();
+			pintaDias(mes_ini, year_ini);
+			
+			//establecer seleccion de dias
+			calendario.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
+				public void propertyChange(PropertyChangeEvent arg0)
+				{
+					pintaDias(mes, year);
+					aReg = calendario.getDate();
+					diaSeleccionado(aReg);
+					if(aReg.after(today))
+					{
+						poderRegistrar(false);
+					}
+					else if(aReg.before(ini_dieta) || aReg.after(fin_dieta))
+					{
+						poderRegistrar(false);
+						JOptionPane.showMessageDialog(null, "Esta fecha no tiene dieta asignada", "Info", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						poderRegistrar(true);
+					}
+				
+				}
+			});
+			
+			dietas.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
+					comboBox.setSelectedIndex(dietas.getSelectedIndex());
+					if(datos_usuario.length!=0)
+					diasDieta();
+					pintaDias(mes_ini, year_ini);
+				}
+			});
+		}
+		revalidate();
+		repaint();
+	}
+	
+	private void inicializacionGrafica()
+	{
+		//obtener y mostrar las dietas en el combobox
+		comboBox = new JComboBox<String>(dietas_usuario);
+		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		dieta_select = control.getDietaPorNombreYusuario(comboBox.getItemAt(comboBox.getSelectedIndex()), control.getUsuarioActual());
+		
+		//inicializar la grafica
+		grafica_panel = new ChartPanel(grafica(mes_ini, year_ini));
+		contenidoGraf.add(grafica_panel);
+	}
+	
 	
 	private JFreeChart grafica(int m, int y)
 	{
@@ -584,11 +634,14 @@ public class Indicadores_personales extends JPanel {
 		fin_dieta = dieta_select.getFechaFinal();
 		
 		sdf = new SimpleDateFormat("dd / MMMM / yyyy");
-		System.out.println(sdf.format(ini_dieta));
 		fini.setText(sdf.format(ini_dieta));
+		fini.setEditable(false);
 		textField.setText(sdf.format(ini_dieta));
+		textField.setEditable(false);
 		ffin.setText(sdf.format(fin_dieta));
+		ffin.setEditable(false);
 		textField_1.setText(sdf.format(fin_dieta));
+		textField_1.setEditable(false);
 		
 		sdf = new SimpleDateFormat("MM");
 		mes_ini = Integer.parseInt(sdf.format(ini_dieta));
