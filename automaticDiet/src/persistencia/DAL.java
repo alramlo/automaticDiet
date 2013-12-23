@@ -273,8 +273,8 @@ public class DAL {
 		dietaDAO.incribirseEnDieta(codigo, fechaIni, fechaFin, user);
 	}
 	
-	public void desincribirseEnDieta(Integer codigo){
-		dietaDAO.desincribirseEnDieta(codigo);
+	public void desincribirseEnDieta(Dieta dieta){
+		dietaDAO.desincribirseEnDieta(dieta);
 	}
 
 	public void setPlatosDietas(List<Integer> codigosPlatoDieta, Integer codigo, GregorianCalendar fechaIni, int numPlatos) {
@@ -314,5 +314,14 @@ public class DAL {
 
 	public Dieta getDietaPorNombreYusuario(String nombre, Usuario usuarioActual2) {
 		return dietaDAO.getDietaPorNombreYusuario(nombre,usuarioActual2);
+	}
+
+	public void eliminarPlatoDieta(PlatoDieta dieta) {
+		platoDietaDAO.eliminarPlatoDieta(dieta);
+		
+	}
+	
+	public List<PlatoDieta>  getPlatoDietaPorIdDieta(Integer codigo){
+		return platoDietaDAO. getPlatoDietaPorIdDieta(codigo);
 	}
 }

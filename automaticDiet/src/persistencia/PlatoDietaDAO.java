@@ -69,6 +69,23 @@ public class PlatoDietaDAO extends AbstractDAO{
 			
 		}
 	}
+	
+	public List<PlatoDieta> getPlatoDietaPorIdDieta(Integer codigo) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT pd "
+					+ "FROM PlatoDieta pd "
+					+ "WHERE pd.dieta.id=:cod ");
+			q.setParameter("cod", codigo);
+			return (List<PlatoDieta>) q.getResultList();
+			
+			
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+			
+		}
+	}
 
 	public void setPlatoDietaOriginal(PlatoDieta platoDieta) {
 		EntityTransaction trx = entityManager.getTransaction();
@@ -84,6 +101,21 @@ public class PlatoDietaDAO extends AbstractDAO{
 			if(trx.isActive())
 				trx.rollback();
 		}
+	}
+
+	public void eliminarPlatoDieta(PlatoDieta dieta) {
+		EntityTransaction trx = entityManager.getTransaction();
+		try{	
+			trx.begin();
+			entityManager.remove(dieta);
+	        entityManager.flush();
+	        trx.commit();
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	         if (trx.isActive())
+	             trx.rollback();
+	     }
 	}
 
 }

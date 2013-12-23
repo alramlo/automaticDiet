@@ -139,23 +139,19 @@ public class DietaDAO extends AbstractDAO{
 		}
 	}
 	
-	public void desincribirseEnDieta(Integer codigo){
+	public void desincribirseEnDieta(Dieta dieta){
 		EntityTransaction trx = entityManager.getTransaction();
-		Dieta dietaAux; 
-		try{
+		try{	
 			trx.begin();
-			dietaAux=entityManager.find(Dieta.class, codigo);
-			dietaAux.setFechaInicial(null);
-			dietaAux.setFechaFinal(null);
-			dietaAux.setUsuario(null);
-			trx.commit();
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			if(trx.isActive())
-				trx.rollback();
-		}
+			entityManager.remove(dieta);
+	        entityManager.flush();
+	        trx.commit();
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	         if (trx.isActive())
+	             trx.rollback();
+	     }
 	}
 
 	public Dieta getDietaPorId(Integer codigo) {

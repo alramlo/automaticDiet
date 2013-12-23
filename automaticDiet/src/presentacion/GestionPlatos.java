@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,6 +31,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Dieta;
 import modelo.Ingrediente;
 import modelo.Plato;
 import modelo.PlatoIngrediente;
@@ -167,32 +169,47 @@ public class GestionPlatos extends JPanel {
 		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					int fila = table.getSelectedRow();
-					Plato plato = new Plato();
-					plato.setNombre(table.getModel().getValueAt(fila,0)+"");
-					Plato platoVuelta = control.consultarPlato(plato.getNombre());
-					if(!control.getPlatosEnDieta(platoVuelta.getId())){
-						if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
-						List<PlatoIngrediente> pi = control.getPlatoIngredientes(platoVuelta);
-						control.eliminarPlatoIngredientePorPlato(pi);
-						control.eliminarPlato(platoVuelta);
-						poblar();
-						JOptionPane.showMessageDialog(null, "Plato eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
-						poblar();
-						}else
-							JOptionPane.showMessageDialog(null, "No tiene permisos", "Error", JOptionPane.ERROR_MESSAGE);
-
-					}
-					else
-						JOptionPane.showMessageDialog(null, "El plato pertene a una dieta o no tiene permisos y no se puede borrar.", "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (DAOExcepcion e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
-				btnEliminar.setEnabled(false);
-				btnModificar.setEnabled(false);
+				//
+				Object[] options = {"SI","NO"};
+				
+				Icon icon = new ImageIcon("src/iconos/eliminar-icono-4912-32.png");
+				
+				int respuesta = JOptionPane.showOptionDialog(null, "¿Desea eliminar el plato?", "CONFIRMACIÓN", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, icon, options, options[0]);
+				if (respuesta == 0 )
+				{
+					try {
+						int fila = table.getSelectedRow();
+						Plato plato = new Plato();
+						plato.setNombre(table.getModel().getValueAt(fila,0)+"");
+						Plato platoVuelta = control.consultarPlato(plato.getNombre());
+						if(!control.getPlatosEnDieta(platoVuelta.getId())){
+							if(platoVuelta.getUsuario().getDni().equals(userConected.getDni()) || userConected.getRol().equals("Administrador")){
+							List<PlatoIngrediente> pi = control.getPlatoIngredientes(platoVuelta);
+							control.eliminarPlatoIngredientePorPlato(pi);
+							control.eliminarPlato(platoVuelta);
+							poblar();
+							}else
+								JOptionPane.showMessageDialog(null, "No tiene permisos", "Error", JOptionPane.ERROR_MESSAGE);
+
+						}
+						else
+							JOptionPane.showMessageDialog(null, "El plato pertene a una dieta o no tiene permisos y no se puede borrar.", "Error", JOptionPane.ERROR_MESSAGE);
+					} catch (DAOExcepcion e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					btnEliminar.setEnabled(false);
+					btnModificar.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "El plato se ha eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}else{
+						JOptionPane.showMessageDialog(null, "El plato no se ha eliminado.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
+				//
+				
+				
+				
 			}
 		});
 		btnEliminar.setIcon(new ImageIcon(GestionPlatos.class.getResource("/iconos/eliminar-icono-4912-32.png")));

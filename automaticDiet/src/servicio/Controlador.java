@@ -609,8 +609,11 @@ public class Controlador {
 		return dal.getIdsPlatoDietaByIdDieta(codigo);
 	}
 
-	public void desincribirseEnDieta(Integer codigo){
-		dal.desincribirseEnDieta(codigo);
+	public void desincribirseEnDieta(Dieta d){
+		List<PlatoDieta> pd = dal. getPlatoDietaPorIdDieta(d.getId());
+		for(int i=0;i<pd.size();i++)
+			dal.eliminarPlatoDieta(pd.get(i));
+		dal.desincribirseEnDieta(d);
 	}
 	
 	public boolean mismaPassword (char[] pass1, char[] pass2){

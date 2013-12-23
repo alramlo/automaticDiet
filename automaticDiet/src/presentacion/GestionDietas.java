@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +28,7 @@ import javax.swing.table.TableModel;
 import modelo.Dieta;
 import modelo.Usuario;
 import servicio.Controlador;
+
 import javax.swing.ImageIcon;
 
 public class GestionDietas extends JPanel {
@@ -89,10 +91,28 @@ public class GestionDietas extends JPanel {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Dieta dietaAux = control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
-				control.desincribirseEnDieta(dietaAux.getId());
-				poblar();
-				JOptionPane.showMessageDialog(null, "La suscripción se ha eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				//
+				Object[] options = {"SI","NO"};
+				
+				Icon icon = new ImageIcon("src/iconos/eliminar-icono-4912-32.png");
+				
+				int respuesta = JOptionPane.showOptionDialog(null, "¿Desea desinscribirse de la dieta?", "CONFIRMACIÓN", JOptionPane.WARNING_MESSAGE, JOptionPane.WARNING_MESSAGE, icon, options, options[0]);
+				if (respuesta == 0 )
+				{
+					Dieta dietaAux = control.getDietaPorNombreYusuario(table.getValueAt(table.getSelectedRow(), 0).toString(), control.getUsuarioActual());
+					control.desincribirseEnDieta(dietaAux);
+					poblar();
+					JOptionPane.showMessageDialog(null, "La suscripción se ha eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}else{
+						JOptionPane.showMessageDialog(null, "La suscripción no se ha eliminado.", "Info", JOptionPane.INFORMATION_MESSAGE);
+				}
+									
+				//
+				
+//				Dieta dietaAux = control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
+//				control.desincribirseEnDieta(dietaAux.getId());
+//				poblar();
+//				JOptionPane.showMessageDialog(null, "La suscripción se ha eliminado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
 		
 			}
 		});
