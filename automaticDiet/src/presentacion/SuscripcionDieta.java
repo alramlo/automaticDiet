@@ -41,6 +41,10 @@ import java.awt.Dialog.ModalExclusionType;
 
 public class SuscripcionDieta extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7241071306989329642L;
 	private JPanel contentPane;
 	private Controlador control;
 	private JSpinner duracion;
@@ -203,7 +207,8 @@ public class SuscripcionDieta extends JFrame {
 		listDietas = new JList();
 		listDietas.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				dietaAux = control.getDietaPorNombre(listDietas.getSelectedValue().getNombre());
+				//dietaAux = control.getDietaPorNombre(listDietas.getSelectedValue().getNombre());
+				dietaAux = control.getDietaPorNombreLibres(listDietas.getSelectedValue().getNombre());
 				descripcion.setText(dietaAux.getDescripcion());
 				dur = control.getSemanasDieta(dietaAux.getId());
 				duracion.setValue(dur.intValue());

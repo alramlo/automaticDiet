@@ -384,7 +384,7 @@ public class Consultar_dieta_asignada extends JPanel
 	private void inicializar(Controlador c){
 		String nombre = comboBoxDietas.getSelectedItem()+"";
 		Object[][] data  = new Object[5][8];
-		dieta = c.getDietaPorNombre(nombre);
+		dieta = c.getDietaPorNombreYusuario(nombre,c.getUsuarioActual());
 		Dieta d = dieta;
 		semanas = (((dieta.getFechaFinal().getTime()-dieta.getFechaInicial().getTime())/ MILLSECS_PER_DAY)+1)/7;
 		Plato[] pl = c.dietaSemanal(dieta.getUsuario().getId(), dieta.getFechaInicial());

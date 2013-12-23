@@ -132,7 +132,7 @@ public class DietaDAO extends AbstractDAO{
 			trx.commit();
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}finally{
 			if(trx.isActive())
 				trx.rollback();
@@ -155,6 +155,88 @@ public class DietaDAO extends AbstractDAO{
 		}finally{
 			if(trx.isActive())
 				trx.rollback();
+		}
+	}
+
+	public Dieta getDietaPorId(Integer codigo) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT d "
+					+ "FROM Dieta d "
+					+ "WHERE d.id=:nom ");
+			q.setParameter("nom", codigo);;
+			return (Dieta) q.getSingleResult();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+		}
+	}
+
+	public void altaDieta(Dieta nueva) {
+		EntityTransaction trx = entityManager.getTransaction();
+		try{
+			trx.begin();
+			entityManager.persist(nueva);
+			entityManager.flush();
+			trx.commit();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(trx.isActive()){
+				
+				trx.rollback();
+			}
+			
+		}
+	}
+
+	public int lastIdDietas() {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT max(d.id) "
+					+ "FROM Dieta d ");
+			return (int) q.getSingleResult();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return -1;
+		}
+	}
+
+	public Dieta getDietaPorNombreLibre(String nombre) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT d "
+					+ "FROM Dieta d "
+					+ "WHERE d.nombre=:nom AND d.usuario=null");
+			q.setParameter("nom", nombre);;
+			return (Dieta) q.getSingleResult();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
+		}
+	}
+
+	public Dieta getDietaPorNombreYusuario(String nombre, Usuario usuarioActual2) {
+		try{
+			Query q;
+			q = entityManager.createQuery("SELECT d "
+					+ "FROM Dieta d "
+					+ "WHERE d.nombre=:nom AND d.usuario=:user");
+			q.setParameter("nom", nombre);
+			q.setParameter("user", usuarioActual2);
+			return (Dieta) q.getSingleResult();
+		
+		
+		}catch(Exception e){
+			System.out.println("Error:"+e);
+			return null;
 		}
 	}
 

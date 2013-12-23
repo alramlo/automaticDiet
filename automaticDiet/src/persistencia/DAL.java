@@ -294,4 +294,25 @@ public class DAL {
 	public void setPlatoDietaOriginal(PlatoDieta platoDieta) {
 		platoDietaDAO.setPlatoDietaOriginal(platoDieta);
 	}
+
+	public Dieta getDietaPorId(Integer codigo) {
+		return dietaDAO.getDietaPorId(codigo);
+	}
+
+	public void altaDieta(Dieta nueva) {
+		dietaDAO.altaDieta(nueva);
+		
+	}
+
+	public int lastIdDietas() {
+		return dietaDAO.lastIdDietas();
+	}
+
+	public Dieta getDietaPorNombreLibre(String nombre) {
+		return dietaDAO.getDietaPorNombreLibre(nombre);
+	}
+
+	public Dieta getDietaPorNombreYusuario(String nombre, Usuario usuarioActual2) {
+		return dietaDAO.getDietaPorNombreYusuario(nombre,usuarioActual2);
+	}
 }

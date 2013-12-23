@@ -557,7 +557,16 @@ public class Controlador {
 	}
 	
 	public void incribirseEnDieta(Integer codigo, Date fechaIni, Date fechaFin, Usuario user){
+		Dieta dieta = this.getDietaPorId(codigo);
 		dal.incribirseEnDieta(codigo, fechaIni, fechaFin, user);
+		Dieta nueva = new Dieta();
+		nueva.setCaloriasMax(dieta.getCaloriasMax());
+		nueva.setCaloriasMin(dieta.getCaloriasMin());
+		nueva.setDescripcion(dieta.getDescripcion());
+		nueva.setNombre(dieta.getNombre());
+		this.altaDieta(nueva);
+		int id = lastIdDietas();
+		Dieta dietaVuelta = this.getDietaPorId(id);
 		GregorianCalendar date = new GregorianCalendar();
 		date.setTime(fechaIni);
 		String[] numPlatos = this.getPlatosDieta(codigo);
@@ -565,12 +574,27 @@ public class Controlador {
 		List<PlatoDieta> pd = this.getPlatoDietaAmodicar(codigo);
 		dal.setPlatosDietas(codigosPlatoDieta,codigo,date, numPlatos.length);
 		for(int i=0; i<pd.size();i++){
-			pd.get(i).setId(pd.get(pd.size()-1).getId()+i+1);
-			pd.get(i).setDia(null);
-			this.setPlatoDietaOriginal(pd.get(i));
+			//pd.get(i).setId(pd.get(pd.size()-1).getId()+i+1);
+			PlatoDieta pd2 = new PlatoDieta();
+			pd2.setDia(null);
+			pd2.setDieta(dietaVuelta);
+			pd2.setPlato(pd.get(i).getPlato());
+			this.setPlatoDietaOriginal(pd2);
 		}
 	}
 	
+	private int lastIdDietas() {
+		return dal.lastIdDietas();
+	}
+
+	public void altaDieta(Dieta nueva) {
+		dal.altaDieta(nueva);
+	}
+
+	public Dieta getDietaPorId(Integer codigo) {
+		return dal.getDietaPorId(codigo);
+	}
+
 	private void setPlatoDietaOriginal(PlatoDieta platoDieta) {
 		dal.setPlatoDietaOriginal(platoDieta);
 		
@@ -602,6 +626,14 @@ public class Controlador {
 			}
 		}
 		return cent;
+	}
+
+	public Dieta getDietaPorNombreLibres(String nombre) {
+		return dal.getDietaPorNombreLibre(nombre);
+	}
+
+	public Dieta getDietaPorNombreYusuario(String nombre, Usuario usuarioActual2) {
+		return dal.getDietaPorNombreYusuario(nombre, usuarioActual2);
 	}
 }
 

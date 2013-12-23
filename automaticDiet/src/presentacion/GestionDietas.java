@@ -110,7 +110,7 @@ public class GestionDietas extends JPanel {
 				
 				System.out.println("Modificamos la tabla");
 				//System.out.println((Date)table.getValueAt(table.getSelectedRow(), 2));
-				Dieta dietaAux =  control.getDietaPorNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
+				Dieta dietaAux =  control.getDietaPorNombreYusuario(table.getValueAt(table.getSelectedRow(), 0).toString(),control.getUsuarioActual());
 				Date fechaActual = new Date();
 				if(fechaActual.compareTo(dietaAux.getFechaInicial())<0){
 					buttonModificar.setEnabled(true);
