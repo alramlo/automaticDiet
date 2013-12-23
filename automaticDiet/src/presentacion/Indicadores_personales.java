@@ -531,14 +531,23 @@ public class Indicadores_personales extends JPanel {
 	
 	private void inicializacionGrafica()
 	{
-		//obtener y mostrar las dietas en el combobox
-		comboBox = new JComboBox<String>(dietas_usuario);
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
-		dieta_select = control.getDietaPorNombreYusuario(comboBox.getItemAt(comboBox.getSelectedIndex()), control.getUsuarioActual());
+		if(dietas_usuario.length < 1)
+		{
+			System.out.println("NO TIENE DIETAS");
+			contenidoGraf.setEnabled(false);
+		}
 		
-		//inicializar la grafica
-		grafica_panel = new ChartPanel(grafica(mes_ini, year_ini));
-		contenidoGraf.add(grafica_panel);
+		else
+		{
+			//obtener y mostrar las dietas en el combobox
+			comboBox = new JComboBox<String>(dietas_usuario);
+			comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+			dieta_select = control.getDietaPorNombreYusuario(comboBox.getItemAt(comboBox.getSelectedIndex()), control.getUsuarioActual());
+			
+			//inicializar la grafica
+			grafica_panel = new ChartPanel(grafica(mes_ini, year_ini));
+			contenidoGraf.add(grafica_panel);
+		}
 	}
 	
 	
