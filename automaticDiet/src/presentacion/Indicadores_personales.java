@@ -24,9 +24,14 @@ import modelo.Seguimiento;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.RegularTimePeriod;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -84,8 +89,9 @@ public class Indicadores_personales extends JPanel {
 	private Date today = calendario.getDate();
 	private Date aReg = null;
 	private Date currentDay = null;
+	private int currentComponent = 0;
 	private int mes, year;
-	private int mes_ini, year_ini, mes_fin, year_fin;
+	private int mes_ini, year_ini;
 	private SimpleDateFormat sdf;
 	
 	ChartPanel grafica_panel;
@@ -105,26 +111,14 @@ public class Indicadores_personales extends JPanel {
 	public Indicadores_personales()
 	{
 	
+		// Inicializacion del controlador
 		try {
 			control=Controlador.dameControlador();
 		} catch (DominioExcepcion e3) {
 			e3.printStackTrace();
 		}
 		
-		
-//		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
-//		datos_usuario = control.getSegUsuario(11);
-		
-//		String[] dietas_usuario = control.getDietas(control.getUsuarioActual());
-//		String[] dietas_usuario = control.getDietas(control.getUsuarioPorId(11));
-		
-//		dietas = new JComboBox();
-//		dietas = new JComboBox<String>(dietas_usuario);
-		
-//		mes = calendario.getCalendar().getInstance().MONTH;
-//		year = calendario.getYearChooser().getYear();
-//		dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
-		
+		iniciarDatos();
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -146,40 +140,22 @@ public class Indicadores_personales extends JPanel {
 		
 		
 		
-		//Panel calendario de seguimiento
-		
-		
+		/* -------------------------------
+		 * PANEL CALENDARIO DE SEGUIMIENTO
+		 * ------------------------------- */
 		
 		tabbedPane.addTab("Calendario de seguimiento", new ImageIcon(Indicadores_personales.class.getResource("/iconos/dietas.png")), registro, null);
-		
 		cumplimiento.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		
 		pesaje.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-//		calendario.getMonthChooser().addPropertyChangeListener(new PropertyChangeListener() {
-//			public void propertyChange(PropertyChangeEvent arg0)
-//			{
-//				mes = calendario.getMonthChooser().getMonth()+1;
-//				pintaDias(mes, year);
-//				diaSeleccionado(null);
-//				poderRegistrar(false);
-//			}
-//		});
-//		calendario.getYearChooser().addPropertyChangeListener(new PropertyChangeListener() {
-//			public void propertyChange(PropertyChangeEvent arg0)
-//			{
-//				year = calendario.getYearChooser().getYear();
-//				pintaDias(mes, year);
-//				diaSeleccionado(null);
-//				poderRegistrar(false);
-//			}
-//		});
-		
 		
 		calendario.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		
 		calendario.getMonthChooser().getSpinner().setFont(new Font("Arial", Font.PLAIN, 16));
 		calendario.getMonthChooser().getComboBox().setFont(new Font("Arial", Font.PLAIN, 16));
 		calendario.getMonthChooser().setFont(new Font("Arial", Font.PLAIN, 16));
+		
 		GroupLayout groupLayout_1 = new GroupLayout(calendario.getMonthChooser());
+		
 		groupLayout_1.setHorizontalGroup(
 			groupLayout_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout_1.createSequentialGroup()
@@ -193,24 +169,23 @@ public class Indicadores_personales extends JPanel {
 					.addComponent(calendario.getMonthChooser().getSpinner(), GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 					.addGap(1))
 		);
+		
 		calendario.getMonthChooser().setLayout(groupLayout_1);
 		calendario.setWeekOfYearVisible(false);
 		calendario.setWeekdayForeground(new Color(0, 0, 0));
 		calendario.setFont(new Font("Arial", Font.PLAIN, 20));
 		calendario.setDecorationBackgroundColor(new Color(255, 153, 102));
 		
-		
-		
-
-		
 		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio");
 		lblFechaDeInicio.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		fini = new JTextField();
+		fini.setEditable(false);
 		fini.setFont(new Font("Arial", Font.PLAIN, 14));
 		fini.setColumns(10);
 		
 		ffin = new JTextField();
+		ffin.setEditable(false);
 		ffin.setFont(new Font("Arial", Font.PLAIN, 14));
 		ffin.setColumns(10);
 		GroupLayout gl_registro = new GroupLayout(registro);
@@ -264,25 +239,42 @@ public class Indicadores_personales extends JPanel {
 		);
 		lblFechaDeFin.setFont(new Font("Arial", Font.PLAIN, 14));
 		
-		
-		lblCuantoKg.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCuantoKg.setFont(new Font("Arial", Font.PLAIN, 18));
-		btnReg.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
+		/* ------------
+		 * MONTHCHOOSER
+		 * ------------ */
+		calendario.getMonthChooser().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0)
 			{
-				
-				Seguimiento s = new Seguimiento();
-				
-				s.setUsuario2(control.getUsuarioPorId(1));
-				s.setFecha(aReg);
-				s.setPeso(new BigDecimal((double)peso.getValue()));
-				registrar(s);
+				mes = calendario.getMonthChooser().getMonth()+1;
+				pintaDias(mes, year);
+				diaSeleccionado(null);
+				poderRegistrar(false);
+			}
+		});
+		
+		/* -----------
+		 * YEARCHOOSER
+		 * ----------- */
+		calendario.getYearChooser().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0)
+			{
+				year = calendario.getYearChooser().getYear();
+				pintaDias(mes, year);
+				diaSeleccionado(null);
+				poderRegistrar(false);
 			}
 		});
 		
 		
-		btnReg.setFont(new Font("Arial", Font.PLAIN, 16));
 		
+		/* ---------------------------
+		 * SUBPANEL DE CONTROL DE PESO
+		 * --------------------------- */
+		
+		lblCuantoKg.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCuantoKg.setFont(new Font("Arial", Font.PLAIN, 18));
+		
+		btnReg.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		peso.setModel(new SpinnerNumberModel(70.0, 40.0, 200.0, 0.1));
 		peso.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -312,42 +304,35 @@ public class Indicadores_personales extends JPanel {
 		);
 		pesaje.setLayout(gl_pesaje);
 		
-		
-		lblHasCumplido.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHasCumplido.setFont(new Font("Arial", Font.PLAIN, 18));
-		btnSi.addActionListener(new ActionListener()
-		{
+		// Funcionalidad del boton registrar 
+		btnReg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Seguimiento s = new Seguimiento();
-					
-				s.setUsuario2(control.getUsuarioPorId(1));
-				s.setFecha(aReg);
-				s.setCumplido("SI");
-				registrar(s);
-			}
-		});
-		
-		
-		btnSi.setFont(new Font("Arial", Font.PLAIN, 16));
-		btnSi.setBorder(new LineBorder(new Color(0, 204, 0), 2));
-		
-		
-		btnNo.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
+				
 				Seguimiento s = new Seguimiento();
 				
 				s.setUsuario2(control.getUsuarioPorId(1));
 				s.setFecha(aReg);
-				s.setCumplido("NO");
+				s.setPeso(new BigDecimal((double)peso.getValue()));
 				registrar(s);
 			}
 		});
 		
+		
+		
+		/* ----------------------------------
+		 * SUBPANEL DE CONTROL DE SEGUIMIENTO
+		 * ---------------------------------- */
+		
+		lblHasCumplido.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHasCumplido.setFont(new Font("Arial", Font.PLAIN, 18));
+		
+		btnSi.setFont(new Font("Arial", Font.PLAIN, 16));
+		btnSi.setBorder(new LineBorder(new Color(0, 204, 0), 2));
+		
 		btnNo.setBorder(new LineBorder(new Color(255, 0, 0), 2));
 		btnNo.setFont(new Font("Arial", Font.PLAIN, 16));
+		
 		GroupLayout gl_cumplimiento = new GroupLayout(cumplimiento);
 		gl_cumplimiento.setHorizontalGroup(
 			gl_cumplimiento.createParallelGroup(Alignment.LEADING)
@@ -375,28 +360,46 @@ public class Indicadores_personales extends JPanel {
 		cumplimiento.setLayout(gl_cumplimiento);
 		registro.setLayout(gl_registro);
 		
+		//Funcionalidad boton SI
+		btnSi.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				Seguimiento s = new Seguimiento();
+					
+				s.setUsuario2(control.getUsuarioPorId(1));
+				s.setFecha(aReg);
+				s.setCumplido("SI");
+				registrar(s);
+			}
+		});
 		
-		//PANEL DE GRAFICA DE CONTROL DE PESO
+		//Funcionalidad boton NO
+		btnNo.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				Seguimiento s = new Seguimiento();
+				
+				s.setUsuario2(control.getUsuarioPorId(1));
+				s.setFecha(aReg);
+				s.setCumplido("NO");
+				registrar(s);
+			}
+		});
+		
+		
+		
+		/* -----------------------------------
+		 * PANEL DE GRAFICA DE CONTROL DE PESO
+		 * ----------------------------------- */
 		
 		tabbedPane.addTab("Grafica de Control de peso", new ImageIcon(Indicadores_personales.class.getResource("/iconos/grafica.png")), panel, null);
 		
 		contenidoGraf = new JPanel();
 		
-//		comboBox = new JComboBox();
-//		comboBox = new JComboBox<String>(dietas_usuario);
-		
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dieta_select = control.getDietaPorNombre((String) comboBox.getItemAt(comboBox.getSelectedIndex()));
-				dietas.setSelectedIndex(comboBox.getSelectedIndex());
-				if(datos_usuario.length!=0)
-				diasDieta();
-				pintaGrafica(mes_ini, year_ini);
-			}
-		});
-		
-		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setText((String) null);
 		textField.setFont(new Font("Arial", Font.PLAIN, 14));
 		textField.setColumns(10);
@@ -408,6 +411,7 @@ public class Indicadores_personales extends JPanel {
 		label_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		textField_1.setText((String) null);
 		textField_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		textField_1.setColumns(10);
@@ -455,22 +459,51 @@ public class Indicadores_personales extends JPanel {
 		panel.setLayout(gl_panel);
 		setLayout(groupLayout);
 		
-//		if(datos_usuario.length!=0)
-//		diasDieta();
-//		pintaGrafica(mes_ini, year_ini);
-//		pintaDias(mes_ini, year_ini);*/
-		
+		// Llamada a inicializacion de los datos y funciones relacionadas con el calendario
 		inicializacionCalendario();
+		
+		// Llamada a inicializacion de los datos y funciones relacionadas con la grafica
 		inicializacionGrafica();
 	}
 	
 	
-	private void inicializacionCalendario()
+	private void iniciarDatos()
 	{
-		//obtener los datos del usuario
 		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
 		dietas_usuario = control.getDietas(control.getUsuarioActual());
-		
+		if(dietas_usuario.length > 0)
+		{
+			//Insertar las dietas en el combobox del calendario
+			dietas = new JComboBox<String>(dietas_usuario);
+			dietas.setFont(new Font("Arial", Font.PLAIN, 16));
+			dietas.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					dieta_select = control.getDietaPorNombreYusuario(dietas.getItemAt(dietas.getSelectedIndex()), control.getUsuarioActual());
+					comboBox.setSelectedIndex(dietas.getSelectedIndex());
+					diaSeleccionado(null);
+					diasDieta();
+					pintaDias(mes_ini, year_ini);
+				}
+			});
+			
+			
+			//Insertar las dietas en el combobox de la grafica
+			comboBox = new JComboBox<String>(dietas_usuario);
+			comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+			comboBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					dieta_select = control.getDietaPorNombreYusuario(comboBox.getItemAt(comboBox.getSelectedIndex()), control.getUsuarioActual());
+					dietas.setSelectedIndex(comboBox.getSelectedIndex());
+					diaSeleccionado(null);
+					diasDieta();
+					pintaGrafica(mes_ini, year_ini);
+				}
+			});
+		}
+	}
+	
+	private void inicializacionCalendario()
+	{
 		if(dietas_usuario.length < 1)
 		{
 			System.out.println("NO TIENE DIETAS");
@@ -480,11 +513,6 @@ public class Indicadores_personales extends JPanel {
 		
 		else
 		{
-			//obtener y mostrar las dietas en el combobox
-			
-			dietas = new JComboBox<String>(dietas_usuario);
-			dietas.setFont(new Font("Arial", Font.PLAIN, 16));
-			
 			//establecer la dieta seleccionada y las fechas de inicio
 			dieta_select = control.getDietaPorNombreYusuario(dietas.getItemAt(dietas.getSelectedIndex()), control.getUsuarioActual());
 
@@ -498,50 +526,38 @@ public class Indicadores_personales extends JPanel {
 					pintaDias(mes, year);
 					aReg = calendario.getDate();
 					diaSeleccionado(aReg);
-					if(aReg.after(today))
-					{
-						poderRegistrar(false);
-					}
-					else if(aReg.before(ini_dieta) || aReg.after(fin_dieta))
+					
+					if(aReg.before(ini_dieta) || aReg.after(fin_dieta))
 					{
 						poderRegistrar(false);
 						JOptionPane.showMessageDialog(null, "Esta fecha no tiene dieta asignada", "Info", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else
 					{
-						poderRegistrar(true);
+						if(aReg.after(today))
+						{
+							poderRegistrar(false);
+						}
+						else
+						{
+							poderRegistrar(true);
+						}
 					}
 				
 				}
 			});
-			
-			dietas.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					dieta_select = control.getDietaPorNombre((String) dietas.getItemAt(dietas.getSelectedIndex()));
-					comboBox.setSelectedIndex(dietas.getSelectedIndex());
-					if(datos_usuario.length!=0)
-					diasDieta();
-					pintaDias(mes_ini, year_ini);
-				}
-			});
 		}
-		revalidate();
-		repaint();
 	}
 	
 	private void inicializacionGrafica()
 	{
 		if(dietas_usuario.length < 1)
 		{
-			System.out.println("NO TIENE DIETAS");
 			contenidoGraf.setEnabled(false);
 		}
 		
 		else
 		{
-			//obtener y mostrar las dietas en el combobox
-			comboBox = new JComboBox<String>(dietas_usuario);
-			comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
 			dieta_select = control.getDietaPorNombreYusuario(comboBox.getItemAt(comboBox.getSelectedIndex()), control.getUsuarioActual());
 			
 			//inicializar la grafica
@@ -550,12 +566,12 @@ public class Indicadores_personales extends JPanel {
 		}
 	}
 	
-	
 	private JFreeChart grafica(int m, int y)
 	{
-		JFreeChart grafica = ChartFactory.createXYLineChart("", "Dia", "Peso (en Kg)", obtenerDatos(m, y), PlotOrientation.VERTICAL, false, false, false);
+		JFreeChart grafica = ChartFactory.createTimeSeriesChart("", "Dia", "Peso (en Kg)", obtenerDatos(m, y), false, false, false);
 		XYLineAndShapeRenderer  renderer  = (XYLineAndShapeRenderer) ((XYPlot) grafica.getPlot()).getRenderer();   
-		grafica.getXYPlot().getDomainAxis().setRange(1, 31);
+		DateAxis axis = (DateAxis) grafica.getXYPlot().getDomainAxis();
+		axis.setDateFormatOverride(new SimpleDateFormat("dd-MM-yyyy"));
 		grafica.getXYPlot().getRangeAxis().setRange(10, 150);
         renderer.setBaseShapesVisible(true);
         renderer.setBaseShapesFilled (true);
@@ -564,25 +580,28 @@ public class Indicadores_personales extends JPanel {
         return grafica;
 	}
 	
-	private XYSeriesCollection obtenerDatos(int m, int y)
+	private TimeSeriesCollection obtenerDatos(int m, int y)
 	{
-        XYSeries series1 = new XYSeries("");
+        TimeSeries series1 = new TimeSeries("");
         for( int i = 0; i < datos_usuario.length; i++)
         {
-        	sdf = new SimpleDateFormat("MM");
-			int mes = Integer.parseInt(sdf.format(datos_usuario[i].getFecha()));
-			sdf = new SimpleDateFormat("yyyy");
-			int year = Integer.parseInt(sdf.format(datos_usuario[i].getFecha()));
-			
-        	if(mes == m && year == y && datos_usuario[i].getPeso()!=null)
-        	{
-        		sdf = new SimpleDateFormat("dd");
-        		int dia = Integer.parseInt(sdf.format(datos_usuario[i].getFecha()));
-        		series1.add(dia, datos_usuario[i].getPeso());
-        	}
+        	Date fecha = datos_usuario[i].getFecha();
+        	
+        	if (fecha.after(ini_dieta) && fecha.before(fin_dieta))
+			{
+	        	sdf = new SimpleDateFormat("dd");
+	    		int dd = Integer.parseInt(sdf.format(datos_usuario[i].getFecha()));
+	    		sdf = new SimpleDateFormat("MM");
+				int mm = Integer.parseInt(sdf.format(datos_usuario[i].getFecha()));
+				sdf = new SimpleDateFormat("yyyy");
+				int yyyy = Integer.parseInt(sdf.format(datos_usuario[i].getFecha()));
+	        	
+	        	RegularTimePeriod time = new Day(dd,mm,yyyy);
+	        	series1.add(time, datos_usuario[i].getPeso());
+			}
         }
 
-        XYSeriesCollection colection = new XYSeriesCollection();
+        TimeSeriesCollection colection = new TimeSeriesCollection();
         colection.addSeries(series1);
                 
         return colection;
@@ -602,7 +621,6 @@ public class Indicadores_personales extends JPanel {
 	{
 		Calendar cal = calendario.getCalendar().getInstance();
 		cal.setTime(calendario.getDate());
-		datos_usuario = control.getSegUsuario(control.getUsuarioActual().getId());
 		cal.set(Calendar.DAY_OF_MONTH,1);
 		Calendar.getInstance();
 		int inicio = cal.get(Calendar.DAY_OF_WEEK)-1;
@@ -624,6 +642,7 @@ public class Indicadores_personales extends JPanel {
 			{
 				dia = Integer.parseInt(sdf.format(currentDay));
 				dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
+				currentComponent = 5 + inicio;
 			}
 			
 			currentDay = d;
@@ -632,7 +651,7 @@ public class Indicadores_personales extends JPanel {
 		{
 			sdf = new SimpleDateFormat("dd");
 			int dia = Integer.parseInt(sdf.format(currentDay));
-			dias[5 + inicio + dia].setFont(new Font("Arial", Font.PLAIN, 20));
+			dias[currentComponent + dia].setFont(new Font("Arial", Font.PLAIN, 20));
 		}
 	}
 	
@@ -654,13 +673,13 @@ public class Indicadores_personales extends JPanel {
 		
 		sdf = new SimpleDateFormat("MM");
 		mes_ini = Integer.parseInt(sdf.format(ini_dieta));
-		mes_fin = Integer.parseInt(sdf.format(fin_dieta));
 		calendario.getMonthChooser().setMonth(mes_ini-1);
 		
 		sdf = new SimpleDateFormat("yyyy");
 		year_ini = Integer.parseInt(sdf.format(ini_dieta));
-		year_fin = Integer.parseInt(sdf.format(fin_dieta));
 		calendario.getYearChooser().setYear(year_ini);
+		
+		fin_dieta.setTime(fin_dieta.getTime()+86400000);
 		
 	}
 	
