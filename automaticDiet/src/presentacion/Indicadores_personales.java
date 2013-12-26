@@ -210,8 +210,8 @@ public class Indicadores_personales extends JPanel {
 								.addComponent(lblFechaDeInicio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 87, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_registro.createParallelGroup(Alignment.LEADING)
-								.addComponent(fini, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-								.addComponent(ffin, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+								.addComponent(ffin, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+								.addComponent(fini, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
 							.addContainerGap())))
 		);
 		gl_registro.setVerticalGroup(
@@ -220,21 +220,19 @@ public class Indicadores_personales extends JPanel {
 					.addContainerGap()
 					.addGroup(gl_registro.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_registro.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblFechaDeInicio, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-							.addComponent(fini, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(dietas, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+							.addComponent(lblFechaDeInicio, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+							.addComponent(fini))
+						.addComponent(dietas, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_registro.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblFechaDeFin, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-						.addGroup(gl_registro.createSequentialGroup()
-							.addGap(8)
-							.addComponent(ffin)))
+					.addGroup(gl_registro.createParallelGroup(Alignment.BASELINE, false)
+						.addComponent(lblFechaDeFin, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(ffin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(calendario, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
 					.addGap(10)
-					.addGroup(gl_registro.createParallelGroup(Alignment.LEADING)
-						.addComponent(cumplimiento, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-						.addComponent(pesaje, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+					.addGroup(gl_registro.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(cumplimiento, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+						.addComponent(pesaje, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
 					.addGap(10))
 		);
 		lblFechaDeFin.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -686,6 +684,7 @@ public class Indicadores_personales extends JPanel {
 	private void registrar(Seguimiento s)
 	{
 		control.setSeguimiento(s);
+		iniciarDatos();
 		pintaDias(mes, year);
 	}
 	private void poderRegistrar(boolean b)
