@@ -280,7 +280,7 @@ public class ElaboracionPlato extends JPanel {
 				for(int i=0;i<nomPlatos.length;i++)
 					comboBoxPlatos.addItem(nomPlatos[i]);
 				if(comboBoxPlatos.getModel().getSize()!=0){	
-					platoVuelta = control.consultarPlato(comboBoxPlatos.getItemAt(1).toString());
+					platoVuelta = control.consultarPlato(comboBoxPlatos.getItemAt(0).toString());
 					if(platoVuelta!=null){
 						textAreaElaboracion.setText(platoVuelta.getElaboracion());
 						String[] vector = new String[1];
