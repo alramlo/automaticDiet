@@ -351,10 +351,10 @@ public class NuevoPlato2 extends JFrame {
 							for(PlatoIngrediente pi : platoIngredienteNuevos)
 								control.insertarPlatoIngrediente(pi);
 							gPlatos.poblar();
-							if(esNuevo){
+							//if(esNuevo){
 							JOptionPane.showMessageDialog(null, "Plato guardado correctamente.", "Info", JOptionPane.INFORMATION_MESSAGE);
 							dispose();
-							}
+							//}
 						}
 				}
 				
