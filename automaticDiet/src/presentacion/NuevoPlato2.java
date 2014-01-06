@@ -151,7 +151,7 @@ public class NuevoPlato2 extends JFrame {
 			}
 		});
 		
-		tNombre.setBounds(176, 40, 186, 29);
+		tNombre.setBounds(176, 40, 311, 29);
 		getContentPane().add(tNombre);
 		tNombre.setColumns(10);
 		
