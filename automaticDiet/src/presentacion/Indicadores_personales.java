@@ -528,7 +528,6 @@ public class Indicadores_personales extends JPanel {
 					if(aReg.before(ini_dieta) || aReg.after(fin_dieta))
 					{
 						poderRegistrar(false);
-						JOptionPane.showMessageDialog(null, "Esta fecha no tiene dieta asignada", "Info", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else
 					{
